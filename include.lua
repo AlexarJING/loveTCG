@@ -1,0 +1,6 @@
+Class=require "lib/middleclass"
+Tween=require "lib/tween"
+gamestate=require "lib/gamestate"
+Net=require "lib/net"
+Camera = require "lib/camera"
+require "lib/util"
