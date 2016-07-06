@@ -1,51 +1,66 @@
-Class = require "lib.middleclass"
 local hand = Class("hand")
 
-function hand:init(root)
+local Card = require "cls/card"
+
+function hand:init(game,root)
     self.cards={}
-    self.go = msg.url(".")
-    self.position = go.get_position(self.go)
-    self.maxCount = 4
+    self.game = game
     self.root = root
+    self.parent = game[root]
+    if self.root == "up" then
+        self.x = -100
+        self.y = -250
+        self.rx = 0
+    else
+        self.x = 100
+        self.y = 250
+        self.rx = 0 
+    end
+
+    self.maxCount= 5
+    for i = 1, 3 do
+        local card = Card(game,game.cardData.green.coin,self)
+        table.insert(self.cards, card)
+    end
+    self:resort()
+
+    
 end
+
 
 
 function hand:resort()
 	if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
-            local pos = go.get_position(self.go)
-            pos.x = pos.x +( -#self.cards/2 +i -0.5) *CARD_WIDTH
-            pos.z = i / 100
-            go.animate(card.go,"position",go.PLAYBACK_ONCE_FORWARD, pos , go.EASING_INBACK, 0.5)
+            local x = self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale 
+            --local y = self.y + 0.001*(x - self.x)^2
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            card:animate(1,{x=x},"inQuad")
+            card:animate(1,{rx=self.rx})
         end
     else
         for i,card in ipairs(self.cards) do
-            local pos = go.get_position(self.go)
-            pos.x = pos.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) *CARD_WIDTH 
-            pos.z = i / 100
-            go.animate(card.go,"position",go.PLAYBACK_ONCE_FORWARD, pos , go.EASING_INBACK, 0.5)
+            local x = self.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+            --local y = self.y + math.abs(x - self.x)*0.1
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            card:animate(1,{x=x},"inQuad")
+            card:animate(1,{rx=self.rx})
         end
     end
 end
 
+
+function hand:update(dt)
+    for i,v in ipairs(self.cards) do
+        v:update(dt)
+    end
+end
+
 function hand:draw()
-	local cards = game[self.root].deck.cards
-	if not cards[1] then return end
-
-	local card =cards[math.random(#cards)]
-	card:transfer(game[self.root].deck,self)
+    for i,v in ipairs(self.cards) do
+        v:draw()
+    end
 end
 
-function hand:play(card)
-	card:transfer(self,game[self.root].play,true)
-end
-
-function hand:discard()
-	if #self.cards>self.maxCount then
-		for i = self.maxCount,#self.cards do
-			card:transfer(self.cards, card.born.deck.cards) --回到出生地，尚未更改
-		end
-	end
-end
 
 return hand

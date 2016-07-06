@@ -2,7 +2,7 @@ local data = {
 	name = "coin",
 	race = "green",
 	class = "coin", --or 
-	rare = 0 ,
+	rare = 1 ,
 
 	profile = {"no money, you can do nothing!"},
 
@@ -17,9 +17,11 @@ local data = {
 	cancel = 2,
 
 	last = 0,
+
+	isHero = false,
 }
 
-data.discription = {
+data.description = {
 	"Gold +1",
 }
 

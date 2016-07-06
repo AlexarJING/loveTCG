@@ -335,7 +335,7 @@ function Tween:set(clock)
     self.clock = self.time
     copyTables(self.subject, self.target)
     if self.callback then
-      self.callback(unpack(self.callback_arg))
+      self.callback(self.callback_arg and unpack(self.callback_arg))
     end
   else
 

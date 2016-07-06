@@ -1,20 +1,41 @@
-Class = require "lib.middleclass"
 local deck = Class("deck")
+local Card = require "cls/card"
 
-function deck:init(root)
+function deck:init(game,root)
     self.cards={}
-    self.go = msg.url(".")
-    self.position = go.get_position()
+    self.game = game
     self.root = root
+    self.parent = game[root]
+    if self.root == "up" then
+        self.x = -500
+        self.y = -250
+        self.rx = 3.14
+    else
+        self.x = 500
+        self.y = 250
+        self.rx = 3.14
+    end
+
+    for i = 1, 5 do
+        local card = Card(game,game.cardData.green.coin,self)
+        table.insert(self.cards, card)
+    end
+end
+
+function deck:update(dt)
+    for i,v in ipairs(self.cards) do
+        v:update(dt)
+    end
+end
+
+function deck:draw()
+    for i,v in ipairs(self.cards) do
+        v:draw()
+    end
 end
 
 function deck:addCards(cardData)
-	for i,data in ipairs(cardData) do
-        local card = factory.create("#card_proto",self.position,nil,
-            {name = hashy[data.name],race = hashy[data.race],
-            exp = data.exp , level = data.level , root = hashy[self.root]})
-        table.insert(self.cards, game.cardIndex[card])
-    end
+	
 end
 
 return deck

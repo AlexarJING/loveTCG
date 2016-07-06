@@ -21,8 +21,14 @@ function scene:draw()
 end
 
 function scene:update(dt)
-    
+    game:update(dt)
 end 
+
+function scene:keypressed(key)
+	if key == "space" then
+		game:drawCard()
+	end
+end
 
 function scene:leave()
 end
