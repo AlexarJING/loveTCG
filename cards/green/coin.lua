@@ -9,11 +9,12 @@ local data = {
 	level = 0,
 
 	basePrice = 0,
-	baseHp = 0,
+	hp = 5,
 
 	block = true,
-	shield = 0,
+	shield = 2,
 
+	cancel = 2,
 
 	last = 0,
 }

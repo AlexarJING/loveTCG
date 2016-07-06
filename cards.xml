@@ -1,0 +1,2300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datalist>
+
+	<!-- data
+		id - required, must be a unique positive integer (never change an existing card!)
+		name - required, name of card
+		textLayout - required, what layout the card text uses
+		borderFrame - required, what frame should the border of the card asset be
+		assetPath - required, url of card art asset
+		cost - optional, how much this card costs to buy in game. Defaults to -1
+		life - optional, how much life does this ally have
+		inherits - optional, this card inherits all the properties of another id as defaults
+		limitId - optional, card is considered a different id for stacking in deck construction
+		limit - optional, how many copies of this card are allowed in a deck. Defaults to 1
+		
+			<cardText
+				fieldName - required, the name of the asset field this line of text will appear in
+				text - required, the text that appears on the screen	
+				highlightContexts - optional, comma separated list of gameplay contexts that highlight this text
+			>
+
+		 Special characters:
+		 ¢	162 -> magic
+		 £	163	-> skull
+		 ¤	164 -> gold
+		 ¥	165 -> food
+		 «	177 -> charge (endazu)
+		 
+		¦ 166 -> vespitole
+		§ 167 -> metris
+		¨ 168 -> daramek
+		© 169 -> gem
+		ª 170 -> silver
+		¬ 172 -> heart
+		 
+	-->
+	
+	<data id="0" name="Reserved"/>
+	<data id="1" name="Ducat" textLayout="oneLine" borderFrame="gold" limit="10" assetPath="img/cards/512x512/%platform%/vespitolecoin.atf">
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	<data id="291" inherits="1" borderFrame="green" assetPath="img/cards/512x512/%platform%/vespitolecoin.atf">
+		<quote text="" source=""/>
+	</data>
+	<data id="292" name="Tauri" inherits="1" borderFrame="red" assetPath="img/cards/512x512/%platform%/daramekcoin.atf">
+		<quote text="" source=""/>
+	</data>
+	<data id="293" inherits="1" borderFrame="blue" assetPath="img/cards/512x512/%platform%/metriscoin.atf">
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="2" name="Sofocatro" faction="vespitole" textLayout="twoLines" borderFrame="green" life="20" hero="true" rarity="C" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="3" assetPath="img/cards/512x512/%platform%/sofocatro.atf">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 £"/>
+		<quote text="" source=""/>
+		<ambientSound tags="secrets:.1"/>
+	</data>
+	
+	<data id="3" name="Courtesan" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="6" rarity="A" quality="1" life="1" tab="power" assetPath="img/cards/512x512/%platform%/courtesan.atf"> <!-- AFTER -->
+		<cardText fieldName="mcLine2" text="On turn: +2 £" highlightContexts="feed"/>
+		<cardText fieldName="mcLine3" text="On feed: +1 £" highlightContexts="feed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="You cannot whisper a sigh in your bedchambers without a Vespitole hearing about it." source="-Geofretto Piscez"/>
+		<ambientSound tags="secrets:.3"/>
+	</data>
+	<data id="4" inherits="3" cost="5" quality="2"/>
+	<data id="5" inherits="3" cost="4" quality="3"/>
+	
+	<data id="6" name="Inquisitor" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="14" rarity="D" quality="1" life="2" tab="faith" assetPath="img/cards/512x512/%platform%/inquisitor.atf">
+		<cardText fieldName="mcLine2" text="On turn / feed:"  highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine3" text="Attack weakest, +1 £" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Fill every empty space of the mind with agony so that lies have no refuge. Whatever remains is the truth." source="-Sodantis, Grand Inquisitor"/>
+		<ambientSound tags="secrets:.8,military:.7"/>
+	</data>
+	<data id="7" inherits="6" cost="13" quality="2"/>
+	<data id="8" inherits="6" cost="12" quality="3"/>
+	
+	<data id="9" name="Spice Route" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="6" rarity="A" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/spiceroute.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¥" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Dalmiria is so rich in spices that a commoner will consume a lord's ransom in a single meal." source="-Captain Listrata"/>
+		<ambientSound tags="supply:.3"/>
+	</data>
+	<data id="10" inherits="9" cost="5" quality="2"/>
+	<data id="11" inherits="9" cost="4" quality="3"/>
+	
+	<data id="12" name="Prayer" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="7" rarity="B" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/prayer.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¢" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Just as the wind can be harnessed to mill, so hath their prayers, bent to His will." source="-Inscription, Holy seat of Gallus"/>
+		<ambientSound tags="faith:.3"/>
+	</data>
+	<data id="13" inherits="12" cost="6" quality="2"/>
+	<data id="14" inherits="12" cost="5" quality="3"/>
+	
+	<data id="15" name="Holy Wrath" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="14" rarity="D" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/holywrath.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="+1 ¢" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="For each ¢: attack" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The philosophers can go debate justice until the sun burns to embers, for I am blessed by God and will bring calamity down on all who oppose me." source="-Cardinal Pocchi"/>
+		<ambientSound tags="faith:1"/>
+	</data>
+	<data id="16" inherits="15" cost="13" quality="2"/>
+	<data id="17" inherits="15" cost="12" quality="3"/>
+	
+	<data id="18" name="Merchant Guild" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="13" rarity="57" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/merchantsguild.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="+1 ¥" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="For each ¥: +1 ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="I claim no nation, I follow no gods. Commerce is my worship and gold is my prayer." source="-Guildmaster Nevretto"/>
+		<ambientSound tags="supply:.4,economy:.8"/>
+	</data>
+	<data id="19" inherits="18" cost="12" quality="2"/>
+	<data id="20" inherits="18" cost="11" quality="3"/>
+	
+	<data id="21" name="Corruption" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="13" rarity="C" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/corruption.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="+1 £" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="For each £: +1 ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A law is only as fair as the men who interpret it. Men with desires, fears, ambitions and secrets." source="-Sofocatro"/>
+		<ambientSound tags="secrets:.9"/>
+	</data>
+	<data id="22" inherits="21" cost="12" quality="2"/>
+	<data id="23" inherits="21" cost="11" quality="3"/>
+	
+	<data id="24" name="Supplicant" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="7" rarity="B" quality="1" life="2" tab="faith" assetPath="img/cards/512x512/%platform%/supplicant.atf">
+		<cardText fieldName="mcLine2" text="On turn / feed:" highlightContexts="feed"/>
+		<cardText fieldName="mcLine3" text="+1 ¢" highlightContexts="feed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The rumors are true. The church hosts a secret order of thaumaturges that have trained countless generations of Vespitole in their dark arts." source="-Inquisitor Ferri"/>
+		<ambientSound tags="faith:.3"/>
+	</data>
+	<data id="25" inherits="24" cost="6" quality="2"/>
+	<data id="26" inherits="24" cost="5" quality="3"/>
+	
+	<data id="27" name="Militia" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="5" rarity="A" quality="1" life="1" tab="war" assetPath="img/cards/512x512/%platform%/militia.atf">
+		<cardText fieldName="mcLine2" text="Intercepts, 25%: retaliate"/>
+		<cardText fieldName="mcLine3" text="On turn / feed: attack" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="You have us until harvest, and not a day after." source="-Johannas Freeman"/>
+		<ambientSound tags="military:.4"/>
+	</data>
+	<data id="28" inherits="27" cost="4" quality="2"/>
+	<data id="29" inherits="27" cost="3" quality="3"/>
+	
+	<data id="30" name="Mercenary" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="7" rarity="B" quality="1" life="2" tab="war" assetPath="img/cards/512x512/%platform%/mercenary.atf">
+		<cardText fieldName="mcLine2" text="Intercepts, 50%: retaliate"/>
+		<cardText fieldName="mcLine3" text="On turn / feed: attack" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A Mercenary is an alchemist.  He heats cold iron with hot blood, and from that crucible he pours gold." source="-Duchessa Cyneswith"/>
+		<ambientSound tags="military:.6"/>
+	</data>
+	<data id="31" inherits="30" cost="6" quality="2"/>
+	<data id="32" inherits="30" cost="5" quality="3"/>
+	
+	<data id="33" name="Soldier" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="10" rarity="C" quality="1" life="3" tab="war" assetPath="img/cards/512x512/%platform%/soldier.atf">
+		<cardText fieldName="mcLine2" text="Intercepts, 75%: retaliate"/>
+		<cardText fieldName="mcLine3" text="On turn / feed: attack" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Some were born to craft songs, and some to craft prayers. Some were born to craft fine works of art. I was born to craft death, and your army will be my masterpiece." source="-Brynne Galli"/>
+		<ambientSound tags="military:.8"/>
+	</data>
+	<data id="34" inherits="33" cost="9" quality="2"/>
+	<data id="35" inherits="33" cost="8" quality="3"/>
+	
+	<data id="36" name="Deceit" faction="metris" textLayout="twoLines" borderFrame="blue" cost="2" rarity="A" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/deceit.atf">
+		<cardText fieldName="mcLine3" text="Draw 2 cards from foe" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="'Xoros is the greatest bullfighter in the world,' may be an obvious lie, but you are still tricked to believe Xoros fights bulls, or that he even exists at all." source="-Birondelle"/>
+		<ambientSound tags="trick:.3"/>
+	</data>
+	<data id="37" inherits="36" cost="1" quality="2"/>
+	<data id="38" inherits="36" cost="0" quality="3"/>
+	
+	<data id="39" name="Bureaucrat" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="7" rarity="B" quality="1" life="1" tab="power" assetPath="img/cards/512x512/%platform%/bureaucrat.atf">
+		<cardText fieldName="mcLine2" text="On turn / feed:" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine3" text="Foe loses 1 resource" highlightContexts="feed, magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="I assume you have a signed permit to move an army through the West gates?" source="-Magistrate Veccio"/>
+		<ambientSound tags="loseResource:.4"/>
+	</data>
+	<data id="40" inherits="39" cost="6" quality="2"/>
+	<data id="41" inherits="39" cost="5" quality="3"/>
+	
+	<data id="42" name="Courtly Intrigue" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="6" rarity="A" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/courtlyintrigue.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 £" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The whispers of idle rumors stoke the flames of funeral pyres." source="-Old Proverb"/>
+		<ambientSound tags="secrets:.3"/>
+	</data>
+	<data id="43" inherits="42" cost="5" quality="2"/>
+	<data id="44" inherits="42" cost="4" quality="3"/>
+	
+	<data id="45" name="Collect Taxes" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="6" rarity="A" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/collecttaxes.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Those who cannot pay in coin, cloth, or salt will pay in blood, bruises, and broken bones." source="-Constable Uberti"/>
+		<ambientSound tags="economy:.3"/>
+	</data>
+	<data id="46" inherits="45" cost="5" quality="2"/>
+	<data id="47" inherits="45" cost="4" quality="3"/>
+	
+	<data id="48" name="Wealthy Patron" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="6" rarity="A" quality="1" life="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/wealthyPatron.atf">
+		<cardText fieldName="mcLine2" text="On turn: +2 ¤"/>
+		<cardText fieldName="mcLine3" text="On feed: +1 ¤" highlightContexts="feed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Though many others wage their wars with armies, mine are waged with gold." source="-Baronessa Vittoria"/>
+		<ambientSound tags="economy:.3"/>
+	</data>
+	<data id="49" inherits="48" cost="5" quality="2"/>
+	<data id="50" inherits="48" cost="4" quality="3"/>
+	
+	<data id="51" name="Vintner" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="6" rarity="A" quality="1" life="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/vintner.atf">
+		<cardText fieldName="mcLine2" text="On turn: +2 ¥"/>
+		<cardText fieldName="mcLine3" text="Feed 2¤: +1 ¥" highlightContexts="goldFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Though the armies will march many miles on beef and bread, wine keeps them from feeling their feet!" source="Vintner Vinchenzo"/>
+		<ambientSound tags="supply:.3"/>
+	</data>
+	<data id="52" inherits="51" cost="5" quality="2"/>
+	<data id="53" inherits="51" cost="4" quality="3"/>
+	
+	<data id="54" name="Embargo" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="6" rarity="A" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/embargo.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Foe loses 1 resource" highlightContexts="play,buy,magicBuy"/>
+		<quote text="No merchant will accept your gold. No ports will harbor your ships. When your people rise against you, you will curse my name to the heavens and the heavens will side with me." source="-Captain Listrata"/>
+		<ambientSound tags="loseResource:.3"/>
+	</data>
+	<data id="55" inherits="54" cost="5" quality="2"/>
+	<data id="56" inherits="54" cost="4" quality="3"/>
+	
+	<data id="57" name="Captain Listrata" faction="vespitole" textLayout="twoLines" borderFrame="green" life="20" hero="true" rarity="B" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="1" assetPath="img/cards/512x512/%platform%/captainviatrix.atf">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¥"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.1"/>
+	</data>
+	
+	<data id="58" name="Cardinal Pocchi" faction="vespitole" textLayout="twoLines" borderFrame="green" life="20" hero="true" rarity="D" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="2" assetPath="img/cards/512x512/%platform%/cardinalpocci.atf">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¤"/>
+		<quote text="" source=""/>
+		<ambientSound tags="economy:.1"/>
+	</data>
+	
+	<data id="59" name="Liet" faction="daramek" textLayout="threeLines" life="20" borderFrame="red" hero="true" rarity="B" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="5" assetPath="img/cards/512x512/%platform%/liet.atf">
+		<cardText fieldName="mcLine2" text="For each card you play,"/>
+		<cardText fieldName="mcLine3" text="15% chance:"/>
+		<cardText fieldName="mcLine4" text="+1 random resource"/>
+		<quote text="" source=""/>
+		<ambientSound tags="resource:.1,ritual:.1"/>
+	</data>
+	
+	<data id="60" name="Esra" faction="daramek" textLayout="twoLines" borderFrame="red" life="20" hero="true" rarity="C" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="4" assetPath="img/cards/512x512/%platform%/ezra.atf">
+		<cardText fieldName="mcLine3" text="When drawing your hand:"/>
+		<cardText fieldName="mcLine4" text="One drawn card is an ally"/>
+		<quote text="" source=""/>
+		<ambientSound tags="slave:.1,rat:.1,goat:.1,pig:.1,ox:.1"/>
+	</data>
+	
+	<data id="61" name="Mogesh" faction="daramek" textLayout="threeLines" borderFrame="red" life="20" hero="true" rarity="D" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="6" assetPath="img/cards/512x512/%platform%/mogesh.atf">
+		<cardText fieldName="mcLine2" text="Feed Mogesh ¢:" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine3" text="Sacrifice strongest ally:" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Attack for victim's life" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="sacrifice:.1,combat:.1"/>
+	</data>
+	
+	<data id="62" name="Rat Ointment" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="C" quality="1" tab="herd" assetPath="img/cards/512x512/%platform%/ratointment.atf">
+		<cardText fieldName="mcLine2" text="Restock Herd of Rats" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Sacrifice a Herd of Rats:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Gain a War Rat" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Gather the coarse, waxy hairs from adult males. The more the better. Soak them in an open basket with water and finch weed. They will swell and yellow until a jelly forms that must be collected with the shell of a hess beetle." source="-Esra"/>
+		<ambientSound tags="rat:.7,resource:.4"/>
+	</data>
+	<data id="63" inherits="62" cost="3" quality="2"/>
+	<data id="64" inherits="62" cost="2" quality="3"/>
+	
+	<data id="65" name="Ritual Slaughter" faction="daramek" textLayout="threeLines" borderFrame="red" cost="2" rarity="A" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/ritualslaughter.atf">
+		<cardText fieldName="mcLine2" text="Pick an ally to sacrifice" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Gain random resources" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="equal to victim's life +1" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="sacrifice:.4,ritual:.4"/>
+	</data>
+	<data id="66" inherits="65" cost="1" quality="2"/>
+	<data id="67" inherits="65" cost="0" quality="3"/>
+	
+	<data id="68" name="War Rat" faction="daramek" textLayout="oneLine" borderFrame="red" cost="5" rarity="B" quality="1" life="2" tab="herd" assetPath="img/cards/512x512/%platform%/warrats.atf">
+		<cardText fieldName="mcLine4" text="On turn: attack x2" />
+		<quote text="" source=""/>
+		<ambientSound tags="rat:.4,warAnimal:.4"/>
+	</data>
+	<data id="69" inherits="68" cost="4" quality="2"/>
+	<data id="70" inherits="68" cost="3" quality="3"/>
+	
+	<data id="71" name="Goat Outrider" faction="daramek" textLayout="twoLines" borderFrame="red" cost="8" rarity="B" quality="1" life="2" tab="herd" assetPath="img/cards/512x512/%platform%/wargoats.atf">
+		<cardText fieldName="mcLine3" text="Intercepts, retaliates" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="Dodge 50% of attacks" highlightContexts="feed,magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="goat:.6,warAnimal:.6"/>
+	</data>
+	<data id="72" inherits="71" cost="7" quality="2"/>
+	<data id="73" inherits="71" cost="6" quality="3"/>
+	
+	<data id="74" name="Herd of Goats" faction="daramek" textLayout="twoLines" borderFrame="red" cost="4" rarity="A" quality="1" life="2" tab="herd" assetPath="img/cards/512x512/%platform%/herdofgoats.atf">
+		<cardText fieldName="mcLine3" text="On turn:"/>
+		<cardText fieldName="mcLine4" text="+1 random resource"/>
+		<quote text="" source=""/>
+		<ambientSound tags="goat:.4"/>
+	</data>
+	<data id="75" inherits="74" cost="3" quality="2"/>
+	<data id="76" inherits="74" cost="2" quality="3"/>
+	
+	<data id="77" name="Shepherd" faction="daramek" textLayout="threeLines" borderFrame="red" cost="9" rarity="D" quality="1" life="2" tab="slaves" chargeFrame="shield" assetPath="img/cards/512x512/%platform%/shepherd.atf">
+		<cardText fieldName="mcLine2" text="Cancel 2 attacks/turn"/>
+		<cardText fieldName="mcLine3" text="On turn, for each herd: " highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 random resource" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="slave:1"/>
+	</data>
+	<data id="78" inherits="77" cost="8" quality="2"/>
+	<data id="79" inherits="77" cost="7" quality="3"/>
+	
+	<data id="80" name="Orphan Gang" faction="daramek" textLayout="twoLines" borderFrame="red" cost="4" rarity="A" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/orphangang.atf">
+		<cardText fieldName="mcLine3" text="On turn / feed / play:" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="Attack weakest" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<quote text="Orphans cover Sitrak like fleas cover aurochs." source="-Mogesh"/>
+		<ambientSound tags="slave:.3,combat:.3"/>
+	</data>
+	<data id="81" inherits="80" cost="3" quality="2"/>
+	<data id="82" inherits="80" cost="2" quality="3"/>
+	
+	<data id="83" name="Rite of Combat" faction="daramek" textLayout="threeLines" borderFrame="red" cost="6" rarity="A" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/riteofcombat.atf">
+		<cardText fieldName="mcLine2" text="Until end of turn:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each card you play," highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Attack" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3,combat:.3"/>
+	</data>
+	<data id="84" inherits="83" cost="5" quality="2"/>
+	<data id="85" inherits="83" cost="4" quality="3"/>
+	
+	<data id="86" name="Gold Panners" faction="daramek" textLayout="twoLines" borderFrame="red" cost="4" rarity="A" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/goldpanner.atf">
+		<cardText fieldName="mcLine3" text="On turn / feed / play:" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<quote text="Slaves do not dream of freedom. When their eyes sadden at the gleam of gold, they are not pining to be free. They want slaves of their own." source="-Mogesh"/>
+		<ambientSound tags="slave:.3,resource:.3"/>
+	</data>
+	<data id="87" inherits="86" cost="3" quality="2"/>
+	<data id="88" inherits="86" cost="2" quality="3"/>
+	
+	<data id="89" name="Herd of Aurochs" faction="daramek" textLayout="threeLines" borderFrame="red" cost="8" rarity="B" quality="1" life="4" tab="herd" assetPath="img/cards/512x512/%platform%/herdofoxen.atf">
+		<cardText fieldName="mcLine2" text="On turn:+2 random resource"/>
+		<cardText fieldName="mcLine3" text="When life reduced to 0"/>
+		<cardText fieldName="mcLine4" text="25% chance: return to hand"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ox:.8"/>
+	</data>
+	<data id="90" inherits="89" cost="7" quality="2"/>
+	<data id="91" inherits="89" cost="6" quality="3"/>
+	
+	<data id="92" name="Rite of Brood" faction="daramek" textLayout="threeLines" borderFrame="red" cost="7" rarity="A" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/riteofbrood.atf">
+		<cardText fieldName="mcLine2" text="Until end of turn:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each card you play," highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 random resource" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3,resource:.3"/>
+	</data>
+	<data id="93" inherits="92" cost="6" quality="2"/>
+	<data id="94" inherits="92" cost="5" quality="3"/>
+	
+	<data id="95" name="Starving Mob" faction="daramek" textLayout="twoLines" borderFrame="red" cost="5" rarity="B" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/starvingmob.atf">
+		<cardText fieldName="mcLine3" text="On turn / feed / play:" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="Foe loses 1 resource" highlightContexts="play,buy,magicBuy,feed,magicFeed"/>
+		<quote text="An empty belly growls louder than any war drum." source="-Mogesh"/>
+		<ambientSound tags="slave:.4"/>
+	</data>
+	<data id="96" inherits="95" cost="4" quality="2"/>
+	<data id="97" inherits="95" cost="3" quality="3"/>
+	
+	<data id="98" name="Feast" faction="daramek" textLayout="twoLines" borderFrame="red" cost="5" rarity="C" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/feast.atf">
+		<cardText fieldName="mcLine3" text="Sacrifice weakest ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Draw 2 allies" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Hark, O lost child! Feast with our flock and you shall never feel hunger again." source="-Liet"/>
+		<ambientSound tags="ritual:.6,sacrifice:.6"/>
+	</data>
+	<data id="99" inherits="98" cost="4" quality="2"/>
+	<data id="100" inherits="98" cost="3" quality="3"/>
+	
+	<data id="101" name="Carnage" faction="daramek" textLayout="threeLines" borderFrame="red" cost="6" rarity="D" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/riteofwar.atf">
+		<cardText fieldName="mcLine2" text="Sacrifice all allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Activate sacrified allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Each ¬ sacrificed: attack" highlightContexts="play,buy,magicBuy"/>
+		<quote text="These cities are the bloated carcasses of a feeble race, and I am the spear ready to burst them." source="-Mogesh"/>
+		<ambientSound tags="ritual:.9,combat:.9"/>
+	</data>
+	<data id="102" inherits="101" cost="5" quality="2"/>
+	<data id="103" inherits="101" cost="4" quality="3"/>
+	
+	<data id="104" name="Bloodlust" faction="daramek" textLayout="twoLines" borderFrame="red" cost="5" rarity="C" quality="1" tab="rituals"  assetPath="img/cards/512x512/%platform%/riteofbattle.atf">
+		<cardText fieldName="mcLine3" text="Pick an enemy:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Attack it until dead" highlightContexts="play,buy,magicBuy"/>
+		<quote text="There is no yoke I cannot shatter, nor chain I cannot snap. Only the mighty are free." source="-Mogesh"/>
+		<ambientSound tags="ritual:.6,combat:.6"/>
+	</data>
+	<data id="105" inherits="104" cost="4" quality="2"/>
+	<data id="106" inherits="104" cost="3" quality="3"/>
+	
+	<data id="107" name="Stampede" faction="daramek" textLayout="oneLine" borderFrame="red" cost="5" rarity="60" quality="1" tab="slaves" assetPath="img/cards/512x512/%platform%/stampede.atf">
+		<cardText fieldName="mcLine4" text="All allies attack" highlightContexts="play,buy,magicBuy"/>
+		<quote text="When I unleash a thousand thundering hooves even the Earth trembles in fear." source="-Esra"/>
+		<ambientSound tags="slave:.6,warAnimal:.6,combat:.6,rat:.2,goat:.2,pig:.2,ox:.2"/>
+	</data>
+	<data id="108" inherits="107" cost="4" quality="2"/>
+	<data id="109" inherits="107" cost="3" quality="3"/>
+	
+	<data id="110" name="Herd of Rats" faction="daramek" textLayout="twoLines" borderFrame="red" cost="2" rarity="A" quality="1" life="1" tab="herd" assetPath="img/cards/512x512/%platform%/herdofrats.atf">
+		<cardText fieldName="mcLine3" text="On turn:"/>
+		<cardText fieldName="mcLine4" text="Foe loses 1 resource"/>
+		<quote text="With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood." source="-Litany of the Shepherd"/>
+		<ambientSound tags="rat:.2"/>
+	</data>
+	<data id="111" inherits="110" cost="1" quality="2"/>
+	<data id="112" inherits="110" cost="0" quality="3"/>
+	
+	<data id="113" name="Cull the Herd" faction="daramek" textLayout="threeLines" borderFrame="red" cost="3" rarity="B" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/culltheherd.atf">
+		<cardText fieldName="mcLine2" text="Sacrifice weakest ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Draw 3 allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Play one, discard other 2" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3,sacrifice:.3"/>
+	</data>
+	<data id="114" inherits="113" cost="2" quality="2"/>
+	<data id="115" inherits="113" cost="1" quality="3"/>
+	
+	<data id="116" name="Scavengers" faction="daramek" textLayout="threeLines" borderFrame="red" cost="5" rarity="A" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/scavengers.atf">
+		<cardText fieldName="mcLine2" text="On turn / play: +1 resource" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="When life reduced to 0"/>
+		<cardText fieldName="mcLine4" text="50% chance: return to hand"/>
+		<quote text="If beetles and maggots can fatten from the fruits of death, so can I." source="-Mogesh"/>
+		<ambientSound tags="slave:.3,resource:.3"/>
+	</data>
+	<data id="117" inherits="116" cost="4" quality="2"/>
+	<data id="118" inherits="116" cost="3" quality="3"/>
+	
+	<data id="119" name="Herd of Boars" faction="daramek" textLayout="threeLines" borderFrame="red" cost="6" rarity="B" quality="1" life="3" tab="herd" assetPath="img/cards/512x512/%platform%/herdofpigs.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack"/>
+		<cardText fieldName="mcLine3" text="When killed:"/>
+		<cardText fieldName="mcLine4" text="+2 random resources"/>
+		<quote text="" source=""/>
+		<ambientSound tags="pig:.6"/>
+	</data>
+	<data id="120" inherits="119" cost="5" quality="2"/>
+	<data id="121" inherits="119" cost="4" quality="3"/>
+	
+	<data id="122" name="Birondelle" faction="metris" textLayout="threeLines" life="20" borderFrame="blue" hero="true" rarity="D" heroTabs="murder,conspiracy,espionage,underlings,coins" heroClipFrame="9" assetPath="img/cards/512x512/%platform%/birondelle.atf">
+		<cardText fieldName="mcLine2" text="When you buy a card,"/>
+		<cardText fieldName="mcLine3" text="15% chance: Restock"/>
+		<cardText fieldName="mcLine4" text="bank from foe's deck"/>
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.1"/>
+	</data>
+	
+	<data id="123" name="Consolidate" faction="metris" textLayout="threeLines" borderFrame="blue" cost="3" rarity="B" quality="1" tab="conspiracy" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/consolidate.atf">
+		<cardText fieldName="mcLine2" text="On turn: Heal hero / allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="50%: save destroyed ally" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="We live invisibly amongst them, an empire hidden within all other lands. Allied under Metris, we are invincible." source="-Valdorian"/>
+		<ambientSound tags="conspire:.5"/>
+	</data>
+	<data id="124" inherits="123" cost="2" quality="2"/>
+	<data id="125" inherits="123" cost="1" quality="3"/>
+	
+	<data id="126" name="Waylay" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="A" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/waylay.atf">
+		<cardText fieldName="mcLine2" text="Attack weakest x3" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Ignores intercept" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Do not be afraid, you are fortunate to be chosen by me. The lives we take live forever in our stories." source="-Birondelle"/>
+		<ambientSound tags="attack:.5"/>
+	</data>
+	<data id="127" inherits="126" cost="3" quality="2"/>
+	<data id="128" inherits="126" cost="2" quality="3"/>
+	
+	<data id="129" name="Surveillance" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="A" quality="1" tab="espionage" chargeFrame="skull" assetPath="img/cards/512x512/%platform%/surveil.atf">
+		<cardText fieldName="mcLine2" text="For 3 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="+1 £" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="spy:.5"/>
+	</data>
+	<data id="130" inherits="129" cost="3" quality="2"/>
+	<data id="131" inherits="129" cost="2" quality="3"/>
+	
+	<data id="132" name="Arson" faction="metris" textLayout="threeLines" borderFrame="blue" cost="7" rarity="C" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/arson.atf">
+		<cardText fieldName="mcLine2" text="Foe loses 7 resources" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack for 7 minus each lost" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="It took years to build what I can destroy in minutes." source="-Theodox"/>
+		<ambientSound tags="sabotage:.8"/>
+	</data>
+	<data id="133" inherits="132" cost="6" quality="2"/>
+	<data id="134" inherits="132" cost="5" quality="3"/>
+	
+	<data id="135" name="Burglary" faction="metris" textLayout="threeLines" borderFrame="blue" cost="7" rarity="D" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/burglary.atf">
+		<cardText fieldName="mcLine2" text="Steal the cheapest card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="from your foe's bank" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The theft of the Holy writs was a heinous violation, both of the spirit and the holy coffers." source="-Abbot Mancuso"/>
+		<ambientSound tags="steal:.8"/>
+	</data>
+	<data id="136" inherits="135" cost="6" quality="2"/>
+	<data id="137" inherits="135" cost="5" quality="3"/>
+	
+	<data id="138" name="Forgery" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="C" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/forgery.atf">
+		<cardText fieldName="mcLine2" text="Next card foe buys:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Gain a copy" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Few can recognize an illegitimate seal. They are too enamored with the honor of written orders from above to hold them to any scrutiny." source="-Birondelle"/>
+		<ambientSound tags="trick:.7"/>
+	</data>
+	<data id="139" inherits="138" cost="3" quality="2"/>
+	<data id="140" inherits="138" cost="2" quality="3"/>
+	
+	<data id="141" name="Infighting" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="A" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/infighting.atf">
+		<cardText fieldName="mcLine2" text="Enemies attack each other" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="No enemies: restock bank" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.4,trick:.4"/>
+	</data>
+	<data id="142" inherits="141" cost="3" quality="2"/>
+	<data id="143" inherits="141" cost="2" quality="3"/>
+	
+	<data id="144" name="Theodox" faction="metris" textLayout="threeLines" borderFrame="blue" life="20" hero="true" rarity="C" heroTabs="murder,conspiracy,espionage,underlings,coins" heroClipFrame="7" assetPath="img/cards/512x512/%platform%/theodox.atf">
+		<cardText fieldName="mcLine2" text="20% chance:"/>
+		<cardText fieldName="mcLine3" text="Prevent destruction of"/>
+		<cardText fieldName="mcLine4" text="a card you control"/>
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.1"/>
+	</data>
+	
+	<data id="145" name="Valdorian" faction="metris" textLayout="threeLines" borderFrame="blue" life="20" hero="true" rarity="B" heroTabs="murder,conspiracy,espionage,underlings,coins" heroClipFrame="8" assetPath="img/cards/512x512/%platform%/valdorian.atf">
+		<cardText fieldName="mcLine2" text="Each turn, 35% chance:"/>
+		<cardText fieldName="mcLine3" text="Draw a card from foe"/>
+		<cardText fieldName="mcLine4" text="Play foe's coin, 35%: +1¤"/>
+		<quote text="" source=""/>
+		<ambientSound tags="conspire:.1"/>
+	</data>
+	
+	<data id="146" name="Curry Favor" faction="metris" textLayout="twoLines" borderFrame="blue" cost="2" rarity="A" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/curryfavors.atf">
+		<cardText fieldName="mcLine3" text="+3 ¥" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="conspire:.3"/>
+	</data>
+	<data id="147" inherits="146" cost="1" quality="2"/>
+	<data id="148" inherits="146" cost="0" quality="3"/>
+	
+	<data id="149" name="Subterfuge" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" rarity="B" quality="1" tab="conspiracy" chargeFrame="charger" assetPath="img/cards/512x512/%platform%/subterfuge.atf">
+		<cardText fieldName="mcLine2" text="For 6 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Draw a card from foe" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.7"/>
+	</data>
+	<data id="150" inherits="149" cost="5" quality="2"/>
+	<data id="151" inherits="149" cost="4" quality="3"/>
+	
+	<data id="152" name="Seduce" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="C" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/seduce.atf">
+		<cardText fieldName="mcLine2" text="Control a random enemy" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="If no enemies: +2 £" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Some men's hearts are like a lock to pick, but most simply hand you the key." source="-Madam Pasqualina"/>
+		<ambientSound tags="trick:.5,conspire:.3"/>
+	</data>
+	<data id="153" inherits="152" cost="3" quality="2"/>
+	<data id="154" inherits="152" cost="2" quality="3"/>
+	
+	<data id="155" name="Infiltrate" faction="metris" textLayout="twoLines" borderFrame="blue" cost="10" rarity="D" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/infiltrate.atf">
+		<cardText fieldName="mcLine3" text="Each turn:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Draw a card from foe" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="trick:1"/>
+	</data>
+	<data id="156" inherits="155" cost="9" quality="2"/>
+	<data id="157" inherits="155" cost="8" quality="3"/>
+	
+	<data id="158" name="Mayhem" faction="metris" textLayout="threeLines" borderFrame="blue" cost="5" rarity="144" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/mayhem.atf">
+		<cardText fieldName="mcLine2" text="Discard everyone's allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Or if no enemies: 4x attack" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="There is only one outcome for a world where everyone gets what they want; self annihilation." source="-Theodox"/>
+		<ambientSound tags="attack:.5,sabotage:.5"/>
+	</data>
+	<data id="159" inherits="158" cost="4" quality="2"/>
+	<data id="160" inherits="158" cost="3" quality="3"/>
+	
+	<data id="161" name="Stratagem" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" rarity="145" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/stratagem.atf">
+		<cardText fieldName="mcLine2" text="Take an extra turn" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Max 2 consecutive turns" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A good conspiracy is so convoluted that any description of its design will be unbelievable. Reason, our most cherished virtue, is also our greatest disguise." source="-Valdorian"/>
+		<ambientSound tags="conspire:.7"/>
+	</data>
+	<data id="162" inherits="161" cost="5" quality="2"/>
+	<data id="163" inherits="161" cost="4" quality="3"/>
+	
+	<data id="164" name="Misdirect" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="A" quality="1" tab="conspiracy" chargeFrame="shield" assetPath="img/cards/512x512/%platform%/misdirect.atf">
+		<cardText fieldName="mcLine2" text="Intercept 2 attacks" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Redirect attack to foe" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.4"/>
+	</data>
+	<data id="165" inherits="164" cost="3" quality="2"/>
+	<data id="166" inherits="164" cost="2" quality="3"/>
+	
+	<data id="167" name="Frame" faction="metris" textLayout="threeLines" borderFrame="blue" cost="8" rarity="C" quality="1" tab="conspiracy" chargeFrame="shield" assetPath="img/cards/512x512/%platform%/frame.atf">
+		<cardText fieldName="mcLine2" text="Intercept 5 attacks" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Redirect attack to foe" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="When a man cries his innocence the angry mob only hears his confession." source="-Theodox"/>
+		<ambientSound tags="trick:.8"/>
+	</data>
+	<data id="168" inherits="167" cost="7" quality="2"/>
+	<data id="169" inherits="167" cost="6" quality="3"/>
+	
+	<data id="170" name="Ambush" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="A" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/ambush.atf">
+		<cardText fieldName="mcLine2" text="Attack foe's hero x3" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Ignores intercept" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.3"/>
+	</data>
+	<data id="171" inherits="170" cost="3" quality="2"/>
+	<data id="172" inherits="170" cost="2" quality="3"/>
+	
+	<data id="173" name="Robbery" faction="metris" textLayout="twoLines" borderFrame="blue" cost="3" rarity="A" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/robbery.atf">
+		<cardText fieldName="mcLine3" text="Steal 2 resources" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="steal:.5"/>
+	</data>
+	<data id="174" inherits="173" cost="2" quality="2"/>
+	<data id="175" inherits="173" cost="1" quality="3"/>
+	
+	<data id="176" name="Sabotage" faction="metris" textLayout="threeLines" borderFrame="blue" cost="2" rarity="A" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/sabotage.atf">
+		<cardText fieldName="mcLine2" text="Attack" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Foe loses 2 resources" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A proud stone tower may be laid to ruin by an army of toiling laborers, or it can be toppled by a single cunning blow to its weakest stone." source="-Valdorian"/>
+		<ambientSound tags="sabotage:.2"/>
+	</data>
+	<data id="177" inherits="176" cost="1" quality="2"/>
+	<data id="178" inherits="176" cost="0" quality="3"/>
+	
+	<data id="179" name="Embezzle" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="B" quality="1" tab="espionage" chargeFrame="charger" assetPath="img/cards/512x512/%platform%/embezzlement.atf">
+		<cardText fieldName="mcLine2" text="For 4 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Steal 1 random resource" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The shrewd lord checks to see that the numbers add up.  The wise lord checks to see that the numbers are the real numbers." source="-An old adage"/>
+		<ambientSound tags="trick:.4,steal:.1"/>
+	</data>
+	<data id="180" inherits="179" cost="3" quality="2"/>
+	<data id="181" inherits="179" cost="2" quality="3"/>
+	
+	<data id="182" name="Hemlock" faction="metris" textLayout="threeLines" borderFrame="blue" cost="9" rarity="C" quality="1" tab="murder" chargeFrame="skull" assetPath="img/cards/512x512/%platform%/hemlock.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack hero x2" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Ignores intercept" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="His quivering hand held the chalice, and he asked, somewhat absentmindedly, why his fingers tingled so?" source="-Valdorian"/>
+		<ambientSound tags="poison:.6"/>
+	</data>
+	<data id="183" inherits="182" cost="8" quality="2"/>
+	<data id="184" inherits="182" cost="7" quality="3"/>
+	
+	<data id="185" name="Satchel Bomb" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" rarity="B" quality="1" tab="murder" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/satchelbomb.atf">
+		<cardText fieldName="mcLine2" text="In 2 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack x6" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source="-Theodox"/>
+		<ambientSound tags="bomb:.3"/>
+	</data>
+	<data id="186" inherits="185" cost="5" quality="2"/>
+	<data id="187" inherits="185" cost="4" quality="3"/>
+	
+	<data id="188" name="Barrel Bomb" faction="metris" textLayout="threeLines" borderFrame="blue" cost="10" rarity="C" quality="1" tab="murder" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/barrelbomb.atf">
+		<cardText fieldName="mcLine2" text="In 3 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack x11" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="bomb:.6"/>
+	</data>
+	<data id="189" inherits="188" cost="9" quality="2"/>
+	<data id="190" inherits="188" cost="8" quality="3"/>
+	
+	<data id="191" name="Wagon Bomb" faction="metris" textLayout="threeLines" borderFrame="blue" cost="14" rarity="D" quality="1" tab="murder" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/wagonbomb.atf">
+		<cardText fieldName="mcLine2" text="In 3 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack x16" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Sacrificing dozens, hundreds or thousands of lives to save the rest of humanity is not only justified, but the only sane choice." source="-Birondelle"/>
+		<ambientSound tags="bomb:1"/>
+	</data>
+	<data id="192" inherits="191" cost="13" quality="2"/>
+	<data id="193" inherits="191" cost="12" quality="3"/>
+	
+	<data id="194" name="Goat Poultice" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="C" quality="1" tab="herd" assetPath="img/cards/512x512/%platform%/goatpoultice.atf">
+		<cardText fieldName="mcLine2" text="Restock Herd of Goats" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Draw Herd of Goats" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Activate all goats" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Soothe the animal until it willingly gives you its cud, which must be immediately put into the still-warm milk from its own mother. Mix it with a dying man's dung until it becomes a thick, sticky paste." source="-Esra"/>
+		<ambientSound tags="goat:.7,resource:.4"/>
+	</data>
+	<data id="195" inherits="194" cost="3" quality="2"/>
+	<data id="196" inherits="194" cost="2" quality="3"/>
+	
+	<data id="197" name="Boar Unguent" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="D" quality="1" tab="herd" assetPath="img/cards/512x512/%platform%/pigunguent.atf">		
+		<cardText fieldName="mcLine2" text="Restock Herd of Boars" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Activate all boars" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Feed hero ¢" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Find a pregnant sow. Have a dozen men scream at her until she is forced into early birth. Ferment each suckling in separate leather sacks, inscribed with the symbols 'haf,' 'lem,' 'peth,' and 'kos.'" source="-Esra"/>
+		<ambientSound tags="pig:.7,resource:.4"/>
+	</data>
+	<data id="198" inherits="197" cost="3" quality="2"/>
+	<data id="199" inherits="197" cost="2" quality="3"/>
+	
+	<data id="200" name="Aurochs Elixir" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="D" quality="1" tab="herd" assetPath="img/cards/512x512/%platform%/oxelixir.atf">
+		<cardText fieldName="mcLine2" text="Restock Herd of Aurochs" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Fully heal all allies" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Activate all aurochs" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Exhume the corpse of a drowned calf from a fetid pond. Remove the clotted blood and mix with bile, and place into pots heated by the noon sun. Ferment for six days, and strain the liquor through a blind child's hair." source="-Esra"/>
+		<ambientSound tags="ox:.7,resource:.4"/>
+	</data>
+	<data id="201" inherits="200" cost="3" quality="2"/>
+	<data id="202" inherits="200" cost="2" quality="3"/>
+	
+	<data id="203" name="Sibylline Scrolls" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="6" rarity="C" tab="faith" quality="1" assetPath="img/cards/512x512/%platform%/sibyllinescrolls.atf">
+		<cardText fieldName="mcLine2" text="Draw 3 cards" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Play one;" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="discard the others" highlightContexts="play,buy,magicBuy"/>
+		<quote text="There are no new ideas. Everything has already been recorded by historians or predicted by sibyls." source="-Mantessaro Bibliothecarius"/>
+		<ambientSound tags="faith:.4"/>
+	</data>
+	<data id="204" inherits="203" cost="5" quality="2"/>
+	<data id="205" inherits="203" cost="4" quality="3"/>
+	
+	<data id="206" name="Fief" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="9" rarity="B" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/fief.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+2 ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="By Penderach's decree, all profits pulled from the soil from the White Hill to the River Wren must pass through my fingers first." source="-Prince Vico"/>
+		<ambientSound tags="economy:.7"/>
+	</data>
+	<data id="207" inherits="206" cost="8" quality="2"/>
+	<data id="208" inherits="206" cost="7" quality="3"/>
+	
+	<data id="209" name="Trade Company" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="9" rarity="B" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/tradecompany.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+2 ¥" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A city suckles at the ports for milk, and those that control the ships drink only cream." source="-Captain Listrata"/>
+		<ambientSound tags="supply:.7"/>
+	</data>
+	<data id="210" inherits="209" cost="8" quality="2"/>
+	<data id="211" inherits="209" cost="7" quality="3"/>
+	
+	<data id="212" name="Masquerade Ball" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="9" rarity="B" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/masqueradeball.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+2 £" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="secrets:.7"/>
+	</data>
+	<data id="213" inherits="212" cost="8" quality="2"/>
+	<data id="214" inherits="212" cost="7" quality="3"/>
+	
+	<data id="215" name="Devotion" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="10" rarity="C" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/devotion.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+2 ¢" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Storms never sink their ships. Their enemies fall mysteriously ill. Every day, fortune graces them with opportunities that others may see once in their lives. For reasons I cannot fathom, God listens to House Vespitole." source="-Cardinal Sutto"/>
+		<ambientSound tags="faith:.7"/>
+	</data>
+	<data id="216" inherits="215" cost="9" quality="2"/>
+	<data id="217" inherits="215" cost="8" quality="3"/>
+	
+	<data id="218" name="Benediction" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="11" rarity="C" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/benediction.atf">	
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Activate all allies" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The divine word can encourage even the mouse to rise against the wolf." source="-Abbot Capraretto "/>
+		<ambientSound tags="supply:.6,faith:.7"/>
+	</data>
+	<data id="219" inherits="218" cost="10" quality="2"/>
+	<data id="220" inherits="218" cost="9" quality="3"/>
+	
+	<data id="221" name="Malediction" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="11" rarity="C" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/malediction.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="For each enemy: attack" highlightContexts="play,buy,magicBuy"/>
+		<quote text="It's not witchcraft when God does it." source="-Cardinal Pocchi"/>
+		<ambientSound tags="military:.3,faith:.8"/>
+	</data>
+	<data id="222" inherits="221" cost="10" quality="2"/>
+	<data id="223" inherits="221" cost="9" quality="3"/>
+	
+	<data id="224" name="Colossal Aurochs" faction="daramek" textLayout="threeLines" borderFrame="red" cost="13" rarity="C" quality="1" tab="herd" life="5" assetPath="img/cards/512x512/%platform%/waroxen.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack x5"/>
+		<cardText fieldName="mcLine3" text="When life reduced to 0"/>
+		<cardText fieldName="mcLine4" text="50% chance: return to hand"/>
+		<quote text="Graze not on grass this day, for your horns will rake the sky, and your rumen will boil with blood!" source="-Mogesh"/>
+		<ambientSound tags="ox:1,warAnimal:1"/>
+	</data>
+	<data id="225" inherits="224" cost="12" quality="2"/>
+	<data id="226" inherits="224" cost="11" quality="3"/>
+	
+	<data id="227" name="Serf" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="4" rarity="A" quality="1" tab="prosperity" life="1" assetPath="img/cards/512x512/%platform%/serf.atf">
+		<cardText fieldName="mcLine3" text="Intercepts"/>
+		<cardText fieldName="mcLine4" text="On play: Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The serf knows two things: to work the fields, and to obey." source="-Sofocatro"/>
+		<ambientSound tags="supply:.2"/>
+	</data>
+	<data id="228" inherits="227" cost="3" quality="2"/>
+	<data id="229" inherits="227" cost="2" quality="3"/>
+	
+	<data id="230" name="Knight" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="12" rarity="D" quality="1" tab="war" life="4" assetPath="img/cards/512x512/%platform%/knight.atf">
+		<cardText fieldName="mcLine2" text="Intercepts, retaliates"/>
+		<cardText fieldName="mcLine3" text="On turn / feed: attack" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="I have spent more time in armor than most have spent awake. My skin is metal, my legs: a horse, and my arm a vengeful sword, honed on bones of weaker men." source="-Sir Mathias"/>
+		<ambientSound tags="military:1"/>
+	</data>
+	<data id="231" inherits="230" cost="11" quality="2"/>
+	<data id="232" inherits="230" cost="10" quality="3"/>
+	
+	<data id="233" name="Bishop" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="10" rarity="D" quality="1" tab="faith" life="3" assetPath="img/cards/512x512/%platform%/bishop.atf">
+		<cardText fieldName="mcLine2" text="On turn:"/>
+		<cardText fieldName="mcLine3" text="+1 each: ¢ £ ¤ ¥"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Your family has done much for his church, I believe God owes you a favor." source="-Bishop Berto"/>
+		<ambientSound tags="faith:1,supply:.1,secret:.1,economy:.1"/>
+	</data>
+	<data id="234" inherits="233" cost="9" quality="2"/>
+	<data id="235" inherits="233" cost="8" quality="3"/>
+	
+	<data id="236" name="Synod" faction="vespitole" textLayout="threeLines" borderFrame="green" chargeFrame="timer" cost="7" rarity="C" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/synod.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For 3 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Restock your bank" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The Cardinals gather around the Penderach's corpse staging elaborate rituals to trick each other into believing the Penderach somehow approves of their agenda." source="Gostino, Camerlengo"/>
+		<ambientSound tags="faith:.25"/>
+	</data>
+	<data id="237" inherits="236" cost="6" quality="2"/>
+	<data id="238" inherits="236" cost="5" quality="3"/>
+	
+	<data id="239" name="Tithe" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="10" rarity="58" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/tithe.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Of course all are beloved, both pauper and lord. Holy favor simply gazes more fondly upon gold, just as a flower follows the sun." source="-Cardinal Nicchi"/>
+		<ambientSound tags="faith:.4,economy:.7"/>
+	</data>
+	<data id="240" inherits="239" cost="9" quality="2"/>
+	<data id="241" inherits="239" cost="8" quality="3"/>
+	
+	<data id="242" name="Liturgy" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="11" rarity="D" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/liturgy.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¢" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Let them deafen the Pendrach with misguided praise. Their feeble minds cannot fathom the power they give me." source="-Cardinal Pocchi"/>
+		<ambientSound tags="faith:.8"/>
+	</data>
+	<data id="243" inherits="242" cost="10" quality="2"/>
+	<data id="244" inherits="242" cost="9" quality="3"/>
+	
+	<data id="245" name="Dire Boar" faction="daramek" textLayout="threeLines" borderFrame="red" cost="10" rarity="C" quality="1" life="5" tab="herd" assetPath="img/cards/512x512/%platform%/warpigs.atf">
+		<cardText fieldName="mcLine2" text="On turn / feed:" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine3" text="Attack x3" highlightContexts="feed,magicFeed"/>
+		<cardText fieldName="mcLine4" text="Sacrifice weakest ally" highlightContexts="feed,magicFeed"/>
+		<quote text="Churn the earth into a red wallow. Rend the world asunder with frenzied hoof, and tearing tusk!" source="-Liet"/>
+		<ambientSound tags="pig:.8,warAnimal:.8"/>
+	</data>
+	<data id="246" inherits="245" cost="9" quality="2"/>
+	<data id="247" inherits="245" cost="8" quality="3"/>
+	
+	<data id="248" name="Repopulate" faction="daramek" textLayout="twoLines" borderFrame="red" cost="7" rarity="D" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/repopulate.atf">
+		<cardText fieldName="mcLine3" text="Sacrifice weakest ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Draw 3 allies" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The valley is ever-fertile. The herds roam thick, on four legs and on two." source="-Liet"/>
+		<ambientSound tags="ritual:.9,sacrifice:.9"/>
+	</data>
+	<data id="249" inherits="248" cost="6" quality="2"/>
+	<data id="250" inherits="248" cost="5" quality="3"/>
+	
+	<data id="251" name="Rite of Passage" faction="daramek" textLayout="threeLines" borderFrame="red" cost="10" rarity="C" quality="1" tab="rituals" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/riteofkin.atf">
+		<cardText fieldName="mcLine2" text="Until end of turn:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each card you play," highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Feed hero ¢" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.6,resource:.6"/>
+	</data>
+	<data id="252" inherits="251" cost="9" quality="2"/>
+	<data id="253" inherits="251" cost="8" quality="3"/>
+	
+	<data id="254" name="Ceremonial Dance" faction="daramek" textLayout="threeLines" borderFrame="red" cost="8" rarity="D" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/riteofclan.atf">
+		<cardText fieldName="mcLine2" text="Next card you buy:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Gain a copy" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Can't copy itself" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.9,resource:.9"/>
+	</data>
+	<data id="255" inherits="254" cost="7" quality="2"/>
+	<data id="256" inherits="254" cost="6" quality="3"/>
+	
+	<data id="257" name="Lepers" faction="daramek" textLayout="oneLine" borderFrame="red" cost="4" rarity="A" quality="1" life="3" tab="slaves" assetPath="img/cards/512x512/%platform%/lepers.atf">
+		<cardText fieldName="mcLine4" text="If attacked: retaliate" highlightContexts="attack,magicAttack"/>
+		<quote text="Let the weeping sores of the lepers quench their thirst for war!" source="-Mogesh"/>
+		<ambientSound tags="slave:.3,combat:.1"/>
+	</data>
+	<data id="258" inherits="257" cost="3" quality="2"/>
+	<data id="259" inherits="257" cost="2" quality="3"/>
+	
+	<data id="260" name="Impersonate" faction="metris" textLayout="threeLines" borderFrame="blue" cost="2" rarity="B" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/impersonate.atf">
+		<cardText fieldName="mcLine2" text="Draw a random card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="from foe's hand" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="If we are ever discovered, do you think they will thank us for the countless villainies we have perpetrated on their supposed behalf?" source="-Birondelle"/>
+		<ambientSound tags="trick:.4,steal:.1"/>
+	</data>
+	<data id="261" inherits="260" cost="1" quality="2"/>
+	<data id="262" inherits="260" cost="0" quality="3"/>
+	
+	<data id="263" name="Rat Catcher" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="B" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/ratcatcher.atf">
+		<cardText fieldName="mcLine3" text="On turn / play: draw ally," highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="except Rat Catchers" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Big rats, small rats, rats with horns, rats with no legs. Fighting rats, talking rats, they all fit in my cage." source="-Unknown"/>
+		<ambientSound tags="slave:.5"/>
+	</data>
+	<data id="264" inherits="263" cost="5" quality="2"/>
+	<data id="265" inherits="263" cost="4" quality="3"/>
+	
+	<data id="266" name="Ransack" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" rarity="C" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/ransack.atf">
+		<cardText fieldName="mcLine2" text="Draw 3 cards from foe" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Steal one, if coin: +6 ¤" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Possessions are fickle friends." source="-Theodox"/>
+		<ambientSound tags="steal:.7"/>
+	</data>
+	<data id="267" inherits="266" cost="5" quality="2"/>
+	<data id="268" inherits="266" cost="4" quality="3"/>
+	
+	<data id="269" name="Belladonna" faction="metris" textLayout="threeLines" borderFrame="blue" cost="5" rarity="B" quality="1" tab="murder" chargeFrame="skull" assetPath="img/cards/512x512/%platform%/belladonna.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack hero" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Ignores intercept" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Berries black as darkest night, fall to sleep without a fight." source="-Nursery Rhyme"/>
+		<ambientSound tags="poison:.3"/>
+	</data>
+	<data id="270" inherits="269" cost="4" quality="2"/>
+	<data id="271" inherits="269" cost="3" quality="3"/>
+	
+	<data id="272" name="Arsenic" faction="metris" textLayout="threeLines" borderFrame="blue" cost="12" rarity="D" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/arsenic.atf">
+		<cardText fieldName="mcLine2" text="On turn, for each poison" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack hero" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Ignores intercept" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Each day he grows weaker, like an untended fire slowly burning to cold ash." source="-Royal Apothecary"/>
+		<ambientSound tags="poison:1"/>
+	</data>
+	<data id="273" inherits="272" cost="11" quality="2"/>
+	<data id="274" inherits="272" cost="10" quality="3"/>
+	
+	<data id="275" name="Misinformation" faction="metris" textLayout="threeLines" borderFrame="blue" cost="5" rarity="D" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/misinformation.atf">
+		<cardText fieldName="mcLine2" text="Pick a card in foe's bank" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Remove entirely from bank" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy / remove after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A fool will always trust news he wants to hear." source="-Birondelle"/>
+		<ambientSound tags="trick:.5"/>
+	</data>
+	<data id="276" inherits="275" cost="4" quality="2"/>
+	<data id="277" inherits="275" cost="3" quality="3"/>
+	
+	<data id="278" name="Stolen Plans" faction="metris" textLayout="twoLines" borderFrame="blue" cost="4" rarity="122" quality="1" tab="espionage" assetPath="img/cards/512x512/%platform%/stolenplans.atf">
+		<cardText fieldName="mcLine3" text="Buy from foe's bank" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="When your enemy has a good idea, use it." source="-Theodox"/>
+		<ambientSound tags="trick:.3,steal:.3"/>
+	</data>
+	<data id="279" inherits="278" cost="3" quality="2"/>
+	<data id="280" inherits="278" cost="2" quality="3"/>
+	
+	<data id="281" name="Ferryman's Toll" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/ferrymanstoll.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 £" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="282" name="Fool's Geld" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/foolsgeld.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Foe loses 1 resource" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="283" name="Bantling Crown" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/bantlingcrown.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="22% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Attack weakest" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="284" name="Wishing Coin" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/wishingcoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="18% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 ¢" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="285" name="Cross and Pile" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/crossandpile.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 random resource" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="286" name="Serpent's Seal" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/serpentsseal.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="24% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Feed hero ¢" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+
+	<data id="287" name="Obol Cornucopia" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/obolcornucopia.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 ¥" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="288" name="Diviner Charms" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/divinercharms.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="12% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Draw a card" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="289" name="Vicar Doubloon" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/vicardoubloon.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+
+	<data id="290" name="Swindler's Mark" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/swindlersmark.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="12% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Steal 1 resource" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="294" name="Undermine" faction="metris" textLayout="threeLines" borderFrame="blue" cost="2" rarity="B" quality="1" tab="conspiracy" chargeFrame="charger" assetPath="img/cards/512x512/%platform%/undermine.atf">
+		<cardText fieldName="mcLine2" text="For 2 turns:" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="Foe draws 1 fewer cards" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play"/>
+		<quote text="You don't need to tell a servant that authority is a lie. You give them the means to resist it." source="-Theodox"/>
+		<ambientSound tags="trick:.3,sabotage:.3"/>
+	</data>
+	<data id="295" inherits="294" cost="1" quality="2"/>
+	<data id="296" inherits="294" cost="0" quality="3"/>
+	
+	<data id="297" name="Tribute" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="12" rarity="D" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/tribute.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 each: ¢ £ ¤ ¥" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The secret to wealth is to loan more gold than you have, and threaten more war than you can make." source="-Captain Listrata"/>
+		<ambientSound tags="faith:.4,secret:.4,supply:.4,economy:.4"/>
+	</data>
+	<data id="298" inherits="297" cost="11" quality="2"/>
+	<data id="299" inherits="297" cost="10" quality="3"/>
+	
+	<data id="300" name="Marshal" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="8" rarity="B" quality="1" life="1" tab="war" assetPath="img/cards/512x512/%platform%/marshall.atf">
+		<cardText fieldName="mcLine2" text="On turn:"/>
+		<cardText fieldName="mcLine3" text="Activate all allies"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Any coward can hold a spear and stand on the line.  It takes a Marshal to make that coward march to his own death through fire and pain with grim determination." source="-Marshal Radnor"/>
+		<ambientSound tags="military:.5,supply:.3"/>
+	</data>
+	<data id="301" inherits="300" cost="7" quality="2"/>
+	<data id="302" inherits="300" cost="6" quality="3"/>
+
+	<data id="303" name="Spy Network" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="10" rarity="2" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/spynetwork.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 £" highlightContexts="play,buy,magicBuy"/>
+		<quote text="A commoner will confess any secret for the mere thrill of participating in something bigger than their tiny little lives." source="-Sofocatro"/>
+		<ambientSound tags="secrets:.85"/>
+	</data>
+	<data id="304" inherits="303" cost="9" quality="2"/>
+	<data id="305" inherits="303" cost="8" quality="3"/>
+	
+	<data id="306" name="Clever Planning" faction="metris" textLayout="threeLines" borderFrame="blue" cost="3" rarity="D" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/cleverplanning.atf">
+		<cardText fieldName="mcLine2" text="The next card you destroy" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="returns to your inventory" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="To subvert defeat into victory you must be aware, in advance, of every possible outcome." source="-Valdorian"/>
+		<ambientSound tags="conspire:.5"/>
+	</data>
+	<data id="307" inherits="306" cost="2" quality="2"/>
+	<data id="308" inherits="306" cost="1" quality="3"/>
+
+	<data id="309" name="Sacrificial Lamb" faction="daramek" textLayout="threeLines" borderFrame="red" cost="3" rarity="61" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/sacrificiallamb.atf">
+		<cardText fieldName="mcLine2" text="Always sacrificed first"/>
+		<cardText fieldName="mcLine3" text="When sacrificed:"/>
+		<cardText fieldName="mcLine4" text="+1 resource, feed hero ¢"/>
+		<quote text="We master life to harvest the fruits of death." source="-Mogesh"/>
+		<ambientSound tags="slave:.3,sacrifice:.6,resource:.2"/>
+	</data>
+	<data id="310" inherits="309" cost="2" quality="2"/>
+	<data id="311" inherits="309" cost="1" quality="3"/>
+	
+	<data id="312" name="Scrivener" faction="daramek" textLayout="threeLines" borderFrame="red" cost="6" rarity="B" quality="1" life="1" tab="slaves" assetPath="img/cards/512x512/%platform%/scrivener.atf">
+		<cardText fieldName="mcLine2" text="On play / turn: draw ritual" highlightContexts=""/>
+		<cardText fieldName="mcLine3" text="Play ritual: +1 resource" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="Can't be sacrificed" highlightContexts=""/>
+		<quote text="Seek the altar deep within the earth's wet maw and transcribe each symbol exactly." source="-Liet"/>
+		<ambientSound tags="slave:.3,ritual:.4"/>
+	</data>
+	<data id="313" inherits="312" cost="5" quality="2"/>
+	<data id="314" inherits="312" cost="4" quality="3"/>
+	
+	<data id="315" name="Festival" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="59" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/festival.atf">
+		<cardText fieldName="mcLine2" text="Sacrifice weakest:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Draw and restock a ritual" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Won't draw/restock Festival" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Grow long and grow fat, and my fires will burn everlasting." source="-Liet"/>
+		<ambientSound tags="sacrifice:.7,ritual:.8"/>
+	</data>
+	<data id="316" inherits="315" cost="3" quality="2"/>
+	<data id="317" inherits="315" cost="2" quality="3"/>
+	
+	<data id="318" name="Reconnaissance" faction="metris" textLayout="threeLines" borderFrame="blue" cost="7" rarity="B" quality="1" tab="espionage" chargeFrame="skull" assetPath="img/cards/512x512/%platform%/reconnaissance.atf">
+		<cardText fieldName="mcLine2" text="For 3 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="+2 £" highlightContexts="play,buy,magicBuy"/>		
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="spy:.8"/>
+	</data>
+	<data id="319" inherits="318" cost="6" quality="2"/>
+	<data id="320" inherits="318" cost="5" quality="3"/>
+	
+	<data id="321" name="Regent Marsh" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="12" assetPath="img/cards/512x512/%platform%/regentmarsh.atf">
+		<cardText fieldName="mcLine3" text="Feed an ally, 50% chance:"/>
+		<cardText fieldName="mcLine4" text="That ally attacks"/>
+		<quote text="To master a trade one must do more than study. Stonemasons must work the rock. Farriers must work the forge. So it is also with war. Let us go and hone our craft." source="Regent Marsh"/>
+		<ambientSound tags="military:.1"/>
+	</data> 
+	
+	<data id="322" name="Patron's Pledge" textLayout="threeLines" borderFrame="gold" rarity="P" life="1" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/backercoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance: becomes ally" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="On turn: +1 ¤" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="323" name="Orom" faction="daramek" textLayout="twoLines" life="20" borderFrame="red" hero="true" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="14" assetPath="img/cards/512x512/%platform%/liet.atf">
+		<cardText fieldName="mcLine3" text="On sacrifice ally:"/>
+		<cardText fieldName="mcLine4" text="+1 random resource"/>
+		<quote text="" source=""/>
+		<ambientSound tags="resource:.1,ritual:.1"/>
+	</data>
+	
+	<data id="324" inherits="145" heroClipFrame="13"/>
+	
+	<data id="325" name="Bounty" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="9" rarity="B" quality="1" tab="power" assetPath="img/cards/512x512/%platform%/bounty.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each ¤: attack" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Lose all ¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Gold is power. Anyone who disagrees possesses neither." source="-Captain Listrata"/>
+		<ambientSound tags="military:.4,secret:.4"/>
+	</data>
+	<data id="326" inherits="325" cost="8" quality="2"/>
+	<data id="327" inherits="325" cost="7" quality="3"/>
+	
+	<data id="328" name="Overseer" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="B" quality="1" life="2" tab="slaves" assetPath="img/cards/512x512/%platform%/overseer.atf">
+		<cardText fieldName="mcLine3" text="When you play an ally:"/>
+		<cardText fieldName="mcLine4" text="Activate that ally"/>
+		<quote text="" source=""/>
+		<ambientSound tags="slave:1"/>
+	</data>
+	<data id="329" inherits="328" cost="5" quality="2"/>
+	<data id="330" inherits="328" cost="4" quality="3"/>
+	
+	<data id="331" name="Coup de Grâce" faction="metris" textLayout="threeLines" borderFrame="blue" cost="8" rarity="B" quality="1" tab="murder" assetPath="img/cards/512x512/%platform%/coupdegrace.atf">
+		<cardText fieldName="mcLine2" text="For each card you control:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack foe's hero x2" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The only moment your enemy should fully understand your plan is just before their death." source="-Loquori"/>
+		<ambientSound tags="attack:.3"/>
+	</data>
+	<data id="332" inherits="331" cost="7" quality="2"/>
+	<data id="333" inherits="331" cost="6" quality="3"/>
+	
+	<data id="334" inherits="59" heroClipFrame="19" purchasable="true" reskinName="Lavation of Blood" xpBonus="true"/>
+	
+	<data id="335" name="Fertility Offering" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="C" quality="1" tab="rituals" assetPath="img/cards/512x512/%platform%/fertilityoffering.atf">
+		<cardText fieldName="mcLine3" text="Sacrifice random ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Copy that ally" highlightContexts="play,buy,magicBuy"/>
+		<quote text="...drown the night with screaming, spill the offal at the edge of the circle, and wreath her with entrails. This will please the Shepherd, and He will reciprocate..." source="-Liet"/>
+		<ambientSound tags="ritual:.6,sacrifice:.6"/>
+	</data>
+	<data id="336" inherits="335" cost="5" quality="2"/>
+	<data id="337" inherits="335" cost="4" quality="3"/>
+	
+	<data id="338" inherits="2" heroClipFrame="18" purchasable="true" reskinName="Visage of War" xpBonus="true"/>
+	 
+	<data id="339" inherits= "122" heroClipFrame="20" purchasable="true" reskinName="The Last Dance" xpBonus="true"/>
+	
+	<data id="340" name="Madam Aline" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="17" assetPath="img/cards/512x512/%platform%/madamAline.atf">
+		<cardText fieldName="mcLine4" text="Starts with 2 Courtesans"/>
+		<quote text="Torturers, soldiers, spies, and kings all spill fields of blood to wrench whispered half truths from their victims. Ours lay bare their every secret without a drop spilt." source="-Madam Aline"/>
+		<ambientSound tags="secrets:.1"/>
+	</data>
+	
+	<data id="341" name="Loquori" faction="metris" textLayout="twoLines" life="20" borderFrame="blue" hero="true" heroTabs="murder,conspiracy,espionage,underlings,coins" heroClipFrame="15">
+		<cardText fieldName="mcLine3" text="When foe gains a resource"/>
+		<cardText fieldName="mcLine4" text="5% chance to steal it"/>
+		<quote text="" source=""/>
+		<ambientSound tags="secrets:.1"/>
+	</data> 
+	
+	<data id="342" name="Tazin" faction="daramek" textLayout="twoLines" life="20" borderFrame="red" hero="true" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="21">
+		<cardText fieldName="mcLine3" text="When an enemy attacks:"/>
+		<cardText fieldName="mcLine4" text="25% chance: retaliate"/>
+		<quote text="" source=""/>
+		<ambientSound tags="combat:.1"/>
+	</data>
+	
+	<data id="343" name="Coordinate" faction="metris" textLayout="threeLines" borderFrame="blue" cost="5" rarity="C" quality="1" tab="conspiracy" assetPath="img/cards/512x512/%platform%/coordinate.atf">
+		<cardText fieldName="mcLine2" text="+2 charges to Metris cards" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Reduce bomb timers by 1" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="conspire:.5"/>
+	</data>
+	<data id="344" inherits="343" cost="4" quality="2"/>
+	<data id="345" inherits="343" cost="3" quality="3"/>
+	
+	<data id="346" name="Rampart" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="9" rarity="C" quality="1" tab="war" chargeFrame="shield" assetPath="img/cards/512x512/%platform%/rampart.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Intercept 4 attacks" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The invaders had never seen a two-story building, let alone a sheer wall of mortared stone.  They had to quickly school themselves in the ways of modern siege warfare, and the tuition was paid with the cracking of bones." source="-The Sieges of Corma"/>
+		<ambientSound tags="military:1"/>
+	</data>
+	<data id="347" inherits="346" cost="8" quality="2"/>
+	<data id="348" inherits="346" cost="7" quality="3"/>
+
+	<data id="349" name="Regent Ashkar" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="31">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¥"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	<data id="350" inherits="349">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¤"/>
+	</data>
+	<data id="351" inherits="349">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 £"/>
+	</data>
+	<data id="352" inherits="349">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¥¤£"/>
+	</data>
+	
+	<data id="353" name="Gretta" faction="metris" textLayout="threeLines" life="20" borderFrame="blue" hero="true" rarity="E" heroTabs="murder,conspiracy,espionage,underlings,coins" heroClipFrame="29" assetPath="img/cards/512x512/%platform%/gretta.atf">
+		<cardText fieldName="mcLine2" text="Intercept 25% of attacks"/>
+		<cardText fieldName="mcLine3" text="When attacked:"/>
+		<cardText fieldName="mcLine4" text="20%: retaliate"/>
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.1,attack:.1"/>
+	</data>
+	
+	<data id="354" name="Tavern Wench" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" life="1" rarity="353" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/tavernwench.atf">
+		<cardText fieldName="mcLine2" text="On turn: control weakest" highlightContexts=""/>
+		<cardText fieldName="mcLine3" text="No enemies: +1£" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="Two tankards of ale, coming right up, m'lords. You sure that's all you want?" source="-Fraulein Lissa"/>
+		<ambientSound tags="trick:.3,steal:.3"/>
+	</data>
+	<data id="355" inherits="354" cost="5" quality="2"/>
+	<data id="356" inherits="354" cost="4" quality="3"/>
+	
+	<data id="357" name="Brute" faction="metris" textLayout="threeLines" borderFrame="blue" cost="6" rarity="B" life="3" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/brute.atf">
+		<cardText fieldName="mcLine2" text="On turn:" />
+		<cardText fieldName="mcLine3" text="Attack 2x" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="I'll bloody my knuckles on anyone.  Old men, women, cripples, kids. You just pay the coin and point them out." source="-Nocche Soranzo"/>
+		<ambientSound tags="attack:.5"/>
+	</data>
+	<data id="358" inherits="357" cost="5" quality="2"/>
+	<data id="359" inherits="357" cost="4" quality="3"/>
+	
+	<data id="360" name="Sister Ysadora" faction="vespitole" textLayout="twoLines" borderFrame="green" life="20" hero="true" rarity="E" heroTabs="power,prosperity,faith,war,coins" heroClipFrame="34" assetPath="img/cards/512x512/%platform%/ysadora.atf">
+		<cardText fieldName="mcLine3" text="When Ysadora attacks,"/>
+		<cardText fieldName="mcLine4" text="75% chance: +1 life"/>
+		<quote text="" source=""/>
+		<ambientSound tags="economy:.1"/>
+	</data>
+	
+	<data id="361" name="Lead the Charge" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="8" rarity="360" quality="1" tab="war" assetPath="img/cards/512x512/%platform%/leadthecharge.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack x2" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Ignores intercept"/>
+		<quote text="Men will always fight harder for a lord with battle scars." source="-Sister Ysadora"/>
+		<ambientSound tags="military:1"/>
+	</data>
+	<data id="362" inherits="361" cost="7" quality="2"/>
+	<data id="363" inherits="361" cost="6" quality="3"/>
+	
+	<data id="364" name="Babarus" faction="daramek" textLayout="twoLines" borderFrame="red" life="20" hero="true" rarity="E" heroTabs="herd,rituals,slaves,idols,coins" heroClipFrame="30" assetPath="img/cards/512x512/%platform%/babarus.atf">
+		<cardText fieldName="mcLine3" text="When you gain ¥ or £,"/>
+		<cardText fieldName="mcLine4" text="50% chance: convert to ¢"/>
+		<quote text="" source=""/>
+		<ambientSound tags="resource:.1,ritual:.1"/>
+	</data>
+	
+	<data id="365" name="Shrine of Rebirth" faction="daramek" textLayout="threeLines" borderFrame="red" cost="6" rarity="364" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/bloodbog.atf">
+		<cardText fieldName="mcLine2" text="When you discard a card," highlightContexts=""/>
+		<cardText fieldName="mcLine3" text="10% chance:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="It returns to your hand" highlightContexts=""/>
+		<quote text="All things die so that their flesh may feed the young." source="-Babarus"/>
+		<ambientSound tags="sacrifice:.3,ritual:.3"/>
+	</data>
+	<data id="366" inherits="365" cost="5" quality="2"/>
+	<data id="367" inherits="365" cost="4" quality="3"/>
+	
+	<data id="368" name="Daru" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="23">
+		<cardText fieldName="mcLine3" text="Uses cards from both"/>
+		<cardText fieldName="mcLine4" text="Vespitole and Metris"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.1"/>
+	</data>
+	
+	<data id="369" name="Kapitien Brogger" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="25">
+		<cardText fieldName="mcLine3" text="When an ally dies:"/>
+		<cardText fieldName="mcLine4" text="30% chance returns to hand"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	
+	<data id="370" name="Guildmaster Nevretto" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="33">
+		<cardText fieldName="mcLine3" text="Starts with Bounty"/>
+		<cardText fieldName="mcLine4" text="+1 ¤ when played"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	<data id="371" inherits="370">
+		<cardText fieldName="mcLine3" text="Starts with Bounty"/>
+		<cardText fieldName="mcLine4" text="+2 ¤ when played"/>
+	</data>
+	<data id="372" inherits="370">
+		<cardText fieldName="mcLine3" text="Starts with Bounty"/>
+		<cardText fieldName="mcLine4" text="+3 ¤ when played"/>
+	</data>
+	
+	<data id="373" name="Loan" plural="Loans" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="5" rarity="B" quality="1" tab="prosperity" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/loan.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Gain 8¤" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Pay 8¤ back over 4 turns" highlightContexts="play,buy,magicBuy"/>
+		<quote text="Wars are expensive.  I'm sure we can find a solution that is in both of our best interests." source="-Ombreggiato Gritti"/>
+		<ambientSound tags="supply:.7"/>
+	</data>
+	<data id="374" inherits="373" cost="4" quality="2"/>
+	<data id="375" inherits="373" cost="3" quality="3"/>
+	
+	<data id="376" name="Apothecary" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" life="1" rarity="D" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/apothecary.atf">
+		<cardText fieldName="mcLine2" text="On feed ¤: restock poison" highlightContexts="goldFeed"/>
+		<cardText fieldName="mcLine3" text="On turn: fully heal allies" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="I don't care how you got those wounds, I tend to the hurt, no questions asked." source="-Marta Wyncke"/>
+		<ambientSound tags="poison:.5"/>
+	</data>
+	<data id="377" inherits="376" cost="3" quality="2"/>
+	<data id="378" inherits="376" cost="2" quality="3"/>
+	
+	<data id="379" name="Bodyguard" faction="metris" textLayout="twoLines" borderFrame="blue" cost="5" life="4" rarity="C" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/bodyguard.atf">
+		<cardText fieldName="mcLine3" text="Intercepts" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="conspire:.3"/>
+	</data>
+	<data id="380" inherits="379" cost="4" quality="2"/>
+	<data id="381" inherits="379" cost="3" quality="3"/>
+	
+	<data id="382" inherits="349">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="+1 ¤£"/>
+	</data>
+	
+	<data id="383" name="Serpent Altar" faction="daramek" textLayout="twoLines" borderFrame="red" cost="5" rarity="B" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/serpentinealter.atf">
+		<cardText fieldName="mcLine3" text="When your hero attacks," highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="25% chance: attack" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3"/>
+	</data>
+	<data id="384" inherits="383" cost="4" quality="2"/>
+	<data id="385" inherits="383" cost="3" quality="3"/>
+
+	<data id="386" name="Castellan Veratta" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="10">
+		<cardText fieldName="mcLine4" text="Allies Activate on Play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	<data id="387" inherits="386" textLayout="twoLines">
+		<cardText fieldName="mcLine3" text="Each Turn:"/>
+		<cardText fieldName="mcLine4" text="+1 Cattle"/>
+		<ambientSound tags="ox:.1"/>
+	</data>
+	<data id="388" inherits="386" textLayout="twoLines">
+		<cardText fieldName="mcLine3" text="Each Turn:"/>
+		<cardText fieldName="mcLine4" text="+2 Cattle"/>
+		<ambientSound tags="ox:.1"/>
+	</data>
+	
+	<data id="389" name="Cattle" textLayout="oneLine" borderFrame="green" cost="9" quality="1" life="2" assetPath="img/cards/512x512/%platform%/cattle.atf">
+		<cardText fieldName="mcLine4" text="Destroy when killed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ox:.8"/>
+	</data>
+
+	<data id="390" name="Monteferro Siani" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="32">
+		<cardText fieldName="mcLine4" text="Starts with 2 Ramparts"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.1"/>
+	</data>
+	<data id="391" inherits="390">
+		<cardText fieldName="mcLine4" text="Starts with 3 Ramparts"/>
+	</data>
+	<data id="392" inherits="390">
+		<cardText fieldName="mcLine4" text="Starts with 4 Ramparts"/>
+	</data>
+	
+	<data id="393" name="Banker" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="7" rarity="D" quality="1" life="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/banker.atf">
+		<cardText fieldName="mcLine2" text="On turn:"/>
+		<cardText fieldName="mcLine3" text="For each coin in hand: +¤"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="The wealthy wise duchess always knew: loose in the fingers, the coins fall through. In the bed of straw thieving rats will chew. In the bank of stone, one ducat becomes two." source="-The Miser and the Duchess"/>
+		<ambientSound tags="economy:.5"/>
+	</data>
+	<data id="394" inherits="393" cost="6" quality="2"/>
+	<data id="395" inherits="393" cost="5" quality="3"/>
+	
+	<data id="396" name="Sacred Tortoise" faction="daramek" textLayout="twoLines" borderFrame="red" cost="4" rarity="C" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/sacredtortoise.atf">
+		<cardText fieldName="mcLine3" text="Feed your hero ¢:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="+1 ¤" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3"/>
+	</data>
+	<data id="397" inherits="396" cost="3" quality="2"/>
+	<data id="398" inherits="396" cost="2" quality="3"/>
+	
+	<data id="399" name="Cattle Stampede" cost="3" faction="vespitole" quality="1" textLayout="twoLines" borderFrame="green" assetPath="img/cards/512x512/%platform%/stampede.atf">
+		<cardText fieldName="mcLine3" text="All cattle attack" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="400" name="Pietra Siani" faction="vespitole" textLayout="twoLine" life="20" borderFrame="green" hero="true" heroClipFrame="35">
+		<cardText fieldName="mcLine3" text="Buy an ally:"/>
+		<cardText fieldName="mcLine4" text="Gain a copy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	<data id="401" inherits="400">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine3" text="Foe loses 1 resource"/>
+	</data>
+	
+	<data id="402" name="Catapult" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="8" rarity="C" quality="1" life="2" tab="war" assetPath="img/cards/512x512/%platform%/catapult.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack x3"/>
+		<cardText fieldName="mcLine3" text="Ignores intercept"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.5"/>
+	</data>
+	<data id="403" inherits="402" cost="7" quality="2"/>
+	<data id="404" inherits="402" cost="6" quality="3"/>
+	
+	<data id="405" inherits="390">
+		<cardText fieldName="mcLine4" text="Foe pays for your loans"/>
+	</data>
+	
+	<data id="406" inherits="400">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="Foe loses 2 resources"/>
+	</data>
+	
+	<data id="407" inherits="400">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="Foe loses all resources"/>
+	</data>
+	
+	<data id="408" name="Cutpurse" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="D" life="1" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/cutpurse.atf">
+		<cardText fieldName="mcLine2" text="On turn: steal 1 resource"/>
+		<cardText fieldName="mcLine3" text="5%: steal gained resource"/>
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="steal:.5"/>
+	</data>
+	<data id="409" inherits="408" cost="3" quality="2"/>
+	<data id="410" inherits="408" cost="2" quality="3"/>
+	
+	<data id="411" name="Boar Fetish" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="D" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/boarfetish.atf">
+		<cardText fieldName="mcLine3" text="Feed your hero ¢:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="Attack" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="combat:.3"/>
+	</data>
+	<data id="412" inherits="411" cost="5" quality="2"/>
+	<data id="413" inherits="411" cost="4" quality="3"/>
+	
+	<data id="414" name="Warship" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="14" rarity="D" quality="1" life="5" tab="war" assetPath="img/cards/512x512/%platform%/warship.atf">
+		<cardText fieldName="mcLine2" text="On turn:"/>
+		<cardText fieldName="mcLine3" text="Attack x5"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.5"/>
+	</data>
+	<data id="415" inherits="414" cost="13" quality="2"/>
+	<data id="416" inherits="414" cost="12" quality="3"/>
+	
+	<data id="417" name="Fire Ship" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="4" life="3" quality="1" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/fireShip.atf">
+		<cardText fieldName="mcLine2" text="In 4 turns:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Attack x6" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="bomb:.3"/>
+	</data>
+	
+	<data id="418" name="Executor Van Hout" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="37">
+		<cardText fieldName="mcLine4" text="Starts with Warship"/>
+		<quote text="" source=""/>
+		<ambientSound tags="economy:.1"/>
+	</data>
+	<data id="419" inherits="418"/>
+	<data id="420" inherits="418"/>
+	
+	<data id="421" inherits="400" textLayout="oneLine">
+		<cardText fieldName="mcLine4" text="Allies activate when killed"/>
+	</data>
+	
+	<data id="422" inherits="400">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="Draw ally"/>
+	</data>
+	
+	<data id="423" textLayout="oneLine" inherits="370">
+		<cardText fieldName="mcLine4" text="Poison lasts +1 turn"/>
+	</data>
+	
+	<data id="424" name="Assassin" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="C" life="2" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/assassin.atf">
+		<cardText fieldName="mcLine2" text="On turn / when you gain £:" />
+		<cardText fieldName="mcLine3" text="Attack weakest" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.5"/>
+	</data>
+	<data id="425" inherits="424" cost="3" quality="2"/>
+	<data id="426" inherits="424" cost="2" quality="3"/>
+	
+	<data id="427" textLayout="oneLine" inherits="321">
+		<cardText fieldName="mcLine2" text="75%: intercepts"/>
+	</data>
+	
+	<data id="428" inherits="321">
+		<cardText fieldName="mcLine3" text="Feed an ally:"/>
+		<cardText fieldName="mcLine4" text="That ally attacks"/>
+	</data>
+	
+	<data id="429" name="Dowager Anibaldo" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="26">
+		<cardText fieldName="mcLine3" text="Starts with 4 Serfs"/>]
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.1"/>
+	</data>
+	
+	<data id="430" name="Magistrate Veccio" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="38">
+		<cardText fieldName="mcLine4" text="Can buy from your bank"/>
+		<quote text="" source=""/>
+		<ambientSound tags="economy:.1"/>
+	</data>
+	
+	<data id="431" name="Champion's Paiza" textLayout="threeLines" borderFrame="gold" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/draftcoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="10% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Restock any card" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="432" name="Landsknecht Yareen" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="40">
+		<cardText fieldName="mcLine3" text="When an enemy attacks:"/>
+		<cardText fieldName="mcLine4" text="35% chance: attack back"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	
+	<data id="433" name="Palisade" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="5" rarity="B" quality="1" tab="war" chargeFrame="shield" assetPath="img/cards/512x512/%platform%/palisade.atf">
+		<cardText fieldName="mcLine3" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Intercept 2 attacks" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.3"/>
+	</data>
+	<data id="434" inherits="433" cost="4" quality="2"/>
+	<data id="435" inherits="433" cost="3" quality="3"/>
+
+	<data id="436" name="Warding Circle" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="A" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/wardingcircle.atf">
+		<cardText fieldName="mcLine2" text="Feed ¢:  +1«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine3" text="For each «:" />
+		<cardText fieldName="mcLine4" text="Intercept" />
+		<quote text="All Endazu know this simple mark.  It is scribed upon the earth within a circle, and for a time no harm may enter that space, just as a newly-waxed boot repels water." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="437" inherits="436" cost="4" quality="2"/>
+	<data id="438" inherits="436" cost="3" quality="3"/>
+	
+	<data id="439" name="Behold the Veil" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="A" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/beholdtheveil.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="On play, for each «:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="+1 ¢" highlightContexts="play"/>
+		<quote text="Magic is learning to control an invisible limb you can neither feel nor touch." source="-Calipeth"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="440" inherits="439" cost="3" quality="2"/>
+	<data id="441" inherits="439" cost="2" quality="3"/>
+	
+	<data id="442" name="Unstable Runes" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="5" rarity="A" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/unstablerunes.atf">
+		<cardText fieldName="mcLine3" text="Feed ¢:  -1«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Attack x2" highlightContexts="magicFeed"/>
+		<quote text="He drew the sign in the air as he pointed his filagreed sword toward the distant soldier, and at his feet there was a crackle as the air was rent in a shower of sparks.  The soldier was thrown up and then to the ground, his clothing and armor in tatters.  He shuddered, and did not rise." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="443" inherits="442" cost="4" quality="2"/>
+	<data id="444" inherits="442" cost="3" quality="3"/>
+	
+	<data id="445" name="Scroll of Petals" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="5" rarity="A" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/scrollofpetals.atf">
+		<cardText fieldName="mcLine3" text="On turn:  -1«, +1¢" />
+		<cardText fieldName="mcLine4" text="Feed ¢:  all « turn to ¢" highlightContexts="magicFeed"/>
+		<quote text="As she read from the long page of script, a warm breeze surged from within the walls though we were in a sealed room with no windows.  The air itself soon filled with fluttering Argoreth petals, and though I was a prisoner in that place, I felt the glee of a child wandering through a blooming orchard." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="446" inherits="445" cost="4" quality="2"/>
+	<data id="447" inherits="445" cost="3" quality="3"/>
+	
+	<data id="448" name="Halting Rebuke" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="A" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/haltingrebuke.atf">
+		<cardText fieldName="mcLine2" text="On hold: +2«"/>
+		<cardText fieldName="mcLine3" text="For each «:" />
+		<cardText fieldName="mcLine4" text="Intercept" />
+		<quote text="Most speak in the silken tongue of poetic speech. Only a few will ever learn the raw words of arcane power. The Endazu are fluent in both." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="449" inherits="448" cost="3" quality="2"/>
+	<data id="450" inherits="448" cost="2" quality="3"/>
+	
+	<data id="451" name="Raktaba'an" faction="endazu" heroTabs="incantations,inscriptions,anima,goetia,coins" textLayout="oneLine" life="20" rarity="B" borderFrame="purple" hero="true" heroClipFrame="39"  assetPath="img/cards/512x512/%platform%/raktabaan.atf">
+		<cardText fieldName="mcLine4" text="Play an Incantation: +1¢"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:.1"/>
+	</data>
+	
+	<data id="452" name="Cantillation" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="B" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/cantillation.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="On play, for each «:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Random card gains +1«" highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="453" inherits="452" cost="3" quality="2"/>
+	<data id="454" inherits="452" cost="2" quality="3"/>
+	
+	<data id="455" name="Whispered Barbs" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="B" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/whisperedbarb.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="On play, for each «:"  highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Attack, ignore intercept"  highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="456" inherits="455" cost="3" quality="2"/>
+	<data id="457" inherits="455" cost="2" quality="3"/>
+	
+	<data id="458" name="Shepherd's Gift" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="B" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/shepherdmonument.atf">
+		<cardText fieldName="mcLine3" text="Each turn" />
+		<cardText fieldName="mcLine4" text="+1 random resource"/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.2"/>
+	</data>
+	<data id="459" inherits="458" cost="5" quality="2"/>
+	<data id="460" inherits="458" cost="4" quality="3"/>
+	
+	<data id="461" inherits="432">
+		<cardText fieldName="mcLine2" text="Each Turn: +1 ¥"/>
+		<cardText fieldName="mcLine3" text="Enemy starts with:"/>
+		<cardText fieldName="mcLine4" text="2 less Bank Cards"/>
+	</data>
+	
+	<data id="462" inherits="429" textLayout="twoLines">
+		<cardText fieldName="mcLine3" text="Starts with 2 Serfs"/>
+		<cardText fieldName="mcLine4" text="Steals your +1 ¥ per turn"/>
+	</data>
+	
+	<data id="463" name="Argoreth Flower" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="3" rarity="A" life="1" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/argorathflower.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +1«"/>
+		<cardText fieldName="mcLine3" text="On turn, for each «:" />
+		<cardText fieldName="mcLine4" text="+1¢" />
+		<quote text="The curious Argoreth flower is only to be found growing in their strange citadel.  It needed neither water nor sunlight, and it seemed to be rooted down to the world between worlds." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="464" inherits="463" cost="2" quality="2"/>
+	<data id="465" inherits="463" cost="1" quality="3"/>
+	 
+	<data id="466" name="Tome of Memory" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="3" rarity="A" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/tomeOfMemory.atf">
+		<cardText fieldName="mcLine2" text="On turn: -1«" />
+		<cardText fieldName="mcLine3" text="Feed ¢:  +3«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="While charged: +1 hand size" />
+		<quote text="Within the gold-bound tome were strange pages of an unknown skin. Through some secret method, my captor could merely think a passage or design, and it would ink itself upon the page.  This very passage could at any time be willed back to the fore, ready to recommit to memory." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="467" inherits="466" cost="2" quality="2"/>
+	<data id="468" inherits="466" cost="1" quality="3"/>
+	
+	<data id="469" name="Gilded Warriors" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="A" life="1" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/gildedwarrior.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +1«"/>
+		<cardText fieldName="mcLine3" text="1 ¬ per «" />
+		<cardText fieldName="mcLine4" text="On turn, for each «: attack" />
+		<quote text="The dead will tirelessly fight for you but do not seek their undying servitude without gold to give, for the dead are vain." source="-King Odashir"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="470" inherits="469" cost="4" quality="2"/>
+	<data id="471" inherits="469" cost="3" quality="3"/>
+	
+	<data id="472" name="The Yarakeen" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="8" rarity="D" life="5" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/yarakeen.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +2«"/>
+		<cardText fieldName="mcLine3" text="On turn, per «: attack" />
+		<cardText fieldName="mcLine4" text="Can't be killed" />
+		<quote text="When you see their citadel, tarry not.  The traveller that does not hasten away from that place will die in silence under the gaze of that deadly golden orb." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="473" inherits="472" cost="7" quality="2"/>
+	<data id="474" inherits="472" cost="6" quality="3"/>
+	
+	<data id="475" name="Gilded Scribes" faction="endazu" textLayout="threeLines" borderFrame="purple" rarity="B" cost="5" life="1" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/gildedscribes.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +1«"/>
+		<cardText fieldName="mcLine3" text="1 ¬ per «" />
+		<cardText fieldName="mcLine4" text="On turn: « cards gain 1«" />
+		<quote text="The dead transcribe tirelessly with speed and precision. A scroll can be copied in minutes, an entire book overnight." source="-King Odashir"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="476" inherits="475" cost="4" quality="2"/>
+	<data id="477" inherits="475" cost="3" quality="3"/>
+	
+	<data id="478" name="Informant" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="B" life="1" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/informant.atf">
+		<cardText fieldName="mcLine2" text="On buy: restock espionage" />
+		<cardText fieldName="mcLine3" text="On turn: draw from foe" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.5"/>
+	</data>
+	<data id="479" inherits="478" cost="3" quality="2"/>
+	<data id="480" inherits="478" cost="2" quality="3"/>
+	
+	<data id="481" name="Grave Contract" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="5" rarity="B" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/gravecontract.atf">
+		<cardText fieldName="mcLine3" text="Feed ¢:  -1«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Summon Gilded Warrior" highlightContexts="magicFeed"/>
+		<quote text="Seek the dead priest in his sarcophagus and speak aloud his true name.  He alone can speak for the dead, and he alone can grant your golden army." source="-King Odashir"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="482" inherits="481" cost="4" quality="2"/>
+	<data id="483" inherits="481" cost="3" quality="3"/>
+	
+	<data id="484" name="Conjured Warrior" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="1" life="2" quality="1" assetPath="img/cards/512x512/%platform%/conjuredwarrior.atf">
+		<cardText fieldName="mcLine2" text="Each turn: attack"/>
+		<cardText fieldName="mcLine3" text="Destroy when killed" />
+		<cardText fieldName="mcLine4" text="Destroy when discarded" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	
+	<data id="485" name="Song of Spring" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="C" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/songofspring.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="On play, for each «:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Summon Argoreth Flower" highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="486" inherits="485" cost="4" quality="2"/>
+	<data id="487" inherits="485" cost="3" quality="3"/>
+	
+	<data id="488" name="Conjured Argoreth" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="1" life="1" quality="1" assetPath="img/cards/512x512/%platform%/conjuredargoreth.atf">
+		<cardText fieldName="mcLine2" text="Each turn: +1¢"/>
+		<cardText fieldName="mcLine3" text="Destroy when killed" />
+		<cardText fieldName="mcLine4" text="Destroy when discarded" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	
+	<data id="489" name="Word of Unmaking" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="6" rarity="C" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/wordofunmaking.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="Can only be played at 3«"/>
+		<cardText fieldName="mcLine4" text="On play: Destroy any card" highlightContexts="play"/>
+		<quote text="The word was no mere utterance from the mouth of man. It resounded, pulsed in my mind, my skin, and even the earth and sky shuddered for a time.  The Word of Unmaking tears something right out of our world, like cutting a stained spot from a cloak, and then mends it back until you cannot detect the hole was ever there." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="490" inherits="489" cost="5" quality="2"/>
+	<data id="491" inherits="489" cost="4" quality="3"/>
+	
+	<data id="492" name="Banishing Gust" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="451" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/sandstorm.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="Can only be played at 2«" />
+		<cardText fieldName="mcLine4" text="On play: discard any card" highlightContexts="play"/>
+		<quote text="The assassin knew not what tore him from his feet, it was as though he were suddenly tossed into unseen roiling rapids. The Endazu can summon a fearsome force that briefly twists the very fabric of the world." source="-The Chronicon Endazui"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="493" inherits="492" cost="3" quality="2"/>
+	<data id="494" inherits="492" cost="2" quality="3"/>
+	
+	<data id="495" name="Dinar" inherits="1" borderFrame="purple" assetPath="img/cards/512x512/%platform%/endazuCoin.atf">
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="496" name="Fecund Charm" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/charmChain.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="12% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Summon Argoreth Flower" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="497" name="Ballista" faction="vespitole" textLayout="twoLines" borderFrame="green" cost="6" rarity="B" quality="1" life="2" tab="war" assetPath="img/cards/512x512/%platform%/ballista.atf">
+		<cardText fieldName="mcLine3" text="On turn: attack x2"/>
+		<cardText fieldName="mcLine4" text="On play: draw a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.5"/>
+	</data>
+	<data id="498" inherits="497" cost="5" quality="2"/>
+	<data id="499" inherits="497" cost="4" quality="3"/>
+	
+	<data id="500" name="Lantern Scroll" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="3" rarity="B" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/writofrecovery.atf">
+		<cardText fieldName="mcLine3" text="On turn, feed ¢:" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="-1«, heal hero x2" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="501" inherits="500" cost="2" quality="2"/>
+	<data id="502" inherits="500" cost="1" quality="3"/>
+	
+	<data id="503" name="Golem" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="7" life="5" rarity="C" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/golem.atf">
+		<cardText fieldName="mcLine2" text="On turn, for each «: heal" highlightContexts=""/>
+		<cardText fieldName="mcLine3" text="Intercepts" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="Can't be killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="504" inherits="503" cost="6" quality="2"/>
+	<data id="505" inherits="503" cost="5" quality="3"/>
+	
+	<data id="506" name="Poem of Blight" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="B" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/wordofblight.atf">
+		<cardText fieldName="mcLine2" text="On hold: +2«"/>
+		<cardText fieldName="mcLine3" text="On play, for each «:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Foe loses 1 resource" highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="507" inherits="506" cost="3" quality="2"/>
+	<data id="508" inherits="506" cost="2" quality="3"/>
+	
+	<data id="509" name="Calipeth" faction="endazu" heroTabs="incantations,inscriptions,anima,goetia,coins" textLayout="oneLine" life="20" rarity="C" borderFrame="purple" hero="true" heroClipFrame="41"  assetPath="img/cards/512x512/%platform%/calipeth.atf">
+		<cardText fieldName="mcLine4" text="+1« to Inscriptions"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:.1"/>
+	</data>
+	
+	<data id="510" name="Paper Vipers" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="509" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/paperviper.atf">
+		<cardText fieldName="mcLine2" text="For each «: retaliate" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine3" text="Feed ¢:" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Convert « into attacks" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="511" inherits="510" cost="3" quality="2"/>
+	<data id="512" inherits="510" cost="2" quality="3"/>
+	
+	<data id="513" name="Empowering Seal" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="C" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/empoweringseal.atf">
+		<cardText fieldName="mcLine2" text="Feed ¢:  -1«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine3" text="2 random Anima gain:" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Permanent +1«" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="514" inherits="513" cost="4" quality="2"/>
+	<data id="515" inherits="513" cost="3" quality="3"/>
+	
+	<data id="516" inherits="360" heroClipFrame="43" purchasable="true" reskinName="The Ophitic Mysteries" xpBonus="true"/>
+	<data id="517" inherits="353" heroClipFrame="42" purchasable="true" reskinName="Settle the Bill" xpBonus="true"/>
+	<data id="518" inherits="364" heroClipFrame="44" purchasable="true" reskinName="Master of Bones" xpBonus="true"/>
+	
+	<data id="519" name="Underworld Barge" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="7" rarity="D" life="3" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/underworldbarge.atf">
+		<cardText fieldName="mcLine2" text="On turn: attack x2"/>
+		<cardText fieldName="mcLine3" text="On discard, for each «:" />
+		<cardText fieldName="mcLine4" text="Summon Gilded Warrior" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="520" inherits="519" cost="6" quality="2"/>
+	<data id="521" inherits="519" cost="5" quality="3"/>
+	
+	<data id="522" name="Daru" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="1" assetPath="img/cards/512x512/%platform%/sofocatro.atf">
+		<cardText fieldName="mcLine3" text="TBD"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.1"/>
+	</data>
+	
+	<data id="523" name="Hedge Guardian" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="6" rarity="526" life="1" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/hedgeguardian.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +1«"/>
+		<cardText fieldName="mcLine3" text="Intercepts. 1 ¬ per «" />
+		<cardText fieldName="mcLine4" text="If attacked: summon Flower" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="524" inherits="523" cost="5" quality="2"/>
+	<data id="525" inherits="523" cost="4" quality="3"/>
+	
+	<data id="526" name="Jesmai" faction="endazu" heroTabs="incantations,inscriptions,anima,goetia,coins" textLayout="twoLines" life="20" rarity="D" borderFrame="purple" hero="true" heroClipFrame="45"  assetPath="img/cards/512x512/%platform%/animaherocard.atf">
+		<cardText fieldName="mcLine3" text="Feed an Anima ¢:"/>
+		<cardText fieldName="mcLine4" text="It gains +1 permanent «"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:.1"/>
+	</data>
+	
+	<data id="527" name="Usury" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="5" rarity="C" quality="1" tab="power" chargeFrame="timer" assetPath="img/cards/512x512/%platform%/usury.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Foe gains 6¤" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="On turn: foe pays you 2¤" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.7"/>
+	</data>
+	<data id="528" inherits="527" cost="4" quality="2"/>
+	<data id="529" inherits="527" cost="3" quality="3"/>
+	
+	<data id="530" name="Dowager Anibaldo" textLayout="threeLines" life="20" faction="draft" hero="true" reward="431" heroClipFrame="26" assetPath="img/cards/512x512/%platform%/dowager.atf">
+		<cardText fieldName="mcLine2" text="Starts with 10 epic coins"/>
+		<cardText fieldName="mcLine3" text="Epic coins have:"/>
+		<cardText fieldName="mcLine4" text="3x chance to activate"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="531" name="Lackey" faction="metris" textLayout="threeLines" borderFrame="blue" cost="3" rarity="C" life="1" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/toady.atf">
+		<cardText fieldName="mcLine2" text="On play: restock underling" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Duplicate hero's ability" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.5"/>
+	</data>
+	<data id="532" inherits="531" cost="2" quality="2"/>
+	<data id="533" inherits="531" cost="1" quality="3"/>
+	
+	<data id="534" name="Sacrificial Dais" faction="daramek" textLayout="twoLines" borderFrame="red" cost="6" rarity="C" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/sacrificialdais.atf">
+		<cardText fieldName="mcLine3" text="Sacrifice an ally:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="+1 random resource" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3"/>
+	</data>
+	<data id="535" inherits="534" cost="5" quality="2"/>
+	<data id="536" inherits="534" cost="4" quality="3"/>
+	
+	<data id="537" name="Shofet Daru" textLayout="twoLines" life="20" faction="draft" hero="true" reward="431" heroClipFrame="23" assetPath="img/cards/512x512/%platform%/daru.atf">
+		<cardText fieldName="mcLine3" text="+1 draw per turn"/>
+		<cardText fieldName="mcLine4" text="+1 hand size"/>
+		<quote text="" source=""/>
+	</data>
+
+	<data id="538" name="Sang Ashkar" textLayout="oneLine" life="20" faction="draft" hero="true" reward="431" heroClipFrame="31" assetPath="img/cards/512x512/%platform%/regentashkar.atf">
+		<cardText fieldName="mcLine4" text="Each turn: +1 ¢"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="539" name="Odashir's Echo" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="6" rarity="D" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/odashirsecho.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="Can only be played at 3«"/>
+		<cardText fieldName="mcLine4" text="On play: Copy any card" highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="540" inherits="539" cost="5" quality="2"/>
+	<data id="541" inherits="539" cost="4" quality="3"/>
+	
+	<data id="542" name="Osfirth" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="46">
+		<cardText fieldName="mcLine3" text="Foe begins game with:"/>
+		<cardText fieldName="mcLine4" text="-3 ¢£¤¥"/>
+		<quote text="" source=""/>
+		<ambientSound tags="economy:.1"/>
+	</data>
+	
+	<data id="543" name="Johannas" faction="vespitole" textLayout="twoLines" life="20" borderFrame="green" hero="true" heroClipFrame="47">
+		<cardText fieldName="mcLine3" text="Begins game with:"/>
+		<cardText fieldName="mcLine4" text="+10 £"/>
+		<quote text="" source=""/>
+		<ambientSound tags="secrets:.1"/>
+	</data>
+	
+	<data id="544" name="Lucca" faction="vespitole" textLayout="threeLines" life="20" borderFrame="green" hero="true" heroClipFrame="24">
+		<cardText fieldName="mcLine2" text="Begins game with:"/>
+		<cardText fieldName="mcLine3" text="An army"/>
+		<cardText fieldName="mcLine4" text="Foe begins with Surprise"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	
+	<data id="545" name="Surprise" cost="0" faction="vespitole" quality="1" textLayout="twoLines" chargeFrame="timer" borderFrame="green" assetPath="img/cards/512x512/%platform%/stratagem.atf">
+		<cardText fieldName="mcLine3" text="Take 5 extra turns" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="546" name="Valdorian" faction="metris" textLayout="threeLines" life="20" borderFrame="blue" hero="true" heroClipFrame="13">
+		<cardText fieldName="mcLine2" text="Each turn, 50% chance:"/>
+		<cardText fieldName="mcLine3" text="Draw a card from foe"/>
+		<cardText fieldName="mcLine4" text="that isn't a coin"/>
+		<quote text="" source=""/>
+		<ambientSound tags="conspire:.1"/>
+	</data>
+	
+	<data id="547" name="Doge Monteferro" textLayout="oneLine" life="20" faction="draft" hero="true" reward="431" heroClipFrame="32" assetPath="img/cards/512x512/%platform%/monteferro.atf">
+		<cardText fieldName="mcLine4" text="+1 restock"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="548" name="Xalia" textLayout="twoLines" life="20" faction="draft" hero="true" reward="431" heroClipFrame="22" assetPath="img/cards/512x512/%platform%/xalia.atf">
+		<cardText fieldName="mcLine3" text="Hero ignores intercept"/>
+		<cardText fieldName="mcLine4" text="Each turn: +1 £"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="549" name="Countess Aline" textLayout="oneLine" life="20" faction="draft" hero="true" reward="431" heroClipFrame="17" assetPath="img/cards/512x512/%platform%/madamAline.atf">
+		<cardText fieldName="mcLine4" text="Allies activate when killed"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="550" name="Brigand Lucca" textLayout="twoLines" life="20" faction="draft" hero="true" reward="431" heroClipFrame="24" assetPath="img/cards/512x512/%platform%/scoutleader.atf">
+		<cardText fieldName="mcLine3" text="Each turn:"/>
+		<cardText fieldName="mcLine4" text="Steal 1 resource"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="551" name="General Marsh" textLayout="oneLine" life="20" faction="disabled-draft" hero="true" reward="431" heroClipFrame="12" assetPath="img/cards/512x512/%platform%/regentmarsh.atf">
+		<cardText fieldName="mcLine4" text="All your allies intercept"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="552" name="Twilight Peacock" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="3" rarity="B" life="1" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/twilightpeacock.atf">
+		<cardText fieldName="mcLine2" text="On hold: permanent +1«"/>
+		<cardText fieldName="mcLine3" text="1 ¬ per «" />
+		<cardText fieldName="mcLine4" text="On turn: heal « allies" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="553" inherits="552" cost="2" quality="2"/>
+	<data id="554" inherits="552" cost="1" quality="3"/>
+
+	<data id="555" inherits="545" quality="2">
+		<cardText fieldName="mcLine3" text="Take 4 extra turns" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+	</data>
+	<data id="556" inherits="545" quality="3">
+		<cardText fieldName="mcLine3" text="Take 3 extra turns" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Destroy after use" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="557" name="Harvest" faction="vespitole" textLayout="threeLines" borderFrame="green" cost="10" rarity="C" quality="1" tab="prosperity" assetPath="img/cards/512x512/%platform%/harvest.atf">
+		<cardText fieldName="mcLine2" text="Draw a card" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="For each ally:" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="+1 ¥" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.8"/>
+	</data>
+	<data id="558" inherits="557" cost="9" quality="2"/>
+	<data id="559" inherits="557" cost="8" quality="3"/>
+	
+	<data id="560" name="Charlatan" faction="metris" textLayout="threeLines" borderFrame="blue" cost="4" rarity="D" life="1" quality="1" tab="underlings" chargeFrame="charger" assetPath="img/cards/512x512/%platform%/charlatan.atf">
+		<cardText fieldName="mcLine2" text="On turn/feed gold:+1 charge" highlightContexts="goldFeed" />
+		<cardText fieldName="mcLine3" text="3 charges: restock from foe" highlightContexts="goldFeed" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="trick:.5"/>
+	</data>
+	<data id="561" inherits="560" cost="3" quality="2"/>
+	<data id="562" inherits="560" cost="2" quality="3"/>
+	
+	<data id="563" name="Herding Stones" faction="daramek" textLayout="threeLines" borderFrame="red" cost="4" rarity="D" quality="1" tab="idols" chargeFrame="charger" assetPath="img/cards/512x512/%platform%/herdingstones.atf">
+		<cardText fieldName="mcLine2" text="Feed hero ¢: +1 charge" highlightContexts=""/>
+		<cardText fieldName="mcLine3" text="4 charges:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="Gain a random herd" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="rat:.1,goat:.1,pig:.1,ox:.1"/>
+	</data>
+	<data id="564" inherits="563" cost="3" quality="2"/>
+	<data id="565" inherits="563" cost="2" quality="3"/>
+	
+	<data id="566" name="Enchanted Treaty" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="4" rarity="B" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/enchantedTreaty.atf">
+		<cardText fieldName="mcLine2" text="On turn:" />
+		<cardText fieldName="mcLine3" text="Heal foe x1, +1¢, -1«" />
+		<cardText fieldName="mcLine4" text="Feed ¢: +3«" highlightContexts="magicFeed"/>
+		<quote text="When you first hold the document, you can feel the very essence of life flowing in through your fingers, filling you with vitality. The terms of the treaty are the last thing on your mind." source="-Cardinal Pocchi"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="567" inherits="566" cost="3" quality="2"/>
+	<data id="568" inherits="566" cost="2" quality="3"/>
+	
+	<data id="569" name="Tazin" textLayout="twoLines" life="20" faction="disabled-draft" hero="true" reward="431" heroClipFrame="21" assetPath="img/cards/512x512/%platform%/tazin.atf">
+		<cardText fieldName="mcLine3" text="When a foe or ally dies:"/>
+		<cardText fieldName="mcLine4" text="Gain +1¢"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="570" name="Gilded General" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="C" life="3" quality="1" tab="anima" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/gildedgeneral.atf">
+		<cardText fieldName="mcLine2" text="On hold / turn: +1«"/>
+		<cardText fieldName="mcLine3" text="Play an ally, -1«:" />
+		<cardText fieldName="mcLine4" text="Activate played ally" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="571" inherits="570" cost="4" quality="2"/>
+	<data id="572" inherits="570" cost="3" quality="3"/>
+	
+	<data id="573" name="Engraved Urn" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="6" rarity="C" quality="1" tab="inscriptions" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/engravedurn.atf">
+		<cardText fieldName="mcLine3" text="Foe or ally dies: +1«"/>
+		<cardText fieldName="mcLine4" text="Feed ¢:  all « turn to ¢" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="574" inherits="573" cost="5" quality="2"/>
+	<data id="575" inherits="573" cost="4" quality="3"/>
+	
+	<data id="576" inherits="526" heroClipFrame="48" purchasable="true" reskinName="The Aspirant Queen" xpBonus="true"/>
+	
+	<data id="577" name="Summoning Rift" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="D" quality="1" tab="incantations" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/summoningrift.atf">
+		<cardText fieldName="mcLine2" text="On hold: +1«"/>
+		<cardText fieldName="mcLine3" text="Summon « random cards" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Pick one to keep" highlightContexts="play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="578" inherits="577" cost="4" quality="2"/>
+	<data id="579" inherits="577" cost="3" quality="3"/>
+	
+	<data id="580" inherits="57" heroClipFrame="49" purchasable="true" reskinName="The Carousing Captain" xpBonus="true"/>
+	
+	<data id="581" name="Miracle" faction="vespitole" textLayout="oneLine" borderFrame="green" cost="13" rarity="D" quality="1" tab="faith" assetPath="img/cards/512x512/%platform%/miracle.atf">
+		<cardText fieldName="mcLine4" text="God gives you a card" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="supply:.8"/>
+	</data>
+	<data id="582" inherits="581" cost="12" quality="2"/>
+	<data id="583" inherits="581" cost="11" quality="3"/>
+	
+	<data id="584" inherits="61" heroClipFrame="52" purchasable="true" reskinName="Heads, I win" xpBonus="true"/>
+	
+	<data id="585" name="Dulferno Siani" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="36">
+		<cardText fieldName="mcLine4" text="On turn: draw War"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	
+	<data id="586" name="Dulferno Siani" faction="vespitole" textLayout="oneLine" life="20" borderFrame="green" hero="true" heroClipFrame="36">
+		<cardText fieldName="mcLine4" text="Begins in play"/>
+		<quote text="" source=""/>
+		<ambientSound tags="military:.1"/>
+	</data>
+	
+	<data id="587" name="Zalasair" faction="endazu" heroTabs="incantations,inscriptions,anima,goetia,coins" textLayout="twoLines" life="25" rarity="E" borderFrame="purple" hero="true" heroClipFrame="53"  assetPath="img/cards/512x512/%platform%/endazuepichero.atf">
+		<cardText fieldName="mcLine3" text="On turn: +1 ¬"/>
+		<cardText fieldName="mcLine4" text="Starts with +5 ¬"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:.1"/>
+	</data>
+	
+	<data id="588" name="Ibshuk" faction="endazu" textLayout="fourLines" borderFrame="purple" cost="5" rarity="587" life="1" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/stalker.atf">
+		<cardText fieldName="mcLine1" text="1 ¬ per «"/>
+		<cardText fieldName="mcLine2" text="Feed 2¬: permanent +1«" highlightContexts="lifeFeed"/>
+		<cardText fieldName="mcLine3" text="On turn: attack weakest" />
+		<cardText fieldName="mcLine4" text="If attacked: +1¢" />
+		<quote text="They don't believe me, but I saw what took Khalib that night. Its arms coalesced from the darkness itself and stole his life, leaving a hollowed husk with a face frozen in a silent scream." source="-Yusuf al-Rachman"/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="589" inherits="588" cost="4" quality="2"/>
+	<data id="590" inherits="588" cost="3" quality="3"/>
+	
+	<data id="591" name="Blood Pact" faction="endazu" textLayout="twoLines" borderFrame="purple" cost="4" rarity="A" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/bloodpact.atf">
+		<cardText fieldName="mcLine3" text="Feed 2¬:  -1«" highlightContexts="magicFeed"/>
+		<cardText fieldName="mcLine4" text="Random card gains +1«" highlightContexts="magicFeed"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="592" inherits="591" cost="3" quality="2"/>
+	<data id="593" inherits="591" cost="2" quality="3"/>
+	
+	<data id="594" inherits="145" heroClipFrame="51" purchasable="true" reskinName="The new advisor" xpBonus="true"/>
+	
+	<data id="595" inherits="144" heroClipFrame="50" purchasable="true" reskinName="Gone native" xpBonus="true"/>
+	
+	<data id="596" name="Merchant of Time" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="8" rarity="D" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/bloodhour.atf">
+		<cardText fieldName="mcLine2" text="Hero loses half their ¬" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine3" text="Take another turn" highlightContexts="play,buy,magicBuy"/>
+		<cardText fieldName="mcLine4" text="Max 2 consecutive turns" highlightContexts="play,buy,magicBuy"/>
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="597" inherits="596" cost="7" quality="2"/>
+	<data id="598" inherits="596" cost="6" quality="3"/>
+	
+
+	<data id="599" name="Bishmog" faction="endazu" textLayout="fourLines" borderFrame="purple" cost="5" rarity="C" life="1" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/bishmog.atf">
+		<cardText fieldName="mcLine1" text="1 ¬ per «"/>
+		<cardText fieldName="mcLine2" text="Feed 3¬: permanent +1«" highlightContexts="lifeFeed"/>
+		<cardText fieldName="mcLine3" text="On turn, for each «:" />
+		<cardText fieldName="mcLine4" text="Attack your side. Gain ¢" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="600" inherits="599" cost="4" quality="2"/>
+	<data id="601" inherits="599" cost="3" quality="3"/>
+	
+	
+	<data id="602" name="Zamgizar" faction="endazu" textLayout="threeLines" borderFrame="purple" cost="5" rarity="B" life="1" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/zamzigar.atf">
+		<cardText fieldName="mcLine2" text="1 ¬ per «"/>
+		<cardText fieldName="mcLine3" text="Feed 4¬: permanent +1«" highlightContexts="lifeFeed"/>
+		<cardText fieldName="mcLine4" text="On turn, for each «: attack" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="603" inherits="602" cost="4" quality="2"/>
+	<data id="604" inherits="602" cost="3" quality="3"/>
+	
+	
+	<data id="605" name="Veil Warden" faction="endazu" textLayout="fourLines" borderFrame="purple" cost="7" rarity="C" life="5" quality="1" tab="goetia" chargeFrame="charge" assetPath="img/cards/512x512/%platform%/retaliateGoetia.atf">
+		<cardText fieldName="mcLine1" text="Intercepts"/>
+		<cardText fieldName="mcLine2" text="Feed 1¬: heal 1" highlightContexts="lifeFeed"/>
+		<cardText fieldName="mcLine3" text="When attacked: +1«" />
+		<cardText fieldName="mcLine4" text="When killed, attack x«" />
+		<quote text="" source=""/>
+		<ambientSound tags="endazu:1"/>
+	</data>
+	<data id="606" inherits="605" cost="6" quality="2"/>
+	<data id="607" inherits="605" cost="5" quality="3"/>
+	
+	<data id="608" name="Wergeld Seax" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/knifecoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="15% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Summon Berserkr" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="609" name="Berserkr" faction="vespitole" textLayout="twoLines" borderFrame="gold" cost="1" life="1" assetPath="img/cards/512x512/%platform%/summonedBerserker.atf">
+		<cardText fieldName="mcLine3" text="On turn: attack"/>
+		<cardText fieldName="mcLine4" text="If attacked: retaliate"/>
+		<quote text="" source=""/>
+	</data>
+
+	<data id="610" name="Humble Offering" textLayout="threeLines" borderFrame="gold" rarity="P" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/humblecoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="20% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Summon Cattle" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	
+	<data id="611" name="Guthrak's Midden" faction="daramek" textLayout="twoLines" borderFrame="red" cost="4" rarity="B" quality="1" tab="idols" assetPath="img/cards/512x512/%platform%/guthrakmidden.atf">
+		<cardText fieldName="mcLine3" text="When foe spends a resource:" highlightContexts=""/>
+		<cardText fieldName="mcLine4" text="10% chance: gain it" highlightContexts=""/>
+		<quote text="" source=""/>
+		<ambientSound tags="ritual:.3"/>
+	</data>
+	<data id="612" inherits="611" cost="3" quality="2"/>
+	<data id="613" inherits="611" cost="2" quality="3"/>
+
+	<data id="614" inherits="58" heroClipFrame="55" purchasable="true" reskinName="Atonement of the Apotheon" xpBonus="true"/>
+	<data id="615" inherits="509" heroClipFrame="56" purchasable="true" reskinName="Pen and the Sword" xpBonus="true"/>
+	<data id="616" inherits="60" heroClipFrame="57" purchasable="true" reskinName="Mother of Orphans" xpBonus="true"/>
+	
+	<data id="617" name="Graveline Drachm" textLayout="threeLines" borderFrame="gold" rarity="E" tab="coins" limit="10" assetPath="img/cards/512x512/%platform%/squarecoin.atf">
+		<cardText fieldName="mcLine2" text="+1 ¤" highlightContexts="play"/>
+		<cardText fieldName="mcLine3" text="8% chance:" highlightContexts="play"/>
+		<cardText fieldName="mcLine4" text="Restock Fireship" highlightContexts="play"/>
+		<quote text="" source=""/>
+	</data>
+	<data id="618" name="Brigand" faction="metris" textLayout="threeLines" borderFrame="blue" cost="5" rarity="C" life="2" quality="1" tab="underlings" assetPath="img/cards/512x512/%platform%/brigand.atf">
+		<cardText fieldName="mcLine2" text="On turn: steal 1 resource" />
+		<cardText fieldName="mcLine3" text="For each failed steal: Attack" />
+		<cardText fieldName="mcLine4" text="50%: destroy when killed" />
+		<quote text="" source=""/>
+		<ambientSound tags="attack:.5"/>
+	</data>
+	<data id="619" inherits="618" cost="4" quality="2"/>
+	<data id="620" inherits="618" cost="3" quality="3"/>
+	
+</datalist>
