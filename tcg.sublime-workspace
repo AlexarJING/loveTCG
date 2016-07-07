@@ -5,11 +5,11 @@
 		[
 			[
 				"for",
-				"fori	for i,v in ipairs()"
+				"forp	for k,v in pairs()"
 			],
 			[
-				"setline",
-				"love.graphics.setLineWidth"
+				"tab",
+				"table.insert	(table, [pos,] value)"
 			],
 			[
 				"img_",
@@ -38,10 +38,6 @@
 			[
 				"library",
 				"libraryData"
-			],
-			[
-				"tab",
-				"table.insert	(table, [pos,] value)"
 			],
 			[
 				"mssage",
@@ -288,61 +284,66 @@
 			}
 		},
 		{
-			"file": "cls/card.lua",
-			"settings":
-			{
-				"buffer_size": 5458,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 461,
+				"buffer_size": 1543,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cards/green/coin.lua",
+			"file": "lib/util.lua",
 			"settings":
 			{
-				"buffer_size": 853,
+				"buffer_size": 21951,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "scenes/test.lua",
+			"settings":
+			{
+				"buffer_size": 544,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/hand.lua",
+			"settings":
+			{
+				"buffer_size": 1860,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/bank.lua",
+			"settings":
+			{
+				"buffer_size": 1454,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/library.lua",
+			"settings":
+			{
+				"buffer_size": 772,
+				"line_ending": "Windows",
+				"name": "library.lua"
+			}
+		},
+		{
+			"file": "cls/card.lua",
+			"settings":
+			{
+				"buffer_size": 5700,
 				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/Lua Love/LuaLove.sublime-build",
+	"build_system": "",
 	"build_system_choices":
 	[
-		[
-			[
-				[
-					"Packages/Lua Love/LuaLove.sublime-build",
-					""
-				],
-				[
-					"Packages/Lua Love/LuaLove.sublime-build",
-					"Run"
-				],
-				[
-					"Packages/Lua Love/LuaLove.sublime-build",
-					"Love2D"
-				],
-				[
-					"Packages/Lua Love/LuaLove.sublime-build",
-					"ldoc: File"
-				],
-				[
-					"Packages/Lua Love/LuaLove.sublime-build",
-					"ldoc: Project"
-				]
-			],
-			[
-				"Packages/Lua Love/LuaLove.sublime-build",
-				"Love2D"
-			]
-		]
 	],
 	"build_varint": "",
 	"command_palette":
@@ -404,16 +405,16 @@
 	},
 	"expanded_folders":
 	[
-		"/G/love2dproj/loveTCG",
-		"/G/love2dproj/loveTCG/cls",
-		"/G/love2dproj/loveTCG/lib",
-		"/G/love2dproj/loveTCG/res",
-		"/G/love2dproj/loveTCG/scenes"
+		"/F/Love2D Project/loveTCG",
+		"/F/Love2D Project/loveTCG/cls",
+		"/F/Love2D Project/loveTCG/lib",
+		"/F/Love2D Project/loveTCG/scenes"
 	],
 	"file_history":
 	[
-		"/G/love2dproj/loveTCG/lib/tween.lua",
-		"/G/love2dproj/loveTCG/scenes/test.lua",
+		"/D/flashbuilder/Adobe Flash Builder 4.7 (64 Bit)/eclipse/plugins/com.adobe.flash.compiler_4.7.0.349722/AIRSDK/atftools/Docs/Readme.txt",
+		"/C/Users/Alexar/Desktop/2/atf2png-master/README.md",
+		"/F/Love2D Project/loveTCG/cls/deck.lua",
 		"/C/Users/Alexar/Documents/Tencent Files/1643386616/FileRecv/woo.txt",
 		"/C/Users/Alexar/Desktop/xml/test.lua",
 		"/C/Users/Alexar/Desktop/pvr/convert.txt",
@@ -538,12 +539,11 @@
 		"/F/Love2D Project/war of omens/load.lua",
 		"/D/Program Files/Sublime Text 3/Data/Packages/ConvertToUTF8/ConvertToUTF8.sublime-settings",
 		"/F/Love2D Project/war of omens/auto.lua",
-		"/F/Love2D Project/war of omens/gameLogic.lua",
-		"/F/Love2D Project/war of omens/scr/abilities.lua"
+		"/F/Love2D Project/war of omens/gameLogic.lua"
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -558,7 +558,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"discrip",
+			"deck",
+			"born",
+			"hand",
 			"cancel",
 			"%platform%",
 			"v",
@@ -683,9 +685,7 @@
 			"selecttab",
 			"print",
 			"lastche",
-			"pre",
-			"choose",
-			"draw3"
+			"pre"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -693,7 +693,8 @@
 		"regex": false,
 		"replace_history":
 		[
-			"descrip",
+			"library",
+			"bank",
 			"shield",
 			"d3d",
 			"https://draihvow2bzoy.cloudfront.net/static/img",
@@ -775,7 +776,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -791,13 +792,12 @@
 						"selection":
 						[
 							[
-								18,
-								18
+								19,
+								19
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
 							"origin_encoding": "UTF-8",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
@@ -810,95 +810,216 @@
 				},
 				{
 					"buffer": 1,
-					"file": "cls/card.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5458,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5365,
-								5365
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": false,
-							"origin_encoding": "ASCII",
-							"spell_check": false,
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3672.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 461,
+						"buffer_size": 1543,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								195,
-								195
+								1400,
+								1400
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 858.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "cards/green/coin.lua",
+					"buffer": 2,
+					"file": "lib/util.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 853,
+						"buffer_size": 21951,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								70,
-								70
+								3927,
+								3927
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3793.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scenes/test.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 544,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								492,
+								492
+							]
+						],
+						"settings":
+						{
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 432.0,
+						"translation.y": 142.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "cls/hand.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1860,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1091,
+								1091
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "cls/bank.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1454,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1229,
+								1229
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "cls/library.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 772,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								511,
+								511
+							]
+						],
+						"settings":
+						{
+							"auto_name": "library.lua",
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "cls/card.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4938,
+								4938
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3278.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -937,7 +1058,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 111.0
+		"height": 96.0
 	},
 	"output.find_results":
 	{
@@ -947,7 +1068,7 @@
 	"project": "tcg.sublime-project",
 	"replace":
 	{
-		"height": 74.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":

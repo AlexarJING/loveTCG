@@ -1,64 +1,69 @@
-Class = require "lib.middleclass"
 local bank = Class("bank")
 
-function bank:init(root)
+local Card = require "cls/card"
+
+function bank:init(game,root)
     self.cards={}
-    self.go = msg.url(".")
-    self.position = go.get_position()
-    self.maxCount = 5
+    self.game = game
     self.root = root
+    self.parent = game[root]
+    if self.root == "up" then
+        self.cx = 550
+        self.cy = 0
+        self.rz = -0.5
+        self.x = 650
+        self.y = 360
+        self.outx = 650
+        self.outy = -360
+    else
+        self.cx = -550
+        self.cy = 0
+        self.rz = 0.5
+        self.x = -650
+        self.y = -360
+        self.outx = -650
+        self.outy = 360
+    end
+
+
+
+    self.maxCount= 5
+
 end
 
 
-function bank:resort()	
-	if #self.cards <= self.maxCount then
+function bank:resort()
+    if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
-        	
-            local pos = go.get_position(self.go)
-            if self.root == "down" then
-                pos.y = i * 80 - 250
+            local y 
+            if self.root == "up" then
+                y= self.cy + (i-1) * 100 - 250
             else
-                pos.y = -i * 80 + 250
+                y= self.cy - (i-1) * 100 + 250
             end
-            pos.z = i / 100
-            go.animate(card.go,"position",go.PLAYBACK_ONCE_FORWARD, 
-            	pos , go.EASING_INBACK, 0.5)
-            --go.animate(card.go,"rotation",go.PLAYBACK_ONCE_FORWARD, 
-            --	vmath.quat_rotation_z(-3.14/5) , go.EASING_INBACK, 0.5)
+            --local y = self.y + 0.001*(x - self.x)^2
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            card:animate(1,{x=self.cx , y = y},"outQuad")
+            card:animate(1,{rz=self.rz})
         end
     else
         local card = self.cards[1]
-        local pos = go.get_position()
-        pos.y = pos.y - 500
-        go.animate(card.go,"position",
-        	go.PLAYBACK_ONCE_FORWARD, 
-        	pos,
-         	go.EASING_INBACK, 0.5,0,
-        	function() card:destroy() end) 	
+        card:animate(1,{x = self.outx, y = self.outy})
         table.remove(self.cards, 1)
+        self:resort()
     end
 end
 
 
-function bank:refill()
-	local cards = game[self.root].library.cards
-	if not cards[1] then return end
-	
-	local data = cards[math.random(#cards)]
-    local card = factory.create("#card_proto",self.position,nil,
-        {name = hashy[data.name],race = hashy[data.race],exp = data.exp ,
-         level = data.level, root = hashy[self.root]})
-    table.insert(self.cards, game.cardIndex[card])
-	self:resort()
+function bank:update(dt)
+    for i,v in ipairs(self.cards) do
+        v:update(dt)
+    end
 end
 
-function bank:buy(card)
-	local money = game[self.root].hero.money
-    if card.price>money then
-        print("not enough money")
-    else
-        --game[self.root]:lost("money",price)
-		card:transfer(game[self.root].bank, game[self.root].play)
+function bank:draw()
+    for i,v in ipairs(self.cards) do
+        v:draw()
     end
 end
 

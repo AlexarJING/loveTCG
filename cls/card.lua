@@ -157,16 +157,25 @@ function card:initImage()
 	love.graphics.setCanvas()
 end
 
+function card:checkHover()
+
+
+end
+
 function card:update(dt)
-	for i,v in ipairs(self.tweens) do
+	for k,v in pairs(self.tweens) do
 		v:update(dt)
 	end
+	if self:checkHover() then self.game.hoverCard = self end
 end
 
 function card:animate(time , target , easing)
-	local tween = Tween.new(time, self, target, easing)
-	tween.callback = function () table.removeItem(self.tweens,tween) end
-	table.insert(self.tweens, tween)
+	for k,v in pairs(target) do
+		local tween = Tween.new(time, self, {[k]=v}, easing)
+		self.tweens[k] = tween
+		tween.callback = function () self.tweens[k] = nil end
+	end
+
 end
 
 function card:draw()

@@ -27,6 +27,8 @@ end
 function scene:keypressed(key)
 	if key == "space" then
 		game:drawCard()
+	elseif key == "lctrl" then
+		game:refillCard()
 	end
 end
 

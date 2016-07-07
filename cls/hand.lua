@@ -22,28 +22,35 @@ function hand:init(game,root)
         local card = Card(game,game.cardData.green.coin,self)
         table.insert(self.cards, card)
     end
-    self:resort()
-
-    
+    self:resort() 
 end
-
 
 
 function hand:resort()
 	if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
-            local x = self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale 
+            local x 
+            if self.root == "up" then
+                x= self.x -( -#self.cards/2 +i -0.5) * card.w * card.scale
+            else
+                x= self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale
+            end
             --local y = self.y + 0.001*(x - self.x)^2
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(1,{x=x},"inQuad")
+            card:animate(1,{x=x},"outQuad")
             card:animate(1,{rx=self.rx})
         end
     else
         for i,card in ipairs(self.cards) do
-            local x = self.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+            local x 
+            if self.root == "up" then
+                x= self.x -( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+            else
+                x= self.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+            end
             --local y = self.y + math.abs(x - self.x)*0.1
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(1,{x=x},"inQuad")
+            card:animate(1,{x=x},"outQuad")
             card:animate(1,{rx=self.rx})
         end
     end

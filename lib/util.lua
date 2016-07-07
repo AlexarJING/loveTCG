@@ -187,7 +187,10 @@ function table.getIndex(tab,item)
 end
 
 function table.removeItem(tab,item)
-   table.remove(tab,table.getIndex(tab,item))
+   local id = table.getIndex(tab,item)
+   if id then 
+   	table.remove(tab,id)
+   end
 end
 
 function string.split(str,keyword)

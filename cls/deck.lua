@@ -7,11 +7,11 @@ function deck:init(game,root)
     self.root = root
     self.parent = game[root]
     if self.root == "up" then
-        self.x = -500
+        self.x = -400
         self.y = -250
         self.rx = 3.14
     else
-        self.x = 500
+        self.x = 400
         self.y = 250
         self.rx = 3.14
     end
