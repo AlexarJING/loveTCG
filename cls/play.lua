@@ -1,32 +1,67 @@
-Class = require "lib.middleclass"
 local play = Class("play")
-
-function play:init(root)
+local moveSpeed = 0.5
+function play:init(game,root)
     self.cards={}
-    self.go = msg.url(".")
-    self.position = go.get_position()
-    self.maxCount = 10
+    self.game = game
     self.root = root
+    self.parent = game[root]
+    if self.root == "up" then
+        self.x = 0
+        self.y = -100
+        self.rx = 0
+    else
+        self.x = 0
+        self.y = 100
+        self.rx = 0 
+    end
+
+    self.maxCount= 8
+
 end
 
-
 function play:resort()
-	if #self.cards<=self.maxCount then
+    if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
-            local pos = go.get_position(self.go)
-            pos.x = pos.x +( -#self.cards/2 +i -0.5) *CARD_WIDTH
-            pos.z = i / 100
-            go.animate(card.go,"position",go.PLAYBACK_ONCE_FORWARD, pos , go.EASING_INBACK, 0.5)
+            local x 
+            if self.root == "up" then
+                x= self.x -( -#self.cards/2 +i -0.5) * card.w * card.scale
+            else
+                x= self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale
+            end
+            --local y = self.y + 0.001*(x - self.x)^2
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
+            card:animate(moveSpeed,{rx=self.rx})
         end
     else
         for i,card in ipairs(self.cards) do
-            local pos = go.get_position(self.go)
-            pos.x = pos.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) *CARD_WIDTH 
-            pos.z = i / 100
-            go.animate(card.go,"position",go.PLAYBACK_ONCE_FORWARD, pos , go.EASING_INBACK, 0.5)
+            local x 
+            if self.root == "up" then
+                x= self.x -( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
+            else
+                x= self.x +( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
+            end
+            --local y = self.y + math.abs(x - self.x)*0.1
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
+            card:animate(moveSpeed,{rx=self.rx})
         end
-
     end
 end
+
+
+function play:update(dt)
+    for i,v in ipairs(self.cards) do
+        v:update(dt)
+    end
+end
+
+function play:draw()
+    for i,v in ipairs(self.cards) do
+        v:draw()
+    end
+end
+
+
 
 return play

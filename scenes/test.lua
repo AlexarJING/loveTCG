@@ -18,10 +18,13 @@ function scene:draw()
 	self.camera:attach()
 	game:draw()
 	self.camera:detach()
+	love.graphics.print(string.format("x:%d,y:%d",game.mousex,game.mousey), x, y, r, sx, sy, ox, oy, kx, ky)
 end
 
 function scene:update(dt)
+	game.mousex, game.mousey = self.camera:mousepos() 
     game:update(dt)
+    game.click=false
 end 
 
 function scene:keypressed(key)
@@ -30,6 +33,10 @@ function scene:keypressed(key)
 	elseif key == "lctrl" then
 		game:refillCard()
 	end
+end
+
+function scene:mousepressed(key)
+	game.click = true
 end
 
 function scene:leave()

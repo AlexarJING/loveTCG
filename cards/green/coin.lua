@@ -16,16 +16,15 @@ local data = {
 
 	cancel = 2,
 
-	last = 0,
+	last = true,
 
-	isHero = false,
 }
 
 data.description = {
 	"Gold +1",
 }
 
-data.abilities={
+data.ability={
 	onBuy = function() end,
 	onDraw = function() end,
 	onHold = function() end,

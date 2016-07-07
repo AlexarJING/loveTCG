@@ -157,9 +157,20 @@ function card:initImage()
 	love.graphics.setCanvas()
 end
 
+local hw =Width/2
+local hh =Height/2
+
 function card:checkHover()
+	local dx,dy = self.game.mousex-self.x,self.game.mousey-self.y
+	local rx,ry = math.axisRot(dx,dy,-self.rz)
 
-
+	local mx,my = rx/self.scale/math.cos(self.ry),ry/self.scale/math.cos(self.rx)
+	
+	if mx>hw then return end
+	if mx<-hw then return end
+	if my>hh then return end
+	if my<-hh then return end
+	return true
 end
 
 function card:update(dt)
@@ -168,6 +179,7 @@ function card:update(dt)
 	end
 	if self:checkHover() then self.game.hoverCard = self end
 end
+
 
 function card:animate(time , target , easing)
 	for k,v in pairs(target) do
@@ -178,8 +190,9 @@ function card:animate(time , target , easing)
 
 end
 
-function card:draw()
+function card:draw(color)
 	love.graphics.setColor(255, 255, 255, 255)
+	if color then love.graphics.setColor(color) end
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
 		love.graphics.draw(self.back, self.x, self.y, self.rz, self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
 	else

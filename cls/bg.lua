@@ -16,6 +16,7 @@ function bg:update(dt)
 end
 
 function bg:draw()
+	love.graphics.setColor(255, 255, 255, 255)
 	love.graphics.draw(self.img, self.x, self.y, self.rot , self.size, self.size, self.tw/2,self.th/2)
 end
 

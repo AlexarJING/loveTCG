@@ -1,7 +1,5 @@
 local hand = Class("hand")
-
-local Card = require "cls/card"
-
+local moveSpeed = 0.5
 function hand:init(game,root)
     self.cards={}
     self.game = game
@@ -9,20 +7,16 @@ function hand:init(game,root)
     self.parent = game[root]
     if self.root == "up" then
         self.x = -100
-        self.y = -250
+        self.y = -280
         self.rx = 0
     else
         self.x = 100
-        self.y = 250
+        self.y = 280
         self.rx = 0 
     end
 
     self.maxCount= 5
-    for i = 1, 3 do
-        local card = Card(game,game.cardData.green.coin,self)
-        table.insert(self.cards, card)
-    end
-    self:resort() 
+
 end
 
 
@@ -37,21 +31,21 @@ function hand:resort()
             end
             --local y = self.y + 0.001*(x - self.x)^2
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(1,{x=x},"outQuad")
-            card:animate(1,{rx=self.rx})
+            card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
+            card:animate(moveSpeed,{rx=self.rx})
         end
     else
         for i,card in ipairs(self.cards) do
             local x 
             if self.root == "up" then
-                x= self.x -( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+                x= self.x -( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
             else
-                x= self.x +( -self.maxCount/2 + (i-1)*self.maxCount/ #self.cards ) * card.w * card.scale
+                x= self.x +( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
             end
             --local y = self.y + math.abs(x - self.x)*0.1
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(1,{x=x},"outQuad")
-            card:animate(1,{rx=self.rx})
+            card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
+            card:animate(moveSpeed,{rx=self.rx})
         end
     end
 end

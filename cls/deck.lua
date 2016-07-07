@@ -7,16 +7,16 @@ function deck:init(game,root)
     self.root = root
     self.parent = game[root]
     if self.root == "up" then
-        self.x = -400
+        self.x = -450
         self.y = -250
         self.rx = 3.14
     else
-        self.x = 400
+        self.x = 450
         self.y = 250
         self.rx = 3.14
     end
 
-    for i = 1, 5 do
+    for i = 1, 10 do
         local card = Card(game,game.cardData.green.coin,self)
         table.insert(self.cards, card)
     end

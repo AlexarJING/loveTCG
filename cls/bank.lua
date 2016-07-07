@@ -1,6 +1,5 @@
 local bank = Class("bank")
-
-local Card = require "cls/card"
+local moveSpeed = 0.5
 
 function bank:init(game,root)
     self.cards={}
@@ -43,12 +42,12 @@ function bank:resort()
             end
             --local y = self.y + 0.001*(x - self.x)^2
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(1,{x=self.cx , y = y},"outQuad")
-            card:animate(1,{rz=self.rz})
+            card:animate(moveSpeed,{x=self.cx , y = y},"outQuad")
+            card:animate(moveSpeed,{rz=self.rz})
         end
     else
         local card = self.cards[1]
-        card:animate(1,{x = self.outx, y = self.outy})
+        card:animate(moveSpeed,{x = self.outx, y = self.outy})
         table.remove(self.cards, 1)
         self:resort()
     end

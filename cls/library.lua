@@ -21,7 +21,7 @@ function library:init(game,root)
 end
 
 function library:makeCard(data)
-    return Card(game,data,self)
+    return Card(self.game,data,self)
 end
 
  
