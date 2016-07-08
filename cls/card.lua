@@ -11,11 +11,12 @@ local rare_3 = love.graphics.newImage("res/others/rare-3.png")
 local rare_4 = love.graphics.newImage("res/others/rare-4.png")
 local rare_h = love.graphics.newImage("res/others/rare-hero.png")
 local img_gold = love.graphics.newImage("res/others/gold.png")
-local img_back = love.graphics.newImage("res/others/back.png")
+local img_back = love.graphics.newImage("res/assets/cardback.png")
 
 function card:init(game,data,born)
 	self.game = game
 	self.born = born
+	self.bornSide = 
 	self:initProperty(data)
 	self:initImage()
 	self:initBack()
@@ -30,7 +31,7 @@ function card:initProperty(data)
 	self.hp_max = self.hp
 	self.shield_max = self.shield
 
-	self.price = self.basePrice - self.level
+	self.price = self.basePrice and self.basePrice - self.level
 
 	self.x = self.born.x or 0
 	self.y = self.born.y or 0
@@ -55,7 +56,7 @@ end
 
 
 function card:initImage()
-	self.img = love.graphics.newImage("res/"..self.race.."/"..self.name..".png")
+	self.img = love.graphics.newImage("res/cards/"..self.id..".png")
 	self.tw = self.img:getWidth()
 	self.th = self.img:getHeight()
 	self.predraw  = love.graphics.newCanvas(Width,Height)
@@ -65,10 +66,18 @@ function card:initImage()
 	love.graphics.draw(self.img, 0, 0, 0, Width/self.tw,Height/self.th)
 	--title
 	love.graphics.setFont(self.game.font_title)
+	love.graphics.setColor(0, 0, 0, 255)
+	love.graphics.printf(self.name, 3, 43, Width, "center")
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.printf(self.name, 0, 40, Width, "center")
+	
 	--description
+	
 	love.graphics.setFont(self.game.font_content)
 	for i,text in ipairs(self.description) do
+		love.graphics.setColor(0,0,0,255)
+		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, "center")
+		love.graphics.setColor(255,255,255,255)
 		love.graphics.printf(text, 0, (i-1)*20+textHeight/(#self.description+1)+ 180, Width, "center")
 	end
 	--price
@@ -194,7 +203,7 @@ function card:draw(color)
 	love.graphics.setColor(255, 255, 255, 255)
 	if color then love.graphics.setColor(color) end
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
-		love.graphics.draw(self.back, self.x, self.y, self.rz, self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
+		love.graphics.draw(self.back, self.x, self.y, self.rz, self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
 	else
 		love.graphics.draw(self.predraw, self.x, self.y, self.rz, self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
 	end

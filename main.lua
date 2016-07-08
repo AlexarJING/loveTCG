@@ -1,6 +1,5 @@
 require "include"
 
-
 function love.load()
     love.graphics.setBackgroundColor(100, 100, 100, 255)
     gameState={}

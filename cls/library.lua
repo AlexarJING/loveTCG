@@ -15,13 +15,13 @@ function library:init(game,root)
     end
 
     for i = 1, 10 do
-        local cardData = game.cardData.green.coin,self
+        local cardData = game.cardData.vespitole.coin
         table.insert(self.cards, cardData)
     end
 end
 
 function library:makeCard(data)
-    return Card(self.game,data,self)
+    return Card(self.game,data,self,self.root)
 end
 
  

@@ -17,7 +17,7 @@ function deck:init(game,root)
     end
 
     for i = 1, 10 do
-        local card = Card(game,game.cardData.green.coin,self)
+        local card = Card(game,game.cardData.vespitole.coin,self,root)
         table.insert(self.cards, card)
     end
 end
@@ -34,8 +34,6 @@ function deck:draw()
     end
 end
 
-function deck:addCards(cardData)
-	
-end
+
 
 return deck
