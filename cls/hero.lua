@@ -23,7 +23,7 @@ end
 
 
 function hero:setHero(data)
-	self.card = Card(self.game, data,self)
+	self.card = Card(self.game, data,self.root,self)
 end
 
 

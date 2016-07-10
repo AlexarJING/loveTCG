@@ -16,7 +16,7 @@ function play:init(game,root)
     end
 
     self.maxCount= 8
-
+    self.scale = 0.5 
 end
 
 function play:resort()
@@ -24,9 +24,9 @@ function play:resort()
         for i,card in ipairs(self.cards) do
             local x 
             if self.root == "up" then
-                x= self.x -( -#self.cards/2 +i -0.5) * card.w * card.scale
+                x= self.x -( -#self.cards/2 +i -0.5) * card.w * self.scale
             else
-                x= self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale
+                x= self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale
             end
             --local y = self.y + 0.001*(x - self.x)^2
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05

@@ -4,36 +4,56 @@
 		"selected_items":
 		[
 			[
+				"sh",
+				"shadow"
+			],
+			[
+				"shadow",
+				"shadowCount"
+			],
+			[
+				"update",
+				"updateCanvas"
+			],
+			[
+				"weak",
+				"weakest"
+			],
+			[
 				"tab",
-				"table.sort	table.sort"
+				"table.insert	(table, [pos,] value)"
 			],
 			[
-				"cancel",
-				"cancelAttack"
+				"for",
+				"fori	for i,v in ipairs()"
 			],
 			[
-				"hoverC",
-				"hoverColor"
+				"fro",
+				"fori	for i,v in ipairs()"
+			],
+			[
+				"ids",
+				"love.mouse.isDown"
+			],
+			[
+				"newim",
+				"love.graphics.newImage"
+			],
+			[
+				"hover",
+				"hoverCard"
 			],
 			[
 				"print",
 				"love.graphics.print"
 			],
 			[
-				"newim",
-				"love.image.newImageData"
+				"random",
+				"love.math.random"
 			],
 			[
-				"imag",
-				"love.graphics.newImage"
-			],
-			[
-				"canva",
-				"love.graphics.newCanvas"
-			],
-			[
-				"for",
-				"fori	for i,v in ipairs()"
+				"setline",
+				"love.graphics.setLineWidth"
 			],
 			[
 				"img_",
@@ -296,26 +316,10 @@
 	"buffers":
 	[
 		{
-			"file": "main.lua",
-			"settings":
-			{
-				"buffer_size": 337,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 6935,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "cls/play.lua",
-			"settings":
-			{
-				"buffer_size": 1764,
+				"buffer_size": 10759,
 				"line_ending": "Windows"
 			}
 		},
@@ -323,7 +327,7 @@
 			"file": "cls/card.lua",
 			"settings":
 			{
-				"buffer_size": 6448,
+				"buffer_size": 7712,
 				"line_ending": "Windows"
 			}
 		},
@@ -331,22 +335,58 @@
 			"file": "cls/deck.lua",
 			"settings":
 			{
-				"buffer_size": 700,
+				"buffer_size": 1037,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cls/library.lua",
+			"file": "cls/effect.lua",
 			"settings":
 			{
-				"buffer_size": 786,
+				"buffer_size": 2030,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/play.lua",
+			"settings":
+			{
+				"buffer_size": 1785,
 				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/Lua Love/LuaLove.sublime-build",
 	"build_system_choices":
 	[
+		[
+			[
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					""
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"Love2D"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"ldoc: File"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"ldoc: Project"
+				]
+			],
+			[
+				"Packages/Lua Love/LuaLove.sublime-build",
+				"Love2D"
+			]
+		]
 	],
 	"build_varint": "",
 	"command_palette":
@@ -408,34 +448,90 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cards",
-		"/F/Love2D Project/loveTCG/cards/vespitole",
-		"/F/Love2D Project/loveTCG/cls",
-		"/F/Love2D Project/loveTCG/lib",
-		"/F/Love2D Project/loveTCG/res",
-		"/F/Love2D Project/loveTCG/scenes"
+		"/G/love2dproj/loveTCG",
+		"/G/love2dproj/loveTCG/cards",
+		"/G/love2dproj/loveTCG/cls",
+		"/G/love2dproj/loveTCG/scenes"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/loveTCG/cls/grave.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/coin.lua",
-		"/F/Love2D Project/loveTCG/cls/effect.lua",
-		"/F/Love2D Project/loveTCG/cls/deck.lua",
-		"/F/Love2D Project/loveTCG/cls/hero.lua",
-		"/F/Love2D Project/loveTCG/cls/bank.lua",
-		"/F/Love2D Project/loveTCG/cls/library.lua",
-		"/F/Love2D Project/loveTCG/cls/hand.lua",
-		"/F/Love2D Project/loveTCG/scenes/test.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/captainviatrix.lua",
-		"/F/Love2D Project/loveTCG/cards/green/coin.lua",
-		"/F/Love2D Project/loveTCG/cls/bg.lua",
+		"/G/love2dproj/loveTCG/scenes/test.lua",
+		"/G/love2dproj/loveTCG/lib/util.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sofocatro.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/cardinalpocchi.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sisterYsadora.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/regentmarsh.lua",
+		"/G/love2dproj/loveTCG/cls/library.lua",
+		"/G/love2dproj/loveTCG/cls/bank.lua",
+		"/G/love2dproj/loveTCG/cls/card.lua",
+		"/G/love2dproj/loveTCG/cls/effect.lua",
+		"/G/love2dproj/loveTCG/cls/deck.lua",
+		"/G/love2dproj/loveTCG/cls/game.lua",
+		"/G/love2dproj/loveTCG/cls/grave.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/coin.lua",
+		"/G/love2dproj/loveTCG/cls/scenes/test.lua",
+		"/G/defold/branches/28979/17281/home/main/control/camera.script",
+		"/G/love2dproj/loveTCG/cards/vespitole/wealthypatron.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/madamaline.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/supplicant.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/leadofcharge.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/marshal.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sibylinescrolls.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/synod.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/vintner.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/merchantsguild.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/tithe.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/militia.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/mercenary.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/palisade.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/catapult.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/rampart.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/soldier.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/knight.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/warship.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/ballista.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/malediction.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bishop.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/holywrath.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/liturgy.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/inquisitor.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/banker.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bounty.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bureaucrat.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/collecttaxes.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/corruption.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/courtesan.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/courtlyintrigue.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/embargo.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/fief.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/harvest.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/loan.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/masqueradeball.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/merchantguild.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/prayer.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/serf.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/spiceroute.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/spynetwork.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/tradecompany.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/tribute.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/usury.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/devotion.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/benediction.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/masqueradeball.png",
+		"/G/love2dproj/loveTCG/cls/cardDataLoader.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/captainviatrix.lua",
+		"/G/love2dproj/loveTCG/cls/play.lua",
+		"/G/love2dproj/loveTCG/cls/show.lua",
+		"/G/love2dproj/loveTCG/cls/hand.lua",
+		"/G/love2dproj/loveTCG/cls/turn.lua",
+		"/G/love2dproj/loveTCG/cls/hero.lua",
+		"/G/love2dproj/loveTCG/main.lua",
+		"/G/love2dproj/loveTCG/cards/green/coin.lua",
+		"/G/love2dproj/loveTCG/cls/bg.lua",
+		"/G/love2dproj/loveTCG/cls/cls/card.lua",
+		"/C/Users/alex/AppData/Local/Temp/Rar$DIa0.151/card_cls.lua",
+		"/G/love2dproj/loveTCG/lib/tween.lua",
 		"/C/Users/Alexar/Documents/Tencent Files/1643386616/FileRecv/woo.txt",
-		"/C/Users/Alexar/Desktop/effects.stf",
-		"/C/Users/Alexar/Downloads/effects.stf",
-		"/D/flashbuilder/Adobe Flash Builder 4.7 (64 Bit)/eclipse/plugins/com.adobe.flash.compiler_4.7.0.349722/AIRSDK/atftools/Docs/Readme.txt",
-		"/C/Users/Alexar/Desktop/2/atf2png-master/README.md",
 		"/C/Users/Alexar/Desktop/xml/test.lua",
 		"/C/Users/Alexar/Desktop/pvr/convert.txt",
 		"/C/Users/Alexar/Desktop/source/assets/convert.txt",
@@ -445,7 +541,9 @@
 		"/C/Users/Alexar/Desktop/ATF2PNG-master/.actionScriptProperties",
 		"/C/Users/Alexar/Desktop/ATF2PNG-master/README.md",
 		"/C/Users/Alexar/Desktop/xml/LuaXml.lua",
+		"/F/Love2D Project/loveTCG/scenes/test.lua",
 		"/F/Love2D Project/loveTCG/cls/game.lua",
+		"/F/Love2D Project/loveTCG/cards/green/coin.lua",
 		"/C/Users/Alexar/Desktop/source/assets_compile/convert.txt",
 		"/F/Love2D Project/loveTCG/main.lua",
 		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.337/说明.txt",
@@ -462,6 +560,7 @@
 		"/F/Love2D Project/loveTCG/conf.lua",
 		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
 		"/F/Love2D Project/FunnyFunky/conf.lua",
+		"/F/Love2D Project/loveTCG/cls/bg.lua",
 		"/F/Love2D Project/loveTCG/libs/camera.lua",
 		"/F/Love2D Project/loveTCG/include.lua",
 		"/F/Love2D Project/FunnyFunky/scene/game.lua",
@@ -483,73 +582,11 @@
 		"/F/defold/branches/28979/17281/Main/main/game.lua",
 		"/F/defold/branches/28979/17281/Main/main/Objects/table/table.script",
 		"/F/Love2D Project/FunnyFunky/lib/util.lua",
-		"/F/defold/branches/28979/17281/Main/main/main.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/hand.script",
-		"/F/defold/branches/28979/17281/Main/main/game.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/grave.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/bank.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/library.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/play.script",
-		"/F/defold/branches/28979/17281/Main/main/control/camera.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/bg.script",
-		"/F/defold/branches/28979/17281/Main/lib/hashy.lua",
-		"/F/defold/branches/28979/17281/Main/main/hash.lua",
-		"/C/Users/Alexar/Downloads/hashy.lua",
-		"/C/Users/Alexar/Desktop/hashy.lua",
-		"/F/defold/branches/28979/17281/Main/input/game.input_binding",
-		"/C/Users/Alexar/Desktop/hashy.txt",
-		"/F/defold/branches/28979/17281/Main/main/render/2d.render_script",
-		"/F/defold/branches/28979/17281/Main/main/control/camera.camera",
-		"/F/Love2D Project/pixelRace/camera.lua",
-		"/F/defold/branches/28979/17281/Main/main/main.collection",
-		"/F/defold/branches/28979/17281/Main/main/render/game.render_script",
-		"/F/Love2D Project/a song of ice and fire/scr/heros/JohnStark.lua",
-		"/F/defold/branches/28979/17281/Main/main/Objects/card/card_proto.go",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.975/main.lua",
-		"/F/defold/branches/28979/17281/Main/lib/goput.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.138/main.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.084/main.lua",
-		"/C/Users/Alexar/Desktop/publicexamples-master/examples/click_game_object/click_game_object.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/hero.script",
-		"/F/defold/branches/28979/17281/Main/main/data/loader.lua",
-		"/C/Users/Alexar/Desktop/publicexamples-master/examples/click_game_object/click_game_object.atlas",
-		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/User/defold.sublime-build",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.470/LuaLove.sublime-build",
-		"/C/Program Files (x86)/Sublime Text 3/Data/Packages/User/lua32.sublime-build",
-		"/F/defold/branches/28979/17281/Main/main/data/publicAbilities.lua",
-		"/F/defold/branches/28979/17281/Main/main/Objects/card/general.script",
-		"/F/defold/branches/26730/17281/main/main/object/mega/mega.script",
-		"/F/defold/branches/28979/17281/Main/main/data/testCoin/coin.script",
-		"/F/defold/branches/28979/17281/Main/main/table/bg.script",
-		"/C/Users/Alexar/Desktop/examples-project/render/example.render_script",
-		"/F/defold/branches/28979/17281/Main/main/render/render.script",
-		"/F/Love2D Project/war of omens/frameWork.lua",
-		"/F/Love2D Project/war of omens/conf.lua",
-		"/F/Love2D Project/war of omens/server.lua",
-		"/F/Love2D Project/war of omens/client.lua",
-		"/F/Love2D Project/war of omens/network.lua",
-		"/F/Love2D Project/war of omens/frame_util.lua",
-		"/F/Love2D Project/war of omens/card_cls.lua",
-		"/F/defold/branches/28979/17281/Main/main/render/zoom.render_script",
-		"/F/defold/branches/29072/17281/workplace/render/example.render_script",
-		"/C/Users/Alexar/Desktop/examples-project/collision-example/camera.script",
-		"/F/defold/branches/29072/17281/workplace/collision-example/camera.script",
-		"/F/Love2D Project/war of omens/main.lua",
-		"/F/defold/workspace/.metadata/.plugins/org.eclipse.core.filesystem/filecache/1466586632553/bundle3907926266936774379efs",
-		"/F/Love2D Project/war of omens/tween/tween.lua",
-		"/F/Love2D Project/module/lib/tween/README.md",
-		"/D/Program Files/Sublime Text 3/Data/Packages/User/Function Name Display.sublime-settings",
-		"/D/Program Files/Sublime Text 3/Data/Packages/Function Name Display/Function Name Display.sublime-settings",
-		"/F/Love2D Project/war of omens/deckEditor.lua",
-		"/F/Love2D Project/war of omens/upper.lua",
-		"/F/Love2D Project/war of omens/lower.lua",
-		"/F/Love2D Project/war of omens/loadCards.lua",
-		"/F/Love2D Project/war of omens/frame_basic.lua",
-		"/F/Love2D Project/war of omens/ai.lua"
+		"/F/defold/branches/28979/17281/Main/main/main.script"
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -564,12 +601,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print",
+			"game",
+			"race",
+			"lost",
 			"deck",
-			"money",
-			"bank",
-			"deck",
-			"born",
 			"hand",
+			"game",
+			"size",
+			"deck",
+			"discrip",
 			"cancel",
 			"%platform%",
 			"v",
@@ -687,11 +728,7 @@
 			"替换",
 			"drawf",
 			"record",
-			"仪式",
-			"draw",
-			"add",
-			"weak",
-			"selecttab"
+			"仪式"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -699,11 +736,15 @@
 		"regex": false,
 		"replace_history":
 		[
-			"grave",
-			"gold",
-			"hero",
-			"library",
-			"bank",
+			"self",
+			"faction",
+			"lose",
+			"show",
+			"play",
+			"self",
+			"scale",
+			"hand",
+			"descrip",
 			"shield",
 			"d3d",
 			"https://draihvow2bzoy.cloudfront.net/static/img",
@@ -785,53 +826,24 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "main.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 337,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								18,
-								18
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6935,
+						"buffer_size": 10759,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3513,
-								3513
+								5525,
+								5525
 							]
 						],
 						"settings":
@@ -841,27 +853,57 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3253.0,
+						"translation.y": 6276.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "cls/play.lua",
+					"buffer": 1,
+					"file": "cls/card.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1764,
+						"buffer_size": 7712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1537,
-								1537
+								4904,
+								4904
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2700.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "cls/deck.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1037,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								654,
+								650
 							]
 						],
 						"settings":
@@ -872,27 +914,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 594.0,
+						"translation.y": 216.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "cls/card.lua",
+					"file": "cls/effect.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6448,
+						"buffer_size": 2030,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								792,
-								792
+								1858,
+								1858
 							]
 						],
 						"settings":
@@ -902,27 +944,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 264.0,
+						"translation.y": 720.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "cls/deck.lua",
+					"file": "cls/play.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 700,
+						"buffer_size": 1785,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								449,
-								449
+								408,
+								408
 							]
 						],
 						"settings":
@@ -937,37 +979,6 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "cls/library.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 786,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								452,
-								452
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 704.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1006,7 +1017,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 142.0
+		"height": 125.0
 	},
 	"output.find_results":
 	{
@@ -1016,7 +1027,7 @@
 	"project": "tcg.sublime-project",
 	"replace":
 	{
-		"height": 70.0
+		"height": 74.0
 	},
 	"save_all_on_build": true,
 	"select_file":

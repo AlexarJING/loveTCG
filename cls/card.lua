@@ -13,10 +13,10 @@ local rare_h = love.graphics.newImage("res/others/rare-hero.png")
 local img_gold = love.graphics.newImage("res/others/gold.png")
 local img_back = love.graphics.newImage("res/assets/cardback.png")
 
-function card:init(game,data,born)
+function card:init(game,data,born,current)
 	self.game = game
-	self.born = born
-	self.bornSide = 
+	self.born = game[born]
+	self.current = current
 	self:initProperty(data)
 	self:initImage()
 	self:initBack()
@@ -30,17 +30,22 @@ function card:initProperty(data)
 	end
 	self.hp_max = self.hp
 	self.shield_max = self.shield
+	self.level = self.level or 1
+	if self.level then
+		self.price = self.basePrice and self.basePrice - self.level + 1
+	end
 
-	self.price = self.basePrice and self.basePrice - self.level
-
-	self.x = self.born.x or 0
-	self.y = self.born.y or 0
-	self.rz = self.born.rz or 0
-	self.rx = self.born.rx or 0
-	self.ry = self.born.ry or 0
+	self.x = self.current.x or 0
+	self.y = self.current.y or 0
+	self.rz = self.current.rz or 0
+	self.rx = self.current.rx or 0
+	self.ry = self.current.ry or 0
 	self.scale = 0.5
 	self.w = Width
 	self.h = Height
+	self.vduration=0
+	self.offx=0
+	self.offy=0
 end
 
 local textHeight = 150
@@ -90,7 +95,7 @@ function card:initImage()
 		love.graphics.printf(self.price, 0, 11, Width-10, "right")
 		love.graphics.setColor(0, 0, 0,255)
 		love.graphics.printf(self.price, 0, 11, Width-9, "right")
-		love.graphics.setColor(255, 255, 255,255)
+		love.graphics.setColor(0, 0, 255,255)
 		love.graphics.printf(self.price, 0, 11, Width-11, "right")
 	end
 	--rare
@@ -108,45 +113,6 @@ function card:initImage()
 		elseif self.rare == "hero" then
 			love.graphics.draw(rare_h, 5,150)
 		end
-	end
-
-	--life
-
-	if self.hp then
-		love.graphics.setColor(100, 100, 100, 255)
-		for i =1 , self.hp_max do
-			--love.graphics.circle("fill", 220 - i*20, 300, 10)
-			love.graphics.draw(img_hp, 220 - self.hp_max*20 + (i-1)*17, 290)
-		end
-		love.graphics.setColor(255,255,255,255)
-		for i =1 , self.hp do
-			--love.graphics.circle("fill", 220 - self.hp_max*20 + (i-1)*20, 300, 8)
-			love.graphics.draw(img_hp, 220 - self.hp_max*20 + (i-1)*17, 290)
-		end
-	end
-
-	--shield
-	if self.shield then
-		love.graphics.setColor(100, 100, 100, 255)
-		for i =1 , self.shield_max do
-			--love.graphics.circle("fill", 220 - self.hp_max*17 - i*17 , 290, 10)
-			love.graphics.draw(img_shield,220 - self.hp_max*17 - (i+1)*17 , 287)
-		end
-		love.graphics.setColor(255,255,255,255)
-		for i =1 , self.shield do
-			--love.graphics.circle("fill", 220 - self.hp_max*17 -self.shield_max*17 + (i-1)*20, 290, 8)
-			love.graphics.draw(img_shield,220 - self.hp_max*17 - (i+1)*17 , 287)
-		end
-	end
-
-
-	--last 
-
-	if self.last then
-		love.graphics.setColor(255,255,255,255)
-		love.graphics.setFont(self.game.font_content)
-		love.graphics.draw(img_wait, 5, 283)
-		love.graphics.printf("x"..tostring(self.last), 22, 283, Width, "left")
 	end
 
 
@@ -170,6 +136,8 @@ local hw =Width/2
 local hh =Height/2
 
 function card:checkHover()
+	if self.tweens.x or self.tweens.y then return end
+
 	local dx,dy = self.game.mousex-self.x,self.game.mousey-self.y
 	local rx,ry = math.axisRot(dx,dy,-self.rz)
 
@@ -183,18 +151,33 @@ function card:checkHover()
 end
 
 function card:update(dt)
+	self:vibrateUpdate(dt)
+	if self:needRedraw() then
+		self:updateCanvas()
+	end
 	for k,v in pairs(self.tweens) do
 		v:update(dt)
 	end
 	if self:checkHover() then self.game.hoverCard = self end
+
+	if self.goingback and not self.tweens.x and not self.tweens.y then
+		self.game:goback(self)
+		self.goingback = false
+	end
 end
 
 
-function card:animate(time , target , easing)
+function card:animate(time , target , easing , cb)
+	target.scale = target.scale or 0.5
+	target.rz = target.rz or 0
+	target.rx = target.rx or 0
 	for k,v in pairs(target) do
 		local tween = Tween.new(time, self, {[k]=v}, easing)
 		self.tweens[k] = tween
-		tween.callback = function () self.tweens[k] = nil end
+		tween.callback = function () 
+			self.tweens[k] = nil
+			if cb then cb() end
+		end
 	end
 
 end
@@ -203,12 +186,90 @@ function card:draw(color)
 	love.graphics.setColor(255, 255, 255, 255)
 	if color then love.graphics.setColor(color) end
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
-		love.graphics.draw(self.back, self.x, self.y, self.rz, self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
+		love.graphics.draw(self.back, self.x+self.offx, self.y+self.offy, self.rz,
+		 self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
 	else
-		love.graphics.draw(self.predraw, self.x, self.y, self.rz, self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
+		love.graphics.draw(self.predraw, self.x+self.offx, self.y+self.offy, self.rz,
+		 self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
 	end
 	
 end
 
+function card:needRedraw()
+	if self.hp == self.ohp and self.shield == self.oshield and self.last == self.olast then
+		return false
+	end
+
+	self.ohp = self.hp
+	self.shield = self.oshield
+	self.last = self.olast
+	return true
+end
+
+
+function card:updateCanvas()
+	love.graphics.setCanvas(self.predraw)
+	
+	if self.hp then
+		love.graphics.setColor(100, 100, 100, 255)
+		for i =1 , self.hp_max do
+			love.graphics.draw(img_hp, 100 - self.hp_max*10 + (i-1)*17, 285)
+		end
+		love.graphics.setColor(255,255,255,255)
+		for i =1 , self.hp do
+			love.graphics.draw(img_hp, 100 - self.hp_max*10 + (i-1)*17, 285)
+		end
+	end
+
+	--shield
+	if self.shield then
+		love.graphics.setColor(100, 100, 100, 255)
+		for i =1 , self.shield_max do
+			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)
+		end
+		love.graphics.setColor(255,255,255,255)
+		for i =1 , self.shield do
+			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)
+		end
+	end
+
+
+	--last 
+
+	if self.last and type(self.last) == "number" then
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.setFont(self.game.font_content)
+		love.graphics.draw(img_wait, 80, 283)
+		love.graphics.printf("x"..tostring(self.last), 100, 283, Width, "left")
+	end
+
+	love.graphics.setCanvas()
+
+end
+
+
+function card:vibrate(duration, magnitude)
+    self.vduration, self.vMagnitude = duration or 1, magnitude or 5
+end
+
+
+function card:vibrateUpdate(dt)
+	if self.vduration<=0 then return end
+	self.vduration = self.vduration -dt
+	self.vMagnitude = self.vMagnitude*0.98
+	self.offx = love.math.random(-self.vMagnitude, self.vMagnitude)
+    self.offy = love.math.random(-self.vMagnitude, self.vMagnitude)
+    if self.vduration<=0 then 
+    	self.offx=0
+    	self.offy=0
+    end
+end
+
+function card:standout()
+	local y = self.y
+	local ty = y>0 and y-50 or y+50
+	self:animate(0.2,{y=ty},"linear",function()self:animate(0.3,{y=y},"linear")end)
+
+end
 
 return card

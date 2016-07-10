@@ -14,14 +14,18 @@ function library:init(game,root)
         self.y = -360
     end
 
-    for i = 1, 10 do
-        local cardData = game.cardData.vespitole.coin
-        table.insert(self.cards, cardData)
-    end
+    table.insert(self.cards, game.cardData.vespitole.militia)
+--[[
+    for k,v in pairs(game.cardData.vespitole) do
+        if not v.isHero and not v.isCoin then
+            table.insert(self.cards, v)
+        end
+    end]]
+
 end
 
 function library:makeCard(data)
-    return Card(self.game,data,self,self.root)
+    return Card(self.game,data,self.root,self)
 end
 
  

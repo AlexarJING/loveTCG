@@ -1,8 +1,7 @@
 local data = {
 	id = "captainviatrix",
-	name = "viatrix",
-	race = "vespitole",
-	class = "hero", --or 
+	name = "Captain Listrata",
+	faction= "vespitole",
 
 	profile = {"no money, you can do nothing!"},
 
@@ -11,7 +10,7 @@ local data = {
 }
 
 data.description = {
-	"turn: +1 Food",
+	"turn: +1 food",
 }
 
 data.ability={
@@ -24,7 +23,9 @@ data.ability={
 	end,
 	onDiscard = function() end,
 	onKilled = function() end,
-	onTurnStart = function() end,
+	onTurnStart = function(card,game) 
+		game:gain(card,"my","food",1)
+	end,
 	onTurnEnd = function() end,
 	onAttack = function() end,
 	onAttacked = function() end,

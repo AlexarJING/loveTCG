@@ -1,28 +1,20 @@
 local data = {
 	id = "vespitolecoin",
 	name = "coin",
-	race = "vespitole",
-	class = "coin", --or 
-	rare = 1 ,
+	faction = "vespitole",
+	category = "coin",
+	rare = 0 ,
 
 	profile = {"no money, you can do nothing!"},
 
-	level = 0,
 
-	basePrice = 1,
-	hp = 5,
+	back = true,
 
-	block = true,
-	shield = 2,
-
-	cancel = 2,
-
-	last = false,
-
+	isCoin = true,
 }
 
 data.description = {
-	"Gold +1",
+	"play: +1 gold",
 }
 
 data.ability={

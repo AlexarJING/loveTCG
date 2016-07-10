@@ -8,14 +8,13 @@ function hand:init(game,root)
     if self.root == "up" then
         self.x = -100
         self.y = -280
-        self.rx = 0
     else
         self.x = 100
         self.y = 280
-        self.rx = 0 
     end
 
     self.maxCount= 5
+    self.scale = 0.5
 
 end
 
@@ -25,12 +24,12 @@ function hand:resort()
         for i,card in ipairs(self.cards) do
             local x 
             if self.root == "up" then
-                x= self.x -( -#self.cards/2 +i -0.5) * card.w * card.scale
+                x= self.x -( -#self.cards/2 +i -0.5) * card.w * self.scale
             else
-                x= self.x +( -#self.cards/2 +i -0.5) * card.w * card.scale
+                x= self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale
             end
             --local y = self.y + 0.001*(x - self.x)^2
-            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
+            --local rz = ( -#self.cards/2 +i -0.5)* 0.0
             card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
             card:animate(moveSpeed,{rx=self.rx})
         end
@@ -45,7 +44,6 @@ function hand:resort()
             --local y = self.y + math.abs(x - self.x)*0.1
             --local rz = ( -#self.cards/2 +i -0.5)* 0.05
             card:animate(moveSpeed,{x=x,y=self.y},"outQuad")
-            card:animate(moveSpeed,{rx=self.rx})
         end
     end
 end

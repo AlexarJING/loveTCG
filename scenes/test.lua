@@ -18,25 +18,35 @@ function scene:draw()
 	self.camera:attach()
 	game:draw()
 	self.camera:detach()
-	love.graphics.print(string.format("x:%d,y:%d",game.mousex,game.mousey), x, y, r, sx, sy, ox, oy, kx, ky)
 end
+
+
 
 function scene:update(dt)
 	game.mousex, game.mousey = self.camera:mousepos() 
     game:update(dt)
     game.click=false
+    game.rightClick = false
 end 
 
 function scene:keypressed(key)
 	if key == "space" then
-		game:drawCard()
+		game.turnButton:endturn()
 	elseif key == "lctrl" then
 		game:refillCard()
+	elseif key == "1" then
+		if game.hoverCard then game.hoverCard:vibrate() end
+	elseif key == "2" then
+		if game.hoverCard then game.hoverCard:standout() end
 	end
 end
 
-function scene:mousepressed(key)
-	game.click = true
+function scene:mousepressed(x,y,key)
+	if key == 1 then
+		game.click = true
+	else 
+		game.rightClick = true
+	end
 end
 
 function scene:leave()

@@ -222,7 +222,7 @@ function table.copy(st,copyto,ifcopyfunction)
 	copyto=copyto or {}
 	for k, v in pairs(st or {}) do
 		if type(v) == "table" then
-			copyto[k] = table.copy(v,copyto[k])          
+			copyto[k] = table.copy(v,copyto[k],ifcopyfunction)          
 		elseif type(v) == "function" then 
 			if ifcopyfunction then
 				copyto[k] = v
