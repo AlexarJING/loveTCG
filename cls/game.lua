@@ -75,14 +75,16 @@ function game:draw()
 		self[side].deck:draw()
 	end
 
-	for i,v in ipairs(self.effects) do
-		v:draw()
-	end
+	
 
 	self.show:draw()
 
 	if self.hoverCard then
 		self.hoverCard:draw(hoverColor)
+	end
+
+	for i,v in ipairs(self.effects) do
+		v:draw()
 	end
 end
 
@@ -330,8 +332,15 @@ function game:lose(card,who,what)
 	local res = self[who].resource
 	res[what] = res[what] - 1
 	
-	local to={x=self[who].hero.x,y=0}
-	local e = Effect(what,self[who].hero,to,true,1,"outQuad")
+	local x,y
+	if self.turn == "up" then
+		x = self.my.hero.x -love.math.random(-30,30)
+		y = self.my.hero.y +love.math.random(50,150)
+	else
+		x = self.my.hero.x +love.math.random(-30,30)
+		y = self.my.hero.y -love.math.random(50,150)
+	end
+	local e = Effect(what,self[who].hero,{x=x,y=y},true,1,"outQuad")
 	e:addCallback(function() self[who].hero:updateResource()end)	
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onLose then
@@ -346,19 +355,49 @@ function game:feedCard()
 	local card = self.hoverCard
 	if not card.hp and not card.isHero then return end
 	if card.isHero then
+		self.my.resource.hp = self.my.resource.hp+1
+	else		
 		if not card.ability.onFeed and card.hp == card.hp_max then return end
 		card.hp = card.hp + 1
-	else
-		game.my.resource.hp = game.my.resource.hp+1
+		if card.hp>card.hp_max then card.hp = card.hp_max end
 	end
 	if self.my.resource.food > 0 then
 		self.my.resource.food = self.my.resource.food - 1
+		local x,y
+		if self.turn == "up" then
+			x = self.my.hero.x -love.math.random(-30,30)
+			y = self.my.hero.y +love.math.random(50,150)
+		else
+			x = self.my.hero.x +love.math.random(-30,30)
+			y = self.my.hero.y -love.math.random(50,150)
+		end
+		local out= Effect("food",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
+		out:addCallback(function() 
+			local back = Effect("food",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
+			back:addCallback(function() self.my.hero:updateResource()end)
+		end)
 	else
 		self.my.resource.magic = self.my.resource.magic - 1
+		local x,y
+		if self.turn == "up" then
+			x = self.my.hero.x -love.math.random(50,150)
+			y = self.my.hero.y +love.math.random(50,150)
+		else
+			x = self.my.hero.x +love.math.random(50,150)
+			y = self.my.hero.y -love.math.random(50,150)
+		end
+		local out= Effect("magic",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
+		out:addCallback(function() 
+			local back = Effect("magic",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
+			back:addCallback(function() self.my.hero:updateResource()end)
+		end)
 	end
-	if card.hp>card.hp_max then card.hp = card.hp_max end
+	
 	if card.ability.onFeed then card.ability.onFeed(card,self) end
-	if card.me.hero.ability.onFeedAlly then card.me.hero.ability.onFeedAlly(card.me.hero.card,self) end
+	if self.my.hero.card.ability.onFeedAlly then 
+		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
+	end
+
 end
 
 function game:attackCard()
@@ -390,15 +429,16 @@ function game:damageCard(card)
 
 end
 
-function game:killCard(card)
+function game:killCard(card,passResort) 
 	if card.back then
-		self:transferCard(card ,card.current, card.born.deck ,_,true)
+		self:transferCard(card ,card.current, card.born.deck ,_,passResort)
 	else
-		self:transferCard(card ,card.current, card.born.grave,_,true)
+		self:transferCard(card ,card.current, card.born.grave,_,passResort)
 	end
 end
 
 function game:goback(card)
+
 	if card.back then
 		card.born.deck:goback(card)
 	else
@@ -469,8 +509,12 @@ function game:attack(from,to)
 
 	
 		if self:damageCard(target) then	 --killed	
-			effect:addCallback(function() target:vibrate(_,_,function()game:goback(target)end) end)
-			self:killCard(target)
+			effect:addCallback(function() target:vibrate(_,_,
+				function()
+					self:goback(target)
+					self.your.play:resort()
+				end) end)
+			self:killCard(target,true)
 		else
 			effect:addCallback(function() target:vibrate() end)
 		end
@@ -484,6 +528,7 @@ function game:attackHero(from)
 	self.your.resource.hp = self.your.resource.hp -1
 	local effect = Effect("attack",from,self.your.hero,false,1,"inBack" )
 	effect:addCallback(function() target:vibrate() end)
+	effect:addCallback(function() self.your.hero:updateResource()end)
 	from:standout()
 	if self.your.resource.hp < 0 then
 		---game over!!
