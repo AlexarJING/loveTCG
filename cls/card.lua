@@ -21,6 +21,7 @@ function card:init(game,data,born,current)
 	self:initImage()
 	self:initBack()
 	self.tweens={}
+	self.tweenStack = {}
 end
 
 
@@ -152,35 +153,56 @@ end
 
 function card:update(dt)
 	self:vibrateUpdate(dt)
-	if self:needRedraw() then
-		self:updateCanvas()
-	end
-	for k,v in pairs(self.tweens) do
-		v:update(dt)
-	end
-	if self:checkHover() then self.game.hoverCard = self end
+	--if self:needRedraw() then
+		--self:updateCanvas()
+	--end
+	
+	self:updateTweens(dt)
 
-	if self.goingback and not self.tweens.x and not self.tweens.y then
-		self.game:goback(self)
-		self.goingback = false
-	end
+	if self:checkHover() then self.game.hoverCard = self end
 end
 
-
-function card:animate(time , target , easing , cb)
-	target.scale = target.scale or 0.5
-	target.rz = target.rz or 0
-	target.rx = target.rx or 0
-	for k,v in pairs(target) do
-		local tween = Tween.new(time, self, {[k]=v}, easing)
-		self.tweens[k] = tween
-		tween.callback = function () 
-			self.tweens[k] = nil
-			if cb then cb() end
+function card:updateTweens(dt)
+	for k,v in pairs(self.tweens) do
+		if v:update(dt) then
+			local tween = self.tweenStack[k] and self.tweenStack[k][1]
+			if tween then
+				self.tweens[k] = tween
+				table.remove(self.tweenStack[k], 1)
+			else
+				self.tweens[k] = nil
+			end
 		end
 	end
-
 end
+
+function card:addAnimate(duration , target , easing , delay, callback)
+	for k,v in pairs(target) do
+		local tween = Tween.new(duration, self, {[k]=v}, easing, delay)
+		if self.tweens[k] then
+			self.tweenStack[k] = self.tweenStack[k] or {}
+			table.insert(self.tweenStack[k], tween)
+		else
+			self.tweens[k] = tween
+		end
+		
+		tween.callback = function () 
+			if callback then callback() end
+		end
+	end
+end
+
+function card:setAnimate(duration , target , easing , delay, callback)
+	for k,v in pairs(target) do
+		local tween = Tween.new(duration, self, {[k]=v}, easing, delay)
+		self.tweens[k] = tween
+		self.tweenStack[k] =  {}	
+		tween.callback = function () 
+			if callback then callback() end
+		end
+	end
+end
+
 
 function card:draw(color)
 	love.graphics.setColor(255, 255, 255, 255)
@@ -248,8 +270,10 @@ function card:updateCanvas()
 end
 
 
-function card:vibrate(duration, magnitude)
-    self.vduration, self.vMagnitude = duration or 1, magnitude or 5
+
+function card:vibrate(duration, magnitude,vfunc)
+    self.vduration, self.vMagnitude = duration or 0.3, magnitude or 5
+    self.vfunc = vfunc
 end
 
 
@@ -262,14 +286,17 @@ function card:vibrateUpdate(dt)
     if self.vduration<=0 then 
     	self.offx=0
     	self.offy=0
+    	if self.vfunc then self.vfunc() end
     end
 end
 
 function card:standout()
 	local y = self.y
 	local ty = y>0 and y-50 or y+50
-	self:animate(0.2,{y=ty},"linear",function()self:animate(0.3,{y=y},"linear")end)
-
+	self:addAnimate(0.3,{y=ty},"linear")
+	self:addAnimate(0.3,{y=y},"linear")
 end
+
+
 
 return card

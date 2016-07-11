@@ -41,8 +41,6 @@ function library:draw()
     end
 end
 
-function library:addCards(cardData)
-	
-end
+
 
 return library

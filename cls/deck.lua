@@ -23,8 +23,8 @@ function deck:init(game,root)
 end
 
 function deck:goback(card)
-    card:animate(0.5,{y=self.y},"inBack")
-    card:animate(0.5,{x=self.x,rz=0,rx=3.14},"outQuad")
+    card:addAnimate(0.5,{y=self.y},"inBack")
+    card:addAnimate(0.5,{x=self.x,rz=0,rx=3.14},"outQuad")
 end
 --[[
 function deck:resort()

@@ -19,7 +19,7 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) game:drawCard() end,
-	onTurnStart = function (card,game) game:attack(card) end,
+	onTurnStart = function (card,game) game:attack(card);game:attack(card) end,
 }
 
 return data

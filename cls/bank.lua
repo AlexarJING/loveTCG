@@ -40,14 +40,11 @@ function bank:resort()
             else
                 y= self.cy - (i-1) * 100 + 250
             end
-            --local y = self.y + 0.001*(x - self.x)^2
-            --local rz = ( -#self.cards/2 +i -0.5)* 0.05
-            card:animate(moveSpeed,{x=self.cx , y = y},"outQuad")
-            card:animate(moveSpeed,{rz=self.rz})
+            card:setAnimate(moveSpeed,{x=self.cx , y = y,rz=self.rz,rx=0},"outQuad")
         end
     else
         local card = self.cards[1]
-        card:animate(moveSpeed,{x = self.outx, y = self.outy})
+        card:setAnimate(moveSpeed,{x = self.outx, y = self.outy,rz = 0,rx=0})
         table.remove(self.cards, 1)
         self:resort()
     end

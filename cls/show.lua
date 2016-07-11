@@ -11,7 +11,7 @@ end
 
 function show:resort()
     for i,card in ipairs(self.cards) do
-        card:animate(0.5,{x=self.x,y=self.y,scale = self.scale},"outQuad")
+        card:addAnimate(0.5,{x=self.x,y=self.y,scale = self.scale},"outQuad")
     end
 end
 

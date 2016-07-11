@@ -329,7 +329,7 @@ function Tween:set(clock)
 
     --self.clock = 0
     copyTables(self.subject, self.initial)
-
+    
   elseif self.clock >= self.time then -- the tween has expired
 
     self.clock = self.time
@@ -343,7 +343,7 @@ function Tween:set(clock)
 
   end
 
-  return self.clock >= self.time
+  return self.clock >= self.time  --if finish
 end
 
 function Tween:reset()
@@ -352,13 +352,21 @@ end
 
 function Tween:update(dt)
   assert(type(dt) == 'number', "dt must be a number")
-  return self:set(self.clock + dt)
+  if self.delay>0 then
+    self.delay = self.delay - dt
+    return
+  else
+    if self.clock ==0 then
+      self.initial = copyTables({},self.target,self.subject)
+    end
+    return self:set(self.clock + dt)
+  end
 end
 
 
 -- Public interface
 
-function tween.new(time, subject, target, easing)
+function tween.new(time, subject, target, easing ,delay)
   easing = getEasingFunction(easing)
   checkNewParams(time, subject, target, easing)
   return setmetatable({
@@ -367,7 +375,8 @@ function tween.new(time, subject, target, easing)
     target    = target,
     easing    = easing,
     initial   = copyTables({},target,subject),
-    clock     = 0
+    clock     = 0,
+    delay     = delay or 0,
   }, Tween_mt)
 end
 

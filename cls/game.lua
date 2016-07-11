@@ -90,16 +90,16 @@ end
 function game:gameStart()
 	self.up.resource={
 		gold = 30,
-		food = 0,
-		magic = 0,
-		skull = 0,
+		food = 100,
+		magic = 100,
+		skull = 100,
 		hp = 30
 	}
 	self.down.resource={
 		gold = 30,
-		food = 0,
-		magic = 0,
-		skull = 0,
+		food = 100,
+		magic = 100,
+		skull = 100,
 		hp = 30
 	}
 
@@ -169,15 +169,15 @@ function game:clickCard()
 		elseif current == self.my.play then
 			self:feedCard()
 		elseif current == self.my.hero then
-			self:feedHero()
+			self:feedCard()
 		elseif current == self.your.bank then
 			self:robCard()
 		elseif current == self.your.hand then
 			self:stealCard()
 		elseif current == self.your.play then
-			self:attackCard(self.my.hero)
+			self:attackCard()
 		elseif current == self.your.hero then
-			self:attackHero()
+			self:attackCard()
 		end
 	elseif #self.show.cards == 1 then
 		if current == self.show then
@@ -246,16 +246,16 @@ function game:refillCard(whose)
 	self:transferCard(card,from,to)
 end
 
-function game:transferCard(card ,from,to ,pos)
+function game:transferCard(card ,from,to ,pos,passResort)
 	table.removeItem(from.cards, card)
-	if from.resort then from:resort() end
+	if from.resort and not passResort then from:resort() end
 	if pos then
 		table.insert(to.cards,pos, card )
 	else
 		table.insert(to.cards, card )
 	end
 	
-	if to.resort then to:resort() end
+	if to.resort and not passResort then to:resort() end
 	card.current = to
 end
 
@@ -301,8 +301,8 @@ function game:gain(card,who,what)
 	local res = self[who].resource
 	res[what] = res[what] + 1
 	
-	Effect(what,card,self.my.hero,false,1)
-	
+	local e = Effect(what,card,self.my.hero,false,1)
+	e:addCallback(function() self[who].hero:updateResource()end)
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onGain then
 			card.ability.onGain(card,self,who,what)
@@ -331,8 +331,8 @@ function game:lose(card,who,what)
 	res[what] = res[what] - 1
 	
 	local to={x=self[who].hero.x,y=0}
-	Effect(what,self[who].hero,to,true,1,"outQuad")
-	
+	local e = Effect(what,self[who].hero,to,true,1,"outQuad")
+	e:addCallback(function() self[who].hero:updateResource()end)	
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onLose then
 			card.ability.onLose(card,self,who,what)
@@ -344,9 +344,13 @@ end
 function game:feedCard()
 	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end
 	local card = self.hoverCard
-	if not card.hp then return end
-	if not card.ability.onFeed and card.hp == card.hp_max then return end
-	card.hp = card.hp + 1
+	if not card.hp and not card.isHero then return end
+	if card.isHero then
+		if not card.ability.onFeed and card.hp == card.hp_max then return end
+		card.hp = card.hp + 1
+	else
+		game.my.resource.hp = game.my.resource.hp+1
+	end
 	if self.my.resource.food > 0 then
 		self.my.resource.food = self.my.resource.food - 1
 	else
@@ -360,7 +364,7 @@ end
 function game:attackCard()
 	if self.my.resource.skull < 1 and self.my.resource.magic < 1 then return end
 	local card = self.hoverCard
-	if not card.hp then return end
+	if not card.hp and not card.isHero then return end
 	
 	if self.my.resource.skull > 0 then
 		self.my.resource.skull = self.my.resource.skull - 1
@@ -371,26 +375,27 @@ function game:attackCard()
 	self:attack(self.my.hero.card,card)
 end
 
-function game:testDeath(card)
-	local death
-	if card.hp then
-		if card.hp < 1 then death = true end
+function game:damageCard(card)
+	if card.shield and card.shield>0 then
+		card.shield = card.shield - 1
 	else
-		if card.shield < 1 then death = true end
+		card.hp = card.hp - 1
 	end
 
-	if death then
-		self:killCard(card)
+	if card.hp then
+		if card.hp < 1 then return true end
+	else
+		if card.shield < 1 then return true end
 	end
+
 end
 
 function game:killCard(card)
 	if card.back then
-		game:transferCard(card ,card.current, card.born.deck )
+		self:transferCard(card ,card.current, card.born.deck ,_,true)
 	else
-		game:transferCard(card ,card.current, card.born.grave )
+		self:transferCard(card ,card.current, card.born.grave,_,true)
 	end
-	--card.goingback = true
 end
 
 function game:goback(card)
@@ -414,15 +419,9 @@ function game:attack(from,to)
 	end
 
 	local target
-
+	local effect
 	if #yourCards == 0 then 
-		target = self.your.hero.card
-		self.your.resource.hp = self.your.resource.hp -1
-		--Effect("attack",from,self.your.hero,false,1,"inBack",function() target:vibrate() end )
-		from:standout()
-		if self.your.resource.hp < 0 then
-			---game over!!
-		end
+		self:attackHero(from)
 		return
 	else
 		local candidate={}
@@ -441,52 +440,54 @@ function game:attack(from,to)
 				candidate = {unpack(yourCards)}
 				target =candidate[love.math.random(1,#candidate)] 
 			end
-			--Effect("attack",from,target,false,1,"inBack",function() target:vibrate() end )	
+			effect = Effect("attack",from,target,false,1,"inBack")	
+			effect:addCallback(function() target:vibrate() end)
 			from:standout()
-		else -- for blockers
 
+		else -- for blockers
 			table.sort( candidate, function(a,b) return a.hp>b.hp end)
 			target = candidate[1]
 			if to then
 				local nextFunc = function()
-					Effect("attack",to,target,false,0.5,"inBack",function() target:vibrate() end )
+					effect = Effect("attack",to,target,false,0.5,"inBack")
 				end
 				local shieldFunc = function()
 					Effect("shield",to,to,false,0.5,"inBack")
 				end
-				--[[Effect("attack",from,to,false,0.5,"inBack",
-					function() 
-						target:standout() 
-							shieldFunc()
-							nextFunc()
-					end )]]
+				local tmp = Effect("attack",from,to,false,0.5,"inBack")
+
+				tmp:addCallback(function()target:standout() end)
+				tmp:addCallback(shieldFunc)
+				tmp:addCallback(nextFunc)
+				from:standout()
 			else
-				--[[Effect("attack",from,target,false,0.5,"inBack",
-					function() 
-						target:vibrate() 
-					end
-				)]]
+				effect = Effect("attack",from,target,false,0.5,"inBack")
+				
 				from:standout()
 			end
 		end
 
-		
-
-		if target.shield and target.shield>0 then
-			target.shield = target.shield - 1
-		else
-			target.hp = target.hp - 1
-		end
-		self:testDeath(target)
-	end
-
 	
+		if self:damageCard(target) then	 --killed	
+			effect:addCallback(function() target:vibrate(_,_,function()game:goback(target)end) end)
+			self:killCard(target)
+		else
+			effect:addCallback(function() target:vibrate() end)
+		end
+	end
 
 end
 
 
-function game:attackHero()
-
+function game:attackHero(from)
+	target = self.your.hero.card
+	self.your.resource.hp = self.your.resource.hp -1
+	local effect = Effect("attack",from,self.your.hero,false,1,"inBack" )
+	effect:addCallback(function() target:vibrate() end)
+	from:standout()
+	if self.your.resource.hp < 0 then
+		---game over!!
+	end
 
 end
 

@@ -9,19 +9,19 @@ local p = img.attack
 p:setParticleLifetime(0.1, 1) 
 p:setEmissionRate(32)
 p:setSizeVariation(1)
-p:setSizes(1,0.1)
+p:setSizes(1,0.5)
 p:setLinearAcceleration(-200, -200, 200, 200)
 p:setColors(255, 255, 255, 255, 255, 255, 255, 0) 
 
-img.shield = love.graphics.newParticleSystem(love.graphics.newImage("res/assets/shield.png"), 32)
+img.shield = love.graphics.newParticleSystem(love.graphics.newImage("res/assets/shield.png"), 64)
 local p = img.shield
 p:setParticleLifetime(0.5, 1) 
-p:setEmissionRate(5)
+p:setEmissionRate(32)
 p:setSizeVariation(1)
-p:setSizes(1,0.1)
+p:setSizes(1,0.5)
 p:setColors(255, 255, 255, 255, 255, 255, 255, 0) 
 
-function effect:init(tag,from,to,fading,during,easing,endfunc)
+function effect:init(tag,from,to,fading,during,easing)
 	table.insert(game.effects, self)
 	self.tag = tag
 	self.img = img[tag]
@@ -29,17 +29,27 @@ function effect:init(tag,from,to,fading,during,easing,endfunc)
 	self.y = from.y
 	self.alpha = 255
 	self.tween = Tween.new(during, self, {x=to.x,y=to.y,alpha = fading and 0 or 255}, easing or "inBack")
+	self.shadow = {}
+	self.callbacks = {}
 	self.tween.callback = function() 
 		table.removeItem(game.effects,self)
-		if endfunc then endfunc() end
+		for i,v in ipairs(self.callbacks) do
+			v()
+		end
 	end
-	self.shadow = {}
 	self.shadowCount = 5
 	for i = 1, self.shadowCount do
 		self.shadow[i]={x=self.x,y=self.y}
 	end
 end
 
+function effect:setCallback(func)
+	self.callbacks={func}
+end
+
+function effect:addCallback(func)
+	table.insert(self.callbacks, func)
+end
 
 function effect:update(dt)
 	self.tween:update(dt)
