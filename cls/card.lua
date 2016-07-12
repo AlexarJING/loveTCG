@@ -41,7 +41,7 @@ function card:initProperty(data)
 	self.rz = self.current.rz or 0
 	self.rx = self.current.rx or 0
 	self.ry = self.current.ry or 0
-	self.scale = 0.5
+	self.scale = self.current.scale or 0.5
 	self.w = Width
 	self.h = Height
 	self.vduration=0
@@ -118,14 +118,14 @@ function card:initImage()
 
 
 	--border
-	if self.race == "green" then
+	if self.level == 1 then
 		love.graphics.setColor(100, 255, 100, 200)
-	elseif self.race == "red" then
-		love.graphics.setColor(255, 100, 100, 200)
-	elseif self.race == "blue" then
+	elseif self.level == 2 then
 		love.graphics.setColor(100, 100, 255, 200)
-	elseif self.race == "purple" then
+	elseif self.level == 3 then
 		love.graphics.setColor(255, 100, 255, 200)
+	else
+		love.graphics.setColor(255, 255, 255, 200)
 	end
 	love.graphics.setLineWidth(5)
 	love.graphics.rectangle("line", 0, 0, Width, Height)

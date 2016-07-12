@@ -2,7 +2,7 @@ local bg = Class("bg")
 
 function bg:init(name)
 	name = name or "default"
-	self.img  = love.graphics.newImage("res/assets/table2d.png")
+	self.img  = love.graphics.newImage("res/assets/"..name..".png")
 	self.tw = self.img:getWidth()
 	self.th = self.img:getHeight()
 	self.x = 0

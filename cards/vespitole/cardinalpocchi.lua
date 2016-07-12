@@ -1,6 +1,6 @@
 local data = {
-	id = "cardinalpocchi",
-	name = "cardinal pocchi",
+	id = "cardinalpocci",
+	name = "cardinal pocci",
 	faction= "vespitole",
 
 	profile = {"no money, you can do nothing!"},

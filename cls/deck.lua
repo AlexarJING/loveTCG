@@ -16,10 +16,7 @@ function deck:init(game,root)
         self.rx = 3.14
     end
     self.scale = 1
-    for i = 1, 10 do
-        local card = Card(game,game.cardData.vespitole.coin,root,self)
-        table.insert(self.cards, card)
-    end
+   
 end
 
 function deck:goback(card)
@@ -34,6 +31,14 @@ function deck:resort()
     end
 end
 ]]
+
+function deck:setCards(data)
+     
+    for i,v in ipairs(data.deck) do
+         local card = Card(self.game,self.game.cardData[data.faction][v],self.root,self)
+         table.insert(self.cards, card)
+    end
+end
 
 function deck:update(dt)
     for i,v in ipairs(self.cards) do

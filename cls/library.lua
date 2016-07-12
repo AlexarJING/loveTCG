@@ -14,18 +14,20 @@ function library:init(game,root)
         self.y = -360
     end
 
-    table.insert(self.cards, game.cardData.vespitole.militia)
---[[
-    for k,v in pairs(game.cardData.vespitole) do
-        if not v.isHero and not v.isCoin then
-            table.insert(self.cards, v)
-        end
-    end]]
-
 end
 
 function library:makeCard(data)
     return Card(self.game,data,self.root,self)
+end
+
+
+function library:setCards(data)
+    for i,v in ipairs(data.library) do
+        local d= table.copy(self.game.cardData[data.faction][v.id],_,true)
+        d.level = v.level
+        d.exp = v.exp
+        table.insert(self.cards, d)
+    end
 end
 
  

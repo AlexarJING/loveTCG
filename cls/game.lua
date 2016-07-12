@@ -10,7 +10,7 @@ local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 
 function game:init()
-	self.bg = require "cls/bg"()
+	self.bg = require "cls/bg"("table2d")
 	self.up = {}
 	self.down = {}
 	for i,side in ipairs(sides) do
@@ -29,6 +29,31 @@ function game:init()
 	self.turnCount = 0
 	self.cardPlayCount = 0
 	self.effects = {}
+	
+	self.up.resource={
+		gold = 30,
+		food = 100,
+		magic = 100,
+		skull = 100,
+		hp = 30
+	}
+	self.down.resource={
+		gold = 30,
+		food = 100,
+		magic = 100,
+		skull = 100,
+		hp = 30
+	}
+
+
+	local upData = require "updata"
+	local downData = require "downdata"
+	self.up.deck:setCards(upData)
+	self.up.library:setCards(upData)
+	self.up.hero:setHero(upData)
+	self.down.deck:setCards(downData)
+	self.down.library:setCards(downData)
+	self.down.hero:setHero(downData)
 	self:gameStart()
 end
 
@@ -90,23 +115,7 @@ end
 
 
 function game:gameStart()
-	self.up.resource={
-		gold = 30,
-		food = 100,
-		magic = 100,
-		skull = 100,
-		hp = 30
-	}
-	self.down.resource={
-		gold = 30,
-		food = 100,
-		magic = 100,
-		skull = 100,
-		hp = 30
-	}
-
-	self.down.hero:setHero(self.cardData.vespitole.captainviatrix)	
-	self.up.hero:setHero(self.cardData.vespitole.captainviatrix)
+	
 
 	self.turn = "down"
 	self.my = self.down
@@ -366,10 +375,10 @@ function game:feedCard()
 		local x,y
 		if self.turn == "up" then
 			x = self.my.hero.x -love.math.random(-30,30)
-			y = self.my.hero.y +love.math.random(50,150)
+			y = self.my.hero.y +love.math.random(100,150)
 		else
 			x = self.my.hero.x +love.math.random(-30,30)
-			y = self.my.hero.y -love.math.random(50,150)
+			y = self.my.hero.y -love.math.random(100,150)
 		end
 		local out= Effect("food",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
 		out:addCallback(function() 
@@ -380,11 +389,11 @@ function game:feedCard()
 		self.my.resource.magic = self.my.resource.magic - 1
 		local x,y
 		if self.turn == "up" then
-			x = self.my.hero.x -love.math.random(50,150)
-			y = self.my.hero.y +love.math.random(50,150)
+			x = self.my.hero.x -love.math.random(-30,30)
+			y = self.my.hero.y +love.math.random(100,150)
 		else
-			x = self.my.hero.x +love.math.random(50,150)
-			y = self.my.hero.y -love.math.random(50,150)
+			x = self.my.hero.x +love.math.random(-30,30)
+			y = self.my.hero.y -love.math.random(100,150)
 		end
 		local out= Effect("magic",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
 		out:addCallback(function() 
@@ -446,7 +455,7 @@ function game:goback(card)
 	end
 end
 
-function game:attack(from,to)
+function game:attack(from,to,ignore)
 	if not from then from = self.my.hero.card end
 
 	local yourCards = self.your.play.cards
@@ -466,7 +475,7 @@ function game:attack(from,to)
 	else
 		local candidate={}
 		for i,card in ipairs(yourCards) do
-			if card.block then
+			if card.block and not ignore then
 				table.insert(candidate, card)
 			end
 		end
@@ -488,8 +497,9 @@ function game:attack(from,to)
 			table.sort( candidate, function(a,b) return a.hp>b.hp end)
 			target = candidate[1]
 			if to then
+				effect = Effect("attack",to,target,false,0.5,"inBack",true)
 				local nextFunc = function()
-					effect = Effect("attack",to,target,false,0.5,"inBack")
+					table.insert(self.effects, effect)
 				end
 				local shieldFunc = function()
 					Effect("shield",to,to,false,0.5,"inBack")

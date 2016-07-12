@@ -15,14 +15,16 @@ p:setColors(255, 255, 255, 255, 255, 255, 255, 0)
 
 img.shield = love.graphics.newParticleSystem(love.graphics.newImage("res/assets/shield.png"), 64)
 local p = img.shield
-p:setParticleLifetime(0.5, 1) 
-p:setEmissionRate(32)
+p:setParticleLifetime(1, 2) 
+p:setEmissionRate(10)
 p:setSizeVariation(1)
-p:setSizes(1,0.5)
-p:setColors(255, 255, 255, 255, 255, 255, 255, 0) 
+p:setSizes(1,1.3)
+p:setColors(255, 255, 0, 200, 255, 255, 0, 0) 
 
-function effect:init(tag,from,to,fading,during,easing)
-	table.insert(game.effects, self)
+function effect:init(tag,from,to,fading,during,easing,manual)
+	if not manual then
+		table.insert(game.effects, self)
+	end
 	self.tag = tag
 	self.img = img[tag]
 	self.x = from.x
