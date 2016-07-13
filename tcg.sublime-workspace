@@ -307,40 +307,40 @@
 			"file": "cls/builder.lua",
 			"settings":
 			{
-				"buffer_size": 2211,
+				"buffer_size": 756,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/pocket.lua",
+			"settings":
+			{
+				"buffer_size": 1261,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/selector.lua",
+			"settings":
+			{
+				"buffer_size": 2553,
 				"line_ending": "Windows",
-				"name": "builder.lua"
+				"name": "selector.lua"
 			}
 		},
 		{
-			"file": "cards/vespitole/cardinalpocchi.lua",
+			"file": "cls/collection.lua",
 			"settings":
 			{
-				"buffer_size": 302,
+				"buffer_size": 1995,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cls/card.lua",
+			"file": "userdata.lua",
 			"settings":
 			{
-				"buffer_size": 8289,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "main.lua",
-			"settings":
-			{
-				"buffer_size": 343,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "scenes/libBuilder.lua",
-			"settings":
-			{
-				"buffer_size": 985,
+				"buffer_size": 2657,
 				"line_ending": "Windows"
 			}
 		},
@@ -348,7 +348,15 @@
 			"file": "cls/button.lua",
 			"settings":
 			{
-				"buffer_size": 1367,
+				"buffer_size": 1456,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/cardDataLoader.lua",
+			"settings":
+			{
+				"buffer_size": 515,
 				"line_ending": "Windows"
 			}
 		}
@@ -418,41 +426,49 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cards",
-		"/F/Love2D Project/loveTCG/cards/vespitole",
 		"/F/Love2D Project/loveTCG/cls",
-		"/F/Love2D Project/loveTCG/res",
-		"/F/Love2D Project/loveTCG/res/cards",
 		"/F/Love2D Project/loveTCG/scenes"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/loveTCG/cards/vespitole/sisterYsadora.lua",
+		"/F/Love2D Project/loveTCG/userdata.lua",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
+		"/F/Love2D Project/loveTCG/lib/util.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/palisade.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/regentmarsh.lua",
+		"/F/Love2D Project/loveTCG/cls/builder.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/vintner.lua",
+		"/F/Love2D Project/loveTCG/cls/collection.lua",
+		"/F/Love2D Project/loveTCG/main.lua",
+		"/F/Love2D Project/loveTCG/scenes/libBuilder.lua",
+		"/F/Love2D Project/loveTCG/cls/button.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/cardinalpocchi.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/bureaucrat.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/bounty.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/bishop.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/banker.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/ballista.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/sisterYsadora.lua",
 		"/F/Love2D Project/loveTCG/cls/game.lua",
 		"/F/Love2D Project/loveTCG/updata.lua",
 		"/F/Love2D Project/loveTCG/downdata.lua",
 		"/F/Love2D Project/loveTCG/cls/bg.lua",
 		"/F/Love2D Project/loveTCG/scenes/test.lua",
-		"/F/Love2D Project/loveTCG/scenes/libBuilder.lua",
 		"/F/Love2D Project/FunnyFunky/cls/button.lua",
 		"/C/Users/Alexar/Desktop/新建文本文档.txt",
 		"/F/Love2D Project/loveTCG/cls/hero.lua",
-		"/F/Love2D Project/loveTCG/main.lua",
 		"/F/Love2D Project/loveTCG/cls/library.lua",
 		"/F/Love2D Project/loveTCG/cls/deck.lua",
 		"/F/Love2D Project/loveTCG/cls/play.lua",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cls/effect.lua",
 		"/F/Love2D Project/loveTCG/cls/action.lua",
 		"/F/Love2D Project/loveTCG/lib/tween.lua",
 		"/F/Love2D Project/loveTCG/cls/bank.lua",
 		"/F/Love2D Project/loveTCG/cls/show.lua",
 		"/F/Love2D Project/loveTCG/cls/hand.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/ballista.lua",
 		"/F/Love2D Project/loveTCG/cls/grave.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/coin.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/captainviatrix.lua",
 		"/F/Love2D Project/loveTCG/cards/green/coin.lua",
 		"/C/Users/Alexar/Documents/Tencent Files/1643386616/FileRecv/woo.txt",
@@ -542,19 +558,7 @@
 		"/F/defold/branches/28979/17281/Main/main/data/testCoin/coin.script",
 		"/F/defold/branches/28979/17281/Main/main/table/bg.script",
 		"/C/Users/Alexar/Desktop/examples-project/render/example.render_script",
-		"/F/defold/branches/28979/17281/Main/main/render/render.script",
-		"/F/Love2D Project/war of omens/frameWork.lua",
-		"/F/Love2D Project/war of omens/conf.lua",
-		"/F/Love2D Project/war of omens/server.lua",
-		"/F/Love2D Project/war of omens/client.lua",
-		"/F/Love2D Project/war of omens/network.lua",
-		"/F/Love2D Project/war of omens/frame_util.lua",
-		"/F/Love2D Project/war of omens/card_cls.lua",
-		"/F/defold/branches/28979/17281/Main/main/render/zoom.render_script",
-		"/F/defold/branches/29072/17281/workplace/render/example.render_script",
-		"/C/Users/Alexar/Desktop/examples-project/collision-example/camera.script",
-		"/F/defold/branches/29072/17281/workplace/collision-example/camera.script",
-		"/F/Love2D Project/war of omens/main.lua"
+		"/F/defold/branches/28979/17281/Main/main/render/render.script"
 	],
 	"find":
 	{
@@ -573,6 +577,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"collection",
+			"selector",
+			"selecto",
 			"born",
 			"game",
 			"goback",
@@ -697,10 +704,7 @@
 			"card.",
 			":",
 			"target",
-			"heal",
-			"替换",
-			"drawf",
-			"record"
+			"heal"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -708,6 +712,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"pocket",
+			"collection",
 			"builder",
 			"self.",
 			"grave",
@@ -796,7 +802,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -805,44 +811,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2211,
+						"buffer_size": 756,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1715,
-								1715
-							]
-						],
-						"settings":
-						{
-							"auto_name": "builder.lua",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1056.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "cards/vespitole/cardinalpocchi.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 302,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								60,
-								60
+								736,
+								736
 							]
 						],
 						"settings":
@@ -852,86 +829,116 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 330.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "cls/card.lua",
+					"buffer": 1,
+					"file": "cls/pocket.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8289,
+						"buffer_size": 1261,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								968,
-								972
+								645,
+								645
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "ASCII",
+							"auto_name": "",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 132.0,
+						"translation.y": 396.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "main.lua",
+					"buffer": 2,
+					"file": "cls/selector.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 343,
+						"buffer_size": 2553,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								336,
-								336
+								712,
+								765
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "UTF-8",
+							"auto_name": "selector.lua",
+							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 132.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "scenes/libBuilder.lua",
+					"buffer": 3,
+					"file": "cls/collection.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 985,
+						"buffer_size": 1995,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18,
-								18
+								0,
+								1995
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1056.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "userdata.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2657,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2584,
+								2584
 							]
 						],
 						"settings":
@@ -941,7 +948,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1584.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -953,15 +960,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1367,
+						"buffer_size": 1456,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1227,
-								1227
+								914,
+								914
 							]
 						],
 						"settings":
@@ -971,10 +978,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 484.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "cls/cardDataLoader.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 515,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								501,
+								501
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -1013,7 +1049,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 142.0
+		"height": 157.0
 	},
 	"output.find_results":
 	{

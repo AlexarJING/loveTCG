@@ -323,6 +323,7 @@ function string.generateName(num,seed)
 
    return name
 end
+
 function table.save(tab,name)
 	name=name or "test"
 	local output="local "..name.."=\n"
@@ -670,14 +671,16 @@ function table.save(tab,name,ifCopyFunction)
 			end 
 			if type(v)=="table" then
 				output=output .. name .."="
-				local checkRepeat
+				local checkRepeat,repeatTab
 				for _,p in ipairs(tableList) do
 					if v==p.tab then
-						checkRepeat=true;break
+						checkRepeat=true
+						repeatTab = p
+						break
 					end
 				end
 				if checkRepeat then
-					output=output.. name .."=table^"..p.name..",\n"
+					output=output.."table->"..repeatTab.name..",\n"
 				else
 					table.insert(tableList,{name=name,tab=v})
 					ergodic(v,time)

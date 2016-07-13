@@ -9,6 +9,7 @@ function button:init(parent,x,y,w,h,text)
 	self.font = love.graphics.newFont(math.ceil(self.h*0.4))
 	self.text=text
 	self.color={100,200,255,255}
+	self.enable = true
 	table.insert(self.parent.buttons, self)
 end
 
@@ -24,7 +25,7 @@ function button:update()
 		if self.onDown then self.onDown(self) end
 		self.down=true
 	elseif self.hover and not love.mouse.isDown(1) and self.down then
-		if self.onClick then self.onClick(self) end
+		if self.onClick  and self.enable then self.onClick(self) end
 		self.down=false
 	end
 
@@ -32,6 +33,9 @@ end
 
 function button:draw()
 	local r,g,b,a=unpack(self.color)
+	if not self.enable then
+		r,g,b = 150,150,150
+	end
 	if not self.hover then a=a*3/4 end
 	local offx,offy=0,0
 	if self.down then offx=3;offy=3 end
