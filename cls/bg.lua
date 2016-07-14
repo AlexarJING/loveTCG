@@ -1,12 +1,12 @@
 local bg = Class("bg")
 
-function bg:init(name)
+function bg:init(name,x,y)
 	name = name or "default"
 	self.img  = love.graphics.newImage("res/assets/"..name..".png")
 	self.tw = self.img:getWidth()
 	self.th = self.img:getHeight()
-	self.x = 0
-	self.y = 0
+	self.x = x or 0
+	self.y = y or 0
 	self.size = 2
 	self.rot = 0
 end

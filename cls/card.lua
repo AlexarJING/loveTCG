@@ -73,9 +73,9 @@ function card:initImage()
 	--title
 	love.graphics.setFont(self.game.font_title)
 	love.graphics.setColor(0, 0, 0, 255)
-	love.graphics.printf(self.name, 3, 43, Width, "center")
+	love.graphics.printf(self.name, 3, 8, Width, "center")
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.printf(self.name, 0, 40, Width, "center")
+	love.graphics.printf(self.name, 0, 5, Width, "center")
 	
 	--description
 	
@@ -127,7 +127,7 @@ function card:initImage()
 	else
 		love.graphics.setColor(255, 255, 255, 200)
 	end
-	love.graphics.setLineWidth(5)
+	love.graphics.setLineWidth(10)
 	love.graphics.rectangle("line", 0, 0, Width, Height)
 
 	love.graphics.setCanvas()

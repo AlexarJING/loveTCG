@@ -1,5 +1,5 @@
 local data = {
-	hero = {id = "sofocatro", exp = 0, level = 1},
+	hero = "sofocatro",
 	faction = "vespitole",  
 	deck = {
 		"coin",
@@ -13,10 +13,21 @@ local data = {
 		"coin",
 		"coin"
 	},
-	library = {
+	lib = {
 		{id = "courtesan", exp = 0, level = 1},
 		{id = "serf", exp = 0, level = 1},
-	}
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+		{id = "serf", exp = 0, level = 1},
+	},
+	coins={}
 }
 
 return data

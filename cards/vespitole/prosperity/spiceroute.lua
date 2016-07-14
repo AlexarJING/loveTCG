@@ -1,12 +1,12 @@
 local data = {
-	id = "collecttaxes",
-	name = "collect taxes",
+	id = "spiceroute",
+	name = "spice route",
 	faction = "vespitole",
 
 	category = "prosperity",
 	rare = 1 ,
 
-	profile = {"Those who cannot pay in coin, cloth, or salt will pay in blood, bruises, and broken bones. –Constable Uberti"},
+	profile = {"Dalmiria is so rich in spices that a commoner will consume a lord's ransom in a single meal.–Captain Listrata"},
 
 	basePrice = 6,
 
@@ -17,13 +17,13 @@ local data = {
 
 data.description = {
 	"play: draw a card",
-	"play: +1 gold"
+	"play: +1 food"
 }
 
 data.ability={
 	onPlay = function(card,game) 
 		game:drawCard() 
-		game:gain(card,"my","gold")
+		game:gain(card,"my","food")
 	end,
 }
 

@@ -6,6 +6,7 @@ local userdata = require "userdata"
 local Selector = require "cls/selector"
 local Collection = require "cls/collection"
 local Pocket = require "cls/pocket"
+local Menu = require "cls/menu"
 
 function builder:init()
 	---to remove---
@@ -18,20 +19,50 @@ function builder:init()
 	self.selector = Selector(self)
 	self.collection = Collection(self)
 	self.pocket = Pocket(self)
+	self.menu = Menu(self)
+
+	self.state = "menu"
+	self.coins = {}
 end
+
+function builder:initEditor()
+	--self.collection = Collection(self)
+	--self.pocket = Pocket(self)
+	self.state = "edit"
+end
+
 
 
 function builder:update(dt)
-	self.selector:update(dt)
-	self.collection:update(dt)
-	self.pocket:update(dt)
+	if self.state == "menu" then	
+		self.selector:update(dt)
+		self.menu:update(dt)
+	else
+		self.hoverCard = nil
+		self.selector:update(dt)
+		self.collection:update(dt)
+		self.pocket:update(dt)
+		self.click = false
+		self.rightClick = false
+	end
 end
 
+local hoverColor = {255, 0, 0, 255}
 
 function builder:draw()
-	self.selector:draw()
-	self.collection:draw()
-	self.pocket:draw()
+
+	if self.state == "menu" then
+		self.selector:draw()
+		self.menu:draw()
+	else
+		self.selector:draw()
+		self.collection:draw()
+		self.pocket:draw()
+		if self.hoverCard then
+			self.hoverCard:draw(hoverColor)
+		end
+	end
+
 end
 
 return builder

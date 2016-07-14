@@ -9,7 +9,7 @@ local Turn = require "cls/turn"
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 
-function game:init()
+function game:init(userdata)
 	self.bg = require "cls/bg"("table2d")
 	self.up = {}
 	self.down = {}
@@ -51,9 +51,9 @@ function game:init()
 	self.up.deck:setCards(upData)
 	self.up.library:setCards(upData)
 	self.up.hero:setHero(upData)
-	self.down.deck:setCards(downData)
-	self.down.library:setCards(downData)
-	self.down.hero:setHero(downData)
+	self.down.deck:setCards(userdata)
+	self.down.library:setCards(userdata)
+	self.down.hero:setHero(userdata)
 	self:gameStart()
 end
 
@@ -241,6 +241,7 @@ end
 function game:drawCard(whose)
 	whose = whose or "my"
 	local from = self[whose].deck
+	if #from.cards == 0 then return end
 	local index = love.math.random(#from.cards)
 	local card = from.cards[index]
 	local to = self[whose].hand

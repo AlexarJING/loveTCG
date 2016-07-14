@@ -10,7 +10,7 @@ function scene:enter(from,to,time,how,...)
     self.alpha=255
     self.time=time or 1
     self.how=how or "tween"
-    self.arg=...
+    self.arg={...}
     self.state_from=from
 end
 
@@ -23,7 +23,7 @@ end
 function scene:update(dt)
     self.alpha=self.alpha-255*self.time/60
     if self.how=="tween" then       
-        if self.alpha<0 then gamestate.switch(self.state_to,self.state_from,self.arg) end
+        if self.alpha<0 then gamestate.switch(self.state_to,self.state_from,unpack(self.arg)) end
     elseif self.how=="bg" then
         if self.alpha<50 then gamestate.switch(self.state_to,self,self.screen) end
     end

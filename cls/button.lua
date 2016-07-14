@@ -32,6 +32,7 @@ function button:update()
 end
 
 function button:draw()
+	love.graphics.setLineWidth(2)
 	local r,g,b,a=unpack(self.color)
 	if not self.enable then
 		r,g,b = 150,150,150

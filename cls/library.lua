@@ -22,8 +22,8 @@ end
 
 
 function library:setCards(data)
-    for i,v in ipairs(data.library) do
-        local d= table.copy(self.game.cardData[data.faction][v.id],_,true)
+    for i,v in ipairs(data.lib) do
+        local d= table.copy(self.game.cardData.short[v.id],_,true)
         d.level = v.level
         d.exp = v.exp
         table.insert(self.cards, d)

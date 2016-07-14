@@ -47,33 +47,39 @@ function selector:init(parent)
 			btn.enable = false
 		end
 		btn.onClick = function(btn)
+			self.parent.pocket:save()
 			self.currentFaction = btn.text
 			self.currentIndex = 1
 			self.bg = Bg(btn.text.."Bg")
 			self.currentHero = self.heros[self.currentFaction][self.currentIndex]
 			self.parent.faction = self.currentFaction
 			self.parent.hero = self.currentHero.id
+			self.parent.pocket:load()
 		end
 	end
 
 	self.prevBtn = Button(self,-500,250,80,30,"prev")
 	self.prevBtn.onClick = function()
+		self.parent.pocket:save()
 		self.currentIndex = self.currentIndex + 1
 		if not self.heros[self.currentFaction][self.currentIndex] then
 			self.currentIndex = 1
 		end
 		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
+		self.parent.hero = self.currentHero.id
+		self.parent.pocket:load()
 	end
 	self.nextBtn = Button(self,-400,250,80,30,"next")
  	self.nextBtn.onClick = function()
+ 		self.parent.pocket:save()
  		self.currentIndex = self.currentIndex - 1
 		if not self.heros[self.currentFaction][self.currentIndex] then
 			self.currentIndex = #self.heros[self.currentFaction]
 		end
 		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
+		self.parent.hero = self.currentHero.id
+		self.parent.pocket:load()
  	end
-	
-
 end
 
 

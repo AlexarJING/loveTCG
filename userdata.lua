@@ -36,7 +36,7 @@ data.cards = {
 			["merchantsguild"]={exp = 0 , level = 3},
 			["loan"]={exp = 0 , level = 3},
 			["vintner"]={exp = 0 , level = 3},
-			["wealthypatron"]={exp = 0 , level = 3},
+			["wealthyPatron"]={exp = 0 , level = 3},
 			["spiceroute"]={exp = 0 , level = 3},
 			["harvest"]={exp = 0 , level = 3},
 			["tradecompany"]={exp = 0 , level = 3},
@@ -91,9 +91,72 @@ data.coins = {}
 data.heros = {	
 	vespitole ={
 		["regentmarsh"]={exp = 0 , level = 3 , lib = {}},
-		["cardinalpocchi"]={exp = 0 , level = 3, lib = {}},
-		["sofocatro"]={exp = 0 , level = 3, lib = {}},
-		["sisterYsadora"]={exp = 0 , level = 3, lib = {}},
+		["cardinalpocci"]={exp = 0 , level = 3, lib = {}},
+		["sofocatro"]={exp = 0 , level = 3, lib = 
+			{
+				[1]={
+				["level"]=3,
+				["exp"]=0,
+				["id"]="banker",
+				["faction"]="vespitole",
+				},
+				[2]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="fief",
+					["faction"]="vespitole",
+				},
+				[3]={
+					["level"]=2,
+					["exp"]=0,
+					["id"]="wealthyPatron",
+					["faction"]="vespitole",
+				},
+				[4]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="merchantsguild",
+					["faction"]="vespitole",
+				},
+				[5]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="loan",
+					["faction"]="vespitole",
+				},
+				[6]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="collecttaxes",
+					["faction"]="vespitole",
+				},
+				[7]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="spiceroute",
+					["faction"]="vespitole",
+				},
+				[8]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="harvest",
+					["faction"]="vespitole",
+				},
+				[9]={
+					["level"]=3,
+					["exp"]=0,
+					["id"]="wealthyPatron",
+					["faction"]="vespitole",
+				},
+				[10]={
+					["level"]=2,
+					["exp"]=0,
+					["id"]="fief",
+					["faction"]="vespitole",
+				},
+			}
+		},
+		["ysadora"]={exp = 0 , level = 3, lib = {}},
 		["madamaline"]={exp = 0 , level = 3, lib = {}},
 		["captainviatrix"]={exp = 0 , level = 3, lib = {}}},
 	metris ={},

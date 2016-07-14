@@ -15,7 +15,7 @@ function deck:init(game,root)
         self.y = 250
         self.rx = 3.14
     end
-    self.scale = 1
+    self.scale = 0.5
    
 end
 
@@ -33,11 +33,18 @@ end
 ]]
 
 function deck:setCards(data)
-     
-    for i,v in ipairs(data.deck) do
-         local card = Card(self.game,self.game.cardData[data.faction][v],self.root,self)
-         table.insert(self.cards, card)
+    
+
+    for i = 1, 10 do
+        local card
+        if data.coins[i] then
+            card = Card(self.game,self.game.cardData.short[data.coins[i]],self.root,self)
+        else
+            card = Card(self.game,self.game.cardData.short[data.faction.."coin"],self.root,self)
+        end
+        table.insert(self.cards, card)
     end
+
 end
 
 function deck:update(dt)

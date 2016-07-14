@@ -26,9 +26,7 @@ end
 
 
 function hero:setHero(data)
-	local d = self.game.cardData[data.faction][data.hero.id]
-    d.exp = data.hero.exp
-    d.level = data.hero.level
+	local d = self.game.cardData[data.faction].hero[data.hero]
     self.card =  Card(self.game,d,self.root,self)
     self:updateResource()
 end

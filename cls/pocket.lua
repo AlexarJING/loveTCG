@@ -4,60 +4,107 @@ local cardData = require "cls/cardDataLoader"
 local Card = require "cls/card"
 local Bg = require "cls/bg"
 
-local function getPos(self,index,level)
-	local x = self.x + (index-1)%5*120 
-	local y = self.y + 180*math.floor(index/5)
-	return {x=x,y=y}
+local function getPos(self,index)
+	local x = self.x + (index-1)%5*150 
+	local y = self.y + 100*math.ceil(index/5 -1)
+	return x,y
+end
+
+local function getPosForCollection(self,index,level)
+	local x = -150 + (index-1)%8*120 + (level-1)*5
+	local y = -200 + 180*math.floor(index/8) + (level-1)*5
+	return x ,y 
 end
 
 function pocket:init(parent)
 	self.parent = parent
 	self.userdata= parent.userdata
-	self.x = -150
-	self.y = -200
+	self.collection = self.parent.collection
+	self.x = -100
+	self.y = 150
 	self.scale = 0.5
 	
-	self.hero = self.parent.hero
-	self.faction = self.parent.faction
-
-
+	self.slot = {}
+	self:load()
+	self:save()
 end
 
-function pocket:readHeroPocket()
-	self.slots = {}
-	for i,v in ipairs(self.userdata.heros[self.faction][self.hero.id].deck) do
-		print(i,v)
+function pocket:load()
+	local faction = self.parent.faction
+	local category = self.parent.category
+	local hero = self.parent.hero
+	local data = self.userdata
+	local cards = self.collection.cards
+	local collection = self.collection
+
+	for i = 1,10 do		
+		local c = self.slot[i]
+		if c then
+			self.slot[i] = nil
+			c.slot = nil
+			c.current = collection
+			local x,y = getPosForCollection(self,c.index,c.level)
+			c:addAnimate(0.5,{x=x,y=y},"inBack")
+		end
 	end
 
+	for i,d in ipairs(data.heros[faction][hero].lib) do
 
+		local card = cards[faction][category][d.id][d.level]
+		local x, y = getPos(self,i)
+		card:addAnimate(0.5,{x=x,y=y},"inBack")
+		self.slot[i]=card
+	end
 end
 
 
 function pocket:update(dt)
 	self.faction = self.parent.faction
 	self.hero = self.parent.hero
-
-	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
-	for i,btn in ipairs(self.buttons) do
-		btn:update(dt)
-	end
-
-	for id,tab in pairs(self.cards[self.faction][self.category]) do
-		for level,card in ipairs(tab) do
-			card:update(dt)
+	for i = 1, 10 do 
+		if self.slot[i] then
+			self.slot[i]:update(dt)
 		end
 	end
+
+	local hoverCard = self.parent.hoverCard
+	local collection = self.parent.collection
+	if hoverCard and self.parent.click and hoverCard.current == self then		
+							
+		self.slot[hoverCard.slot] = nil
+		hoverCard.slot = nil
+		hoverCard.current = collection
+		local x,y = getPosForCollection(self,hoverCard.index,hoverCard.level)
+		hoverCard:addAnimate(0.5,{x=x,y=y},"inBack")
+		self.parent.click = false
+	end
+end
+
+function pocket:save()
+	local data = {}
+	for i = 1, 10 do
+		if self.slot[i] then
+			local card= self.slot[i]
+			table.insert(data,{id= card.id,faction=card.faction,level = card.level,exp = card.exp})
+		end
+	end
+	self.userdata.heros[self.parent.faction][self.parent.hero].lib = data
+	self.parent.lib = data
 end
 
 
 function pocket:draw()
-	
-	for i,btn in ipairs(self.buttons) do
-		btn:draw()
+
+		
+	love.graphics.setColor(0, 0, 0, 100)
+	for i = 1, 10 do
+		local x,y = getPos(self,i)
+		love.graphics.ellipse( "fill", x, y+80, 80, 20 )
 	end
-	for id,tab in pairs(self.cards[self.faction][self.category]) do
-		for level,card in ipairs(tab) do
-			card:draw()
+
+	for i = 1, 10 do 
+		if self.slot[i] then
+			self.slot[i]:draw()
 		end
 	end
 end

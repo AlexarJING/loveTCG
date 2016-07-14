@@ -31,13 +31,7 @@ end
 
 function scene:keypressed(key)
 	if key == "space" then
-		builder.turnButton:endturn()
-	elseif key == "lctrl" then
-		builder:refillCard()
-	elseif key == "1" then
-		if builder.hoverCard then builder.hoverCard:vibrate() end
-	elseif key == "2" then
-		if builder.hoverCard then builder.hoverCard:standout() end
+		builder.pocket:save()
 	end
 end
 
