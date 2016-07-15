@@ -6,7 +6,7 @@ local Bg = require "cls/bg"
 
 function selector:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata
+	self.userdata= parent.userdata.collection
 	self.x = -400
 	self.y = 0
 	self.scale = 1.3
@@ -33,13 +33,13 @@ function selector:init(parent)
 	end
 	self.currentHero = self.heros[self.currentFaction][self.currentIndex]
 
-	self.buttons = {}
+	self.ui = {}
 
 	self.factionBtn = {
-		vespitole = Button(self,-600,-300,80,30,"vespitole"),
-		metris = Button(self,-500,-300,80,30,"metris"),
-		daramek = Button(self,-400,-300,80,30,"daramek"),
-		endazu =Button(self,-300,-300,80,30,"endazu")
+		vespitole = Button(self,-550,-250,80,30,"vespitole"),
+		metris = Button(self,-450,-250,80,30,"metris"),
+		daramek = Button(self,-350,-250,80,30,"daramek"),
+		endazu =Button(self,-250,-250,80,30,"endazu")
 	}
 
 	for faction,btn in pairs(self.factionBtn) do
@@ -58,7 +58,7 @@ function selector:init(parent)
 		end
 	end
 
-	self.prevBtn = Button(self,-500,250,80,30,"prev")
+	self.prevBtn = Button(self,-450,250,80,30,"prev")
 	self.prevBtn.onClick = function()
 		self.parent.pocket:save()
 		self.currentIndex = self.currentIndex + 1
@@ -69,7 +69,7 @@ function selector:init(parent)
 		self.parent.hero = self.currentHero.id
 		self.parent.pocket:load()
 	end
-	self.nextBtn = Button(self,-400,250,80,30,"next")
+	self.nextBtn = Button(self,-350,250,80,30,"next")
  	self.nextBtn.onClick = function()
  		self.parent.pocket:save()
  		self.currentIndex = self.currentIndex - 1
@@ -85,7 +85,7 @@ end
 
 function selector:update(dt)
 	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
-	for i,btn in ipairs(self.buttons) do
+	for i,btn in ipairs(self.ui) do
 		btn:update(dt)
 	end
 end
@@ -93,7 +93,7 @@ end
 
 function selector:draw()
 	self.bg:draw()
-	for i,btn in ipairs(self.buttons) do
+	for i,btn in ipairs(self.ui) do
 		btn:draw()
 	end
 	self.currentHero:draw()

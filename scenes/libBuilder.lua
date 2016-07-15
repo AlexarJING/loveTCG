@@ -4,13 +4,13 @@ local Card = require "cls/card"
 
 
 function scene:init()
-	builder = Builder()
+	
 	self.camera = Camera()
 	self.camera:lookAt(0,0)
 end 
 
-function scene:enter(from,to,time,how,...)
-
+function scene:enter(cur,from,data)
+	builder = Builder(data)
 end
 
 

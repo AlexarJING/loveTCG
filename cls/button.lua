@@ -10,12 +10,12 @@ function button:init(parent,x,y,w,h,text)
 	self.text=text
 	self.color={100,200,255,255}
 	self.enable = true
-	table.insert(self.parent.buttons, self)
+	table.insert(self.parent.ui, self)
 end
 
 function button:check(x,y)
-	if x< self.x or x>self.x+self.w then return false end
-	if y< self.y or y>self.y+self.h then return false end
+	if x< self.x-self.w/2 or x>self.x+self.w/2 then return false end
+	if y< self.y-self.h/2 or y>self.y+self.h/2 then return false end
 	return true
 end
 
@@ -41,12 +41,12 @@ function button:draw()
 	local offx,offy=0,0
 	if self.down then offx=3;offy=3 end
 	love.graphics.setColor(r,g,b,a)
-	love.graphics.rectangle("line", self.x+offx, self.y+offy, self.w, self.h,self.w/4,self.h/4)
+	love.graphics.rectangle("line", self.x+offx - self.w/2, self.y+offy -self.h/2, self.w, self.h,self.w/4,self.h/4)
 	love.graphics.setColor(r,g,b,a/2)
-	love.graphics.rectangle("fill", self.x+offx, self.y+offy, self.w, self.h,self.w/4,self.h/4)
+	love.graphics.rectangle("fill", self.x+offx -self.w/2, self.y+offy - self.h/2, self.w, self.h,self.w/4,self.h/4)
 	love.graphics.setColor(255-r, 255-g, 255-g, 255)
 	love.graphics.setFont(self.font)
-	love.graphics.printf(self.text, self.x+offx, self.y+offy+self.h/4, self.w, "center")
+	love.graphics.printf(self.text, self.x+offx -self.w/2, self.y+offy+self.h/4 - self.h/2, self.w, "center")
 end
 
 return button

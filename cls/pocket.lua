@@ -18,7 +18,7 @@ end
 
 function pocket:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata
+	self.userdata= parent.userdata.collection
 	self.collection = self.parent.collection
 	self.x = -100
 	self.y = 150
@@ -49,9 +49,10 @@ function pocket:load()
 	end
 
 	for i,d in ipairs(data.heros[faction][hero].lib) do
-
-		local card = cards[faction][category][d.id][d.level]
+		local card = cards[faction][d.category][d.id][d.level]
 		local x, y = getPos(self,i)
+		card.current = self
+		card.slot = i
 		card:addAnimate(0.5,{x=x,y=y},"inBack")
 		self.slot[i]=card
 	end
@@ -69,8 +70,9 @@ function pocket:update(dt)
 
 	local hoverCard = self.parent.hoverCard
 	local collection = self.parent.collection
+
 	if hoverCard and self.parent.click and hoverCard.current == self then		
-							
+					
 		self.slot[hoverCard.slot] = nil
 		hoverCard.slot = nil
 		hoverCard.current = collection
@@ -85,11 +87,23 @@ function pocket:save()
 	for i = 1, 10 do
 		if self.slot[i] then
 			local card= self.slot[i]
-			table.insert(data,{id= card.id,faction=card.faction,level = card.level,exp = card.exp})
+			table.insert(data,{
+				id= card.id,
+				faction=card.faction,
+				level = card.level,
+				exp = card.exp,
+				category = card.category})
 		end
 	end
 	self.userdata.heros[self.parent.faction][self.parent.hero].lib = data
 	self.parent.lib = data
+
+
+	local file = love.filesystem.newFile("system", "w")
+	local data = table.save(self.parent.userdata)
+	file:write(data)
+	file:close()
+
 end
 
 

@@ -234,7 +234,7 @@ function table.copy(st,copyto,ifcopyfunction)
 	return copyto
 end
 
-function string.generateName(num,seed)
+function string.generateName(num)
    local list = {}
    list[1] = {{'b','c','d','f','g','h','j','l','m','n','p','r','s','t','v','x','z','k','w','y'},{'qu','th','ll','ph'}} --21,4
    list[2] = {'a','e','i','o','u'} --v
@@ -663,7 +663,7 @@ function table.save(tab,name,ifCopyFunction)
 		output=output.."{\n"
 		for k,v in pairs(target) do
 			output=output .. string.rep("\t",time)
-			local name
+			local name = ""
 			if type(k)=="number" then
 				name="["..k.."]"
 			elseif type(k)=="string" then

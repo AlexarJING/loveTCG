@@ -18,7 +18,7 @@ end
 
 function collection:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata
+	self.userdata= parent.userdata.collection
 	self.x = -150
 	self.y = -200
 	self.scale = 0.5
@@ -49,14 +49,14 @@ function collection:init(parent)
 			end
 		end
 	end
-	self.buttons = {}
+	self.ui = {}
 
 	self.categoryBtn ={}
 	local i = 0
 	for category,data in pairs(self.cards[self.faction]) do
 		self.category = self.category or category
 		i = i + 1
-		local btn =  Button(self,self.x+i*150 ,self.y-130,80,30,category)
+		local btn =  Button(self,self.x+i*150+100 ,self.y-130,80,30,category)
 		btn.onClick = function(btn) 
 			self.category = btn.text 
 			self.parent.category = btn.text
@@ -65,7 +65,7 @@ function collection:init(parent)
 	end
 	self.parent.category = self.category
 
-	local btn = Button(self,self.x, self.y - 130, 80,30, "save")
+	local btn = Button(self,self.x+70, self.y - 130, 80,30, "save")
 	btn.onClick = function()
 		self.parent.state = "menu"
 		self.parent.pocket:save()
@@ -80,7 +80,7 @@ function collection:update(dt)
 
 
 	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
-	for i,btn in ipairs(self.buttons) do
+	for i,btn in ipairs(self.ui) do
 		btn:update(dt)
 	end
 
@@ -119,9 +119,17 @@ function collection:draw()
 	local hero = self.parent.hero
 	local category = self.category
 
-	for i,btn in ipairs(self.buttons) do
+	for i,btn in ipairs(self.ui) do
 		btn:draw()
 	end
+
+	love.graphics.setColor(100, 100, 255, 50)
+	for i = 1, 16 do
+		local x, y = getPos(self,i,1)
+		love.graphics.rectangle("fill", x-55, y-80, 110, 160)
+	end
+
+
 	for id,tab in pairs(self.cards[faction][category]) do
 		for level,card in ipairs(tab) do
 			card:draw()

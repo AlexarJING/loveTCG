@@ -69,7 +69,7 @@ end
 
 local all_callbacks = {
 	'draw', 'errhand', 'focus', 'keypressed', 'keyreleased', 'mousefocus',
-	'mousepressed', 'mousereleased', 'quit', 'resize', 'textinput',
+	'mousepressed', 'mousereleased', 'quit', 'resize', 'textinput',"textedited",
 	'threaderror', 'update', 'visible', 'gamepadaxis', 'gamepadpressed',
 	'gamepadreleased', 'joystickadded', 'joystickaxis', 'joystickhat',
 	'joystickpressed', 'joystickreleased', 'joystickremoved'
