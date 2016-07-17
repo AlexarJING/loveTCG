@@ -2,15 +2,6 @@ local turn = Class("turn")
 
 
 function turn:init(game,side)
-	if side == "up" then
-		self.x = 320
-		self.y = 0
-		self.orientation = -1
-	else
-		self.x = -320
-		self.y = 0
-		self.orientation = 1
-	end
 	self.ry = 0
 	self.d = 20
 	self.turntime = 30
@@ -20,6 +11,17 @@ function turn:init(game,side)
 	self.tw,self.th = self.img:getWidth(),self.img:getHeight()
 end
 
+function turn:setTurn(side)
+	if side == "up" then
+		self.x = 320
+		self.y = 0
+		self.orientation = -1
+	else
+		self.x = -320
+		self.y = 0
+		self.orientation = 1
+	end
+end
 
 function turn:update(dt)
 	self.timer = self.timer - dt
@@ -35,6 +37,7 @@ end
 
 function turn:checkMouse()
 	if not  self.game.click then return end
+	if self.game.my ~= self.game.userturn then return end
 	local x , y = self.game.mousex , self.game.mousey
 
 	if x > self.x - self.d and x < self.x + self.d and

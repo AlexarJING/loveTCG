@@ -1,5 +1,5 @@
 local data = {
-	id = "wealthyPatron",
+	id = "wealthypatron",
 	name = "wealthy patron",
 	faction = "vespitole",
 

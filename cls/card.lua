@@ -131,6 +131,7 @@ function card:initImage()
 	love.graphics.rectangle("line", 0, 0, Width, Height)
 
 	love.graphics.setCanvas()
+	self:updateCanvas()
 end
 
 local hw =Width/2

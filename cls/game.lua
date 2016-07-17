@@ -9,7 +9,7 @@ local Turn = require "cls/turn"
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 
-function game:init(userdata)
+function game:init(userdata,foedata)
 	self.bg = require "cls/bg"("table2d")
 	self.up = {}
 	self.down = {}
@@ -23,7 +23,9 @@ function game:init(userdata)
 		self[side].grave = require "cls/grave"(self,side)
 	end
 	self.show = require "cls/show"(self)
+	self.turnButton = require "cls/turn"(self)
 
+	self.aiCD = 0.5
 	self.mousex = 0
 	self.mousey = 0
 	self.turnCount = 0
@@ -31,26 +33,26 @@ function game:init(userdata)
 	self.effects = {}
 	
 	self.up.resource={
-		gold = 30,
-		food = 100,
-		magic = 100,
-		skull = 100,
+		gold = 0,
+		food = 0,
+		magic = 0,
+		skull = 0,
 		hp = 30
 	}
 	self.down.resource={
-		gold = 30,
-		food = 100,
-		magic = 100,
-		skull = 100,
+		gold = 0,
+		food = 0,
+		magic = 0,
+		skull = 0,
 		hp = 30
 	}
 
+	self.userdata = userdata
+	self.foedata = foedata
 
-	local upData = require "updata"
-	local downData = require "downdata"
-	self.up.deck:setCards(upData)
-	self.up.library:setCards(upData)
-	self.up.hero:setHero(upData)
+	self.up.deck:setCards(foedata)
+	self.up.library:setCards(foedata)
+	self.up.hero:setHero(foedata)
 	self.down.deck:setCards(userdata)
 	self.down.library:setCards(userdata)
 	self.down.hero:setHero(userdata)
@@ -59,6 +61,11 @@ end
 
 function game:update(dt)
 	self.hoverCard = nil
+	
+	if self.gameMode == "skirmish" and self.my ~= self.userturn then
+		self:AI(dt)
+	end
+
 	for i,side in ipairs(sides) do
 		self[side].deck:update(dt)
 		self[side].hand:update(dt)
@@ -79,6 +86,7 @@ function game:update(dt)
 	end
 
 	if self.hoverCard and self.rightClick then
+		if self.my~=self.userturn then return end
 		self:showCard()
 	end
 
@@ -116,12 +124,14 @@ end
 
 function game:gameStart()
 	
-
+	self.gameMode = "skirmish"
 	self.turn = "down"
 	self.my = self.down
 	self.your = self.up
+	self.userturn = self.down
 
-	self.turnButton = require "cls/turn"(self,self.turn)
+	
+	self.turnButton:setTurn(self.turn)
 
 	for i = 1,4 do
 		self:refillCard("up")
@@ -145,6 +155,10 @@ function game:turnStart()
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
 	end
+
+	local card = self.my.hero.card
+	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+
 end
 
 function game:turnEnd()
@@ -169,7 +183,7 @@ end
 
 
 function game:clickCard()
-
+	if self.my~=self.userturn then return end
 	local current = self.hoverCard.current
 
 	if #self.show.cards == 0 then
@@ -201,8 +215,8 @@ function game:clickCard()
 	end
 end
 
-function game:showCard()
-	local card = self.hoverCard
+function game:showCard(card)
+	card = card or self.hoverCard
 	for i,v in ipairs(self.show.cards) do
 		if v then return end
 	end
@@ -211,17 +225,17 @@ function game:showCard()
 	self:transferCard(card,card.current,self.show)
 end
 
-function game:returnCard()
-	local card = self.hoverCard
+function game:returnCard(card)
+	card = card or self.hoverCard
 	local pos = self.show.lastPos
 	local where = self.show.lastPlace
 	self:transferCard(card,card.current,where,pos)
 end
 
 
-function game:robCard()
+function game:robCard(card)
 	if not self.canRob then return end
-	local card = self.hoverCard
+	card = card or self.hoverCard
 	if self.my.resource.gold < card.price then 
 		print("too expensive")
 		return 
@@ -231,9 +245,9 @@ function game:robCard()
 	end
 end
 
-function game:stealCard()
+function game:stealCard(card)
 	if not self.canSteal then return end
-	local card = self.hoverCard
+	card = card or self.hoverCard
 	self:transferCard(card,card.current,self.my.hand)
 end
 
@@ -271,9 +285,9 @@ function game:transferCard(card ,from,to ,pos,passResort)
 	card.current = to
 end
 
-function game:playCard()
+function game:playCard(card)
 	self.cardPlayCount = self.cardPlayCount + 1
-	local card = self.hoverCard
+	card = card or self.hoverCard
 	if card.last or card.hp then
 		local onPlay = card.ability.onPlay
 		if onPlay then onPlay(card,self) end
@@ -284,10 +298,11 @@ function game:playCard()
 		self:killCard(card)
 		self:goback(card)
 	end
+	return true
 end
 
-function game:buyCard()
-	local card = self.hoverCard
+function game:buyCard(card)
+	card = card or self.hoverCard
 	if self.my.resource.gold + self.my.resource.magic < card.price then 
 		print("too expensive")
 		return 
@@ -302,6 +317,7 @@ function game:buyCard()
 		end
 
 		self:playCard(card)
+		return true
 	end
 
 end
@@ -313,7 +329,7 @@ function game:gain(card,who,what)
 	local res = self[who].resource
 	res[what] = res[what] + 1
 	
-	local e = Effect(what,card,self.my.hero,false,1)
+	local e = Effect(self,what,card,self.my.hero,false,1)
 	e:addCallback(function() self[who].hero:updateResource()end)
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onGain then
@@ -350,7 +366,7 @@ function game:lose(card,who,what)
 		x = self.my.hero.x +love.math.random(-30,30)
 		y = self.my.hero.y -love.math.random(50,150)
 	end
-	local e = Effect(what,self[who].hero,{x=x,y=y},true,1,"outQuad")
+	local e = Effect(self,what,self[who].hero,{x=x,y=y},true,1,"outQuad")
 	e:addCallback(function() self[who].hero:updateResource()end)	
 	for i,card in ipairs(self.my.play.cards) do
 		if card.ability.onLose then
@@ -360,9 +376,9 @@ function game:lose(card,who,what)
 	return true
 end
 
-function game:feedCard()
+function game:feedCard(card)
 	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end
-	local card = self.hoverCard
+	card = card or self.hoverCard
 	if not card.hp and not card.isHero then return end
 	if card.isHero then
 		self.my.resource.hp = self.my.resource.hp+1
@@ -381,9 +397,9 @@ function game:feedCard()
 			x = self.my.hero.x +love.math.random(-30,30)
 			y = self.my.hero.y -love.math.random(100,150)
 		end
-		local out= Effect("food",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
+		local out= Effect(self,"food",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
 		out:addCallback(function() 
-			local back = Effect("food",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
+			local back = Effect(self,"food",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
 			back:addCallback(function() self.my.hero:updateResource()end)
 		end)
 	else
@@ -396,9 +412,9 @@ function game:feedCard()
 			x = self.my.hero.x +love.math.random(-30,30)
 			y = self.my.hero.y -love.math.random(100,150)
 		end
-		local out= Effect("magic",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
+		local out= Effect(self,"magic",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
 		out:addCallback(function() 
-			local back = Effect("magic",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
+			local back = Effect(self,"magic",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
 			back:addCallback(function() self.my.hero:updateResource()end)
 		end)
 	end
@@ -407,12 +423,12 @@ function game:feedCard()
 	if self.my.hero.card.ability.onFeedAlly then 
 		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
 	end
-
+	return true
 end
 
-function game:attackCard()
+function game:attackCard(card)
 	if self.my.resource.skull < 1 and self.my.resource.magic < 1 then return end
-	local card = self.hoverCard
+	card = card or self.hoverCard
 	if not card.hp and not card.isHero then return end
 	
 	if self.my.resource.skull > 0 then
@@ -420,8 +436,8 @@ function game:attackCard()
 	else
 		self.my.resource.magic = self.my.resource.magic - 1
 	end
-	
 	self:attack(self.my.hero.card,card)
+	return true
 end
 
 function game:damageCard(card)
@@ -464,7 +480,7 @@ function game:attack(from,to,ignore)
 	for i,card in ipairs(yourCards) do
 		if card.cancel and card.cancel>0 then
 			card.cancel = card.cancel -1
-			Effect("attack",from,to,false,1,"inBack")
+			Effect(self,"attack",from,to,false,1,"inBack")
 		end
 	end
 
@@ -490,7 +506,7 @@ function game:attack(from,to,ignore)
 				candidate = {unpack(yourCards)}
 				target =candidate[love.math.random(1,#candidate)] 
 			end
-			effect = Effect("attack",from,target,false,1,"inBack")	
+			effect = Effect(self,"attack",from,target,false,1,"inBack")	
 			effect:addCallback(function() target:vibrate() end)
 			from:standout()
 
@@ -498,21 +514,21 @@ function game:attack(from,to,ignore)
 			table.sort( candidate, function(a,b) return a.hp>b.hp end)
 			target = candidate[1]
 			if to then
-				effect = Effect("attack",to,target,false,0.5,"inBack",true)
+				effect = Effect(self,"attack",to,target,false,0.5,"inBack",true)
 				local nextFunc = function()
 					table.insert(self.effects, effect)
 				end
 				local shieldFunc = function()
-					Effect("shield",to,to,false,0.5,"inBack")
+					Effect(self,"shield",to,to,false,0.5,"inBack")
 				end
-				local tmp = Effect("attack",from,to,false,0.5,"inBack")
+				local tmp = Effect(self,"attack",from,to,false,0.5,"inBack")
 
 				tmp:addCallback(function()target:standout() end)
 				tmp:addCallback(shieldFunc)
 				tmp:addCallback(nextFunc)
 				from:standout()
 			else
-				effect = Effect("attack",from,target,false,0.5,"inBack")
+				effect = Effect(self,"attack",from,target,false,0.5,"inBack")
 				
 				from:standout()
 			end
@@ -537,7 +553,7 @@ end
 function game:attackHero(from)
 	target = self.your.hero.card
 	self.your.resource.hp = self.your.resource.hp -1
-	local effect = Effect("attack",from,self.your.hero,false,1,"inBack" )
+	local effect = Effect(self,"attack",from,self.your.hero,false,1,"inBack" )
 	effect:addCallback(function() target:vibrate() end)
 	effect:addCallback(function() self.your.hero:updateResource()end)
 	from:standout()
@@ -545,6 +561,25 @@ function game:attackHero(from)
 		---game over!!
 	end
 
+end
+
+function game:pickCard(card)
+
+
+end
+
+
+function game:AI(dt)
+	self.aiCD = self.aiCD - dt
+	if self.aiCD > 0 then return end
+	local rule = self.foedata.rule
+	for i,cond in ipairs(rule) do
+		if cond(self) then
+			self.aiCD = 0.5
+			return 
+		end
+	end
+	self.turnButton:endturn()
 end
 
 return game

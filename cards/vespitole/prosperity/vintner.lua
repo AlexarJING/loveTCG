@@ -34,8 +34,8 @@ data.ability={
 		if game.my.resource.gold>=2 then
 			game:gain(card,"my","food") 
 			game:gain(card,"my","food") 
-			game:lose(card,"my","money")
-			game:lose(card,"my","money")
+			game:lose(card,"my","gold")
+			game:lose(card,"my","gold")
 		else
 			game:gain(card,"my","food") 
 		end

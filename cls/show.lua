@@ -1,4 +1,5 @@
 local show = Class("show")
+local moveSpeed = 0.5
 
 function show:init(game)
     self.cards={}
@@ -7,11 +8,14 @@ function show:init(game)
     self.x=0
     self.y=0
     self.scale = 1
+
 end
 
 function show:resort()
+
     for i,card in ipairs(self.cards) do
-        card:addAnimate(0.5,{x=self.x,y=self.y,scale = self.scale},"outQuad")
+        local x = self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale    
+        card:setAnimate(moveSpeed,{x=x,y=self.y,rz=0,rx=0,scale=self.scale},"outQuad")
     end
 end
 

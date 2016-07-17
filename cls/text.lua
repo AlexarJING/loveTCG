@@ -1,6 +1,6 @@
 local textInput=Class("text")
 local utf8 = require("utf8")
-local cnFont = love.graphics.newFont("res/others/chinese.TTF",40)
+local cnFont = love.graphics.newFont(35)
 
 function textInput:init(parent,x,y,w,h,tag,text)
 	self.parent = parent

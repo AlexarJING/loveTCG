@@ -7,7 +7,7 @@ function bg:init(name,x,y)
 	self.th = self.img:getHeight()
 	self.x = x or 0
 	self.y = y or 0
-	self.size = 2
+	self.scale = 1
 	self.rot = 0
 end
 
@@ -17,7 +17,7 @@ end
 
 function bg:draw()
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.draw(self.img, self.x, self.y, self.rot , self.size, self.size, self.tw/2,self.th/2)
+	love.graphics.draw(self.img, self.x, self.y, self.rot , self.scale, self.scale, self.tw/2,self.th/2)
 end
 
 return bg

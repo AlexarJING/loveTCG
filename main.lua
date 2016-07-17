@@ -6,6 +6,6 @@ function love.load()
         gameState[name:sub(1,-5)]=require("scenes."..name:sub(1,-5))
     end
     gamestate.registerEvents()
-    gamestate.switch(gameState.start)
+    gamestate.switch(gameState.shopSCENE)
 end
 

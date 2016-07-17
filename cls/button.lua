@@ -1,6 +1,6 @@
 local button=Class("button")
 
-function button:init(parent,x,y,w,h,text)
+function button:init(parent,x,y,w,h,text,cb)
 	self.parent = parent
 	self.x=x
 	self.y=y
@@ -10,6 +10,7 @@ function button:init(parent,x,y,w,h,text)
 	self.text=text
 	self.color={100,200,255,255}
 	self.enable = true
+	self.onClick = cb
 	table.insert(self.parent.ui, self)
 end
 

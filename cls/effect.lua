@@ -21,9 +21,10 @@ p:setSizeVariation(1)
 p:setSizes(1,1.3)
 p:setColors(255, 255, 0, 200, 255, 255, 0, 0) 
 
-function effect:init(tag,from,to,fading,during,easing,manual)
+function effect:init(parent,tag,from,to,fading,during,easing,manual)
+	self.parent = parent
 	if not manual then
-		table.insert(game.effects, self)
+		table.insert(parent.effects, self)
 	end
 	self.tag = tag
 	self.img = img[tag]
