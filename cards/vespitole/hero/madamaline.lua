@@ -6,7 +6,7 @@ local data = {
 	profile = {"Torturers, soldiers, spies, and kings all spill fields of blood to wrench whispered half truths from their victims. Ours lay bare their every secret without a drop spilt. –Madam Aline"},
 
 	isHero = true,
-
+	rare = 4,
 }
 
 data.description = {

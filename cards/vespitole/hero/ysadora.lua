@@ -6,7 +6,7 @@ local data = {
 	profile = {"Men will always fight harder for a lord with battle scars. "},
 
 	isHero = true,
-
+	rare = 3,
 }
 
 data.description = {

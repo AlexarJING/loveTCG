@@ -6,7 +6,7 @@ local data = {
 	profile = {"To master a trade one must do more than study. Stonemasons must work the rock. Farriers must work the forge. So it is also with war. Let us go and hone our craft. –Regent Marsh"},
 
 	isHero = true,
-
+	rare = "E",
 }
 
 data.description = {

@@ -603,6 +603,7 @@ function table.safeRemove(tab,index)
 end
 
 function table.isEmpty(tab)
+	if tab[1] then return false end
 	for k,v in pairs(tab) do
 		return false
 	end
@@ -649,8 +650,7 @@ function love.math.createEllipse(rx,ry,segments)
 		local y = math.sin(angle)*ry
 		table.insert(vertices, x)
 		table.insert(vertices, y)
-	end
- 	
+	end	
 	return vertices
 end
 
@@ -707,140 +707,6 @@ function table.save(tab,name,ifCopyFunction)
 	--print(output)
 	return output 
 end
-
-
-local sqrt, cos, sin, atan2 = math.sqrt, math.cos, math.sin, math.atan2
-
-local function str(x,y)
-	return "("..tonumber(x)..","..tonumber(y)..")"
-end
-
-local function mul(s, x,y)
-	return s*x, s*y
-end
-
-local function div(s, x,y)
-	return x/s, y/s
-end
-
-local function add(x1,y1, x2,y2)
-	return x1+x2, y1+y2
-end
-
-local function sub(x1,y1, x2,y2)
-	return x1-x2, y1-y2
-end
-
-local function permul(x1,y1, x2,y2)
-	return x1*x2, y1*y2
-end
-
-local function dot(x1,y1, x2,y2)
-	return x1*x2 + y1*y2
-end
-
-local function det(x1,y1, x2,y2)
-	return x1*y2 - y1*x2
-end
-
-local function eq(x1,y1, x2,y2)
-	return x1 == x2 and y1 == y2
-end
-
-local function lt(x1,y1, x2,y2)
-	return x1 < x2 or (x1 == x2 and y1 < y2)
-end
-
-local function le(x1,y1, x2,y2)
-	return x1 <= x2 and y1 <= y2
-end
-
-local function len2(x,y)
-	return x*x + y*y
-end
-
-local function len(x,y)
-	return sqrt(x*x + y*y)
-end
-
-local function dist2(x1,y1, x2,y2)
-	return len2(x1-x2, y1-y2)
-end
-
-local function dist(x1,y1, x2,y2)
-	return len(x1-x2, y1-y2)
-end
-
-local function normalize(x,y)
-	local l = len(x,y)
-	if l > 0 then
-		return x/l, y/l
-	end
-	return x,y
-end
-
-local function rotate(phi, x,y)
-	local c, s = cos(phi), sin(phi)
-	return c*x - s*y, s*x + c*y
-end
-
-local function perpendicular(x,y)
-	return -y, x
-end
-
-local function project(x,y, u,v)
-	local s = (x*u + y*v) / (u*u + v*v)
-	return s*u, s*v
-end
-
-local function mirror(x,y, u,v)
-	local s = 2 * (x*u + y*v) / (u*u + v*v)
-	return s*u - x, s*v - y
-end
-
--- ref.: http://blog.signalsondisplay.com/?p=336
-local function trim(maxLen, x, y)
-	local s = maxLen * maxLen / len2(x, y)
-	s = s > 1 and 1 or math.sqrt(s)
-	return x * s, y * s
-end
-
-local function angleTo(x,y, u,v)
-	if u and v then
-		return atan2(y, x) - atan2(v, u)
-	end
-	return atan2(y, x)
-end
-
--- the module
-math.vec2={
-	str = str,
-	mul    = mul,
-	div    = div,
-	add    = add,
-	sub    = sub,
-	permul = permul,
-	dot    = dot,
-	det    = det,
-	cross  = det,
-	eq = eq,
-	lt = lt,
-	le = le,
-	len2          = len2,
-	len           = len,
-	dist2         = dist2,
-	dist          = dist,
-	normalize     = normalize,
-	rotate        = rotate,
-	perpendicular = perpendicular,
-	project       = project,
-	mirror        = mirror,
-	trim          = trim,
-	angleTo       = angleTo,
-}
-
-
-local inv3=1/3
 
 --return center,area verts[1],verts[2] = x ,y
 function math.getPolygonArea(verts) 
@@ -925,67 +791,4 @@ function string.strippath(filename)
 end
 function string.stripfilename(filename)
     return string.match(filename, ".+\\([^\\]*%.%w+)$") -- *nix system
-end
-
-
-local _rotate=love.graphics.rotate
-local _translate=love.graphics.translate
-local _scale=love.graphics.scale
-local _shear=love.graphics.shear
-local _pop=love.graphics.pop
-local _origin= love.graphics.origin
-local _push=love.graphics.push
-local CoordinateInfo={
-	currentIndex=1,
-	info={{x=0,y=0,rotation=0,sx=1,sy=1,kx=0,ky=0}}
-	}
-love.graphics.coordinateInfo=CoordinateInfo
-love.graphics.getCoordinateInfo=function() 
-	return CoordinateInfo.info[CoordinateInfo.currentIndex].x,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].y,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].rotation,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].sx,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].sy,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].kx,
-	CoordinateInfo.info[CoordinateInfo.currentIndex].ky
-end
-love.graphics.rotate=function(angle)
-	CoordinateInfo.info[CoordinateInfo.currentIndex].angle=angle
-	_rotate(angle)
-end
-love.graphics.translate=function(x,y)
-	CoordinateInfo.info[CoordinateInfo.currentIndex].x=x
-	CoordinateInfo.info[CoordinateInfo.currentIndex].y=y
-	_translate(x,y)
-end
-love.graphics.scale=function(x,y)
-	CoordinateInfo.info[CoordinateInfo.currentIndex].sx=x
-	CoordinateInfo.info[CoordinateInfo.currentIndex].sy=y
-	_scale(x,y)
-end
-love.graphics.shear=function(x,y)
-	CoordinateInfo.info[CoordinateInfo.currentIndex].kx=x
-	CoordinateInfo.info[CoordinateInfo.currentIndex].ky=y
-	_shear(x,y)
-end
-love.graphics.push=function() 
-	CoordinateInfo.currentIndex=CoordinateInfo.currentIndex+1
-	CoordinateInfo.info[CoordinateInfo.currentIndex]={}
-	for k,v in pairs(CoordinateInfo.info[CoordinateInfo.currentIndex-1]) do
-		CoordinateInfo.info[CoordinateInfo.currentIndex][k]=v
-	end
-	_push()
-end
-love.graphics.pop=function()
-	CoordinateInfo.currentIndex=CoordinateInfo.currentIndex-1
-	_pop()
-end
-
-love.graphics.origin=function()
-	CoordinateInfo.currentIndex=1
-	CoordinateInfo.info={{x=0,y=0,rotation=0,
-		sx=1,sy=1,
-		kx=0,ky=0
-		}}
-	_origin()
 end

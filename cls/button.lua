@@ -11,6 +11,7 @@ function button:init(parent,x,y,w,h,text,cb)
 	self.color={100,200,255,255}
 	self.enable = true
 	self.onClick = cb
+	self.visible = true
 	table.insert(self.parent.ui, self)
 end
 
@@ -21,6 +22,7 @@ function button:check(x,y)
 end
 
 function button:update()
+	if not self.visible then return end
 	self.hover=self:check(self.parent.mousex,self.parent.mousey)
 	if self.hover and love.mouse.isDown(1) then
 		if self.onDown then self.onDown(self) end
@@ -33,6 +35,7 @@ function button:update()
 end
 
 function button:draw()
+	if not self.visible then return end
 	love.graphics.setLineWidth(2)
 	local r,g,b,a=unpack(self.color)
 	if not self.enable then

@@ -11,7 +11,16 @@ local rare_3 = love.graphics.newImage("res/others/rare-3.png")
 local rare_4 = love.graphics.newImage("res/others/rare-4.png")
 local rare_h = love.graphics.newImage("res/others/rare-hero.png")
 local img_gold = love.graphics.newImage("res/others/gold.png")
-local img_back = love.graphics.newImage("res/assets/cardback.png")
+local img_back = {
+	normal = love.graphics.newImage("res/assets/cardback.png"),
+	silver = love.graphics.newImage("res/assets/cardbacksilver.png"),
+	gold = love.graphics.newImage("res/assets/cardbackgold.png"),
+}
+love.graphics.newImage("res/assets/cardback.png")
+local cardImage = {}
+local font_title = love.graphics.newFont(30)
+local font_content = love.graphics.newFont(20)
+
 
 function card:init(game,data,born,current)
 	self.game = game
@@ -47,22 +56,29 @@ function card:initProperty(data)
 	self.vduration=0
 	self.offx=0
 	self.offy=0
+	self.alpha = 255
+	self.cardback = self.back and img_back[self.back] or img_back.normal
 end
 
 local textHeight = 150
 function card:initBack()
-	local tw = img_back:getWidth()
-	local th = img_back:getHeight()
+	local tw = self.cardback:getWidth()
+	local th = self.cardback:getHeight()
 	self.back = love.graphics.newCanvas(Width,Height)
 	love.graphics.setCanvas(self.back)
 	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.draw(img_back, 0, 0, 0, Width/tw,Height/th)
+	love.graphics.draw(self.cardback, 0, 0, 0, Width/tw,Height/th)
 	love.graphics.setCanvas()
 end
 
 
 function card:initImage()
-	self.img = love.graphics.newImage("res/cards/"..self.id..".png")
+	if not cardImage[self.id] then
+		cardImage[self.id]= love.graphics.newImage("res/cards/"..self.id..".png")
+	end
+		
+	self.img = cardImage[self.id]
+
 	self.tw = self.img:getWidth()
 	self.th = self.img:getHeight()
 	self.predraw  = love.graphics.newCanvas(Width,Height)
@@ -71,7 +87,7 @@ function card:initImage()
 	--bg
 	love.graphics.draw(self.img, 0, 0, 0, Width/self.tw,Height/self.th)
 	--title
-	love.graphics.setFont(self.game.font_title)
+	love.graphics.setFont(font_title)
 	love.graphics.setColor(0, 0, 0, 255)
 	love.graphics.printf(self.name, 3, 8, Width, "center")
 	love.graphics.setColor(255,255,255,255)
@@ -79,7 +95,7 @@ function card:initImage()
 	
 	--description
 	
-	love.graphics.setFont(self.game.font_content)
+	love.graphics.setFont(font_content)
 	for i,text in ipairs(self.description) do
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, "center")
@@ -91,7 +107,7 @@ function card:initImage()
 		love.graphics.setColor(255, 255, 255,255)
 		--love.graphics.circle("fill", 195, 20, 15)
 		love.graphics.draw(img_gold, 180, 10,0,1.2,1.2)
-		love.graphics.setFont(self.game.font_content)
+		love.graphics.setFont(font_content)
 		love.graphics.setColor(0, 0, 0,255)
 		love.graphics.printf(self.price, 0, 11, Width-10, "right")
 		love.graphics.setColor(0, 0, 0,255)
@@ -206,7 +222,7 @@ end
 
 
 function card:draw(color)
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(255, 255, 255, self.alpha)
 	if color then love.graphics.setColor(color) end
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
 		love.graphics.draw(self.back, self.x+self.offx, self.y+self.offy, self.rz,
@@ -261,7 +277,7 @@ function card:updateCanvas()
 
 	if self.last and type(self.last) == "number" then
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setFont(self.game.font_content)
+		love.graphics.setFont(font_content)
 		love.graphics.draw(img_wait, 80, 283)
 		love.graphics.printf("x"..tostring(self.last), 100, 283, Width, "left")
 	end

@@ -21,13 +21,5 @@ function scene:update(dt)
 	self.shop:update(dt)
 end 
 
-function scene:keypressed(key)
-	self.shop:keypressed(key)
-end
-
-
-function scene:textinput(text )
-	self.shop:textinput(text)
-end
 
 return scene

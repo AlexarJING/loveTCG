@@ -27,8 +27,6 @@ function builder:init(data)
 end
 
 function builder:initEditor()
-	--self.collection = Collection(self)
-	--self.pocket = Pocket(self)
 	self.state = "edit"
 end
 

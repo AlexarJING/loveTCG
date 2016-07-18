@@ -7,7 +7,7 @@ function bg:init(name,x,y)
 	self.th = self.img:getHeight()
 	self.x = x or 0
 	self.y = y or 0
-	self.scale = 1
+	self.scale = 2
 	self.rot = 0
 end
 
