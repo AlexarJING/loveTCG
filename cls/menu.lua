@@ -18,7 +18,7 @@ function menu:init(parent)
 		end
 		if test then return end
 		local foeData = require("cardLibs/skirmishLib")
-		gamestate.switch(gameState.inter,gameState.game,nil,nil,self.parent,foeData) --from,to,time,how,...
+		gamestate.switch(gameState.inter,gameState.game_scene,nil,nil,self.parent,foeData) --from,to,time,how,...
 	end
 	local melee = Button(self,self.x,-100 + self.y,250,50,"melee")
 	local arena = Button(self,self.x,0+ self.y, 250,50,"arena")

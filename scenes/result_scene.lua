@@ -5,10 +5,12 @@ local Result = require "cls/result"
 function scene:init()
 	self.camera = Camera()
 	self.camera:lookAt(0,0)
-	self.result = Result(self,nil,"lose") --"lose"	
+	 --"lose"	
 end 
 
-
+function scene:enter(from,...)
+	self.result = Result(self,...) --parent,screenshot,hero,result
+end
 
 function scene:draw()
 	self.camera:attach()

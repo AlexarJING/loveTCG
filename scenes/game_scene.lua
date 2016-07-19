@@ -33,9 +33,9 @@ function scene:keypressed(key)
 	elseif key == "lctrl" then
 		game:refillCard()
 	elseif key == "1" then
-		if game.hoverCard then game.hoverCard:vibrate() end
+		game:winner()
 	elseif key == "2" then
-		if game.hoverCard then game.hoverCard:standout() end
+		game:loser()
 	end
 end
 

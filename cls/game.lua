@@ -62,7 +62,7 @@ end
 function game:update(dt)
 	self.hoverCard = nil
 	
-	if self.gameMode == "skirmish" and self.my ~= self.userturn then
+	if self.gameMode == "skirmish" and self.my ~= self.userside then
 		self:AI(dt)
 	end
 
@@ -86,7 +86,7 @@ function game:update(dt)
 	end
 
 	if self.hoverCard and self.rightClick then
-		if self.my~=self.userturn then return end
+		if self.my~=self.userside then return end
 		self:showCard()
 	end
 
@@ -128,7 +128,7 @@ function game:gameStart()
 	self.turn = "down"
 	self.my = self.down
 	self.your = self.up
-	self.userturn = self.down
+	self.userside = self.down
 
 	
 	self.turnButton:setTurn(self.turn)
@@ -183,7 +183,7 @@ end
 
 
 function game:clickCard()
-	if self.my~=self.userturn then return end
+	if self.my~=self.userside then return end
 	local current = self.hoverCard.current
 
 	if #self.show.cards == 0 then
@@ -558,10 +558,28 @@ function game:attackHero(from)
 	effect:addCallback(function() self.your.hero:updateResource()end)
 	from:standout()
 	if self.your.resource.hp < 0 then
-		---game over!!
+		if game.userside == self.your then
+			self:loser()
+		else
+			self:winner()
+		end
 	end
 
 end
+
+function game:winner()
+	--screenshot,hero,result
+	local ss = love.graphics.newImage(love.graphics.newScreenshot())
+	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"win")
+end
+
+function game:loser()
+	--screenshot,hero,result
+	local ss = love.graphics.newImage(love.graphics.newScreenshot())
+	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose")
+end
+
+
 
 function game:pickCard(card)
 
