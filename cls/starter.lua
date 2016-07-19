@@ -78,7 +78,7 @@ end
 
 
 function starter:toBuilder()
-	gamestate.switch(gameState.inter,gameState.libBuilder,nil,nil,self.data) 
+	gamestate.switch(gameState.inter,gameState.builder_scene,nil,nil,self.data) 
 end
 
 function starter:update(dt)

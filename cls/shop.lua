@@ -40,7 +40,7 @@ end
 function shop:reset()
 	self.state = "buy"
 	self.packs = table.copy(packs)
-
+	self.showTag = {}
 	self.ui = {}
 	--(parent,x,y,w,h,text)
 	self.buys = {
@@ -100,15 +100,21 @@ function shop:getRandomCard(p)
 		local function callback()
 			self:checkUpgrade(i)	
 		end
-		cards[i]:addAnimate(1,{x = (i-2)*300,y=-50,rx = 0},"inQuad",2,callback) --duration , target , easing , delay, callback
+		cards[i]:addAnimate(1,{x = (i-2)*300},"inQuad",2) --duration , target , easing , delay, callback
+		cards[i]:addAnimate(1,{y=-50},"inQuad",2)
+		cards[i]:addAnimate(1,{rx = 0},"inQuad",2,callback)
 	end
 	self.cards = cards
 end
 
 function shop:checkUpgrade(index)
 	local card = self.cards[index]
-	local data = self.data.collection[card.faction][card.category][card.id]
-	self.showTag = {}
+	local data
+	if card.isHero then
+		data = self.data.collection.heros[card.faction][card.id]
+	else
+		data = self.data.collection.cards[card.faction][card.category][card.id]
+	end
 	if data then
 		data.exp = data.exp + 1
 		if data.exp>= 3^(data.level+1) then
@@ -116,13 +122,19 @@ function shop:checkUpgrade(index)
 			data.level = data.level + 1
 			self.showTag[index] = "upgrade"
 		else
-			table.insert(self.ui,Progress(self,(i-2)*300,200,150,30,3^(data.level+1),data.exp))
+			table.insert(self.ui,Progress(self,(index-2)*300,100,150,20,3^(data.level+1),data.exp))
 			self.showTag[index] = "exp"
 		end
 	else
-		self.data.cards[card.faction][card.category][card.id] = {exp=0,level = 1}
+		if card.isHero then
+			self.data.collection.heros[card.faction][card.id] = {exp=0,level = 1,lib={}}
+		else
+			self.data.collection.cards[card.faction][card.category][card.id] = {exp=0,level = 1}
+		end
+		
 		self.showTag[index] = "new"
 	end
+
 end
 
 function shop:update(dt)
@@ -162,7 +174,7 @@ end
 
 
 function shop:draw()
-	love.graphics.setFont(self.font)
+	
 	self.bg:draw()
 	self.info:draw()
 	for i,v in ipairs(self.ui) do
@@ -192,12 +204,15 @@ function shop:draw()
 		if self.showTag then
 			for i,v in ipairs(self.showTag) do
 				if v == "new" then
-					love.graphics.printf("New!", (i-2)*300-50,200,100,"center")
+					love.graphics.setFont(self.font)
+					love.graphics.printf("New!", (i-2)*300-50,80,100,"center")
 				elseif v == "upgrade" then
-					love.graphics.printf("upgrade!", (i-2)*300-50,200,100,"center")
+					love.graphics.setFont(self.font)
+					love.graphics.printf("upgrade!", (i-2)*300-50,80,100,"center")
 				end
 			end
 		end
+		love.graphics.setFont(self.font)
 		love.graphics.printf("click to continue", -360, 200, 720, "center")
 	elseif self.state == "fadeout" then
 		for i,v in ipairs(self.cards) do

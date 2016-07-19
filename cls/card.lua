@@ -201,11 +201,8 @@ function card:addAnimate(duration , target , easing , delay, callback)
 			table.insert(self.tweenStack[k], tween)
 		else
 			self.tweens[k] = tween
-		end
-		
-		tween.callback = function () 
-			if callback then callback() end
-		end
+		end		
+		if callback then tween.callback = callback end
 	end
 end
 

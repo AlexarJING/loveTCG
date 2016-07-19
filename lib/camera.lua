@@ -33,7 +33,17 @@ local function new(x,y, zoom, rot)
 	x,y  = x or love.graphics.getWidth()/2, y or love.graphics.getHeight()/2
 	zoom = zoom or 1
 	rot  = rot or 0
-	return setmetatable({x = x, y = y, scale = zoom, rot = rot}, camera)
+	local obj = {
+		x=x,
+		y=y,
+		scale=zoom,
+		rot = rot,
+		offx=0,
+		offy=0,
+		duration=0,
+		magnitude=0,
+	}
+	return setmetatable(obj, camera)
 end
 
 function camera:lookAt(x,y)
@@ -77,6 +87,24 @@ function camera:attach()
 	love.graphics.translate(cx, cy)
 	love.graphics.rotate(self.rot)
 	love.graphics.translate(-self.x, -self.y)
+	self:shakeUpdate()
+end
+
+function camera:shake(duration, magnitude)
+	self.duration, self.magnitude = duration or 3, magnitude or 10
+end
+
+function camera:shakeUpdate()
+	if self.duration<=0 then return end
+	self.duration = self.duration - love.timer.getDelta()
+	self.magnitude = self.magnitude*0.98
+	self.offx = love.math.random(-self.magnitude, self.magnitude)
+    self.offy = love.math.random(-self.magnitude, self.magnitude)
+    if self.duration<=0 then 
+    	self.offx=0
+    	self.offy=0
+    end
+    love.graphics.translate(self.offx, self.offy)
 end
 
 function camera:detach()

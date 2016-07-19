@@ -5,7 +5,7 @@
 		[
 			[
 				"for",
-				"fori	for i,v in ipairs()"
+				"forp	for k,v in pairs()"
 			],
 			[
 				"show",
@@ -332,28 +332,19 @@
 	"buffers":
 	[
 		{
-			"file": "cls/shop.lua",
-			"settings":
-			{
-				"buffer_size": 5206,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 285,
+				"buffer_size": 286,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cls/progressbar.lua",
+			"file": "/C/Users/Alexar/Desktop/演习总结/胡伟.txt",
 			"settings":
 			{
-				"buffer_size": 1464,
-				"line_ending": "Windows",
-				"name": "progressbar.lua"
+				"buffer_size": 52,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -422,20 +413,27 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cardLibs",
 		"/F/Love2D Project/loveTCG/cls",
+		"/F/Love2D Project/loveTCG/res",
 		"/F/Love2D Project/loveTCG/scenes"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/loveTCG/cls/shop.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/war/marshall.lua",
+		"/F/Love2D Project/loveTCG/cls/progressbar.lua",
+		"/F/Love2D Project/loveTCG/cls/starter.lua",
+		"/F/Love2D Project/loveTCG/scenes/result_scene.lua",
+		"/F/Love2D Project/loveTCG/cls/collection.lua",
+		"/C/Users/Alexar/AppData/Roaming/LOVE/loveTCG/system",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
+		"/F/Love2D Project/loveTCG/cls/cls/shop.lua",
 		"/C/Users/Alexar/Desktop/演习总结/樊力.txt",
 		"/F/Love2D Project/loveTCG/cls/builder.lua",
 		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cls/menu.lua",
 		"/F/Love2D Project/loveTCG/cls/bg.lua",
 		"/F/Love2D Project/loveTCG/cls/button.lua",
-		"/F/Love2D Project/loveTCG/cls/collection.lua",
 		"/F/Love2D Project/loveTCG/scenes/shopSCENE.lua",
 		"/F/Love2D Project/loveTCG/lib/util.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/captainviatrix.lua",
@@ -446,12 +444,10 @@
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/sofocatro.lua",
 		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.106/main.lua",
 		"/F/Love2D Project/loveTCG/scenes/start.lua",
-		"/F/Love2D Project/loveTCG/cls/starter.lua",
 		"/F/Love2D Project/loveTCG/cls/info.lua",
 		"/F/Love2D Project/loveTCG/cls/pocket.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/default.lua",
 		"/F/Love2D Project/loveTCG/scenes/libBuilder.lua",
-		"/C/Users/Alexar/AppData/Roaming/LOVE/loveTCG/system",
 		"/F/Love2D Project/loveTCG/cls/selector.lua",
 		"/F/Love2D Project/loveTCG/lib/gamestate.lua",
 		"/F/Love2D Project/loveTCG/cls/text.lua",
@@ -550,12 +546,7 @@
 		"/F/Love2D Project/FunnyFunky/lib/util.lua",
 		"/F/defold/branches/28979/17281/Main/main/main.script",
 		"/F/defold/branches/28979/17281/Main/main/Objects/table/hand.script",
-		"/F/defold/branches/28979/17281/Main/main/game.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/grave.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/bank.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/library.script",
-		"/F/defold/branches/28979/17281/Main/main/Objects/table/play.script",
-		"/F/defold/branches/28979/17281/Main/main/control/camera.script"
+		"/F/defold/branches/28979/17281/Main/main/game.script"
 	],
 	"find":
 	{
@@ -574,6 +565,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"shop",
+			"mar",
+			"wealth",
 			"button",
 			"card",
 			"font",
@@ -698,10 +692,7 @@
 			"draw3",
 			"reset",
 			":",
-			"belongTo",
-			"frame.me",
-			"frame.self",
-			",\"onPlay\",a.reUse"
+			"belongTo"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -709,6 +700,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"result",
 			"progress",
 			"info",
 			"ui",
@@ -806,54 +798,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "cls/shop.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5206,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2962,
-								2962
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2046.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "main.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 285,
+						"buffer_size": 286,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								269,
-								278
+								279,
+								279
 							]
 						],
 						"settings":
@@ -865,36 +827,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "cls/progressbar.lua",
+					"buffer": 1,
+					"file": "/C/Users/Alexar/Desktop/演习总结/胡伟.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1464,
+						"buffer_size": 52,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								57,
-								93
+								52,
+								52
 							]
 						],
 						"settings":
 						{
-							"auto_name": "progressbar.lua",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -933,7 +894,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 195.0
+		"height": 170.0
 	},
 	"output.find_results":
 	{
