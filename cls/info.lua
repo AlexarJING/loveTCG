@@ -25,6 +25,18 @@ function info:update(dt)
 	
 end
 
+function info:newUserFile(name)
+	self.data ={
+					name = name,
+					gem = 0,
+					gold = 0,
+					dust =0,
+					collection = require "cardLibs/default"	
+				}
+
+	self:saveUserFile()
+end
+
 function info:readUserFile()
 	local file = love.filesystem.newFile("system", "r")
 	if not file then
@@ -36,7 +48,7 @@ function info:readUserFile()
 	return data
 end
 
-function info:saveUserData()
+function info:saveUserFile()
 	local file = love.filesystem.newFile("system", "w")
 	local data = table.save(self.data)
 	file:write(data)

@@ -9,37 +9,33 @@ function scene:init()
 	self.camera:lookAt(0,0)
 end 
 
-function scene:enter(cur,from,data)
-	builder = Builder(data)
+function scene:enter(cur,from)
+	self.builder = self.builder or Builder()
 end
 
 
 function scene:draw()
 	self.camera:attach()
-	builder:draw()
+	self.builder:draw()
 	self.camera:detach()
 end
 
 
 
 function scene:update(dt)
-	builder.mousex, builder.mousey = self.camera:mousepos() 
-    builder:update(dt)
-    builder.click=false
-    builder.rightClick = false
+	self.builder.mousex, self.builder.mousey = self.camera:mousepos() 
+    self.builder:update(dt)
+    self.builder.click=false
+    self.builder.rightClick = false
 end 
 
-function scene:keypressed(key)
-	if key == "space" then
-		builder.pocket:save()
-	end
-end
+
 
 function scene:mousepressed(x,y,key)
 	if key == 1 then
-		builder.click = true
+		self.builder.click = true
 	else 
-		builder.rightClick = true
+		self.builder.rightClick = true
 	end
 end
 

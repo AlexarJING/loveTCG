@@ -5,9 +5,10 @@ local cardData = require "cls/cardDataLoader"
 local Bg = require "cls/bg"
 local Button = require "cls/button"
 local Text = require "cls/text"
-
+local Info = require "cls/info"
 
 function starter:init(parent)
+	self.info = Info(self)
 	self.parent = parent
 	self.bg = Bg("startbg")
 	self.bg2 = Bg("title")
@@ -33,14 +34,7 @@ function starter:init(parent)
 		if btn.text == "confirm" then
 			if not self.data then
 				local name = self.input.text == "" and string.generateName(8) or self.input.text
-				self.data = {
-					name = name,
-					gem = 0,
-					gold = 0,
-					dust =0,
-					collection = require "cardLibs/default"	
-				}
-				self:saveUserData()
+				self.info:newUserFile(name)
 			end
 				
 			self:toBuilder()
@@ -50,35 +44,16 @@ function starter:init(parent)
 			self.data = nil
 		end
 	end
-	self:readUserFile()
-end
-
-
-
-function starter:readUserFile()
-	local file = love.filesystem.newFile("system", "r")
-	if not file then
-		--self:createDataFile()
-		return
+	local data = self.info:readUserFile()
+	if data then
+		self.input.text = data.name
+		self.input.isLabel = true
 	end
-	local data = loadstring(file:read())()
-	self.data = data
-	self.input.text = data.name
-	self.input.isLabel = true
-	file:close()
 end
-
-function starter:saveUserData()
-	local file = love.filesystem.newFile("system", "w")
-	local data = table.save(self.data)
-	file:write(data)
-	file:close()
-end
-
 
 
 function starter:toBuilder()
-	gamestate.switch(gameState.inter,gameState.builder_scene,nil,nil,self.data) 
+	gamestate.switch(gameState.inter,gameState.builder_scene) 
 end
 
 function starter:update(dt)

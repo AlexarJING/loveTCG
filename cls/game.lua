@@ -9,6 +9,10 @@ local Turn = require "cls/turn"
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 
+local foeLibs={}
+foeLibs[1] = require("cardLibs/skirmishLib")
+
+
 function game:init(userdata,foedata)
 	self.bg = require "cls/bg"("table2d")
 	self.up = {}
@@ -24,6 +28,9 @@ function game:init(userdata,foedata)
 	end
 	self.show = require "cls/show"(self)
 	self.turnButton = require "cls/turn"(self)
+
+	self.aiLevel = 1
+	local foedata = foeLibs[self.aiLevel]
 
 	self.aiCD = 0.5
 	self.mousex = 0
@@ -570,13 +577,13 @@ end
 function game:winner()
 	--screenshot,hero,result
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
-	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"win")
+	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"win",self)
 end
 
 function game:loser()
 	--screenshot,hero,result
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
-	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose")
+	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose",self)
 end
 
 

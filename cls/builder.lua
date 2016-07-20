@@ -9,9 +9,11 @@ local Pocket = require "cls/pocket"
 local Menu = require "cls/menu"
 local Info = require "cls/info"
 
-function builder:init(data)
 
-	self.userdata = data
+
+function builder:init()
+	self.info = Info(self)
+	self.userdata = self.info.data
 	
 	self.font_title = love.graphics.newFont(30)
 	self.font_content = love.graphics.newFont(20)
