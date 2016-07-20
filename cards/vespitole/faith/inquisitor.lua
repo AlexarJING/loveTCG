@@ -1,6 +1,6 @@
 local data = {
 	id = "inquisitor",
-	name = "inquisitor",
+	name = "Inquisitor",
 	faction = "vespitole",
 
 	category = "faith",

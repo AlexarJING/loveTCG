@@ -2,7 +2,7 @@ local data = {
 	id = "vespitolecoin",
 	name = "coin",
 	faction = "vespitole",
-	category = "coin",
+	--category = "coin",
 	rare = 0 ,
 
 	profile = {"no money, you can do nothing!"},

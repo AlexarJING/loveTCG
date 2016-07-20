@@ -1,6 +1,6 @@
 local data = {
 	id = "usury",
-	name = "usury",
+	name = "Usury",
 	faction = "vespitole",
 	category = "power",
 	rare = 3 ,

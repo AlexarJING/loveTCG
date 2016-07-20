@@ -1,14 +1,14 @@
 local data = {
-	id = "spiceroute",
-	name = "spice route",
+	id = "masqueradeball",
+	name = "Masquerade Ball",
 	faction = "vespitole",
 
-	category = "prosperity",
-	rare = 1 ,
+	category = "power",
+	rare = 2 ,
 
 	profile = {"Dalmiria is so rich in spices that a commoner will consume a lord's ransom in a single meal. –Captain Listrata"},
 
-	basePrice = 6,
+	basePrice = 9,
 
 	last = false,
 
@@ -17,13 +17,14 @@ local data = {
 
 data.description = {
 	"play: draw a card",
-	"play: +1 food"
+	"play: +2 skull"
 }
 
 data.ability={
 	onPlay = function(card,game) 
 		game:drawCard() 
-		game:gain(card,"my","food")
+		game:gain(card,"my","skull")
+		game:gain(card,"my","skull")
 	end,
 }
 

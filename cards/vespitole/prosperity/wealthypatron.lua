@@ -1,6 +1,6 @@
 local data = {
 	id = "wealthypatron",
-	name = "wealthy patron",
+	name = "Wealthy Patron",
 	faction = "vespitole",
 
 	category = "prosperity",
@@ -19,13 +19,14 @@ local data = {
 }
 
 data.description = {
-	"turn/feed: +1 gold",
+	"turn: +2 gold",
+	"feed: +1 gold",
 	"play: draw a card",
 }
 
 data.ability={
 	onPlay = function(card,game) game:drawCard() end,
-	onTurnStart = function(card,game) game:gain(card,"my","gold") end,
+	onTurnStart = function(card,game) game:gain(card,"my","gold");game:gain(card,"my","gold") end,
 	onFeed = function(card,game) game:gain(card,"my","gold") end,
 }
 

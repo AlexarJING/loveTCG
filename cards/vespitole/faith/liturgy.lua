@@ -1,6 +1,6 @@
 local data = {
 	id = "liturgy",
-	name = "liturgy",
+	name = "Liturgy",
 	faction = "vespitole",
 
 	category = "faith",
@@ -8,7 +8,7 @@ local data = {
 
 	profile = {"Let them deafen the Pendrach with misguided praise. Their feeble minds cannot fathom the power they give me. –Cardinal Pocchi"},
 
-	basePrice = 12,
+	basePrice = 11,
 	back = true,
 }
 

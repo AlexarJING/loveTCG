@@ -8,7 +8,7 @@ local dust = love.graphics.newImage("res/others/steel.png")
 
 function info:init(parent)
 	self.parent = parent
-	self.data = parent.userdata or self:readUserFile()
+	self.data = self:readUserFile()
 	self.id = self.data.name
 	self.gem = self.data.gem
 	self.gold= self.data.gold
@@ -26,6 +26,7 @@ function info:update(dt)
 end
 
 function info:newUserFile(name)
+	if name == "test" then
 	self.data ={
 					name = name,
 					gem = 0,
@@ -33,14 +34,22 @@ function info:newUserFile(name)
 					dust =0,
 					collection = require "cardLibs/default"	
 				}
-
-	self:saveUserFile()
+	else
+	self.data ={
+					name = name,
+					gem = 1000,
+					gold = 1000,
+					dust =1000,
+					collection = require "cardLibs/test"	
+				}
+	end
+	return self:saveUserFile()
 end
 
 function info:readUserFile()
 	local file = love.filesystem.newFile("system", "r")
 	if not file then
-		return
+		return self:newUserFile("default")
 	end
 	local data = loadstring(file:read())()
 	self.data = data
@@ -53,6 +62,7 @@ function info:saveUserFile()
 	local data = table.save(self.data)
 	file:write(data)
 	file:close()
+	return self.data
 end
 
 

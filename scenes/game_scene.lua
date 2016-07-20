@@ -30,12 +30,6 @@ end
 function scene:keypressed(key)
 	if key == "space" then
 		game.turnButton:endturn()
-	elseif key == "lctrl" then
-		game:refillCard()
-	elseif key == "1" then
-		game:winner()
-	elseif key == "2" then
-		game:loser()
 	end
 end
 

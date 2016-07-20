@@ -1,6 +1,6 @@
 local data = {
 	id = "corruption",
-	name = "corruption",
+	name = "Corruption",
 	faction = "vespitole",
 	category = "power",
 	rare = 3 ,
@@ -13,11 +13,13 @@ local data = {
 
 data.description = {
 	"play: draw a card",
+	"play: +skull",	
 	"each skull +1 gold",
 }
 
 data.ability={
 	onPlay = function(card,game) 
+		game:gain(card,"my","skull") 
 		game:drawCard()
 		for i= 1, game.my.resource.skull do  
 			game:gain(card,"my","gold")

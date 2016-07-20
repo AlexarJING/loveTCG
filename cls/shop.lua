@@ -51,7 +51,7 @@ function shop:reset()
 	
 	for i = 1 , 3 do
 		self.buys[i].onClick = function() 
-			--if self.data.gold<100 then return end
+			if self.data[price[i].money]<price[1].amount then return end
 			self.data[price[i].money] = self.data[price[i].money] -price[i].amount
 			self.state = "selected"
 			self.selected = self.packs[i]
@@ -66,7 +66,7 @@ function shop:reset()
 	end
 	local back = Button(self,500,300,100,50,"back")
 	back.onClick = function()
-		gamestate.switch(gameState.inter,gameState.libBuilder,nil,nil,self.data) 	
+		gamestate.switch(gameState.inter,gameState.builder_scene,nil,nil,self.data) 	
 	end
 	self.cards = {}
 end
@@ -168,7 +168,7 @@ function shop:update(dt)
 end
 
 function shop:save()
-	self.info:saveUserData()
+	self.info:saveUserFile()
 	self:reset()
 end
 

@@ -1,6 +1,6 @@
 local data = {
 	id = "courtesan",
-	name = "courtesan",
+	name = "Courtesan",
 	faction = "vespitole",
 
 	category = "power",
@@ -20,14 +20,20 @@ local data = {
 }
 
 data.description = {
-	"turn/feed: +1 skull",
+	"turn: +2 skull",
+	"feed: +1 skull",
 	"play: draw a card",
 }
 
 data.ability={
 	onPlay = function(card,game) game:drawCard() end,
-	onTurnStart = function(card,game) game:gain(card,"my","skull") end,
-	onFeed = function(card,game) game:gain(card,"my","skull") end,
+	onTurnStart = function(card,game) 
+		game:gain(card,"my","skull") 
+		game:gain(card,"my","skull") 
+	end,
+	onFeed = function(card,game) 
+		game:gain(card,"my","skull") 
+	end,
 }
 
 return data

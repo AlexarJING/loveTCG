@@ -1,6 +1,6 @@
 local data = {
 	id = "leadthecharge",
-	name = "lead of charge",
+	name = "Lead the Charge",
 	faction = "vespitole",
 	category = "war",
 	rare = "H" ,

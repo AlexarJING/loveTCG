@@ -244,7 +244,7 @@ function game:robCard(card)
 	if not self.canRob then return end
 	card = card or self.hoverCard
 	if self.my.resource.gold < card.price then 
-		print("too expensive")
+		--print("too expensive")
 		return 
 	else
 		self:lose(card,"my","gold",card.price)
@@ -280,7 +280,7 @@ function game:refillCard(whose)
 end
 
 function game:transferCard(card ,from,to ,pos,passResort)
-	table.removeItem(from.cards, card)
+	if from.cards then table.removeItem(from.cards, card) end
 	if from.resort and not passResort then from:resort() end
 	if pos then
 		table.insert(to.cards,pos, card )

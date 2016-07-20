@@ -1,6 +1,6 @@
 local data = {
 	id = "spynetwork",
-	name = "spy network",
+	name = "Spy Network",
 	faction = "vespitole",
 	category = "power",
 	rare = "H" ,

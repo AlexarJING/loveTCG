@@ -1,6 +1,6 @@
 local data = {
 	id = "sibyllinescrolls",
-	name = "sibylline scrolls",
+	name = "Sibylline Scrolls",
 	faction = "vespitole",
 
 	category = "faith",
@@ -23,10 +23,12 @@ data.ability={
 	onPlay = function(card,game) 
 		game:drawCard() 
 		local candidate = {}
-		local cards = game.my.deck.cards
+		local cards = {unpack(game.my.deck.cards)}
 		for i = 1,3 do
 			if #cards==0 then break end
-			table.insert(candidate, cards[love.math.random(#cards)])
+			local index = love.math.random(#cards)
+			table.insert(candidate, cards[index])
+			table.remove(cards, index)
 		end
 		if #candidate == 0 then return end
 		game.show:addOptions(candidate,game.my.deck)
