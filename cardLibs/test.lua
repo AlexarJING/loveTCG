@@ -92,77 +92,12 @@ data.coins = {}
 
 data.heros = {	
 	vespitole ={
-		["captainviatrix"]= {exp = 0 , level = 1, lib = {
-			[1]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="prosperity",
-				["faction"]="vespitole",
-				["id"]="serf",
-			},
-			[2]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="prosperity",
-				["faction"]="vespitole",
-				["id"]="spiceroute",
-			},
-			[3]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="prosperity",
-				["faction"]="vespitole",
-				["id"]="collecttaxes",
-			},
-			[4]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="prosperity",
-				["faction"]="vespitole",
-				["id"]="vintner",
-			},
-			[5]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="prosperity",
-				["faction"]="vespitole",
-				["id"]="wealthypatron",
-			},
-			[6]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="power",
-				["faction"]="vespitole",
-				["id"]="embargo",
-			},
-			[7]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="power",
-				["faction"]="vespitole",
-				["id"]="courtesan",
-			},
-			[8]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="power",
-				["faction"]="vespitole",
-				["id"]="courtlyintrigue",
-			},
-			[9]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="war",
-				["faction"]="vespitole",
-				["id"]="militia",
-			},
-			[10]={
-				["level"]=1,
-				["exp"]=0,
-				["category"]="faith",
-				["faction"]="vespitole",
-				["id"]="prayer",}
-		}}
+		["captainviatrix"]= {exp = 0 , level = 1, lib ={}},
+		["cardinalpocci"]= {exp = 0 , level = 1, lib ={}},
+		["madamaline"]= {exp = 0 , level = 1, lib ={}},
+		["regentmarsh"]= {exp = 0 , level = 1, lib ={}},
+		["sofocatro"]= {exp = 0 , level = 1, lib ={}},
+		["ysadora"]= {exp = 0 , level = 1, lib = {}}
 		},
 	metris ={},
 	daramek ={},

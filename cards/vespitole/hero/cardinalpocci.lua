@@ -14,9 +14,8 @@ data.description = {
 }
 
 data.ability={
-	
 	onTurnStart = function(card,game) 
-		game:gain(card,"my","gold",1)
+		game:gain(card,"my","gold")
 	end,
 }
 

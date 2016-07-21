@@ -16,7 +16,7 @@ data.description = {
 data.ability={
 	onAttack = function(card,game) 
 		if love.math.random()<0.75 then
-			game.me.resource.hp = game.me.resource.hp + 1
+			game.my.resource.hp = game.my.resource.hp + 1
 		end
 	end,
 }

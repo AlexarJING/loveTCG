@@ -3,7 +3,7 @@ local data = {
 	name = "Tithe",
 	faction = "vespitole",
 
-	category = "faith",
+	category = "prosperity",
 	
 	rare = "H" ,
 

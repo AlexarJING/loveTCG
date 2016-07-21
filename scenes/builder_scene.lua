@@ -10,7 +10,7 @@ function scene:init()
 end 
 
 function scene:enter(cur,from)
-	self.builder = self.builder or Builder()
+	self.builder = Builder()
 end
 
 

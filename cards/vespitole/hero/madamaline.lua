@@ -10,7 +10,8 @@ local data = {
 }
 
 data.description = {
-	"star with 2 courtsan",
+	"start with",
+	"2 courtsan",
 }
 
 data.ability={

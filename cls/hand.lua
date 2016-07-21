@@ -20,7 +20,7 @@ end
 
 
 function hand:resort()
-	if #self.cards<=self.maxCount then
+    if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
             local x 
             if self.root == "up" then
@@ -28,17 +28,17 @@ function hand:resort()
             else
                 x= self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale
             end
-            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0},"outQuad")
+            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0,scale=self.scale},"outQuad")
         end
     else
         for i,card in ipairs(self.cards) do
             local x 
             if self.root == "up" then
-                x= self.x -( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
+                x= self.x -( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * self.scale
             else
-                x= self.x +( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
+                x= self.x +( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * self.scale
             end
-            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0},"outQuad")
+            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0,scale=self.scale},"outQuad")
         end
     end
 end

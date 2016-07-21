@@ -154,7 +154,7 @@ local hw =Width/2
 local hh =Height/2
 
 function card:checkHover()
-	if self.tweens.x or self.tweens.y then return end
+	--if self.tweens.x or self.tweens.y then return end
 
 	local dx,dy = self.game.mousex-self.x,self.game.mousey-self.y
 	local rx,ry = math.axisRot(dx,dy,-self.rz)
@@ -249,11 +249,11 @@ function card:updateCanvas()
 	if self.hp then
 		love.graphics.setColor(100, 100, 100, 255)
 		for i =1 , self.hp_max do
-			love.graphics.draw(img_hp, 100 - self.hp_max*10 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, 130 - self.hp_max*17 + (i-1)*17, 285)
 		end
 		love.graphics.setColor(255,255,255,255)
 		for i =1 , self.hp do
-			love.graphics.draw(img_hp, 100 - self.hp_max*10 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, 130 - self.hp_max*17 + (i-1)*17, 285)
 		end
 	end
 

@@ -104,10 +104,10 @@ function result:toMenu()
 end
 
 function result:save()
-	local data = self.info:readUserFile()
-	local hero = data.currentHero.id
-	local faction = data.currentHero.faction
-	local heroData = data.heros[faction][id]
+	local data = self.info.data
+	local id = data.collection.currentHero.id
+	local faction = data.collection.currentHero.faction
+	local heroData = data.collection.heros[faction][id]
 	if self.result =="win" then
 		data.gold = data.gold + 100*(2^self.game.aiLevel)
 		heroData.exp = heroData.exp + 200

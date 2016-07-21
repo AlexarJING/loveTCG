@@ -26,21 +26,22 @@ function info:update(dt)
 end
 
 function info:newUserFile(name)
+	print(name)
 	if name == "test" then
-	self.data ={
-					name = name,
-					gem = 0,
-					gold = 0,
-					dust =0,
-					collection = require "cardLibs/default"	
-				}
-	else
 	self.data ={
 					name = name,
 					gem = 1000,
 					gold = 1000,
 					dust =1000,
 					collection = require "cardLibs/test"	
+				}
+	else
+	self.data ={
+					name = name,
+					gem = 0,
+					gold = 0,
+					dust =0,
+					collection = require "cardLibs/default"	
 				}
 	end
 	return self:saveUserFile()

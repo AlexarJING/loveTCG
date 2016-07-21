@@ -47,10 +47,10 @@ function game:init(userdata,foedata)
 		hp = 30
 	}
 	self.down.resource={
-		gold = 0,
-		food = 0,
-		magic = 0,
-		skull = 0,
+		gold = 30,
+		food = 30,
+		magic = 30,
+		skull = 30,
 		hp = 30
 	}
 
@@ -192,7 +192,11 @@ end
 function game:clickCard()
 	if self.my~=self.userside then return end
 	local current = self.hoverCard.current
-
+	if love.keyboard.isDown("lshift") then
+		self.useall = true
+	else
+		self.useall = false
+	end
 	if #self.show.cards == 0 then
 		if current == self.my.hand then
 			self:playCard()
@@ -217,7 +221,7 @@ function game:clickCard()
 		end
 	else
 		if current == self.show then
-			self:pickCard()
+			self:chooseCard()
 		end
 	end
 end
@@ -232,10 +236,40 @@ function game:showCard(card)
 	self:transferCard(card,card.current,self.show)
 end
 
+function game:optionsCards(cards,to)
+	self.show.lastPlace = cards[1].current
+	for i,card in ipairs(cards) do
+		self:transferCard(card,card.current,self.show)
+	end
+	self.show.targetPlace = to
+end
+
+function game:chooseCard(card)
+	card = card or self.hoverCard
+	local cards = {unpack(self.show.cards)}
+	for i,v in ipairs(cards) do
+		if v==card then
+			if self.show.targetPlace then
+				self:transferCard(v,v.current,self.show.targetPlace)
+			else
+				self:playCard(v)
+			end
+		else
+			self:goback(v)
+			self:transferCard(v,v.current,self.show.lastPlace)
+		end
+	end
+
+	--self.show.lastPlace = nil
+	
+end
+
 function game:returnCard(card)
 	card = card or self.hoverCard
 	local pos = self.show.lastPos
 	local where = self.show.lastPlace
+	self.show.lastPos = nil
+	self.show.lastPlace = nil
 	self:transferCard(card,card.current,where,pos)
 end
 
@@ -244,7 +278,6 @@ function game:robCard(card)
 	if not self.canRob then return end
 	card = card or self.hoverCard
 	if self.my.resource.gold < card.price then 
-		--print("too expensive")
 		return 
 	else
 		self:lose(card,"my","gold",card.price)
@@ -275,6 +308,7 @@ function game:refillCard(whose)
 	local from = self[whose].library --data
 	local index = love.math.random(#from.cards)
 	local card = from:makeCard(from.cards[index])
+	--local card = from:makeCard(data)
 	local to = self[whose].bank
 	self:transferCard(card,from,to)
 end
@@ -287,7 +321,6 @@ function game:transferCard(card ,from,to ,pos,passResort)
 	else
 		table.insert(to.cards, card )
 	end
-	
 	if to.resort and not passResort then to:resort() end
 	card.current = to
 end
@@ -311,16 +344,16 @@ end
 function game:buyCard(card)
 	card = card or self.hoverCard
 	if self.my.resource.gold + self.my.resource.magic < card.price then 
-		print("too expensive")
+		--print("too expensive")
 		return 
 	else
 
-		for i = 1 , card.price-self.my.resource.gold do
-			self:lose(card,"my","magic")
-		end
-
-		for i = 1, card.price do
-			self:lose(card,"my","gold")
+		for i = 1 , card.price do
+			if self.my.resource.gold>0 then
+				self:lose(card,"my","gold")
+			else
+				self:lose(card,"my","magic")
+			end			
 		end
 
 		self:playCard(card)
@@ -395,6 +428,8 @@ function game:feedCard(card)
 		if card.hp>card.hp_max then card.hp = card.hp_max end
 	end
 	if self.my.resource.food > 0 then
+		self:lose(self.my.hero.card,"my","food") --game:lose(card,who,what)
+		--[[
 		self.my.resource.food = self.my.resource.food - 1
 		local x,y
 		if self.turn == "up" then
@@ -408,8 +443,10 @@ function game:feedCard(card)
 		out:addCallback(function() 
 			local back = Effect(self,"food",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
 			back:addCallback(function() self.my.hero:updateResource()end)
-		end)
+		end)]]
 	else
+		self:lose(self.my.hero.card,"my","magic")
+		--[[
 		self.my.resource.magic = self.my.resource.magic - 1
 		local x,y
 		if self.turn == "up" then
@@ -423,7 +460,7 @@ function game:feedCard(card)
 		out:addCallback(function() 
 			local back = Effect(self,"magic",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
 			back:addCallback(function() self.my.hero:updateResource()end)
-		end)
+		end)]]
 	end
 	
 	if card.ability.onFeed then card.ability.onFeed(card,self) end
@@ -432,6 +469,12 @@ function game:feedCard(card)
 	end
 	return true
 end
+
+function game:feed(from,to)
+
+end
+
+
 
 function game:attackCard(card)
 	if self.my.resource.skull < 1 and self.my.resource.magic < 1 then return end
@@ -443,6 +486,7 @@ function game:attackCard(card)
 	else
 		self.my.resource.magic = self.my.resource.magic - 1
 	end
+	self.my.hero:updateResource()
 	self:attack(self.my.hero.card,card)
 	return true
 end
@@ -453,7 +497,7 @@ function game:damageCard(card)
 	else
 		card.hp = card.hp - 1
 	end
-
+	card:updateCanvas()
 	if card.hp then
 		if card.hp < 1 then return true end
 	else
@@ -586,12 +630,6 @@ function game:loser()
 	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose",self)
 end
 
-
-
-function game:pickCard(card)
-
-
-end
 
 
 function game:AI(dt)

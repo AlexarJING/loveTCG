@@ -32,11 +32,10 @@ function starter:init(parent)
 	self.confirm = Button(self,150, -100 ,150,80,"confirm")
 	self.confirm.onClick = function(btn)
 		if btn.text == "confirm" then
-			if not self.data then
-				local name = self.input.text == "" and string.generateName(8) or self.input.text
-				self.info:newUserFile(name)
-			end
-				
+			
+			if self.input.text ~= self.info.data.name then
+				self.info:newUserFile(self.input.text)
+			end			
 			self:toBuilder()
 		elseif btn.text == "change" then
 			self.input.isLabel = false
@@ -44,11 +43,11 @@ function starter:init(parent)
 			self.data = nil
 		end
 	end
-	local data = self.info:readUserFile()
-	if data then
-		self.input.text = data.name
-		self.input.isLabel = true
-	end
+	local data = self.info.data
+	
+	self.input.text = data.name
+	self.input.isLabel = true
+	
 end
 
 

@@ -23,11 +23,11 @@ function bank:init(game,root)
         self.outx = -650
         self.outy = 360
     end
-
+    self.scale = 0.5
 
 
     self.maxCount= 5
-
+   
 end
 
 
@@ -40,11 +40,11 @@ function bank:resort()
             else
                 y= self.cy - (i-1) * 100 + 250
             end
-            card:setAnimate(moveSpeed,{x=self.cx , y = y,rz=self.rz,rx=0},"outQuad")
+            card:setAnimate(moveSpeed,{x=self.cx , y = y,rz=self.rz,rx=0,scale=self.scale},"outQuad")
         end
     else
         local card = self.cards[1]
-        card:setAnimate(moveSpeed,{x = self.outx, y = self.outy,rz = 0,rx=0})
+        card:setAnimate(moveSpeed,{x = self.outx, y = self.outy,rz = 0,rx=0,scale=self.scale})
         table.remove(self.cards, 1)
         self:resort()
     end

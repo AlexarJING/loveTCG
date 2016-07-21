@@ -13,10 +13,9 @@ data.description = {
 	"turn: +1 skull",
 }
 
-data.ability={
-	
+data.ability={	
 	onTurnStart = function(card,game) 
-		game:gain(card,"my","skull",1)
+		game:gain(card,"my","skull")
 	end,
 }
 
