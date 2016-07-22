@@ -4,24 +4,32 @@
 		"selected_items":
 		[
 			[
+				"table",
+				"table.insert	(table, [pos,] value)"
+			],
+			[
 				"for",
-				"forp	for k,v in pairs()"
+				"fori	for i,v in ipairs()"
+			],
+			[
+				"print",
+				"love.graphics.print"
+			],
+			[
+				"setc",
+				"love.graphics.setColor"
+			],
+			[
+				"attackCa",
+				"attackCardAll"
 			],
 			[
 				"tab",
 				"table.remove	(table [, pos])"
 			],
 			[
-				"setc",
-				"love.graphics.setCanvas"
-			],
-			[
 				"newim",
 				"love.graphics.newImage"
-			],
-			[
-				"print",
-				"love.graphics.printf"
 			],
 			[
 				"getdt",
@@ -232,10 +240,6 @@
 				"cost_lvl0"
 			],
 			[
-				"table",
-				"table.remove	(table [, pos])"
-			],
-			[
 				"inter",
 				"interceptTab"
 			],
@@ -340,10 +344,10 @@
 	"buffers":
 	[
 		{
-			"file": "scenes/builder_scene.lua",
+			"file": "cls/card.lua",
 			"settings":
 			{
-				"buffer_size": 705,
+				"buffer_size": 9642,
 				"line_ending": "Windows"
 			}
 		},
@@ -351,7 +355,15 @@
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 15233,
+				"buffer_size": 16488,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/turn.lua",
+			"settings":
+			{
+				"buffer_size": 1403,
 				"line_ending": "Windows"
 			}
 		},
@@ -359,23 +371,71 @@
 			"file": "cls/result.lua",
 			"settings":
 			{
-				"buffer_size": 3464,
+				"buffer_size": 3493,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cardLibs/test.lua",
+			"file": "cls/effect.lua",
 			"settings":
 			{
-				"buffer_size": 2747,
+				"buffer_size": 2551,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cls/card.lua",
+			"file": "cls/play.lua",
 			"settings":
 			{
-				"buffer_size": 8747,
+				"buffer_size": 1523,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/faith/malediction.lua",
+			"settings":
+			{
+				"buffer_size": 493,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/faith/liturgy.lua",
+			"settings":
+			{
+				"buffer_size": 582,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/power/spynetwork.lua",
+			"settings":
+			{
+				"buffer_size": 610,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/prosperity/tithe.lua",
+			"settings":
+			{
+				"buffer_size": 608,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/prosperity/harvest.lua",
+			"settings":
+			{
+				"buffer_size": 602,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/deck.lua",
+			"settings":
+			{
+				"buffer_size": 1631,
 				"line_ending": "Windows"
 			}
 		}
@@ -445,36 +505,49 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cardLibs",
 		"/F/Love2D Project/loveTCG/cards",
 		"/F/Love2D Project/loveTCG/cards/vespitole",
-		"/F/Love2D Project/loveTCG/cls",
-		"/F/Love2D Project/loveTCG/res",
-		"/F/Love2D Project/loveTCG/scenes"
+		"/F/Love2D Project/loveTCG/cls"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/loveTCG/cls/effect.lua",
+		"/F/Love2D Project/loveTCG/cls/game.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/faith/malediction.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/power/spynetwork.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/harvest.lua",
+		"/F/Love2D Project/loveTCG/scenes/builder_scene.lua",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/hero/captainviatrix.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
 		"/F/Love2D Project/loveTCG/cls/library.lua",
+		"/F/Love2D Project/loveTCG/cls/result.lua",
+		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
+		"/F/Love2D Project/loveTCG/include.lua",
+		"/F/Love2D Project/loveTCG/lib/delay.lua",
+		"/F/Love2D Project/loveTCG/main.lua",
+		"/F/Love2D Project/loveTCG/cls/turn.lua",
+		"/C/Users/Alexar/Desktop/game/cls/game.lua",
+		"/C/Users/Alexar/Desktop/love编译工具/compile.lua",
+		"/F/更鸟工作站/MyGame/新建工程/Game.lua",
+		"/F/更鸟工作站/MyGame/新建工程/bak/2016-7-22/Game.lua",
+		"/F/更鸟工作站/Plugins/3500常用字.txt",
 		"/F/Love2D Project/loveTCG/cls/bank.lua",
 		"/F/Love2D Project/loveTCG/cls/pocket.lua",
 		"/F/Love2D Project/loveTCG/cls/starter.lua",
-		"/F/Love2D Project/loveTCG/cls/game.lua",
 		"/C/Users/Alexar/Desktop/新建文本文档.txt",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cls/hand.lua",
 		"/F/Love2D Project/loveTCG/cls/deck.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/sibyllinescrolls.lua",
 		"/F/Love2D Project/loveTCG/cls/info.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/tithe.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/test.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/captainviatrix.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/cardinalpocci.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/madamaline.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/regentmarsh.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/sofocatro.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/ysadora.lua",
 		"/F/Love2D Project/loveTCG/conf.lua",
-		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/coin/vespitolecoin.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/miracle.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/war/militia.lua",
@@ -491,7 +564,6 @@
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/courtlyintrigue.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/embargo.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/masqueradeball.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/power/spynetwork.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/tribute.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/usury.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/spiceroute.lua",
@@ -509,20 +581,15 @@
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/holywrath.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/devotion.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/benediction.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/malediction.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/bishop.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/synod.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/liturgy.lua",
 		"/F/Love2D Project/loveTCG/cls/builder.lua",
-		"/C/Users/Alexar/Desktop/love编译工具/compile.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/power/courtesan.lua",
-		"/F/Love2D Project/loveTCG/main.lua",
-		"/F/Love2D Project/loveTCG/cls/result.lua",
 		"/F/Love2D Project/loveTCG/cls/shop.lua",
 		"/F/Love2D Project/loveTCG/scenes/game_scene.lua",
 		"/C/Users/Alexar/Desktop/game/scenes/start_scene.lua",
 		"/F/Love2D Project/box2d/editor/box2dhelper/collision.lua",
-		"/F/Love2D Project/loveTCG/scenes/builder_scene.lua",
 		"/F/Love2D Project/loveTCG/cls/menu.lua",
 		"/F/Love2D Project/loveTCG/scenes/result_scene.lua",
 		"/F/Love2D Project/loveTCG/lib/firework.lua",
@@ -571,17 +638,7 @@
 		"/F/Love2D Project/loveTCG/cards/vespitole/bishop.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/banker.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/ballista.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/sisterYsadora.lua",
-		"/F/Love2D Project/loveTCG/downdata.lua",
-		"/F/Love2D Project/loveTCG/scenes/test.lua",
-		"/F/Love2D Project/FunnyFunky/cls/button.lua",
-		"/F/Love2D Project/loveTCG/cls/play.lua",
-		"/F/Love2D Project/loveTCG/cls/effect.lua",
-		"/F/Love2D Project/loveTCG/cls/action.lua",
-		"/F/Love2D Project/loveTCG/lib/tween.lua",
-		"/F/Love2D Project/loveTCG/cls/show.lua",
-		"/F/Love2D Project/loveTCG/cls/grave.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/coin.lua"
+		"/F/Love2D Project/loveTCG/cards/vespitole/sisterYsadora.lua"
 	],
 	"find":
 	{
@@ -600,6 +657,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"delay",
+			"back",
+			"gold",
+			"choose",
+			"returncard",
 			"print",
 			"save",
 			"self",
@@ -722,12 +784,7 @@
 			"cards",
 			"print",
 			"card[i]",
-			"v[i]",
-			"mark",
-			"\"持续\"",
-			"lua",
-			"drawcard",
-			"print"
+			"v[i]"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -834,24 +891,24 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scenes/builder_scene.lua",
+					"file": "cls/card.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 705,
+						"buffer_size": 9642,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								243,
-								243
+								5117,
+								5117
 							]
 						],
 						"settings":
@@ -861,10 +918,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4360.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -873,15 +930,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15233,
+						"buffer_size": 16488,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10464,
-								10464
+								1271,
+								1271
 							]
 						],
 						"settings":
@@ -891,49 +948,19 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 9593.0,
+						"translation.y": 924.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "cls/result.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3464,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2462,
-								2462
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2069.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "cardLibs/test.lua",
+					"file": "cls/turn.lua",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 2747,
+						"buffer_size": 1403,
 						"regions":
 						{
 						},
@@ -951,27 +978,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1694.0,
+						"translation.y": 704.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "cls/card.lua",
+					"buffer": 3,
+					"file": "cls/result.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8747,
+						"buffer_size": 3493,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8747,
-								8747
+								96,
+								96
 							]
 						],
 						"settings":
@@ -981,10 +1008,252 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6437.0,
+						"translation.y": 2585.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "cls/effect.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2551,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2366,
+								2366
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1507.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "cls/play.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1523,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1286,
+								1286
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 792.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "cards/vespitole/faith/malediction.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 493,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								452,
+								452
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 132.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "cards/vespitole/faith/liturgy.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 582,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								559,
+								559
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 68.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "cards/vespitole/power/spynetwork.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 610,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								589,
+								589
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 264.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "cards/vespitole/prosperity/tithe.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 608,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								587,
+								587
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 264.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "cards/vespitole/prosperity/harvest.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 602,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								581,
+								581
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 198.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "cls/deck.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1234,
+								1234
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 334.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
 					"type": "text"
 				}
 			]
@@ -1023,7 +1292,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 150.0
+		"height": 175.0
 	},
 	"output.find_results":
 	{

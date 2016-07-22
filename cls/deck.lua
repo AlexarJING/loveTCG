@@ -53,10 +53,17 @@ function deck:update(dt)
     end
 end
 
+local font = love.graphics.newFont(50)
+
 function deck:draw()
     for i,v in ipairs(self.cards) do
         v:draw()
     end
+    love.graphics.setFont(font)
+    love.graphics.setColor(0, 0, 0, 255)
+    love.graphics.printf(tostring(#self.cards), self.x-100+2, self.y-30+2, 200, "center")
+    love.graphics.setColor(255, 255, 0, 255)
+    love.graphics.printf(tostring(#self.cards), self.x-100, self.y-30, 200, "center")
 end
 
 

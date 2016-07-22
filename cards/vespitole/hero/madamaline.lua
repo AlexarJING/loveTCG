@@ -1,6 +1,6 @@
 local data = {
 	id = "madamaline",
-	name = "madam aline",
+	name = "Madam Aline",
 	faction= "vespitole",
 
 	profile = {"Torturers, soldiers, spies, and kings all spill fields of blood to wrench whispered half truths from their victims. Ours lay bare their every secret without a drop spilt. –Madam Aline"},
@@ -11,7 +11,7 @@ local data = {
 
 data.description = {
 	"start with",
-	"2 courtsan",
+	"2 courtesan",
 }
 
 data.ability={

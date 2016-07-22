@@ -84,7 +84,7 @@ end
 
 local function feedAlly(game)
 	for i,card in ipairs(game.my.play.cards) do
-		if card.hp<card.hp_max then	
+		if card.hp and card.hp<card.hp_max then	
 			return game:feedCard(card)
 		end
 	end

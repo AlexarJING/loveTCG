@@ -28,7 +28,7 @@ function play:resort()
             else
                 x= self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale
             end
-            card:setAnimate(moveSpeed,{x=x,y=self.y,rz=0,rx=self.rx},"outQuad")
+            card:setAnimate(moveSpeed,{x=x,y=self.y,rz=0,rx=self.rx,scale=self.scale},"outQuad")
         end
     else
         for i,card in ipairs(self.cards) do
@@ -38,7 +38,7 @@ function play:resort()
             else
                 x= self.x +( -self.maxCount/2 + (i-0.5)*self.maxCount/ #self.cards ) * card.w * card.scale
             end
-            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0},"outQuad")
+            card:setAnimate(moveSpeed,{x=x,y=self.y,rx=self.rx,rz=0,scale=self.scale},"outQuad")
         end
     end
 end

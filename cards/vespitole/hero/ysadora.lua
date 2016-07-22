@@ -1,6 +1,6 @@
 local data = {
 	id = "ysadora",
-	name = "sister ysadora",
+	name = "Sister Ysadora",
 	faction= "vespitole",
 
 	profile = {"Men will always fight harder for a lord with battle scars. "},

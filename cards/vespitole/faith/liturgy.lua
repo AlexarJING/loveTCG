@@ -20,9 +20,10 @@ data.description = {
 data.ability={
 	onPlay = function(card,game) 
 		game:drawCard()
-		for i,v in ipairs(game.my.play.cards) do
-			if v.hp then game:gain(v,"my","magic") end
+		for i = 1, #game.my.play.cards do
+			if game.my.play.cards[i].hp then game:gain(v,"my","magic") end
 		end
+		game:gain(v,"my","magic")
 	end,
 	
 }

@@ -3,7 +3,7 @@ local delay={}
 delay.index=0
 delay.stack={}  --k=id [1]=time, [2]=function [3]=arg
 function delay:new(delayTime,since,func,...)
-	since=tostring(since)
+	--since=tostring(since)
 	self.index=self.index+1
 	if since and self.stack[tostring(since)] and self.stack[tostring(since)][1] then
 		delayTime=delayTime+self.stack[since][1]

@@ -4,6 +4,10 @@ img.food = love.graphics.newImage("res/others/food.png")
 img.gold = love.graphics.newImage("res/others/money.png")
 img.skull = love.graphics.newImage("res/others/skull.png")
 img.magic = love.graphics.newImage("res/others/magic.png")
+img.attack = love.graphics.newImage("res/others/skull.png")
+img.shield = love.graphics.newImage("res/assets/shield.png")
+
+--[[
 img.attack = love.graphics.newParticleSystem(love.graphics.newImage("res/others/skull.png"), 64)
 local p = img.attack
 p:setParticleLifetime(0.1, 1) 
@@ -19,7 +23,7 @@ p:setParticleLifetime(1, 2)
 p:setEmissionRate(10)
 p:setSizeVariation(1)
 p:setSizes(1,1.3)
-p:setColors(255, 255, 0, 200, 255, 255, 0, 0) 
+p:setColors(255, 255, 0, 200, 255, 255, 0, 0) ]]
 
 function effect:init(parent,tag,from,to,fading,during,easing,manual)
 	self.parent = parent
@@ -56,7 +60,7 @@ end
 
 function effect:update(dt)
 	self.tween:update(dt)
-	
+	--[[
 	if self.tag =="attack" or self.tag == "shield" then 
 		self.img:update(dt) 
 	else
@@ -65,14 +69,20 @@ function effect:update(dt)
 			self.shadow[i].x = self.shadow[i-1].x
 			self.shadow[i].y = self.shadow[i-1].y
 		end
+	end]]
+
+	self.shadow[1].x = self.x ; self.shadow[1].y = self.y
+	for i= self.shadowCount,2,-1 do
+		self.shadow[i].x = self.shadow[i-1].x
+		self.shadow[i].y = self.shadow[i-1].y
 	end
 end
 
 
 function effect:draw()
-	if self.tag =="attack" or self.tag == "shield" then 
+	if self.tag == "shield" then 
 		love.graphics.setColor(255, 255, 255, 255)
-		love.graphics.draw(self.img,self.x,self.y)
+		love.graphics.draw(self.img,self.x-70,self.y-100)
 	else
 		for i,v in ipairs(self.shadow) do
 			love.graphics.setColor(255, 255, 255, self.alpha/i)

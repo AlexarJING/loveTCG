@@ -21,9 +21,14 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game) 
-		game:drawCard() 
-		for i,v in ipairs(game.your.play.cards) do
-			if v.hp then game:attack(card) end
+		game:drawCard()
+		local count =0
+
+		for i,t in ipairs(game.your.play.cards) do
+			if t.hp then count=count+1 end
+		end
+		for i = 1, count+1 do
+			game:attack(card)
 		end
 	end,
 }

@@ -1,6 +1,6 @@
 local result = Class("result")
 local Bg = require "cls/bg"
-local font = love.graphics.newFont(30)
+local font = love.graphics.newFont(20)
 local Frag = require "lib/frag"
 local cardData = require "cls/cardDataLoader"
 local Card = require "cls/card"
@@ -17,10 +17,10 @@ function result:init(parent,screenshot,hero,result,game)
 	self.cards = {}
 	self.fireworks={}
 	self.hero = hero
-	self.hero:addAnimate(1,{x=0},"inQuad",nil)
-	self.hero:addAnimate(1,{y=0},"inQuad",nil)
+	self.hero:setAnimate(1,{x=0},"inQuad",nil)
+	self.hero:setAnimate(1,{y=0},"inQuad",nil)
 	if result == "win" then
-		self.hero:addAnimate(1,{scale=1},"inQuad",nil,
+		self.hero:setAnimate(1,{scale=1},"inQuad",nil,
 			function() 
 				for i= 1,3 do
 					table.insert(self.fireworks,self:fire())
@@ -28,7 +28,7 @@ function result:init(parent,screenshot,hero,result,game)
 				self.showResult=true
 			end)
 	else
-		self.hero:addAnimate(1,{scale=1},"inQuad",nil,function() self:breakout() end)
+		self.hero:setAnimate(1,{scale=1},"inQuad",nil,function() self:breakout() end)
 	end
 	 --addAnimate(duration , target , easing , delay, callback)
 	self:initBg()	
@@ -130,6 +130,7 @@ function result:draw()
 	if self.frag then self.frag:draw() end
 
 	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setFont(font)
 	if self.showResult then
 		if self.result == "lose" then
 			love.graphics.printf("YOU LOSE !\n+50 gold\n+50 exp", -360,100, 360, "center", 0, 2, 2)

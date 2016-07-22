@@ -16,7 +16,14 @@ local img_back = {
 	silver = love.graphics.newImage("res/assets/cardbacksilver.png"),
 	gold = love.graphics.newImage("res/assets/cardbackgold.png"),
 }
-love.graphics.newImage("res/assets/cardback.png")
+
+local img_frame = {
+	love.graphics.newImage("res/assets/cardframe-normal.png"),
+	love.graphics.newImage("res/assets/cardframe-silver.png"),
+	love.graphics.newImage("res/assets/cardframe-gold.png"),
+}
+
+
 local cardImage = {}
 local font_title = love.graphics.newFont(30)
 local font_content = love.graphics.newFont(20)
@@ -26,11 +33,20 @@ function card:init(game,data,born,current)
 	self.game = game
 	self.born = game[born]
 	self.current = current
+	self.data = data
 	self:initProperty(data)
 	self:initImage()
+	self:updateCanvas()
 	self:initBack()
 	self.tweens={}
 	self.tweenStack = {}
+end
+
+function card:reset()
+	self.hp = self.data.hp
+	self.last = self.data.last
+	self.shield = self.data.shield
+	self:updateCanvas()
 end
 
 
@@ -71,10 +87,12 @@ function card:initBack()
 	love.graphics.setCanvas()
 end
 
+local count = 0
 
 function card:initImage()
 	if not cardImage[self.id] then
 		cardImage[self.id]= love.graphics.newImage("res/cards/"..self.id..".png")
+		count = count+1
 	end
 		
 	self.img = cardImage[self.id]
@@ -82,73 +100,12 @@ function card:initImage()
 	self.tw = self.img:getWidth()
 	self.th = self.img:getHeight()
 	self.predraw  = love.graphics.newCanvas(Width,Height)
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.setCanvas(self.predraw)
-	--bg
-	love.graphics.draw(self.img, 0, 0, 0, Width/self.tw,Height/self.th)
-	--title
-	love.graphics.setFont(font_title)
-	love.graphics.setColor(0, 0, 0, 255)
-	love.graphics.printf(self.name, 3, 8, Width, "center")
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.printf(self.name, 0, 5, Width, "center")
+
 	
-	--description
-	
-	love.graphics.setFont(font_content)
-	for i,text in ipairs(self.description) do
-		love.graphics.setColor(0,0,0,255)
-		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, "center")
-		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(text, 0, (i-1)*20+textHeight/(#self.description+1)+ 180, Width, "center")
-	end
-	--price
-	if self.price then
-		love.graphics.setColor(255, 255, 255,255)
-		--love.graphics.circle("fill", 195, 20, 15)
-		love.graphics.draw(img_gold, 180, 10,0,1.2,1.2)
-		love.graphics.setFont(font_content)
-		love.graphics.setColor(0, 0, 0,255)
-		love.graphics.printf(self.price, 0, 11, Width-10, "right")
-		love.graphics.setColor(0, 0, 0,255)
-		love.graphics.printf(self.price, 0, 11, Width-9, "right")
-		love.graphics.setColor(0, 0, 255,255)
-		love.graphics.printf(self.price, 0, 11, Width-11, "right")
-	end
-	--rare
-	if self.rare then
-		love.graphics.setColor(255, 255, 255, 255)
-		--love.graphics.circle("fill", 15, 160, 15)
-		if self.rare == 1 then
-			love.graphics.draw(rare_1, 5,150)
-		elseif self.rare == 2 then
-			love.graphics.draw(rare_2, 5,150)
-		elseif self.rare == 3 then
-			love.graphics.draw(rare_3, 5,150)
-		elseif self.rare == 4 then
-			love.graphics.draw(rare_4, 5,150)
-		elseif self.rare == "hero" then
-			love.graphics.draw(rare_h, 5,150)
-		end
-	end
-
-
-	--border
-	if self.level == 1 then
-		love.graphics.setColor(100, 255, 100, 200)
-	elseif self.level == 2 then
-		love.graphics.setColor(100, 100, 255, 200)
-	elseif self.level == 3 then
-		love.graphics.setColor(255, 100, 255, 200)
-	else
-		love.graphics.setColor(255, 255, 255, 200)
-	end
-	love.graphics.setLineWidth(10)
-	love.graphics.rectangle("line", 0, 0, Width, Height)
-
-	love.graphics.setCanvas()
-	self:updateCanvas()
 end
+
+
+
 
 local hw =Width/2
 local hh =Height/2
@@ -242,18 +199,98 @@ function card:needRedraw()
 	return true
 end
 
+local mask_shader = love.graphics.newShader [[
+   vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+      if (Texel(texture, texture_coords).a == 0.0) {
+         // a discarded pixel wont be applied as the stencil.
+         discard;
+      }
+      return vec4(1.0);
+   }
+]]
+
 
 function card:updateCanvas()
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.setCanvas(self.predraw)
+	--bg
+	local function myStencilFunction()
+		love.graphics.setShader(mask_shader)
+		love.graphics.draw(self.cardback, 0, 0, 0, Width/self.tw,Height/self.th)
+		love.graphics.setShader()
+	end
+	love.graphics.stencil(myStencilFunction, "replace", 1)
+    love.graphics.setStencilTest("greater", 0)
+    love.graphics.draw(self.img, 0, 0, 0, Width/self.tw,Height/self.th)
+    love.graphics.setStencilTest()
+
+
+	
+	--border
+	if img_frame[self.level] then
+		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.draw(img_frame[self.level],0, 0, 0, Width/self.tw,Height/self.th)
+	end
+
+
+	--title
+	love.graphics.setFont(font_title)
+	love.graphics.setColor(0, 0, 0, 255)
+	love.graphics.printf(self.name, 3, 8, Width, "center")
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.printf(self.name, 0, 5, Width, "center")
+	
+	--description
+	
+	love.graphics.setFont(font_content)
+	for i,text in ipairs(self.description) do
+		love.graphics.setColor(0,0,0,255)
+		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, "center")
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.printf(text, 0, (i-1)*20+textHeight/(#self.description+1)+ 180, Width, "center")
+	end
+	--price
+	if self.price then
+		love.graphics.setColor(255, 255, 255,255)
+		--love.graphics.circle("fill", 195, 20, 15)
+		love.graphics.draw(img_gold, 177, 10,0,1.3,1.3)
+		love.graphics.setFont(font_content)
+		love.graphics.setColor(0, 0, 0,255)
+		love.graphics.printf(self.price, 177, 11, 30, "center")
+		love.graphics.setColor(0, 0, 0,255)
+		love.graphics.printf(self.price, 176, 11, 30, "center")
+		love.graphics.setColor(0, 0, 255,255)
+		love.graphics.printf(self.price, 175, 11, 30, "center")
+	end
+	--rare
+	if self.rare then
+		love.graphics.setColor(255, 255, 255, 255)
+		--love.graphics.circle("fill", 15, 160, 15)
+		if self.rare == 1 then
+			love.graphics.draw(rare_1, 5,150)
+		elseif self.rare == 2 then
+			love.graphics.draw(rare_2, 5,150)
+		elseif self.rare == 3 then
+			love.graphics.draw(rare_3, 5,150)
+		elseif self.rare == 4 then
+			love.graphics.draw(rare_4, 5,150)
+		elseif self.rare == "hero" then
+			love.graphics.draw(rare_h, 5,150)
+		end
+	end
+
+
+	
+
 	
 	if self.hp then
 		love.graphics.setColor(100, 100, 100, 255)
 		for i =1 , self.hp_max do
-			love.graphics.draw(img_hp, 130 - self.hp_max*17 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)
 		end
 		love.graphics.setColor(255,255,255,255)
 		for i =1 , self.hp do
-			love.graphics.draw(img_hp, 130 - self.hp_max*17 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)
 		end
 	end
 
@@ -305,9 +342,18 @@ function card:vibrateUpdate(dt)
 end
 
 function card:standout()
-	local y = self.y
+	local tween = self.tweenStack.y and self.tweenStack.y[#self.tweenStack.y]
+	local y
+	if tween then 
+		y = tween.target.y
+	elseif self.tweens.y then
+		y = self.tweens.y.target.y
+	else
+		y = self.y
+	end 
 	local ty = y>0 and y-50 or y+50
-	self:addAnimate(0.3,{y=ty},"linear")
+
+	self:setAnimate(0.3,{y=ty},"linear")
 	self:addAnimate(0.3,{y=y},"linear")
 end
 

@@ -4,7 +4,7 @@ local turn = Class("turn")
 function turn:init(game,side)
 	self.ry = 0
 	self.d = 20
-	self.turntime = 30
+	self.turntime = 60
 	self.timer = self.turntime
 	self.game = game
 	self.img = love.graphics.newImage("res/assets/coin.png")
@@ -37,7 +37,8 @@ end
 
 function turn:checkMouse()
 	if not  self.game.click then return end
-	if self.game.my ~= self.game.userturn then return end
+	if self.game.my ~= self.game.userside then return end
+
 	local x , y = self.game.mousex , self.game.mousey
 
 	if x > self.x - self.d and x < self.x + self.d and
