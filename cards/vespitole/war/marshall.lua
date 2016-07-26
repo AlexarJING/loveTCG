@@ -24,7 +24,7 @@ data.ability={
 			game.my.hero.card.ability.onTurnStart(game.my.hero.card,game)
 		end
 		for i,v in ipairs(game.my.play.cards) do
-			if v.ability.onTurnStart then
+			if v.ability.onTurnStart and v.id~="marshall" then
 				v.ability.onTurnStart(v,game)
 			end
 		end

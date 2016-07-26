@@ -47,7 +47,7 @@ function game:init(userdata,foedata)
 		hp = 30
 	}
 	self.down.resource={
-		gold = 0,
+		gold = 100,
 		food = 0,
 		magic =0,
 		skull = 0,
@@ -243,15 +243,31 @@ end
 
 function game:showCard(card)
 	card = card or self.hoverCard
-	for i,v in ipairs(self.show.cards) do
-		if v then return end
-	end
+	if self.show.cards[1] then return end
+
 	self.show.lastPos = table.getIndex(card.current.cards,card)
 	self.show.lastPlace= card.current
 	self:transferCard(card,card.current,self.show)
 end
 
 function game:optionsCards(cards,to)
+	if self.show.cards[1] then 
+		--delay:new(delayTime,since,func,...)
+		delay:new(
+			function() return not self.show.cards[1] end,
+			nil,
+			function() 
+				if self.my == self.userside then
+					self:optionsCards(cards,to) 
+				else
+					game:chooseCard(cards[1])
+				end
+				
+			end
+			)
+		return	
+	end
+	
 	self.show.lastPlace = cards[1].current
 	for i,card in ipairs(cards) do
 		self:transferCard(card,card.current,self.show)
@@ -307,26 +323,47 @@ function game:stealCard(card)
 end
 
 
-function game:drawCard(whose)
+function game:drawCard(whose,id,card)
 	whose = whose or "my"
 	local from = self[whose].deck
-	if #from.cards == 0 then return end
-	local index = love.math.random(#from.cards)
-	local card = from.cards[index]
-	card:reset()
-	local to = self[whose].hand
-	self:transferCard(card,from,to)
+	if id then
+		for i,v in ipairs(self.my.deck.cards) do
+			if v.id ==  id then
+				v:reset()
+				local to = self[whose].hand
+				self:transferCard(v,from,to)
+				return
+			end
+		end
+	else
+		if #from.cards == 0 then return end
+		local index = love.math.random(#from.cards)
+		local card = from.cards[index]
+		card:reset()
+		local to = self[whose].hand
+		self:transferCard(card,from,to)
+	end
+	
 end
 
 
-function game:refillCard(whose)
+function game:refillCard(whose,id,card)
 	whose = whose or "my"
 	local from = self[whose].library --data
-	local index = love.math.random(#from.cards)
-	local card = from:makeCard(from.cards[index])
-	--local card = from:makeCard(data)
-	local to = self[whose].bank
-	self:transferCard(card,from,to)
+	if id then
+		local d = self.cardData.short[id]
+		d.level = card.level
+		local t = from:makeCard(v)
+		local to = self[whose].bank
+		self:transferCard(t,from,to)
+		return		
+	else
+		local index = love.math.random(#from.cards)
+		local t = from:makeCard(from.cards[index])
+		--local card = from:makeCard(data)
+		local to = self[whose].bank
+		self:transferCard(t,from,to)
+	end
 end
 
 function game:transferCard(card ,from,to ,pos,passResort)
@@ -459,6 +496,14 @@ function game:attackCardAll(target)
 	end
 end
 
+function game:feedHeroWith(what)
+	local card = self.my.hero.card
+	self.my.resource.hp = self.my.resource.hp+1
+	card:updateCanvas()
+	if card.ability.onFeed then card.ability.onFeed(card,self,what) end	
+	return true
+end
+
 function game:feedCard(card)
 	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end
 	card = card or self.hoverCard
@@ -470,40 +515,12 @@ function game:feedCard(card)
 		card.hp = card.hp + 1
 		if card.hp>card.hp_max then card.hp = card.hp_max end
 	end
+	card:updateCanvas()
 	if self.my.resource.food > 0 then
 		self:lose(self.my.hero.card,"my","food") --game:lose(card,who,what)
-		--[[
-		self.my.resource.food = self.my.resource.food - 1
-		local x,y
-		if self.turn == "up" then
-			x = self.my.hero.x -love.math.random(-30,30)
-			y = self.my.hero.y +love.math.random(100,150)
-		else
-			x = self.my.hero.x +love.math.random(-30,30)
-			y = self.my.hero.y -love.math.random(100,150)
-		end
-		local out= Effect(self,"food",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
-		out:addCallback(function() 
-			local back = Effect(self,"food",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
-			back:addCallback(function() self.my.hero:updateResource()end)
-		end)]]
 	else
 		self:lose(self.my.hero.card,"my","magic")
-		--[[
-		self.my.resource.magic = self.my.resource.magic - 1
-		local x,y
-		if self.turn == "up" then
-			x = self.my.hero.x -love.math.random(-30,30)
-			y = self.my.hero.y +love.math.random(100,150)
-		else
-			x = self.my.hero.x +love.math.random(-30,30)
-			y = self.my.hero.y -love.math.random(100,150)
-		end
-		local out= Effect(self,"magic",self.my.hero,{x=x,y=y},false,0.3,"outQuad")
-		out:addCallback(function() 
-			local back = Effect(self,"magic",{x=x,y=y},self.my.hero,false,0.3,"inQuad")
-			back:addCallback(function() self.my.hero:updateResource()end)
-		end)]]
+
 	end
 	
 	if card.ability.onFeed then card.ability.onFeed(card,self) end
@@ -540,14 +557,20 @@ function game:damageCard(card)
 	end
 	card:updateCanvas()
 	if card.hp then
-		if card.hp < 1 then return true end
+		if card.hp < 1 then 
+			if card.onDying then 
+				return card.onDying(card,self)
+			end
+			return "death"
+		end
 	else
-		if card.shield < 1 then return true end
+		if card.shield < 1 then return "death" end
 	end
 
 end
 
-function game:killCard(card,passResort) 
+function game:killCard(card,passResort)
+	if card.ability.onKilled then card.ability.onKilled(card,self) end
 	if card.back then
 		self:transferCard(card ,card.current, card.born.deck ,_,passResort)
 	else
@@ -636,14 +659,27 @@ function game:attack(from,to,ignore)
 			end
 		end
 
-	
-		if self:damageCard(target) then	 --killed	
+		if to.dodgeRate and love.math.random()<to.dodgeRate then
+			effect:addCallback(function() target:turnaround() end)
+			return
+		end
+
+		local result = self:damageCard(target)
+
+		if result == "death" then	 --killed	
 			effect:addCallback(function() target:vibrate(_,_,
 				function()
 					self:goback(target)
 					self.your.play:resort()
 				end) end)
 			self:killCard(target,true)
+		elseif result == "toHand" then
+			self:transferCard(target ,target.current, target.my.hand ,_,true)
+			effect:addCallback(function() target:vibrate(_,_,
+				function()
+					self.my.hand:resort()
+				end)
+			end)
 		else
 			effect:addCallback(function() target:vibrate() end)
 		end
@@ -683,6 +719,62 @@ function game:loser()
 	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose",self)
 end
 
+function game:sacrificeCard(target)
+	
+	if target == "weakest" then
+		for i,v in ipairs(self.my.play.cards) do
+			if v.sacrifice then
+				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
+				self:killCard(v)
+				return v
+			end
+		end
+		local weakest
+		local weakest_hp = 10
+		for i,v in ipairs(self.my.play.cards) do
+			if v.hp<weakest then
+				weakest = {v}
+			elseif v.hp== weakest then
+				table.insert(weakest,v)
+			end
+		end
+		if not weakest then return end
+		local card = weakest[love.math.random(weakest)]
+		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
+		self:killCard(card)
+		return card
+	elseif target == "strongest" then
+		for i,v in ipairs(self.my.play.cards) do
+			if v.sacrifice then
+				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
+				self:killCard(v)
+				return v
+			end
+		end
+		local strongest
+		local strongest_hp = 0
+		for i,v in ipairs(self.my.play.cards) do
+			if v.hp>strongest then
+				strongest = {v}
+			elseif v.hp== strongest then
+				table.insert(strongest,v)
+			end
+		end
+		if not strongest then return end
+		local card = strongest[love.math.random(strongest)]
+		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
+		self:killCard(card)
+		return card
+	elseif target then
+		for i,v in ipairs(self.my.play.cards) do
+			if v.id == target then
+				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
+				self:killCard(v)
+				return v
+			end
+		end
+	end
+end
 
 
 function game:AI(dt)

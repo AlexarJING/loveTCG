@@ -357,6 +357,9 @@ function card:standout()
 	self:addAnimate(0.3,{y=y},"linear")
 end
 
-
+function card:turnaround()
+	self:setAnimate(0.3,{rx=3.14},"linear")
+	self:addAnimate(0.3,{rx=0},"linear")
+end
 
 return card

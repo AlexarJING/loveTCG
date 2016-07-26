@@ -75,6 +75,14 @@ local data = {
 	coins = {},
 }
 
+local function chooseShow(game)
+	local card = game.my.show.cards[1]
+	if card then
+		return game:chooseCard(card)
+	end
+end
+
+
 local function playHand(game)
 	local card = game.my.hand.cards[1]
 	if card then
@@ -118,6 +126,6 @@ local function attackHero(game)
 end
 
 
-data.rule = {playHand,feedAlly,aimFoe,buyBank,feedHero,attackHero}
+data.rule = {gameplay,Hand,feedAlly,aimFoe,buyBank,feedHero,attackHero}
 
 return data
