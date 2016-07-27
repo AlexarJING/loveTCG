@@ -5,16 +5,23 @@ local testlib = {
     [1]={
         ["level"]=1,
         ["exp"]=0,
-        ["category"]="faith",
-        ["faction"]="vespitole",
-        ["id"]="sibyllinescrolls",
+        ["category"]="herd",
+        ["faction"]="daramek",
+        ["id"]="herdofrats",
     },
     [2]={
         ["level"]=1,
         ["exp"]=0,
-        ["category"]="war",
-        ["faction"]="vespitole",
-        ["id"]="soldier",
+        ["category"]="rituals",
+        ["faction"]="daramek",
+        ["id"]="ritualslaughter",
+    },
+    [2]={
+        ["level"]=1,
+        ["exp"]=0,
+        ["category"]="rituals",
+        ["faction"]="daramek",
+        ["id"]="culltheherd",
     },
 }
 
@@ -42,7 +49,7 @@ end
 
 function library:setCards(data)
     --local lib = data.lib
-    local lib = testlib
+    local lib = self.root=="down" and testlib or data.lib
     for i,v in ipairs(lib) do
         local d= table.copy(self.game.cardData.short[v.id],_,true)
         d.level = v.level

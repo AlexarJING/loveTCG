@@ -1,11 +1,11 @@
 local data = {
-	id = "ritualslaughter",
-	name = "Ritual Slaughter",
+	id = "culltheherd",
+	name = "Cull the Herd",
 	faction = "daramek",
 	category = "rituals",
-	rare = 1 ,
+	rare = 2,
 	profile = {" Find a pregnant sow. Have a dozen men scream at her until she is forced into early birth. Ferment each suckling in separate leather sacks, inscribed with the symbols 'haf', 'lem', 'peth', and 'kos'.  –Esra"},
-	basePrice = 4,
+	basePrice = 3,
 	back = true,
 }
 
@@ -18,20 +18,14 @@ data.description = {
 data.ability={
 	onPlay = function (card,game)
 		local candidate = {}
-		for i,v in ipairs(game.my.play.cards) do
-			if v.hp>0 and not v.cannotScrifice then
-				table.insert(candidate, v)
-			end
+		if game:sacrificeCard("weakest") then
+			local t = game:drawCard("my",function(c) return c.hp end,true)
+			if t then table.insert(candidate,t) end
 		end
-		if not candidate[1] then return end
+
+		if #candidate == 0 then return end
+		
 		game:optionsCards(candidate)
-		game.show.onChoose = function(card,game)
-			for i = 1, card.hp+1 do
-				delay:new((i-1)*0.2,nil,game.gain,game,card,"my","random")
-			end
-			game:sacrificeCard(card)
-			game.show.onChoose = nil
-		end
 	end,
 }
 

@@ -230,12 +230,10 @@ function game:clickCard()
 				self:attackCard()
 			end	
 		end
-	elseif #self.show.cards == 1 then
-		if current == self.show then
+	elseif current == self.show then
+		if self.show.tag == "zoom" then
 			self:returnCard()
-		end
-	else
-		if current == self.show then
+		else
 			self:chooseCard()
 		end
 	end
@@ -248,6 +246,7 @@ function game:showCard(card)
 	self.show.lastPos = table.getIndex(card.current.cards,card)
 	self.show.lastPlace= card.current
 	self:transferCard(card,card.current,self.show)
+	self.show.tag = "zoom"
 end
 
 function game:optionsCards(cards,to)
@@ -267,7 +266,7 @@ function game:optionsCards(cards,to)
 			)
 		return	
 	end
-	
+	self.show.tag = "option"
 	self.show.lastPlace = cards[1].current
 	for i,card in ipairs(cards) do
 		self:transferCard(card,card.current,self.show)
@@ -277,22 +276,24 @@ end
 
 function game:chooseCard(card)
 	card = card or self.hoverCard
+	self.show.tag = nil
 	local cards = {unpack(self.show.cards)}
+	
 	for i,v in ipairs(cards) do
 		if v==card then
-			if self.show.targetPlace then
-				self:transferCard(v,v.current,self.show.targetPlace)
+			if self.show.onChoose then 
+				self.show.onChoose(card,self) 
 			else
-				self:playCard(v)
+				if self.show.targetPlace then
+					self:transferCard(v,v.current,self.show.targetPlace)
+				else
+					self:playCard(v)
+				end		
 			end
 		else
-			self:goback(v)
 			self:transferCard(v,v.current,self.show.lastPlace)
 		end
-	end
-
-	--self.show.lastPlace = nil
-	
+	end	
 end
 
 function game:returnCard(card)
@@ -301,6 +302,7 @@ function game:returnCard(card)
 	local where = self.show.lastPlace
 	self.show.lastPos = nil
 	self.show.lastPlace = nil
+	self.show.tag = nil
 	self:transferCard(card,card.current,where,pos)
 end
 
@@ -323,13 +325,23 @@ function game:stealCard(card)
 end
 
 
-function game:drawCard(whose,id,card)
+function game:drawCard(whose,id,manual) --or condition func with func(card)
 	whose = whose or "my"
 	local from = self[whose].deck
-	if id then
+	if type(id) == "string" then
 		for i,v in ipairs(self.my.deck.cards) do
 			if v.id ==  id then
 				v:reset()
+				local to = self[whose].hand
+				self:transferCard(v,from,to)
+				return
+			end
+		end
+	elseif type(id) == "function" then
+		for i,v in ipairs(self.my.deck.cards) do
+			if id(v) then
+				v:reset()
+				if manual then return v end
 				local to = self[whose].hand
 				self:transferCard(v,from,to)
 				return
@@ -720,7 +732,7 @@ function game:loser()
 end
 
 function game:sacrificeCard(target)
-	
+	if #self.my.play.cards==0 then return end
 	if target == "weakest" then
 		for i,v in ipairs(self.my.play.cards) do
 			if v.sacrifice then
@@ -732,14 +744,15 @@ function game:sacrificeCard(target)
 		local weakest
 		local weakest_hp = 10
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp<weakest then
+			if v.hp<weakest_hp then
 				weakest = {v}
+				weakest_hp = v.hp
 			elseif v.hp== weakest then
 				table.insert(weakest,v)
 			end
 		end
 		if not weakest then return end
-		local card = weakest[love.math.random(weakest)]
+		local card = weakest[love.math.random(#weakest)]
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
@@ -754,18 +767,19 @@ function game:sacrificeCard(target)
 		local strongest
 		local strongest_hp = 0
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp>strongest then
+			if v.hp>strongest_hp then
 				strongest = {v}
+				strongest_hp = v.hp
 			elseif v.hp== strongest then
 				table.insert(strongest,v)
 			end
 		end
 		if not strongest then return end
-		local card = strongest[love.math.random(strongest)]
+		local card = strongest[love.math.random(#strongest)]
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
-	elseif target then
+	elseif type(target)=="string" then
 		for i,v in ipairs(self.my.play.cards) do
 			if v.id == target then
 				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
@@ -773,6 +787,9 @@ function game:sacrificeCard(target)
 				return v
 			end
 		end
+	else	
+		if target.ability.onSacrifice then target.ability.onSacrifice(target,self) end
+		self:killCard(target)
 	end
 end
 
