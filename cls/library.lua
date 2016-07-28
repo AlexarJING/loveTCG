@@ -16,12 +16,26 @@ local testlib = {
         ["faction"]="daramek",
         ["id"]="ritualslaughter",
     },
-    [2]={
+    [3]={
         ["level"]=1,
         ["exp"]=0,
         ["category"]="rituals",
         ["faction"]="daramek",
         ["id"]="culltheherd",
+    },
+    [4]={
+        ["level"]=1,
+        ["exp"]=0,
+        ["category"]="herd",
+        ["faction"]="daramek",
+        ["id"]="herdofgoats",
+    },
+    [5]={
+        ["level"]=1,
+        ["exp"]=0,
+        ["category"]="herd",
+        ["faction"]="daramek",
+        ["id"]="herdofrats",
     },
 }
 

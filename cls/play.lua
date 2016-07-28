@@ -46,6 +46,7 @@ end
 
 function play:update(dt)
     for i,v in ipairs(self.cards) do
+        if v.ability.always then v.ability.always(v,v.game) end
         v:update(dt)
     end
 end

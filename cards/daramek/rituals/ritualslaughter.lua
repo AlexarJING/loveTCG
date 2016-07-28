@@ -30,7 +30,6 @@ data.ability={
 				delay:new((i-1)*0.2,nil,game.gain,game,card,"my","random")
 			end
 			game:sacrificeCard(card)
-			game.show.onChoose = nil
 		end
 	end,
 }

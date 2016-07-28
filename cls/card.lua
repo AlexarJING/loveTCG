@@ -29,7 +29,7 @@ local font_title = love.graphics.newFont(30)
 local font_content = love.graphics.newFont(20)
 
 
-function card:init(game,data,born,current)
+function card:init(game,data,born,current,state)
 	self.game = game
 	self.born = game[born]
 	self.current = current
@@ -40,7 +40,16 @@ function card:init(game,data,born,current)
 	self:initBack()
 	self.tweens={}
 	self.tweenStack = {}
+	if state then card:setState(state) end
 end
+
+function card:setState(state)
+	self.hp = state.hp
+	self.last = state.last
+	self.shield = state.shield
+	self:updateCanvas()
+end
+
 
 function card:reset()
 	self.hp = self.data.hp
@@ -126,14 +135,14 @@ function card:checkHover()
 end
 
 function card:update(dt)
-	self:vibrateUpdate(dt)
-	--if self:needRedraw() then
-		--self:updateCanvas()
-	--end
-	
-	self:updateTweens(dt)
 
+	self:vibrateUpdate(dt)
+
+	self:updateTweens(dt)
+	
 	if self:checkHover() then self.game.hoverCard = self end
+	
+
 end
 
 function card:updateTweens(dt)

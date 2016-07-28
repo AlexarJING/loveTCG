@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"tab",
+				"table.insert	(table, [pos,] value)"
+			],
+			[
 				"fro",
 				"fori	for i,v in ipairs()"
 			],
@@ -26,10 +30,6 @@
 			[
 				"attackCa",
 				"attackCardAll"
-			],
-			[
-				"tab",
-				"table.remove	(table [, pos])"
 			],
 			[
 				"newim",
@@ -348,34 +348,37 @@
 	"buffers":
 	[
 		{
-			"contents": "local data = {\n	id = \"ritualslaughter\",\n	name = \"Ritual Slaughter\",\n	faction = \"daramek\",\n	category = \"rituals\",\n	rare = 4 ,\n	profile = {\" Find a pregnant sow. Have a dozen men scream at her until she is forced into early birth. Ferment each suckling in separate leather sacks, inscribed with the symbols 'haf', 'lem', 'peth', and 'kos'.  –Esra\"},\n	basePrice = 4,\n	--hp = 2,\n	--last = true,\n	back = true,\n}\n\ndata.description = {\n	\"Pick an ally to sacrifice\",\n 	\"Gain random resources\",\n 	\"equal to victim's life +1.\"\n}\n\ndata.ability={\n	onPlay = function (card,game) \n		game:refill(\"my\",\"herdofboars\",card)\n		for i,v in ipairs(game.my.play.cards) do\n			if v.id == \"herdofgoats\" or v.id == \"direboar\" then\n				v.ability.onTurnStart(game,v)\n			end\n		end\n		game:feedHeroWith(\"magic\")\n	end,\n}\n\nreturn data",
-			"file": "cards/daramek/rituals/ritualslaughter.lua",
-			"file_size": 19,
-			"file_write_time": 131139127113399295,
-			"settings":
-			{
-				"buffer_size": 800,
-				"line_ending": "Windows",
-				"name": "ritualslaughter.lua"
-			}
-		},
-		{
-			"contents": "local game = Class(\"game\")\ngame.cardData = require \"cls/cardDataLoader\"\ngame.font_title = love.graphics.newFont(30)\ngame.font_content = love.graphics.newFont(20)\n\nlocal Effect = require \"cls/effect\"\nlocal Turn = require \"cls/turn\"\n\nlocal sides = {\"up\",\"down\"}\nlocal hoverColor = {255,100,100,255}\n\nlocal foeLibs={}\nfoeLibs[1] = require(\"cardLibs/skirmishLib\")\n\n\nfunction game:init(userdata,foedata)\n	self.bg = require \"cls/bg\"(\"table2d\")\n	self.up = {}\n	self.down = {}\n	for i,side in ipairs(sides) do\n		self[side].deck = require \"cls/deck\"(self,side)\n		self[side].hand = require \"cls/hand\"(self,side)\n		self[side].bank = require \"cls/bank\"(self,side)\n		self[side].play = require \"cls/play\"(self,side)\n		self[side].library = require \"cls/library\"(self,side)\n		self[side].hero = require \"cls/hero\"(self,side)\n		self[side].grave = require \"cls/grave\"(self,side)\n	end\n	self.show = require \"cls/show\"(self)\n	self.turnButton = require \"cls/turn\"(self)\n\n	self.aiLevel = 1\n	local foedata = foeLibs[self.aiLevel]\n\n	self.aiCD = 0.5\n	self.mousex = 0\n	self.mousey = 0\n	self.turnCount = 0\n	self.cardPlayCount = 0\n	self.effects = {}\n	\n	self.up.resource={\n		gold = 0,\n		food = 0,\n		magic = 0,\n		skull = 0,\n		hp = 30\n	}\n	self.down.resource={\n		gold = 100,\n		food = 0,\n		magic =0,\n		skull = 0,\n		hp = 30\n	}\n\n	self.userdata = userdata\n	self.foedata = foedata\n\n	self.up.deck:setCards(foedata)\n	self.up.library:setCards(foedata)\n	self.up.hero:setHero(foedata)\n	self.down.deck:setCards(userdata)\n	self.down.library:setCards(userdata)\n	self.down.hero:setHero(userdata)\n	self:gameStart()\nend\n\nfunction game:update(dt)\n	delay:update(dt)\n	self.hoverCard = nil\n	\n	if self.gameMode == \"skirmish\" and self.my ~= self.userside then\n		self:AI(dt)\n	end\n\n	for i,side in ipairs(sides) do\n		self[side].deck:update(dt)\n		self[side].hand:update(dt)\n		self[side].bank:update(dt)\n		self[side].play:update(dt)\n		self[side].hero:update(dt)\n		self[side].grave:update(dt)\n	end\n\n	self.show:update(dt)\n\n	for i,e in ipairs(self.effects) do\n		e:update(dt)\n	end\n\n	if self.hoverCard and self.click then\n		self:clickCard()\n	end\n\n	if self.hoverCard and self.rightClick then\n		if self.my~=self.userside then return end\n		self:showCard()\n	end\n\n	self.turnButton:update(dt)\nend\n\nfunction game:draw()\n\n	self.bg:draw()\n	self.turnButton:draw()\n\n	for i,side in ipairs(sides) do\n		\n		self[side].hand:draw()\n		self[side].bank:draw()\n		self[side].play:draw()\n		self[side].hero:draw()\n		self[side].grave:draw()\n		self[side].deck:draw()\n	end\n\n	\n\n	self.show:draw()\n\n	if self.hoverCard then\n		self.hoverCard:draw(hoverColor)\n	end\n\n	for i,v in ipairs(self.effects) do\n		v:draw()\n	end\nend\n\n\nfunction game:gameStart()\n	\n	self.gameMode = \"skirmish\"\n	self.turn = \"down\"\n	self.my = self.down\n	self.your = self.up\n	self.userside = self.down\n\n	\n	self.turnButton:setTurn(self.turn)\n\n	for i = 1,4 do\n		self:refillCard(\"up\")\n		self:refillCard(\"down\")\n	end\n	for i = 1, 3 do\n		self:drawCard(\"up\")\n		self:drawCard(\"down\")\n	end\n	self:turnStart()\nend\n\n\nfunction game:turnStart()\n	self.turnCount = self.turnCount + 1\n	for i = 1, 3 do\n		if #self.my.hand.cards>3 then break end\n		self:drawCard()\n	end\n	self:refillCard()\n	for i,card in ipairs(self.my.play.cards) do\n		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end\n	end\n\n	local card = self.my.hero.card\n	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end\n\nend\n\nfunction game:turnEnd()\n\n	if #self.show.cards==1 then\n		self:returnCard(self.show.cards[1])\n	elseif #self.show.cards>1 then\n		self:chooseCard(self.show.cards[1])\n	end\n\n	for i,card in ipairs(self.my.play.cards) do\n		if card.onTurnEnd then card.onTurnEnd(card,self) end\n	end\n\n	for i,card in ipairs(self.my.play.cards) do\n		if card.last and type(card.last) == \"number\" then\n			card.last = card.last - 1\n			card:updateCanvas()\n			if card.last<1 then\n				self:killCard(card)\n				self:goback(card)\n			end\n		end\n	end\n\n	self.turn = self.turn==\"down\" and \"up\" or \"down\"\n	self.my = self.my == self.down and self.up or self.down\n	self.your = self.your==self.up and self.down or self.up\n	self:turnStart()\nend\n\n\nfunction game:clickCard()\n	if self.my~=self.userside then return end\n	local current = self.hoverCard.current\n	local useall\n	if love.keyboard.isDown(\"lshift\") then\n		useall = true\n	else\n		useall = false\n	end\n	if #self.show.cards == 0 then\n		if current == self.my.hand then\n			self:playCard()\n		elseif current == self.my.bank then\n			self:buyCard()\n		elseif current == self.my.play or current == self.my.hero then\n			if useall then\n				self:feedCardAll(self.hoverCard)\n			else\n				self:feedCard()\n			end		\n		elseif current == self.your.bank then\n			self:robCard()\n		elseif current == self.your.hand then\n			self:stealCard()\n		elseif current == self.your.play  or current == self.your.hero then\n			if useall then\n				self:attackCardAll(self.hoverCard)\n			else\n				self:attackCard()\n			end	\n		end\n	elseif #self.show.cards == 1 then\n		if current == self.show then\n			self:returnCard()\n		end\n	else\n		if current == self.show then\n			self:chooseCard()\n		end\n	end\nend\n\nfunction game:showCard(card)\n	card = card or self.hoverCard\n	if self.show.cards[1] then return end\n\n	self.show.lastPos = table.getIndex(card.current.cards,card)\n	self.show.lastPlace= card.current\n	self:transferCard(card,card.current,self.show)\nend\n\nfunction game:optionsCards(cards,to)\n	if self.show.cards[1] then \n		--delay:new(delayTime,since,func,...)\n		delay:new(\n			function() return not self.show.cards[1] end,\n			nil,\n			function() \n				if self.my == self.userside then\n					self:optionsCards(cards,to) \n				else\n					game:chooseCard(cards[1])\n				end\n				\n			end\n			)\n		return	\n	end\n	self.show.isRitual = isRitual \n	self.show.lastPlace = cards[1].current\n	for i,card in ipairs(cards) do\n		self:transferCard(card,card.current,self.show)\n	end\n	self.show.targetPlace = to\nend\n\nfunction game:chooseCard(card)\n	card = card or self.hoverCard\n	local cards = {unpack(self.show.cards)}\n	\n	for i,v in ipairs(cards) do\n		if v==card then\n			if self.show.targetPlace then\n				self:transferCard(v,v.current,self.show.targetPlace)\n			else\n				self:playCard(v)\n			end\n		else\n			self:transferCard(v,v.current,self.show.lastPlace)\n		end\n	end	\nend\n\nfunction game:returnCard(card)\n	card = card or self.hoverCard\n	local pos = self.show.lastPos\n	local where = self.show.lastPlace\n	self.show.lastPos = nil\n	self.show.lastPlace = nil\n	self:transferCard(card,card.current,where,pos)\nend\n\n\nfunction game:robCard(card)\n	if not self.canRob then return end\n	card = card or self.hoverCard\n	if self.my.resource.gold < card.price then \n		return \n	else\n		self:lose(card,\"my\",\"gold\",card.price)\n		self:playCard(card)\n	end\nend\n\nfunction game:stealCard(card)\n	if not self.canSteal then return end\n	card = card or self.hoverCard\n	self:transferCard(card,card.current,self.my.hand)\nend\n\n\nfunction game:drawCard(whose,id,card)\n	whose = whose or \"my\"\n	local from = self[whose].deck\n	if id then\n		for i,v in ipairs(self.my.deck.cards) do\n			if v.id ==  id then\n				v:reset()\n				local to = self[whose].hand\n				self:transferCard(v,from,to)\n				return\n			end\n		end\n	else\n		if #from.cards == 0 then return end\n		local index = love.math.random(#from.cards)\n		local card = from.cards[index]\n		card:reset()\n		local to = self[whose].hand\n		self:transferCard(card,from,to)\n	end\n	\nend\n\n\nfunction game:refillCard(whose,id,card)\n	whose = whose or \"my\"\n	local from = self[whose].library --data\n	if id then\n		local d = self.cardData.short[id]\n		d.level = card.level\n		local t = from:makeCard(v)\n		local to = self[whose].bank\n		self:transferCard(t,from,to)\n		return		\n	else\n		local index = love.math.random(#from.cards)\n		local t = from:makeCard(from.cards[index])\n		--local card = from:makeCard(data)\n		local to = self[whose].bank\n		self:transferCard(t,from,to)\n	end\nend\n\nfunction game:transferCard(card ,from,to ,pos,passResort)\n	if from.cards then table.removeItem(from.cards, card) end\n	if from.resort and not passResort then from:resort() end\n	if pos then\n		table.insert(to.cards,pos, card )\n	else\n		table.insert(to.cards, card )\n	end\n	if to.resort and not passResort then to:resort() end\n	card.current = to\nend\n\nfunction game:playCard(card)\n	self.cardPlayCount = self.cardPlayCount + 1\n	card = card or self.hoverCard\n	if card.last or card.hp then\n		local onPlay = card.ability.onPlay\n		if onPlay then onPlay(card,self) end\n		self:transferCard(card,card.current,self.my.play)\n	else\n		local onPlay = card.ability.onPlay\n		if onPlay then onPlay(card,self) end\n		self:killCard(card)\n		self:goback(card)\n	end\n	return true\nend\n\nfunction game:buyCard(card)\n	card = card or self.hoverCard\n	if self.my.resource.gold + self.my.resource.magic < card.price then \n		--print(\"too expensive\")\n		return \n	else\n\n		for i = 1 , card.price do\n			if self.my.resource.gold>0 then\n				self:lose(card,\"my\",\"gold\")\n			else\n				self:lose(card,\"my\",\"magic\")\n			end			\n		end\n\n		self:playCard(card)\n		return true\n	end\n\nend\n\nlocal res = {\"gold\",\"food\",\"magic\",\"skull\"}\n\nfunction game:gain(card,who,what)\n	if what == \"random\" then what = res[love.math.random(#res)] end\n	local res = self[who].resource\n	res[what] = res[what] + 1\n	\n	local e = Effect(self,what,card,self.my.hero,false,1)\n	e:addCallback(function() self[who].hero:updateResource()end)\n	for i,card in ipairs(self.my.play.cards) do\n		if card.ability.onGain then\n			card.ability.onGain(card,self,who,what)\n		end\n	end\nend\n\nfunction game:lose(card,who,what)\n	\n	if what == \"random\" then \n		local candidate = {unpack(res)}\n		repeat\n			local index = love.math.random(#candidate)\n			local item = candidate[index]\n			if self[who].resource[item]>0 then\n				what = item\n				break\n			else\n				table.remove(candidate, index)\n			end\n		until #candidate == 0\n		if what == \"random\" then return end\n	end\n\n	local res = self[who].resource\n	res[what] = res[what] - 1\n	\n	local x,y\n	if self.turn == \"up\" then\n		x = self.my.hero.x -love.math.random(-30,30)\n		y = self.my.hero.y +love.math.random(50,150)\n	else\n		x = self.my.hero.x +love.math.random(-30,30)\n		y = self.my.hero.y -love.math.random(50,150)\n	end\n	local e = Effect(self,what,self[who].hero,{x=x,y=y},true,1,\"outQuad\")\n	e:addCallback(function() self[who].hero:updateResource()end)	\n	for i,card in ipairs(self.my.play.cards) do\n		if card.ability.onLose then\n			card.ability.onLose(card,self,who,what)\n		end\n	end\n	return true\nend\n\nfunction game:feedCardAll()\n	--delay:new(delayTime,since,func,...)\n	if self.my.resource.food>0 then\n		for i = 1, self.my.resource.food do\n			delay:new(i*0.3,nil,self.feedCard,self)\n			--self:feedCard()\n		end\n	elseif self.my.resource.magic>0 then\n		for i = 1, self.my.resource.magic do\n			delay:new(i*0.3,nil,self.feedCard,self)\n		end\n	end\nend\n\nfunction game:attackCardAll(target)\n	if self.my.resource.skull>0 then\n		for i = 1, self.my.resource.skull do\n			delay:new(i*0.1,nil,self.attackCard,self,target)\n			--self:attackCard()\n		end\n	elseif self.my.resource.magic>0 then\n		for i = 1, self.my.resource.magic do\n			delay:new(i*0.1,nil,self.attackCard,self,target)\n		end\n	end\nend\n\nfunction game:feedHeroWith(what)\n	local card = self.my.hero.card\n	self.my.resource.hp = self.my.resource.hp+1\n	card:updateCanvas()\n	if card.ability.onFeed then card.ability.onFeed(card,self,what) end	\n	return true\nend\n\nfunction game:feedCard(card)\n	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end\n	card = card or self.hoverCard\n	if not card.hp and not card.isHero then return end\n	if card.isHero then\n		self.my.resource.hp = self.my.resource.hp+1\n	else		\n		if not card.ability.onFeed and card.hp == card.hp_max then return end\n		card.hp = card.hp + 1\n		if card.hp>card.hp_max then card.hp = card.hp_max end\n	end\n	card:updateCanvas()\n	if self.my.resource.food > 0 then\n		self:lose(self.my.hero.card,\"my\",\"food\") --game:lose(card,who,what)\n	else\n		self:lose(self.my.hero.card,\"my\",\"magic\")\n\n	end\n	\n	if card.ability.onFeed then card.ability.onFeed(card,self) end\n	if self.my.hero.card.ability.onFeedAlly then \n		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) \n	end\n	return true\nend\n\n\n\n\n\nfunction game:attackCard(card)\n	if self.my.resource.skull < 1 and self.my.resource.magic < 1 then return end\n	card = card or self.hoverCard\n	if not card.hp and not card.isHero then return end\n	\n	if self.my.resource.skull > 0 then\n		self.my.resource.skull = self.my.resource.skull - 1\n	else\n		self.my.resource.magic = self.my.resource.magic - 1\n	end\n	self.my.hero:updateResource()\n	self:attack(self.my.hero.card,card)\n	return true\nend\n\nfunction game:damageCard(card)\n	if card.shield and card.shield>0 then\n		card.shield = card.shield - 1\n	else\n		card.hp = card.hp - 1\n	end\n	card:updateCanvas()\n	if card.hp then\n		if card.hp < 1 then \n			if card.onDying then \n				return card.onDying(card,self)\n			end\n			return \"death\"\n		end\n	else\n		if card.shield < 1 then return \"death\" end\n	end\n\nend\n\nfunction game:killCard(card,passResort)\n	if card.ability.onKilled then card.ability.onKilled(card,self) end\n	if card.back then\n		self:transferCard(card ,card.current, card.born.deck ,_,passResort)\n	else\n		self:transferCard(card ,card.current, card.born.grave,_,passResort)\n	end\nend\n\nfunction game:goback(card)\n\n	if card.back then\n		card.born.deck:goback(card)\n	else\n		card.born.grave:goback(card)\n	end\nend\n\nfunction game:attack(from,to,ignore)\n	if not from then from = self.my.hero.card end\n\n	local yourCards = self.your.play.cards\n\n	for i,card in ipairs(yourCards) do\n		if card.cancel and card.cancel>0 then\n			card.cancel = card.cancel -1\n			Effect(self,\"attack\",from,to,false,1,\"inBack\")\n		end\n	end\n\n	local target\n	local effect\n	if #yourCards == 0 then \n		self:attackHero(from)\n		return\n	else\n		local candidate={}\n		for i,card in ipairs(yourCards) do\n			if card.block and not ignore then\n				table.insert(candidate, card)\n			end\n		end\n\n		\n\n		if #candidate == 0 then --no block\n			if to then\n				target = to\n			else\n				for i,v in ipairs(yourCards) do\n					if v.hp or v.shield then\n						table.insert(candidate, v)\n					end\n				end\n\n				if #candidate == 0 then\n					self:attackHero(from)\n					return\n				end\n\n				target =candidate[love.math.random(1,#candidate)] \n			end\n			effect = Effect(self,\"attack\",from,target,false,1,\"inBack\")	\n			effect:addCallback(function() target:vibrate() end)\n			from:standout()\n\n		else -- for blockers\n			table.sort( candidate, function(a,b) return a.hp>b.hp end)\n			target = candidate[1]\n			if to then\n				effect = Effect(self,\"attack\",to,target,false,0.5,\"inBack\",true)\n				local nextFunc = function()\n					table.insert(self.effects, effect)\n				end\n				local shieldFunc = function()\n					Effect(self,\"shield\",to,to,false,0.5,\"inBack\")\n				end\n				local tmp = Effect(self,\"attack\",from,to,false,0.5,\"inBack\")\n\n				tmp:addCallback(function()target:standout() end)\n				tmp:addCallback(shieldFunc)\n				tmp:addCallback(nextFunc)\n				from:standout()\n			else\n				effect = Effect(self,\"attack\",from,target,false,0.5,\"inBack\")\n				\n				from:standout()\n			end\n		end\n\n		if to.dodgeRate and love.math.random()<to.dodgeRate then\n			effect:addCallback(function() target:turnaround() end)\n			return\n		end\n\n		local result = self:damageCard(target)\n\n		if result == \"death\" then	 --killed	\n			effect:addCallback(function() target:vibrate(_,_,\n				function()\n					self:goback(target)\n					self.your.play:resort()\n				end) end)\n			self:killCard(target,true)\n		elseif result == \"toHand\" then\n			self:transferCard(target ,target.current, target.my.hand ,_,true)\n			effect:addCallback(function() target:vibrate(_,_,\n				function()\n					self.my.hand:resort()\n				end)\n			end)\n		else\n			effect:addCallback(function() target:vibrate() end)\n		end\n	end\n\nend\n\n\nfunction game:attackHero(from)\n	target = self.your.hero.card\n	self.your.resource.hp = self.your.resource.hp -1\n	local effect = Effect(self,\"attack\",from,self.your.hero,false,1,\"inBack\" )\n	effect:addCallback(function() target:vibrate() end)\n	effect:addCallback(\n		function() \n			self.your.hero:updateResource()\n			if self.your.resource.hp < 1 then\n				if game.userside == self.your then\n					self:loser()\n				else\n					self:winner()\n				end\n			end\n		end)\n	from:standout()\nend\n\nfunction game:winner()\n	--screenshot,hero,result\n	local ss = love.graphics.newImage(love.graphics.newScreenshot())\n	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,\"win\",self)\nend\n\nfunction game:loser()\n	--screenshot,hero,result\n	local ss = love.graphics.newImage(love.graphics.newScreenshot())\n	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,\"lose\",self)\nend\n\nfunction game:sacrificeCard(target)\n	\n	if target == \"weakest\" then\n		for i,v in ipairs(self.my.play.cards) do\n			if v.sacrifice then\n				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end\n				self:killCard(v)\n				return v\n			end\n		end\n		local weakest\n		local weakest_hp = 10\n		for i,v in ipairs(self.my.play.cards) do\n			if v.hp<weakest then\n				weakest = {v}\n			elseif v.hp== weakest then\n				table.insert(weakest,v)\n			end\n		end\n		if not weakest then return end\n		local card = weakest[love.math.random(weakest)]\n		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end\n		self:killCard(card)\n		return card\n	elseif target == \"strongest\" then\n		for i,v in ipairs(self.my.play.cards) do\n			if v.sacrifice then\n				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end\n				self:killCard(v)\n				return v\n			end\n		end\n		local strongest\n		local strongest_hp = 0\n		for i,v in ipairs(self.my.play.cards) do\n			if v.hp>strongest then\n				strongest = {v}\n			elseif v.hp== strongest then\n				table.insert(strongest,v)\n			end\n		end\n		if not strongest then return end\n		local card = strongest[love.math.random(strongest)]\n		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end\n		self:killCard(card)\n		return card\n	elseif target then\n		for i,v in ipairs(self.my.play.cards) do\n			if v.id == target then\n				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end\n				self:killCard(v)\n				return v\n			end\n		end\n	end\nend\n\n\nfunction game:AI(dt)\n	if self.aiEnd then return end\n	self.aiCD = self.aiCD - dt\n	if self.aiCD > 0 then return end\n	local rule = self.foedata.rule\n	for i,cond in ipairs(rule) do\n		if cond(self) then\n			self.aiCD = 0.5\n			return \n		end\n	end\n\n	delay:new(3,nil,function() \n		self.turnButton:endturn()\n		self.aiCD = 0.5\n		self.aiEnd=false\n	end)\n	self.aiEnd=true\nend\n\nreturn game\n\n\n",
 			"file": "cls/game.lua",
-			"file_size": 19081,
-			"file_write_time": 131139126838220425,
 			"settings":
 			{
-				"buffer_size": 18262,
+				"buffer_size": 20565,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Alexar/Desktop/screenshot/system.txt",
+			"file": "cards/daramek/herd/herdofaurochs.lua",
 			"settings":
 			{
-				"buffer_size": 19194,
+				"buffer_size": 712,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/daramek/slaves/goldpanner.lua",
+			"settings":
+			{
+				"buffer_size": 656,
+				"line_ending": "Windows",
+				"name": "goldpanner.lua"
+			}
+		},
+		{
+			"file": "cards/daramek/slaves/overseer.lua",
+			"settings":
+			{
+				"buffer_size": 566,
+				"line_ending": "Windows",
+				"name": "overseer.lua"
 			}
 		}
 	],
@@ -444,15 +447,43 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/loveTCG",
+		"/F/Love2D Project/loveTCG/cardLibs",
 		"/F/Love2D Project/loveTCG/cards",
 		"/F/Love2D Project/loveTCG/cards/daramek",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals",
+		"/F/Love2D Project/loveTCG/cards/daramek/slaves",
 		"/F/Love2D Project/loveTCG/cards/vespitole",
-		"/F/Love2D Project/loveTCG/cls"
+		"/F/Love2D Project/loveTCG/cards/vespitole/war",
+		"/F/Love2D Project/loveTCG/lib"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/loveTCG/cards/daramek/slaves/scavengers.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/slaves/orphangang.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/slaves/lerpers.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ceremonialdance.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofcambat.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/carnage.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofbrood.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofpassage.lua",
+		"/F/Love2D Project/war of omens/loadCards.lua",
+		"/C/Users/Alexar/Desktop/xml/cards.txt",
+		"/F/Love2D Project/war of omens/abilities.lua",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/bloodlust.lua",
+		"/F/Love2D Project/loveTCG/cls/play.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/festival.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
+		"/C/Users/Alexar/Desktop/screenshot/system.txt",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/repopulate.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/culltheherd.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/fertilityoffering.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/rituals/feast.lua",
+		"/F/Love2D Project/loveTCG/lib/util.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofgoats.lua",
+		"/F/Love2D Project/loveTCG/cls/library.lua",
+		"/F/Love2D Project/loveTCG/cls/deck.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/warrats.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/ratointment.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/goatpoultice.lua",
@@ -461,25 +492,18 @@
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofaurochs.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/colossalaurochs.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/aurochselixir.lua",
-		"/C/Users/Alexar/Desktop/screenshot/system.txt",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/boarunguent.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/direboar.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofgoats.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/goatoutrider.lua",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/C/Users/Alexar/Desktop/screenshot/新建文本文档.txt",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofrats.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/war/marshall.lua",
 		"/F/ss/pac.txt",
-		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
 		"/F/Love2D Project/loveTCG/lib/delay.lua",
-		"/F/Love2D Project/loveTCG/cls/library.lua",
 		"/F/Love2D Project/loveTCG/cls/result.lua",
 		"/F/Love2D Project/loveTCG/cls/effect.lua",
-		"/F/Love2D Project/loveTCG/cls/play.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/faith/malediction.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/madamaline.lua",
-		"/F/Love2D Project/loveTCG/cls/deck.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/harvest.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/sofocatro.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/hero/ysadora.lua",
@@ -561,26 +585,7 @@
 		"/F/Love2D Project/loveTCG/cls/cls/shop.lua",
 		"/C/Users/Alexar/Desktop/演习总结/樊力.txt",
 		"/F/Love2D Project/loveTCG/cls/bg.lua",
-		"/F/Love2D Project/loveTCG/cls/button.lua",
-		"/F/Love2D Project/loveTCG/scenes/shopSCENE.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.106/main.lua",
-		"/F/Love2D Project/loveTCG/scenes/start.lua",
-		"/F/Love2D Project/loveTCG/cardLibs/default.lua",
-		"/F/Love2D Project/loveTCG/scenes/libBuilder.lua",
-		"/F/Love2D Project/loveTCG/cls/selector.lua",
-		"/F/Love2D Project/loveTCG/lib/gamestate.lua",
-		"/F/Love2D Project/loveTCG/cls/text.lua",
-		"/F/Love2D Project/box2d/editor/system.lua",
-		"/F/Love2D Project/box2d/editor/helpText.lua",
-		"/F/Love2D Project/box2d/ui/fileMenu.lua",
-		"/F/Love2D Project/loveTCG/lib/middleclass.lua",
-		"/F/Love2D Project/loveTCG/cls/textInput.lua",
-		"/F/Love2D Project/loveTCG/cls/hero.lua",
-		"/F/Love2D Project/loveTCG/updata.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.023/thread.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.976/main.lua",
-		"/C/Users/Alexar/AppData/Local/Temp/Rar$DIa0.241/thread.lua"
+		"/F/Love2D Project/loveTCG/cls/button.lua"
 	],
 	"find":
 	{
@@ -599,6 +604,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"ondying",
+			"delay",
+			"cardplaycount",
+			"sacrif",
+			"Fertility Offering ",
 			"kill",
 			"draw",
 			"weakest",
@@ -721,12 +731,7 @@
 			"lower",
 			"hp=100",
 			"#weakest==1",
-			":",
-			"：",
-			"cardplay",
-			"getRnd",
-			"size",
-			"insertd"
+			":"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -834,53 +839,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "cards/daramek/rituals/ritualslaughter.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 800,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								489,
-								489
-							]
-						],
-						"settings":
-						{
-							"auto_name": "ritualslaughter.lua",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18262,
+						"buffer_size": 20565,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6098,
-								6098
+								13471,
+								13471
 							]
 						],
 						"settings":
@@ -890,39 +866,98 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6098.0,
+						"translation.y": 15313.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/C/Users/Alexar/Desktop/screenshot/system.txt",
-					"semi_transient": false,
+					"buffer": 1,
+					"file": "cards/daramek/herd/herdofaurochs.lua",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 19194,
+						"buffer_size": 712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19165,
-								19165
+								579,
+								697
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6820.0,
+						"translation.y": 132.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "cards/daramek/slaves/goldpanner.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 656,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								656
+							]
+						],
+						"settings":
+						{
+							"auto_name": "goldpanner.lua",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "cards/daramek/slaves/overseer.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 566,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								546,
+								546
+							]
+						],
+						"settings":
+						{
+							"auto_name": "overseer.lua",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

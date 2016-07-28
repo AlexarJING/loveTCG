@@ -602,6 +602,13 @@ function table.safeRemove(tab,index)
 	tab[#tab]=nil
 end
 
+function table.pickRandom(tab)
+	local i = love.math.random(#tab)
+	local v = tab[i]
+	table.remove(tab,i)
+	return v
+end
+
 function table.isEmpty(tab)
 	if tab[1] then return false end
 	for k,v in pairs(tab) do

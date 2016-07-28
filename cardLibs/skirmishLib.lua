@@ -76,7 +76,7 @@ local data = {
 }
 
 local function chooseShow(game)
-	local card = game.my.show.cards[1]
+	local card = game.show.cards[1]
 	if card then
 		return game:chooseCard(card)
 	end
@@ -126,6 +126,6 @@ local function attackHero(game)
 end
 
 
-data.rule = {gameplay,Hand,feedAlly,aimFoe,buyBank,feedHero,attackHero}
+data.rule = {chooseShow,playHand,feedAlly,aimFoe,buyBank,feedHero,attackHero}
 
 return data

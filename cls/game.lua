@@ -5,6 +5,7 @@ game.font_content = love.graphics.newFont(20)
 
 local Effect = require "cls/effect"
 local Turn = require "cls/turn"
+local Card = require "cls/card"
 
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
@@ -282,7 +283,8 @@ function game:chooseCard(card)
 	for i,v in ipairs(cards) do
 		if v==card then
 			if self.show.onChoose then 
-				self.show.onChoose(card,self) 
+				self.show.onChoose(card,self)
+				self.show.onChoose=nil
 			else
 				if self.show.targetPlace then
 					self:transferCard(v,v.current,self.show.targetPlace)
@@ -293,7 +295,8 @@ function game:chooseCard(card)
 		else
 			self:transferCard(v,v.current,self.show.lastPlace)
 		end
-	end	
+	end
+	return true
 end
 
 function game:returnCard(card)
@@ -338,15 +341,16 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 			end
 		end
 	elseif type(id) == "function" then
-		for i,v in ipairs(self.my.deck.cards) do
-			if id(v) then
-				v:reset()
-				if manual then return v end
-				local to = self[whose].hand
-				self:transferCard(v,from,to)
-				return
-			end
+		
+		local card = id(self.my.deck.cards)
+		if card then
+			card:reset()
+			if manual then return v end
+			local to = self[whose].hand
+			self:transferCard(card,from,to)
+			return
 		end
+		
 	else
 		if #from.cards == 0 then return end
 		local index = love.math.random(#from.cards)
@@ -362,13 +366,19 @@ end
 function game:refillCard(whose,id,card)
 	whose = whose or "my"
 	local from = self[whose].library --data
-	if id then
+	if type(id)=="string" then
 		local d = self.cardData.short[id]
-		d.level = card.level
+		d.level = card and card.level or 1
 		local t = from:makeCard(v)
 		local to = self[whose].bank
-		self:transferCard(t,from,to)
-		return		
+		self:transferCard(t,from,to)	
+	elseif type(id) == "function" then
+		local d = id(from.cards)
+		if d then
+			local t = from:makeCard(d)
+			local to = self[whose].bank
+			self:transferCard(t,from,to)
+		end
 	else
 		local index = love.math.random(#from.cards)
 		local t = from:makeCard(from.cards[index])
@@ -422,6 +432,7 @@ function game:buyCard(card)
 		end
 
 		self:playCard(card)
+		if self.onBuy then self.onBuy(card) end
 		return true
 	end
 
@@ -627,8 +638,21 @@ function game:attack(from,to,ignore)
 		
 
 		if #candidate == 0 then --no block
-			if to then
+			if type(to) == "table" then
 				target = to
+			
+			elseif to == "weakest" then
+				for i,v in ipairs(yourCards) do
+					if v.hp then
+						table.insert(candidate, v)
+					end
+				end
+				table.sort( candidate, function(a,b) return a.hp<b.hp end)
+				if #candidate == 0 then
+					self:attackHero(from)
+					return
+				end
+				target =candidate[1]
 			else
 				for i,v in ipairs(yourCards) do
 					if v.hp or v.shield then
@@ -681,7 +705,8 @@ function game:attack(from,to,ignore)
 		if result == "death" then	 --killed	
 			effect:addCallback(function() target:vibrate(_,_,
 				function()
-					self:goback(target)
+					--self:goback(target)
+					self.your.deck:resort()
 					self.your.play:resort()
 				end) end)
 			self:killCard(target,true)
@@ -732,7 +757,7 @@ function game:loser()
 end
 
 function game:sacrificeCard(target)
-	if #self.my.play.cards==0 then return end
+	if #self.my.play.cards==0 and type(target)~="table" then return end
 	if target == "weakest" then
 		for i,v in ipairs(self.my.play.cards) do
 			if v.sacrifice then
@@ -744,10 +769,10 @@ function game:sacrificeCard(target)
 		local weakest
 		local weakest_hp = 10
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp<weakest_hp then
+			if v.hp and v.hp<weakest_hp then
 				weakest = {v}
 				weakest_hp = v.hp
-			elseif v.hp== weakest then
+			elseif v.hp and v.hp== weakest then
 				table.insert(weakest,v)
 			end
 		end
@@ -767,15 +792,33 @@ function game:sacrificeCard(target)
 		local strongest
 		local strongest_hp = 0
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp>strongest_hp then
+			if v.hp and v.hp>strongest_hp then
 				strongest = {v}
 				strongest_hp = v.hp
-			elseif v.hp== strongest then
+			elseif v.hp and v.hp== strongest then
 				table.insert(strongest,v)
 			end
 		end
 		if not strongest then return end
 		local card = strongest[love.math.random(#strongest)]
+		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
+		self:killCard(card)
+		return card
+	elseif target == "random" then
+		for i,v in ipairs(self.my.play.cards) do
+			if v.sacrifice then
+				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
+				self:killCard(v)
+				return v
+			end
+		end
+		local candidate = {}
+		for i,v in ipairs(self.my.play.cards) do	
+			if v.hp then
+				table.insert(candidate,v)
+			end
+		end	
+		local card = candidate[love.math.random(#candidate)]
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
@@ -787,10 +830,25 @@ function game:sacrificeCard(target)
 				return v
 			end
 		end
-	else	
+	elseif type(target)=="table" then	
 		if target.ability.onSacrifice then target.ability.onSacrifice(target,self) end
 		self:killCard(target)
+	else
+		local candidate = {}
+		for i,v in ipairs(self.my.play.cards) do
+			if v.hp then table.insert(candidate,v) end
+		end
+		if not candidate[1] then return end
+		local c = candidate[love.math.random(#candidate)]
+		if c.ability.onSacrifice then c.ability.onSacrifice(c,self) end
+		self:killCard(c)
+		return c
 	end
+end
+
+function game:copyCard(card)
+	--card:init(game,data,born,current)
+	return Card(self,card.data,card.born,card.current)
 end
 
 

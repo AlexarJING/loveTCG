@@ -1,18 +1,17 @@
 local data = {
-	id = "culltheherd",
-	name = "Cull the Herd",
+	id = "feast",
+	name = "Feast",
 	faction = "daramek",
 	category = "rituals",
-	rare = 2,
-	profile = {" Find a pregnant sow. Have a dozen men scream at her until she is forced into early birth. Ferment each suckling in separate leather sacks, inscribed with the symbols 'haf', 'lem', 'peth', and 'kos'.  –Esra"},
-	basePrice = 3,
+	rare = 3,
+	profile = {" Hark, O lost child! Feast with our flock and you shall never feel hunger again. "},
+	basePrice = 5,
 	back = true,
 }
 
 data.description = {
 	"Sacrifice weakest ally",
-	"Draw 3 allies",
-	"play one of them" 
+	"Draw 2 allies",
 }
 
 data.ability={
@@ -36,17 +35,17 @@ data.ability={
 			end
 		end
 
-		for i = 1, 3 do
+		for i = 1, 2 do
 			if #options == 0 then break end
 			table.insert(candidate,table.pickRandom(options)) 
 		end
 
+		for i,v in ipairs(candidate) do
+			game:drawCard("my",v)
+		end
 		
 		game:sacrificeCard("weakest") 
-
-		if #candidate == 0 then return end
-		
-		game:optionsCards(candidate)
+	
 	end,
 }
 

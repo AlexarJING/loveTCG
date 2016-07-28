@@ -1,18 +1,17 @@
 local data = {
-	id = "culltheherd",
-	name = "Cull the Herd",
+	id = "repopulate",
+	name = "repopulate",
 	faction = "daramek",
 	category = "rituals",
-	rare = 2,
-	profile = {" Find a pregnant sow. Have a dozen men scream at her until she is forced into early birth. Ferment each suckling in separate leather sacks, inscribed with the symbols 'haf', 'lem', 'peth', and 'kos'.  –Esra"},
-	basePrice = 3,
+	rare = 4,
+	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
+	basePrice = 7,
 	back = true,
 }
 
 data.description = {
 	"Sacrifice weakest ally",
 	"Draw 3 allies",
-	"play one of them" 
 }
 
 data.ability={
@@ -41,12 +40,12 @@ data.ability={
 			table.insert(candidate,table.pickRandom(options)) 
 		end
 
+		for i,v in ipairs(candidate) do
+			game:drawCard("my",v)
+		end
 		
 		game:sacrificeCard("weakest") 
-
-		if #candidate == 0 then return end
-		
-		game:optionsCards(candidate)
+	
 	end,
 }
 

@@ -1,24 +1,28 @@
 local data = {
-	id = "herdofgoats",
-	name = "Herd of Goats",
+	id = "overseer",
+	name = "Overseer",
 	faction = "daramek",
-	category = "herd",
-	rare = 1 ,
+	category = "slaves",
+	rare = 2 ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
-	basePrice = 4,
+	basePrice = 6,
 	hp = 2,
 	last = true,
 	back = true,
 }
 
 data.description = {
-	"turn: gain 1 resource",
+	"When play an ally",
+	"Activate that ally",
 }
 
 data.ability={
 	onTurnStart = function (card,game) 
-		game:gain(card,"my","random")		--card,who,what
+		game:gain(card,"my","gold")		--card,who,what
 	end,
+	always = function(card,game)
+		
+	end
 }
 
 return data

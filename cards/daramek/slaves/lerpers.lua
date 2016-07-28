@@ -1,24 +1,24 @@
 local data = {
-	id = "herdofgoats",
-	name = "Herd of Goats",
+	id = "lerpers",
+	name = "Lerpers",
 	faction = "daramek",
-	category = "herd",
+	category = "slaves",
 	rare = 1 ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
 	basePrice = 4,
-	hp = 2,
+	hp = 3,
 	last = true,
 	back = true,
 }
 
 data.description = {
-	"turn: gain 1 resource",
+	"On atteck: Retaliate",
 }
 
 data.ability={
-	onTurnStart = function (card,game) 
-		game:gain(card,"my","random")		--card,who,what
-	end,
+	onAttacked = function(card,game,from) 
+		game:attack(card) 
+	end
 }
 
 return data
