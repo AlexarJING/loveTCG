@@ -21,6 +21,7 @@ data.ability={
 		card.currentCardPlayed = game.cardPlayCount
 	end,
 	always = function (card,game)
+		if card.current.root ~= game.turn then return end
 		if game.cardPlayCount> card.currentCardPlayed then
 			for i = 1, game.cardPlayCount-card.currentCardPlayed do
 				game:gain(card,"my","random")

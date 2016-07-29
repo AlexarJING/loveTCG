@@ -401,8 +401,9 @@ function game:transferCard(card ,from,to ,pos,passResort)
 end
 
 function game:playCard(card)
-	self.cardPlayCount = self.cardPlayCount + 1
 	card = card or self.hoverCard
+	self.cardPlayCount = self.cardPlayCount + 1
+	self.lastPlayed = card
 	if card.last or card.hp then
 		local onPlay = card.ability.onPlay
 		if onPlay then onPlay(card,self) end
@@ -411,15 +412,17 @@ function game:playCard(card)
 		local onPlay = card.ability.onPlay
 		if onPlay then onPlay(card,self) end
 		self:killCard(card)
-		self:goback(card)
+	end
+	if self.onPlay then
+		self.onPlay(card)
 	end
 	return true
 end
 
 function game:buyCard(card)
 	card = card or self.hoverCard
+	self.lastBought = card
 	if self.my.resource.gold + self.my.resource.magic < card.price then 
-		--print("too expensive")
 		return 
 	else
 

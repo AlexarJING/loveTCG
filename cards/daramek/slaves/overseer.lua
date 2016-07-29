@@ -17,12 +17,22 @@ data.description = {
 }
 
 data.ability={
-	onTurnStart = function (card,game) 
-		game:gain(card,"my","gold")		--card,who,what
+	onPlay = function (card,game)
+		card.currentCardPlayed = game.cardPlayCount
 	end,
-	always = function(card,game)
-		
-	end
+	onTurnStart = function (card,game)
+		card.currentCardPlayed = game.cardPlayCount
+	end,
+	always = function (card,game)
+		if card.current.root ~= game.turn then return end
+		if game.cardPlayCount> card.currentCardPlayed then
+			local ab = game.lastPlayed.ability.onTurnStart
+			if ab then
+				ab(game.lastPlayed,game)
+			end
+		end
+	end,
+	
 }
 
 return data

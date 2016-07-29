@@ -16,12 +16,19 @@ data.description = {
 }
 
 data.ability={
+	
 	onPlay = function (card,game)
-		game.onBuy = function(cardBought)
-			if cardBought.id==card.id then return end
-			local copy = game:copyCard(cardBought)
+		card.lastBought = game.lastBought
+	end,
+	onTurnStart = function (card,game)
+		card.lastBought = game.lastBought
+	end,
+	always = function (card,game)
+		if card.current.root ~= game.turn then return end
+		if game.lastBought ~= card.lastBought then
+			local copy = game:copyCard( game.cardBought)
 			game:transferCard(copy,copy.current,game.my.hand)
-			game.onBuy = nil
+			game:killCard(card)
 		end
 	end,
 	
