@@ -1,23 +1,27 @@
 local data = {
-	id = "lerpers",
-	name = "Lerpers",
+	id = "sacrificiallamb",
+	name = "Sacrificial Lamb",
 	faction = "daramek",
 	category = "slaves",
-	rare = 1 ,
+	rare = "H" ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
-	basePrice = 4,
-	hp = 3,
+	basePrice = 3,
+	hp = 1,
 	last = true,
 	back = true,
 }
 
 data.description = {
-	"On attacked: Retaliate",
+	"Always sacrificed first.",
+ 	"When sacrificed:",
+ 	"+1 resources",
+ 	"feed hero magic ",
 }
 
 data.ability={
-	onAttacked = function(card,game,from) 
-		game:attack(card) 
+	onScrifice = function(card,game)
+		game:gain(card,"my","random")
+		game:feedHeroWith("magic")
 	end
 }
 

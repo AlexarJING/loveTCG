@@ -1,23 +1,22 @@
 local data = {
-	id = "lerpers",
-	name = "Lerpers",
+	id = "shepherdsgift",
+	name = "Shepherd's Gift",
 	faction = "daramek",
-	category = "slaves",
-	rare = 1 ,
+	category = "idols",
+	rare = 2 ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
-	basePrice = 4,
-	hp = 3,
+	basePrice = 5,
 	last = true,
 	back = true,
 }
 
 data.description = {
-	"On attacked: Retaliate",
+	"turn: +1 random resource",
 }
 
 data.ability={
-	onAttacked = function(card,game,from) 
-		game:attack(card) 
+	onTurnStart = function(card,game)
+		game:gain(card,"my","random")
 	end
 }
 

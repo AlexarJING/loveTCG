@@ -1,23 +1,25 @@
 local data = {
-	id = "lerpers",
-	name = "Lerpers",
+	id = "stampede",
+	name = "Stampede",
 	faction = "daramek",
 	category = "slaves",
-	rare = 1 ,
+	rare = "H" ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
-	basePrice = 4,
-	hp = 3,
-	last = true,
+	basePrice = 3,
 	back = true,
 }
 
 data.description = {
-	"On attacked: Retaliate",
+	"All allies attack",
 }
 
 data.ability={
-	onAttacked = function(card,game,from) 
-		game:attack(card) 
+	onPlay = function(card,game)
+		for i,v in ipairs(game.my.play.cards) do
+			if v.hp then
+				game:attack(card)
+			end
+		end
 	end
 }
 

@@ -17,17 +17,8 @@ data.description = {
 }
 
 data.ability={
-	onPlay = function (card,game)
-		card.currentCardPlayed = game.cardPlayCount
-	end,
-	always = function (card,game)
-		if card.current.root ~= game.turn then return end
-		if game.cardPlayCount> card.currentCardPlayed then
-			for i = 1, game.cardPlayCount-card.currentCardPlayed do
-				game:attack(card)
-			end
-			card.currentCardPlayed = game.cardPlayCount
-		end
+	onCardPlay = function (card,game)
+		game:attack(card)
 	end,
 }
 

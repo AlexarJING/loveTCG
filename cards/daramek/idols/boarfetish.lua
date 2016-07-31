@@ -1,23 +1,23 @@
 local data = {
-	id = "lerpers",
-	name = "Lerpers",
+	id = "boarfetish",
+	name = "Boar Fetish",
 	faction = "daramek",
-	category = "slaves",
-	rare = 1 ,
+	category = "idols",
+	rare = 4 ,
 	profile = {"With silent devotion, they caress the Earth with tiny fingers under the night sky. Blessed is their fur, their dung and their blood.  –Litany of the Shepherd" },
-	basePrice = 4,
-	hp = 3,
+	basePrice = 6,
 	last = true,
 	back = true,
 }
 
 data.description = {
-	"On attacked: Retaliate",
+	"on feed hero magic:", 
+	"attack.",
 }
 
 data.ability={
-	onAttacked = function(card,game,from) 
-		game:attack(card) 
+	onFeedMagic = function(card,game)
+		game:attack(card)
 	end
 }
 

@@ -156,17 +156,25 @@ end
 
 function game:turnStart()
 	self.turnCount = self.turnCount + 1
-	for i = 1, 3 do
-		if #self.my.hand.cards>3 then break end
-		self:drawCard()
-	end
-	self:refillCard()
-	for i,card in ipairs(self.my.play.cards) do
-		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+	
+	if self.my.hero.ability.onDrawHand then
+		self.my.hero.ability.onDrawHand(self)
+	else
+
+		for i = 1, 3 do
+			if #self.my.hand.cards>3 then break end
+			self:drawCard()
+		end
+		self:refillCard()
 	end
 
 	local card = self.my.hero.card
 	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+
+	for i,card in ipairs(self.my.play.cards) do
+		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+	end
+
 
 end
 
@@ -335,7 +343,7 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 		for i,v in ipairs(self.my.deck.cards) do
 			if v.id ==  id then
 				v:reset()
-				local to = self[whose].hand
+				local to = self.my.hand
 				self:transferCard(v,from,to)
 				return
 			end
@@ -346,7 +354,7 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 		if card then
 			card:reset()
 			if manual then return v end
-			local to = self[whose].hand
+			local to = self.my.hand
 			self:transferCard(card,from,to)
 			return
 		end
@@ -356,7 +364,7 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 		local index = love.math.random(#from.cards)
 		local card = from.cards[index]
 		card:reset()
-		local to = self[whose].hand
+		local to = self.my.hand
 		self:transferCard(card,from,to)
 	end
 	
@@ -404,6 +412,18 @@ function game:playCard(card)
 	card = card or self.hoverCard
 	self.cardPlayCount = self.cardPlayCount + 1
 	self.lastPlayed = card
+
+	for i,v in ipairs(self.my.play.card) do
+		if v.ability.onCardPlay then
+			v.ability.onCardPlay(v,game,card)
+		end
+	end
+
+	local hero = self.my.hero.card
+	if hero.ability.onCardPlay then
+		hero.ability.onCardPlay(v,game,card)
+	end
+
 	if card.last or card.hp then
 		local onPlay = card.ability.onPlay
 		if onPlay then onPlay(card,self) end
@@ -413,9 +433,8 @@ function game:playCard(card)
 		if onPlay then onPlay(card,self) end
 		self:killCard(card)
 	end
-	if self.onPlay then
-		self.onPlay(card)
-	end
+	
+	
 	return true
 end
 
@@ -425,6 +444,11 @@ function game:buyCard(card)
 	if self.my.resource.gold + self.my.resource.magic < card.price then 
 		return 
 	else
+		for i,v in ipairs(self.my.play.card) do
+			if v.ability.onCardBuy then
+				v.ability.onCardBuy(v,game,card)
+			end
+		end
 
 		for i = 1 , card.price do
 			if self.my.resource.gold>0 then
@@ -435,7 +459,7 @@ function game:buyCard(card)
 		end
 
 		self:playCard(card)
-		if self.onBuy then self.onBuy(card) end
+		
 		return true
 	end
 
@@ -445,6 +469,11 @@ local res = {"gold","food","magic","skull"}
 
 function game:gain(card,who,what)
 	if what == "random" then what = res[love.math.random(#res)] end
+
+	if self.my.hero.card.ability.onGain then
+		what = self.my.hero.card.ability.onGain(self.my.hero.card,self,who,what) or what
+	end
+
 	local res = self[who].resource
 	res[what] = res[what] + 1
 	
@@ -455,6 +484,7 @@ function game:gain(card,who,what)
 			card.ability.onGain(card,self,who,what)
 		end
 	end
+	
 end
 
 function game:lose(card,who,what)
@@ -526,6 +556,9 @@ function game:feedHeroWith(what)
 	local card = self.my.hero.card
 	self.my.resource.hp = self.my.resource.hp+1
 	card:updateCanvas()
+	for i,v in ipairs(self.my.play.cards) do
+		if v.ability.onFeedMagic then v.ability.onFeedMagic(card,game) end
+	end
 	if card.ability.onFeed then card.ability.onFeed(card,self,what) end	
 	return true
 end
@@ -597,6 +630,13 @@ end
 
 function game:killCard(card,passResort)
 	if card.ability.onKilled then card.ability.onKilled(card,self) end
+
+	for i,v in ipairs(self.my.play.cards) do
+		if v.ability.onKillCard and v.ability.onKillCard(v,self,card) then	
+			return
+		end
+	end
+	
 	if card.back then
 		self:transferCard(card ,card.current, card.born.deck ,_,passResort)
 	else
@@ -622,6 +662,7 @@ function game:attack(from,to,ignore)
 		if card.cancel and card.cancel>0 then
 			card.cancel = card.cancel -1
 			Effect(self,"attack",from,to,false,1,"inBack")
+			return
 		end
 	end
 
@@ -656,6 +697,8 @@ function game:attack(from,to,ignore)
 					return
 				end
 				target =candidate[1]
+			elseif to == "hero" then
+				target = self.your.hero.card
 			else
 				for i,v in ipairs(yourCards) do
 					if v.hp or v.shield then
@@ -698,10 +741,26 @@ function game:attack(from,to,ignore)
 			end
 		end
 
-		if to.dodgeRate and love.math.random()<to.dodgeRate then
+		if from == self.my.hero.card then
+			for i,v in ipairs(self.my.play.cards) do
+				if v.ability.onHeroAttack then
+					v.ability.onHeroAttack(v,game)
+				end
+			end
+		end
+
+		if target.dodgeRate and love.math.random()<target.dodgeRate then
 			effect:addCallback(function() target:turnaround() end)
 			return
 		end
+
+		local foe = {self.your.hero.card,unpack(self.your.play.cards)}
+		for i,v in ipairs(foe) do
+			if v.ability.onFoeAttack then
+				v.ability.onFoeAttack(v,self,target)
+			end
+		end
+
 
 		local result = self:damageCard(target)
 
@@ -759,6 +818,8 @@ function game:loser()
 	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose",self)
 end
 
+
+
 function game:sacrificeCard(target)
 	if #self.my.play.cards==0 and type(target)~="table" then return end
 	if target == "weakest" then
@@ -772,15 +833,20 @@ function game:sacrificeCard(target)
 		local weakest
 		local weakest_hp = 10
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp and v.hp<weakest_hp then
+			if v.hp and not v.cannotScrificed and v.hp<weakest_hp then
 				weakest = {v}
 				weakest_hp = v.hp
-			elseif v.hp and v.hp== weakest then
+			elseif v.hp and not v.cannotScrificed and v.hp== weakest then
 				table.insert(weakest,v)
 			end
 		end
 		if not weakest then return end
 		local card = weakest[love.math.random(#weakest)]
+		for i,v in ipairs({self.my.hero.card,unpack(self.my.play.cards)}) do
+			if v.onSacrificeAlly then
+				v.onSacrificeAlly(v,game,card)
+			end
+		end
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
@@ -795,15 +861,20 @@ function game:sacrificeCard(target)
 		local strongest
 		local strongest_hp = 0
 		for i,v in ipairs(self.my.play.cards) do
-			if v.hp and v.hp>strongest_hp then
+			if v.hp and not v.cannotScrificed and v.hp>strongest_hp then
 				strongest = {v}
 				strongest_hp = v.hp
-			elseif v.hp and v.hp== strongest then
+			elseif v.hp and not v.cannotScrificed  and v.hp== strongest then
 				table.insert(strongest,v)
 			end
 		end
 		if not strongest then return end
 		local card = strongest[love.math.random(#strongest)]
+		for i,v in ipairs(({self.my.hero.card,unpack(self.my.play.cards)})) do
+			if v.onSacrificeAlly then
+				v.onSacrificeAlly(v,game,card)
+			end
+		end
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
@@ -817,32 +888,53 @@ function game:sacrificeCard(target)
 		end
 		local candidate = {}
 		for i,v in ipairs(self.my.play.cards) do	
-			if v.hp then
+			if v.hp and not v.cannotScrificed then
 				table.insert(candidate,v)
 			end
 		end	
 		local card = candidate[love.math.random(#candidate)]
+		for i,v in ipairs(({self.my.hero.card,unpack(self.my.play.cards)})) do
+			if v.onSacrificeAlly then
+				v.onSacrificeAlly(v,game,card)
+			end
+		end
 		if card.ability.onSacrifice then card.ability.onSacrifice(card,self) end
 		self:killCard(card)
 		return card
 	elseif type(target)=="string" then
 		for i,v in ipairs(self.my.play.cards) do
 			if v.id == target then
+				for i,t in ipairs(({self.my.hero.card,unpack(self.my.play.cards)})) do
+					if t.onSacrificeAlly then
+						t.onSacrificeAlly(t,game,card,v)
+					end
+				end
 				if v.ability.onSacrifice then v.ability.onSacrifice(v,self) end
 				self:killCard(v)
 				return v
 			end
 		end
-	elseif type(target)=="table" then	
+	elseif type(target)=="table" then
+		for i,v in ipairs({self.my.hero.card,unpack(self.my.play.cards)}) do
+			if v.onSacrificeAlly then
+				v.onSacrificeAlly(v,game,target)
+			end
+		end
 		if target.ability.onSacrifice then target.ability.onSacrifice(target,self) end
+		
 		self:killCard(target)
 	else
 		local candidate = {}
-		for i,v in ipairs(self.my.play.cards) do
-			if v.hp then table.insert(candidate,v) end
+		for i,v in ipairs({self.my.hero.card,unpack(self.my.play.cards)}) do
+			if v.hp and not v.cannotScrificed then table.insert(candidate,v) end
 		end
 		if not candidate[1] then return end
 		local c = candidate[love.math.random(#candidate)]
+		for i,v in ipairs(self.my.play.cards) do
+			if v.onSacrificeAlly then
+				v.onSacrificeAlly(v,game,c)
+			end
+		end
 		if c.ability.onSacrifice then c.ability.onSacrifice(c,self) end
 		self:killCard(c)
 		return c
@@ -854,6 +946,12 @@ function game:copyCard(card)
 	return Card(self,card.data,card.born,card.current)
 end
 
+function game:chargeCard(card)
+	card.charge = card.charge+1
+	if card.charge >= card.chargeMax then
+		card.ability.onFullCharge(card,self)
+	end
+end
 
 function game:AI(dt)
 	if self.aiEnd then return end

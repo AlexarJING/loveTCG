@@ -26,21 +26,12 @@ data.ability={
 		game:optionsCards(options)
 		
 		game.show.onChoose = function(target,game)
-			card.attackTarget = target
-			card.attackCD = 0.1
+			repeat
+				game:attack(card,target)
+			until target.hp<1
+			game:killCard(card)
 		end		
 	end,
-	always = function (card,game)
-		if not card.attackTarget then return end
-		card.attackCD = card.attackCD - 0.017
-		if card.attackTarget.hp>0 and card.attackCD<0 then
-			game:attack(card,card.attackTarget)
-			card.attackCD = 0.1
-		else
-			card.attackTarget = nil
-			game:killCard(card)
-		end
-	end
 }
 
 return data
