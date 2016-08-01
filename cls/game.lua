@@ -55,6 +55,12 @@ function game:init(userdata,foedata)
 		hp = 30
 	}
 
+	self.up.turnDrawCount = 3
+	self.up.turnDrawMax = 4
+	self.down.turnDrawCount = 3
+	self.down.turnDrawMax = 4
+
+
 	self.userdata = userdata
 	self.foedata = foedata
 
@@ -142,7 +148,7 @@ function game:gameStart()
 	
 	self.turnButton:setTurn(self.turn)
 
-	for i = 1,4 do
+	for i = 1, 4 do
 		self:refillCard("up")
 		self:refillCard("down")
 	end
@@ -157,16 +163,7 @@ end
 function game:turnStart()
 	self.turnCount = self.turnCount + 1
 	
-	if self.my.hero.ability.onDrawHand then
-		self.my.hero.ability.onDrawHand(self)
-	else
-
-		for i = 1, 3 do
-			if #self.my.hand.cards>3 then break end
-			self:drawCard()
-		end
-		self:refillCard()
-	end
+	
 
 	local card = self.my.hero.card
 	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
@@ -175,6 +172,15 @@ function game:turnStart()
 		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
 	end
 
+	for i,card in ipairs(self.my.play.cards) do
+		if card.last and type(card.last) == "number" then
+			card.last = card.last - 1
+			card:updateCanvas()
+			if card.last<1 then
+				self:killCard(card)
+			end
+		end
+	end
 
 end
 
@@ -186,24 +192,39 @@ function game:turnEnd()
 		self:chooseCard(self.show.cards[1])
 	end
 
+
+
 	for i,card in ipairs(self.my.play.cards) do
 		if card.onTurnEnd then card.onTurnEnd(card,self) end
 	end
 
-	for i,card in ipairs(self.my.play.cards) do
-		if card.last and type(card.last) == "number" then
-			card.last = card.last - 1
-			card:updateCanvas()
-			if card.last<1 then
-				self:killCard(card)
-				self:goback(card)
-			end
+	local combo 
+	for i,v in ipairs(self.my.play.cards) do
+		if v.combo and self.comboCount<3 then
+			combo = true
+			self.comboCount = self.comboCount + 1
+			self:killCard(v)
+			self:turnStart()
+			return
 		end
 	end
 
+	self.comboCount = 0
 	self.turn = self.turn=="down" and "up" or "down"
 	self.my = self.my == self.down and self.up or self.down
 	self.your = self.your==self.up and self.down or self.up
+
+	if self.my.hero.ability.onDrawHand then
+		self.my.hero.ability.onDrawHand(self)
+	else
+
+		for i = 1, self.my.turnDrawCount do
+			if #self.my.hand.cards== self.my.turnDrawMax then break end
+			self:drawCard()
+		end
+		self:refillCard()
+	end
+	
 	self:turnStart()
 end
 
@@ -319,11 +340,23 @@ end
 
 
 function game:robCard(card)
-	if not self.canRob then return end
+	
+	local robber
+
+	for i,v in ipairs(self.my.play.cards) do
+		if v.rob then
+			robber = v
+			break
+		end
+	end
+
+	if not robber then return end
+
 	card = card or self.hoverCard
 	if self.my.resource.gold < card.price then 
 		return 
 	else
+		self:killCard(robber)
 		self:lose(card,"my","gold",card.price)
 		self:playCard(card)
 	end
@@ -450,12 +483,33 @@ function game:buyCard(card)
 			end
 		end
 
+		local hero = self.my.hero.card
+		if hero.ability.onCardBuy then
+			hero.ability.onCardBuy(hero,game,card)
+		end
+
+
+		for i,v in ipairs(self.your.play.card) do
+			if v.ability.onFoeBuy then
+				v.ability.onFoeBuy(v,game,card)
+			end
+		end
+
+		local hero = self.your.hero.card
+		if hero.ability.onFoeBuy then
+			hero.ability.onFoeBuy(hero,game,card)
+		end
+
 		for i = 1 , card.price do
 			if self.my.resource.gold>0 then
 				self:lose(card,"my","gold")
 			else
 				self:lose(card,"my","magic")
 			end			
+		end
+
+		if card.ability.onBuy then
+			card.ability.onBuy(card,self)
 		end
 
 		self:playCard(card)
@@ -485,6 +539,16 @@ function game:gain(card,who,what)
 		end
 	end
 	
+	if self.your.hero.card.ability.onGain then
+		self.your.hero.card.ability.onGain(self.your.hero.card,self,who,what)
+	end
+
+
+	for i,card in ipairs(self.your.play.cards) do
+		if card.ability.onFoeGain then
+			card.ability.onFoeGain(card,self,who,what)
+		end
+	end
 end
 
 function game:lose(card,who,what)
@@ -522,7 +586,7 @@ function game:lose(card,who,what)
 			card.ability.onLose(card,self,who,what)
 		end
 	end
-	return true
+	return what
 end
 
 function game:feedCardAll()
@@ -563,7 +627,22 @@ function game:feedHeroWith(what)
 	return true
 end
 
+function game:feedCardGold(card)
+	if self.my.resource.gold <1 then return end
+	self:lose(self.my.hero.card,"my","gold")
+	if card.ability.onFeed then card.ability.onFeed(card,self) end
+	
+	for i,v in ipairs(self.my.play.cards) do
+		v.ability.onFeedAlly(v,self) 
+	end
+
+	if self.my.hero.card.ability.onFeedAlly then 
+		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
+	end
+end
+
 function game:feedCard(card)
+	if card.canFeedGold then return self:feedCardGold(card) end
 	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end
 	card = card or self.hoverCard
 	if not card.hp and not card.isHero then return end
@@ -582,16 +661,35 @@ function game:feedCard(card)
 
 	end
 	
+
+
+
 	if card.ability.onFeed then card.ability.onFeed(card,self) end
 	if self.my.hero.card.ability.onFeedAlly then 
 		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
 	end
+	for i,v in ipairs(self.my.play.cards) do
+		v.ability.onFeedAlly(v,self) 
+	end
 	return true
 end
 
+function game:healCard(card)
+	if card.isHero then
+		self.my.resource.hp = self.my.resource.hp + 1
+	else
+		if not card.hp then return end
+		card.hp = card.hp + 1
+		if card.hp>card.hp_max then card.hp = card.hp_max end
+	end
+end
 
-
-
+function game:healAll()
+	for i,v in ipairs(self.my.play.cards) do
+		self:healCard(v)
+	end
+	self:healCard(self.my.hero.card)
+end
 
 function game:attackCard(card)
 	if self.my.resource.skull < 1 and self.my.resource.magic < 1 then return end
@@ -629,7 +727,12 @@ function game:damageCard(card)
 end
 
 function game:killCard(card,passResort)
-	if card.ability.onKilled then card.ability.onKilled(card,self) end
+	if card.ability.onKilled then 
+		if card.ability.onKilled(card,self) then --directly kill
+			self:transferCard(card ,card.current, card.born.grave,_,passResort)
+			return
+		end
+	end
 
 	for i,v in ipairs(self.my.play.cards) do
 		if v.ability.onKillCard and v.ability.onKillCard(v,self,card) then	
@@ -639,7 +742,37 @@ function game:killCard(card,passResort)
 	
 	if card.back then
 		self:transferCard(card ,card.current, card.born.deck ,_,passResort)
-	else
+	else --destroy
+		if card.ability.onDestoryed then
+			if card.ability.onDestoryed(card,self) then
+				self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+				return
+			end
+		end
+
+		for i,v in ipairs(self.my.play.cards) do
+			if v.ability.onDestroyCard then
+				if v.ability.onDestroyCard(v,self,card) then
+					self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+					return
+				end
+			end
+		end
+
+		local check = self.my.hero.card.ability.onDestroyCard
+		if check then
+			if check(self.my.hero.card,self,card) then
+				self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+			end
+		end
+
+		for i,v in ipairs(self.my.play.cards) do
+			if v.instead then
+				self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+				self:killCard(v)
+				return
+			end
+		end
 		self:transferCard(card ,card.current, card.born.grave,_,passResort)
 	end
 end
@@ -661,7 +794,7 @@ function game:attack(from,to,ignore)
 	for i,card in ipairs(yourCards) do
 		if card.cancel and card.cancel>0 then
 			card.cancel = card.cancel -1
-			Effect(self,"attack",from,to,false,1,"inBack")
+			Effect(self,"attack",from,card,false,1,"inBack")
 			return
 		end
 	end
@@ -686,17 +819,19 @@ function game:attack(from,to,ignore)
 				target = to
 			
 			elseif to == "weakest" then
-				for i,v in ipairs(yourCards) do
-					if v.hp then
-						table.insert(candidate, v)
+
+				local weakest
+				local weakest_hp = 10
+				for i,v in ipairs(self.my.play.cards) do
+					if v.hp and not v.cannotScrificed and v.hp<weakest_hp then
+						weakest = {v}
+						weakest_hp = v.hp
+					elseif v.hp and not v.cannotScrificed and v.hp== weakest then
+						table.insert(weakest,v)
 					end
 				end
-				table.sort( candidate, function(a,b) return a.hp<b.hp end)
-				if #candidate == 0 then
-					self:attackHero(from)
-					return
-				end
-				target =candidate[1]
+				if not weakest then return end
+				target = weakest[love.math.random(#weakest)]
 			elseif to == "hero" then
 				target = self.your.hero.card
 			else
@@ -757,7 +892,11 @@ function game:attack(from,to,ignore)
 		local foe = {self.your.hero.card,unpack(self.your.play.cards)}
 		for i,v in ipairs(foe) do
 			if v.ability.onFoeAttack then
-				v.ability.onFoeAttack(v,self,target)
+				local t = v.ability.onFoeAttack(v,self,target)
+				if t then
+					target = t
+					break
+				end
 			end
 		end
 

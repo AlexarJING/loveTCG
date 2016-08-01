@@ -1,27 +1,22 @@
 local data = {
-	id = "wagonbomb",
-	name = "Wagon Bomb",
+	id = "burglary",
+	name = "Burglary",
 	faction = "metris",
-	category = "murder",
+	category = "espionage",
 	rare = 4 ,
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
-	basePrice = 14,
-	last = 4,
-	bomb = true
+	basePrice = 7,
 }
 
 data.description = {
-	"In 3 turns: attack x16",
+	"Steal the cheapest card",
+	"from your foe's bank",
  	"Destroy after use",
 }
 
 data.ability={
-	onKilled = function(card,game)		
-		
-		for i = 1, 16 do
-			game:attack(card)
-		end
-
+	onPlay = function(card,game)
+		game.my.canRob = true
 	end,
 }
 

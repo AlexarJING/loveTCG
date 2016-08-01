@@ -22,9 +22,10 @@ data.ability={
 			if not candidate[1] then return end
 			return candidate[love.math.random(#candidate)]
 		end)
-		for i = 1, 2 do
-			if #game.my.hand.cards>3 then break end
-			game:drawCard()
+
+		for i = 1, self.my.turnDrawCount-1 do
+			if #self.my.hand.cards== self.my.turnDrawMax then break end
+			self:drawCard()
 		end
 		game:refillCard()
 	end,

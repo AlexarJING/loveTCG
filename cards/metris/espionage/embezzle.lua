@@ -1,25 +1,23 @@
 local data = {
-	id = "satchelbomb",
-	name = "Satchel Bomb",
+	id = "embezzle",
+	name = "Embezzle",
 	faction = "metris",
-	category = "murder",
+	category = "espionage",
 	rare = 2 ,
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
-	basePrice = 6,
-	last = 3,
-	bomb = true
+	basePrice = 4,
+	last = 4
 }
 
 data.description = {
-	"In 2 turns: attack x6",
+ 	"turn: Steal 1 resource",
  	"Destroy after use",
 }
 
 data.ability={
-	onKilled = function(card,game)			
-		for i = 1, 6 do
-			game:attack(card)
-		end	
+	onTurnStart = function(card,game)
+		if res then game:game(card,"my",res) end
+		game:gain(card,"my","skull")
 	end,
 }
 

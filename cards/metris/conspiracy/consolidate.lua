@@ -1,25 +1,36 @@
 local data = {
-	id = "misdirect",
-	name = "Misdirect",
+	id = "consolidate",
+	name = "Consolidate",
 	faction = "metris",
 	category = "conspiracy",
-	rare = 1 ,
+	rare = 3 ,
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
-	basePrice = 4,
-	intercept = true,
-	shield = 2,
+	basePrice = 3,
+	last = 5
+
 }
 
 data.description = {
-	"Intercept 2 attacks",
- 	"Rediect attack to foe",
- 	"Destroy after use ",
+	"On turn: Heal hero/allies",
+ 	"50%: save destroyed ally",
+	"Destroy after use ",
 }
 
 data.ability={
-	onAttacked = function(card,game,from)		
-		game:attack(card,from)
+	onTurnStart = function(card,game)		
+		game:healAll()
 	end,
+	onDestroyed = function (card,game,target)
+		--[[
+		if  love.math.random()<0.5 then
+			return true
+		end]]
+	end,
+	onDestroyCard = function (card,game,target)
+		if  target.hp and target.born == game.my  and love.math.random()<0.5 then
+			return true
+		end
+	end
 }
 
 return data

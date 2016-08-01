@@ -6,7 +6,8 @@ local data = {
 	rare = 3 ,
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
 	basePrice = 10,
-	last = 4
+	last = 4,
+	bomb = true
 }
 
 data.description = {
@@ -15,13 +16,12 @@ data.description = {
 }
 
 data.ability={
-	onTurnStart = function(card,game)		
-		if card.last == 1 then
-			for i = 1, 11 do
-				game:attack(card)
-			end
+	onKilled = function(card,game)		
+		
+		for i = 1, 11 do
+			game:attack(card)
 		end
-		game:killCard(card)	
+		
 	end,
 }
 

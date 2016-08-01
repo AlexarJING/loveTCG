@@ -10,6 +10,7 @@ local rare_2 = love.graphics.newImage("res/others/rare-2.png")
 local rare_3 = love.graphics.newImage("res/others/rare-3.png")
 local rare_4 = love.graphics.newImage("res/others/rare-4.png")
 local rare_h = love.graphics.newImage("res/others/rare-hero.png")
+local rare_e = love.graphics.newImage("res/others/rare-5.png")
 local img_gold = love.graphics.newImage("res/others/gold.png")
 local img_back = {
 	normal = love.graphics.newImage("res/assets/cardback.png"),

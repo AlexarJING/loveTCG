@@ -602,12 +602,7 @@ function table.safeRemove(tab,index)
 	tab[#tab]=nil
 end
 
-function table.pickRandom(tab)
-	local i = love.math.random(#tab)
-	local v = tab[i]
-	table.remove(tab,i)
-	return v
-end
+
 
 function table.isEmpty(tab)
 	if tab[1] then return false end
@@ -798,4 +793,15 @@ function string.strippath(filename)
 end
 function string.stripfilename(filename)
     return string.match(filename, ".+\\([^\\]*%.%w+)$") -- *nix system
+end
+
+function table.random(tab)
+	return tab[love.math.random(#tab)]
+end
+
+function table.pickRandom(tab)
+	local i = love.math.random(#tab)
+	local v = tab[i]
+	table.remove(tab,i)
+	return v
 end

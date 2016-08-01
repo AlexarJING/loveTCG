@@ -1,27 +1,23 @@
 local data = {
-	id = "wagonbomb",
-	name = "Wagon Bomb",
+	id = "reconnaissance",
+	name = "Reconnaissance",
 	faction = "metris",
-	category = "murder",
-	rare = 4 ,
+	category = "espionage",
+	rare = 2 ,
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
-	basePrice = 14,
-	last = 4,
-	bomb = true
+	basePrice = 7,
+	last = 3
 }
 
 data.description = {
-	"In 3 turns: attack x16",
+ 	"turn: +2 skull",
  	"Destroy after use",
 }
 
 data.ability={
-	onKilled = function(card,game)		
-		
-		for i = 1, 16 do
-			game:attack(card)
-		end
-
+	onPlay = function(card,game)
+		game:gain(card,"my","skull")
+		game:gain(card,"my","skull")
 	end,
 }
 
