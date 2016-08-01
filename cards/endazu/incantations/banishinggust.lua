@@ -1,21 +1,21 @@
 local data = {
-	id = "beholdtheveil",
-	name = "Behold the Veil",
+	id = "banishinggust",
+	name = "Banishing Gust",
 	faction = "endazu",
 	category = "incantations",
-	rare = 1,
+	rare = "H",
 	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
 	basePrice = 4,
 	back = true,
-	--last = true,
-	chargeInit = 1,
-	chargeMax = 20
+	chargeInit = 0,
+	chargeMax = 2,
 }
 
 data.description = {
-	"1/20 charge",
+	"0/2 charge",
  	"On hold: +1 charge",
- 	"On play: for each charge +1 magic",
+ 	"On play and full charge",
+ 	"Summon Argoreth Flower ",
 }
 
 data.ability={
@@ -23,8 +23,12 @@ data.ability={
 		game:chargeCard(card)
 	end,
 	onPlay = function (card,game)
-		for i = 1, card.charge do
-			game:gain(card,"my","magic")
+		if card.charge<chargeMax then return end
+		for i,v in ipairs(game.my.play.cards) do
+			game:killCard(v)
+		end
+		for i,v in ipairs(game.your.play.cards) do
+			game:killCard(v)
 		end
 	end,
 }

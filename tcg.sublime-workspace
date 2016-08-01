@@ -4,8 +4,32 @@
 		"selected_items":
 		[
 			[
+				"firewo",
+				"fireworks"
+			],
+			[
+				"attack",
+				"attackHero"
+			],
+			[
 				"for",
 				"fori	for i,v in ipairs()"
+			],
+			[
+				"sh",
+				"shadow"
+			],
+			[
+				"shadow",
+				"shadowCount"
+			],
+			[
+				"update",
+				"updateCanvas"
+			],
+			[
+				"weak",
+				"weakest"
 			],
 			[
 				"tab",
@@ -16,88 +40,28 @@
 				"fori	for i,v in ipairs()"
 			],
 			[
-				"table",
-				"table.insert	(table, [pos,] value)"
-			],
-			[
-				"print",
-				"love.graphics.print"
-			],
-			[
-				"setc",
-				"love.graphics.setColor"
-			],
-			[
-				"attackCa",
-				"attackCardAll"
+				"ids",
+				"love.mouse.isDown"
 			],
 			[
 				"newim",
 				"love.graphics.newImage"
 			],
 			[
-				"getdt",
-				"love.timer.getDelta"
+				"hover",
+				"hoverCard"
 			],
 			[
-				"transl",
-				"love.graphics.translate"
-			],
-			[
-				"show",
-				"showTag"
-			],
-			[
-				"recet",
-				"love.graphics.rectangle"
-			],
-			[
-				"isd",
-				"love.mouse.isDown"
-			],
-			[
-				"font_",
-				"font_content"
+				"print",
+				"love.graphics.print"
 			],
 			[
 				"random",
 				"love.math.random"
 			],
 			[
-				"newf",
-				"love.graphics.newFont"
-			],
-			[
 				"setline",
 				"love.graphics.setLineWidth"
-			],
-			[
-				"hoverc",
-				"hoverColor"
-			],
-			[
-				"faction",
-				"factions"
-			],
-			[
-				"tabl",
-				"table.insert	(table, [pos,] value)"
-			],
-			[
-				"cancel",
-				"cancelAttack"
-			],
-			[
-				"hoverC",
-				"hoverColor"
-			],
-			[
-				"imag",
-				"love.graphics.newImage"
-			],
-			[
-				"canva",
-				"love.graphics.newCanvas"
 			],
 			[
 				"img_",
@@ -110,6 +74,10 @@
 			[
 				"circ",
 				"love.graphics.circle"
+			],
+			[
+				"newf",
+				"love.graphics.newFont"
 			],
 			[
 				"font",
@@ -216,10 +184,6 @@
 				"onAttack"
 			],
 			[
-				"attack",
-				"attackweak"
-			],
-			[
 				"alway",
 				"cardsAlways_update"
 			],
@@ -242,6 +206,10 @@
 			[
 				"cost_",
 				"cost_lvl0"
+			],
+			[
+				"table",
+				"table.remove	(table [, pos])"
 			],
 			[
 				"inter",
@@ -282,6 +250,10 @@
 			[
 				"dra",
 				"love.graphics.draw"
+			],
+			[
+				"setc",
+				"love.graphics.setColor"
 			],
 			[
 				"set",
@@ -351,34 +323,103 @@
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 26189,
+				"buffer_size": 27513,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cards/endazu/incantations/beholdtheveil.lua",
+			"file": "cards/endazu/incantations/banishinggust.lua",
 			"settings":
 			{
-				"buffer_size": 674,
+				"buffer_size": 717,
 				"line_ending": "Windows",
-				"name": "beholdtheveil.lua"
+				"name": "banishinggust.lua"
 			}
 		},
 		{
-			"contents": "local card = Class(\"card\")\nlocal Width = 210\nlocal Height = 312\n\nlocal img_hp = love.graphics.newImage(\"res/others/hp.png\")\nlocal img_shield = love.graphics.newImage(\"res/others/shield.png\")\nlocal img_wait  = love.graphics.newImage(\"res/others/wait.png\")\nlocal rare_1 = love.graphics.newImage(\"res/others/rare-1.png\")\nlocal rare_2 = love.graphics.newImage(\"res/others/rare-2.png\")\nlocal rare_3 = love.graphics.newImage(\"res/others/rare-3.png\")\nlocal rare_4 = love.graphics.newImage(\"res/others/rare-4.png\")\nlocal rare_h = love.graphics.newImage(\"res/others/rare-hero.png\")\nlocal rare_e = love.graphics.newImage(\"res/others/rare-5.png\")\nlocal img_gold = love.graphics.newImage(\"res/others/gold.png\")\nlocal img_back = {\n	normal = love.graphics.newImage(\"res/assets/cardback.png\"),\n	silver = love.graphics.newImage(\"res/assets/cardbacksilver.png\"),\n	gold = love.graphics.newImage(\"res/assets/cardbackgold.png\"),\n}\n\nlocal img_frame = {\n	love.graphics.newImage(\"res/assets/cardframe-normal.png\"),\n	love.graphics.newImage(\"res/assets/cardframe-silver.png\"),\n	love.graphics.newImage(\"res/assets/cardframe-gold.png\"),\n}\n\n\nlocal cardImage = {}\nlocal font_title = love.graphics.newFont(30)\nlocal font_content = love.graphics.newFont(20)\n\n\nfunction card:init(game,data,born,current,state)\n	self.game = game\n	self.born = game[born]\n	self.current = current\n	self.data = data\n	self:initProperty(data)\n	self:initImage()\n	self:updateCanvas()\n	self:initBack()\n	self.tweens={}\n	self.tweenStack = {}\n	if state then card:setState(state) end\nend\n\nfunction card:setState(state)\n	self.hp = state.hp\n	self.last = state.last\n	self.shield = state.shield\n	self.charge = state.charge\n	self:updateCanvas()\nend\n\n\nfunction card:reset()\n	self.hp = self.data.hp\n	self.last = self.data.last\n	self.shield = self.data.shield\n	self.charge = self.data.chargeInit\n	self:updateCanvas()\nend\n\n\nfunction card:initProperty(data)\n	for k,v in pairs(data) do\n		self[k]=v\n	end\n	self.hp_max = self.hp\n	self.shield_max = self.shield\n	self.charge_max = self.chargeMax\n	self.charge = self.chargeInit\n	self.level = self.level or 1\n	if self.level then\n		self.price = self.basePrice and self.basePrice - self.level + 1\n	end\n\n	self.x = self.current.x or 0\n	self.y = self.current.y or 0\n	self.rz = self.current.rz or 0\n	self.rx = self.current.rx or 0\n	self.ry = self.current.ry or 0\n	self.scale = self.current.scale or 0.5\n	self.w = Width\n	self.h = Height\n	self.vduration=0\n	self.offx=0\n	self.offy=0\n	self.alpha = 255\n	self.cardback = self.back and img_back[self.back] or img_back.normal\nend\n\nlocal textHeight = 150\nfunction card:initBack()\n	local tw = self.cardback:getWidth()\n	local th = self.cardback:getHeight()\n	self.back = love.graphics.newCanvas(Width,Height)\n	love.graphics.setCanvas(self.back)\n	love.graphics.setColor(255, 255, 255, 255)\n	love.graphics.draw(self.cardback, 0, 0, 0, Width/tw,Height/th)\n	love.graphics.setCanvas()\nend\n\nlocal count = 0\n\nfunction card:initImage()\n	if not cardImage[self.id] then\n		cardImage[self.id]= love.graphics.newImage(\"res/cards/\"..self.id..\".png\")\n		count = count+1\n	end\n		\n	self.img = cardImage[self.id]\n\n	self.tw = self.img:getWidth()\n	self.th = self.img:getHeight()\n	self.predraw  = love.graphics.newCanvas(Width,Height)\n\n	\nend\n\n\n\n\nlocal hw =Width/2\nlocal hh =Height/2\n\nfunction card:checkHover()\n	--if self.tweens.x or self.tweens.y then return end\n\n	local dx,dy = self.game.mousex-self.x,self.game.mousey-self.y\n	local rx,ry = math.axisRot(dx,dy,-self.rz)\n\n	local mx,my = rx/self.scale/math.cos(self.ry),ry/self.scale/math.cos(self.rx)\n	\n	if mx>hw then return end\n	if mx<-hw then return end\n	if my>hh then return end\n	if my<-hh then return end\n	return true\nend\n\nfunction card:update(dt)\n\n	self:vibrateUpdate(dt)\n\n	self:updateTweens(dt)\n	\n	if self:checkHover() then self.game.hoverCard = self end\n	\n\nend\n\nfunction card:updateTweens(dt)\n	for k,v in pairs(self.tweens) do\n		if v:update(dt) then\n			local tween = self.tweenStack[k] and self.tweenStack[k][1]\n			if tween then\n				self.tweens[k] = tween\n				table.remove(self.tweenStack[k], 1)\n			else\n				self.tweens[k] = nil\n			end\n		end\n	end\nend\n\nfunction card:addAnimate(duration , target , easing , delay, callback)\n	for k,v in pairs(target) do\n		local tween = Tween.new(duration, self, {[k]=v}, easing, delay)\n		if self.tweens[k] then\n			self.tweenStack[k] = self.tweenStack[k] or {}\n			table.insert(self.tweenStack[k], tween)\n		else\n			self.tweens[k] = tween\n		end		\n		if callback then tween.callback = callback end\n	end\nend\n\nfunction card:setAnimate(duration , target , easing , delay, callback)\n	for k,v in pairs(target) do\n		local tween = Tween.new(duration, self, {[k]=v}, easing, delay)\n		self.tweens[k] = tween\n		self.tweenStack[k] =  {}	\n		tween.callback = function () \n			if callback then callback() end\n		end\n	end\nend\n\n\nfunction card:draw(color)\n	love.graphics.setColor(255, 255, 255, self.alpha)\n	if color then love.graphics.setColor(color) end\n	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then\n		love.graphics.draw(self.back, self.x+self.offx, self.y+self.offy, self.rz,\n		 self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)\n	else\n		love.graphics.draw(self.predraw, self.x+self.offx, self.y+self.offy, self.rz,\n		 self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)\n	end\n	\nend\n\nfunction card:needRedraw()\n	if self.hp == self.ohp and self.shield == self.oshield and self.last == self.olast then\n		return false\n	end\n\n	self.ohp = self.hp\n	self.shield = self.oshield\n	self.last = self.olast\n	return true\nend\n\nlocal mask_shader = love.graphics.newShader [[\n   vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {\n      if (Texel(texture, texture_coords).a == 0.0) {\n         // a discarded pixel wont be applied as the stencil.\n         discard;\n      }\n      return vec4(1.0);\n   }\n]]\n\n\nfunction card:updateCanvas()\n	love.graphics.setColor(255,255,255,255)\n	love.graphics.setCanvas(self.predraw)\n	--bg\n	local function myStencilFunction()\n		love.graphics.setShader(mask_shader)\n		love.graphics.draw(self.cardback, 0, 0, 0, Width/self.tw,Height/self.th)\n		love.graphics.setShader()\n	end\n	love.graphics.stencil(myStencilFunction, \"replace\", 1)\n    love.graphics.setStencilTest(\"greater\", 0)\n    love.graphics.draw(self.img, 0, 0, 0, Width/self.tw,Height/self.th)\n    love.graphics.setStencilTest()\n\n\n	\n	--border\n	if img_frame[self.level] then\n		love.graphics.setColor(255, 255, 255, 255)\n		love.graphics.draw(img_frame[self.level],0, 0, 0, Width/self.tw,Height/self.th)\n	end\n\n\n	--title\n	love.graphics.setFont(font_title)\n	love.graphics.setColor(0, 0, 0, 255)\n	love.graphics.printf(self.name, 3, 8, Width, \"center\")\n	love.graphics.setColor(255,255,255,255)\n	love.graphics.printf(self.name, 0, 5, Width, \"center\")\n	\n	--description\n	\n	love.graphics.setFont(font_content)\n	for i,text in ipairs(self.description) do\n		love.graphics.setColor(0,0,0,255)\n		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, \"center\")\n		love.graphics.setColor(255,255,255,255)\n		love.graphics.printf(text, 0, (i-1)*20+textHeight/(#self.description+1)+ 180, Width, \"center\")\n	end\n	--price\n	if self.price then\n		love.graphics.setColor(255, 255, 255,255)\n		--love.graphics.circle(\"fill\", 195, 20, 15)\n		love.graphics.draw(img_gold, 177, 10,0,1.3,1.3)\n		love.graphics.setFont(font_content)\n		love.graphics.setColor(0, 0, 0,255)\n		love.graphics.printf(self.price, 177, 11, 30, \"center\")\n		love.graphics.setColor(0, 0, 0,255)\n		love.graphics.printf(self.price, 176, 11, 30, \"center\")\n		love.graphics.setColor(0, 0, 255,255)\n		love.graphics.printf(self.price, 175, 11, 30, \"center\")\n	end\n	--rare\n	if self.rare then\n		love.graphics.setColor(255, 255, 255, 255)\n		--love.graphics.circle(\"fill\", 15, 160, 15)\n		if self.rare == 1 then\n			love.graphics.draw(rare_1, 5,150)\n		elseif self.rare == 2 then\n			love.graphics.draw(rare_2, 5,150)\n		elseif self.rare == 3 then\n			love.graphics.draw(rare_3, 5,150)\n		elseif self.rare == 4 then\n			love.graphics.draw(rare_4, 5,150)\n		elseif self.rare == \"hero\" then\n			love.graphics.draw(rare_h, 5,150)\n		end\n	end\n\n\n	\n\n	\n	if self.hp then\n		love.graphics.setColor(100, 100, 100, 255)\n		for i =1 , self.hp_max do\n			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)\n		end\n		love.graphics.setColor(255,255,255,255)\n		for i =1 , self.hp do\n			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)\n		end\n	end\n\n	--shield\n	if self.shield then\n		love.graphics.setColor(100, 100, 100, 255)\n		for i =1 , self.shield_max do\n			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)\n		end\n		love.graphics.setColor(255,255,255,255)\n		for i =1 , self.shield do\n			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)\n		end\n	end\n\n\n	--last \n\n	if self.last and type(self.last) == \"number\" then\n		love.graphics.setColor(255,255,255,255)\n		love.graphics.setFont(font_content)\n		love.graphics.draw(img_wait, 80, 283)\n		love.graphics.printf(\"x\"..tostring(self.last), 100, 283, Width, \"left\")\n	end\n\n	love.graphics.setCanvas()\n\nend\n\n\n\nfunction card:vibrate(duration, magnitude,vfunc)\n    self.vduration, self.vMagnitude = duration or 0.3, magnitude or 5\n    self.vfunc = vfunc\nend\n\n\nfunction card:vibrateUpdate(dt)\n	if self.vduration<=0 then return end\n	self.vduration = self.vduration -dt\n	self.vMagnitude = self.vMagnitude*0.98\n	self.offx = love.math.random(-self.vMagnitude, self.vMagnitude)\n    self.offy = love.math.random(-self.vMagnitude, self.vMagnitude)\n    if self.vduration<=0 then \n    	self.offx=0\n    	self.offy=0\n    	if self.vfunc then self.vfunc() end\n    end\nend\n\nfunction card:standout()\n	local tween = self.tweenStack.y and self.tweenStack.y[#self.tweenStack.y]\n	local y\n	if tween then \n		y = tween.target.y\n	elseif self.tweens.y then\n		y = self.tweens.y.target.y\n	else\n		y = self.y\n	end \n	local ty = y>0 and y-50 or y+50\n\n	self:setAnimate(0.3,{y=ty},\"linear\")\n	self:addAnimate(0.3,{y=y},\"linear\")\nend\n\nfunction card:turnaround()\n	self:setAnimate(0.3,{rx=3.14},\"linear\")\n	self:addAnimate(0.3,{rx=0},\"linear\")\nend\n\nreturn card",
-			"file": "cls/card.lua",
-			"file_size": 10307,
-			"file_write_time": 131145157995434409,
+			"file": "cards/endazu/incantations/odashirsecho.lua",
 			"settings":
 			{
-				"buffer_size": 10062,
+				"buffer_size": 851,
+				"line_ending": "Windows",
+				"name": "odashirsecho.lua"
+			}
+		},
+		{
+			"file": "cards/endazu/incantations/summoningrift.lua",
+			"settings":
+			{
+				"buffer_size": 905,
+				"line_ending": "Windows",
+				"name": "summoningrift.lua"
+			}
+		},
+		{
+			"file": "cls/card.lua",
+			"settings":
+			{
+				"buffer_size": 9937,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/endazu/incantations/wordofunmaking.lua",
+			"settings":
+			{
+				"buffer_size": 724,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/endazu/incantations/whisperedbarbs.lua",
+			"settings":
+			{
+				"buffer_size": 601,
+				"line_ending": "Windows",
+				"name": "whisperedbarbs.lua"
+			}
+		},
+		{
+			"file": "cards/endazu/incantations/songofspring.lua",
+			"settings":
+			{
+				"buffer_size": 599,
+				"line_ending": "Windows",
+				"name": "songofspring.lua"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/Lua Love/LuaLove.sublime-build",
 	"build_system_choices":
 	[
+		[
+			[
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					""
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"Love2D"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"ldoc: File"
+				],
+				[
+					"Packages/Lua Love/LuaLove.sublime-build",
+					"ldoc: Project"
+				]
+			],
+			[
+				"Packages/Lua Love/LuaLove.sublime-build",
+				"Love2D"
+			]
+		]
 	],
 	"build_varint": "",
 	"command_palette":
@@ -440,149 +481,146 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cards",
-		"/F/Love2D Project/loveTCG/cards/daramek",
-		"/F/Love2D Project/loveTCG/cards/endazu",
-		"/F/Love2D Project/loveTCG/cards/endazu/incantations",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero",
-		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity",
-		"/F/Love2D Project/loveTCG/cls"
+		"/G/love2dproj/loveTCG",
+		"/G/love2dproj/loveTCG/cards/daramek",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations",
+		"/G/love2dproj/loveTCG/cls",
+		"/G/love2dproj/loveTCG/res"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/loveTCG/cards/metris/hero/theodox.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/hero/gretta.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/hero/birondelle.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/hero/loquori.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/hero/valdorian.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/charlatan.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/cutpurse.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/tavernwench.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/coordinate.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/vintner.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/apothecary.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/bodyguard.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/assassin.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/lackey.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/informent.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/brute.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/burglary.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/stolenplans.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/misinformation.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/ramsack.lua",
-		"/C/Users/Alexar/Desktop/screenshot/system.txt",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/impersonate.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/roberry.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/sabotage.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/surveillance.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/embezzle.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/reconnaissance.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/forgery.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/coin/metriscoin.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/stratagem.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/infiltrate.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/cleverplanning.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/consolidate.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/murder/barrelbomb.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/murder/satchelbomb.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/murder/wagonbomb.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/subterfuge.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/seduce.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/undermine.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/hero/esra.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/frame.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/goldpanner.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/overseer.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ceremonialdance.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofbrood.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofcambat.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofpassage.lua",
-		"/C/Users/Alexar/Downloads/debugWorldDraw.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/scavengers.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/orphangang.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/lerpers.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/carnage.lua",
-		"/F/Love2D Project/war of omens/loadCards.lua",
-		"/C/Users/Alexar/Desktop/xml/cards.txt",
-		"/F/Love2D Project/war of omens/abilities.lua",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/bloodlust.lua",
-		"/F/Love2D Project/loveTCG/cls/play.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/festival.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/repopulate.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/culltheherd.lua",
-		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/fertilityoffering.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/feast.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofgoats.lua",
-		"/F/Love2D Project/loveTCG/cls/library.lua",
-		"/F/Love2D Project/loveTCG/cls/deck.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/warrats.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/ratointment.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/goatpoultice.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofboars.lua",
-		"/F/Love2D Project/loveTCG/cls/game.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofaurochs.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/colossalaurochs.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/aurochselixir.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/boarunguent.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/direboar.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/goatoutrider.lua",
-		"/C/Users/Alexar/Desktop/screenshot/新建文本文档.txt",
-		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofrats.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/marshall.lua",
-		"/F/ss/pac.txt",
-		"/F/Love2D Project/loveTCG/lib/delay.lua",
-		"/F/Love2D Project/loveTCG/cls/result.lua",
-		"/F/Love2D Project/loveTCG/cls/effect.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/malediction.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/madamaline.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/harvest.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/sofocatro.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/ysadora.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/liturgy.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/power/spynetwork.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/tithe.lua",
-		"/C/Users/Alexar/Desktop/新建文本文档.txt",
-		"/F/Love2D Project/loveTCG/scenes/builder_scene.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/captainviatrix.lua",
-		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
-		"/F/Love2D Project/loveTCG/include.lua",
-		"/F/Love2D Project/loveTCG/main.lua",
-		"/F/Love2D Project/loveTCG/cls/turn.lua",
-		"/C/Users/Alexar/Desktop/game/cls/game.lua",
-		"/C/Users/Alexar/Desktop/love编译工具/compile.lua",
-		"/F/更鸟工作站/MyGame/新建工程/Game.lua",
-		"/F/更鸟工作站/MyGame/新建工程/bak/2016-7-22/Game.lua",
-		"/F/更鸟工作站/Plugins/3500常用字.txt",
-		"/F/Love2D Project/loveTCG/cls/bank.lua",
-		"/F/Love2D Project/loveTCG/cls/pocket.lua",
-		"/F/Love2D Project/loveTCG/cls/starter.lua",
-		"/F/Love2D Project/loveTCG/cls/hand.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/sibyllinescrolls.lua",
-		"/F/Love2D Project/loveTCG/cls/info.lua",
-		"/F/Love2D Project/loveTCG/cardLibs/test.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/cardinalpocci.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/hero/regentmarsh.lua",
-		"/F/Love2D Project/loveTCG/conf.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/coin/vespitolecoin.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/miracle.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/militia.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/mercenary.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/soldier.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/knight.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/rampart.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/leadofcharge.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/warship.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/palisade.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/war/ballista.lua"
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/poemofblight.lua",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/beholdtheveil.lua",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/wordofunmaking.lua",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/cantillation.lua",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/haltingrebuke.lua",
+		"/G/love2dproj/loveTCG/cards/metris/conspiracy/curryfavor.lua",
+		"/G/love2dproj/loveTCG/cards/metris/conspiracy/deceit.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/barrelbomb.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/satchelbomb.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/wagonbomb.lua",
+		"/G/love2dproj/loveTCG/cards/metris/conspiracy/misdirect.lua",
+		"/G/love2dproj/loveTCG/cards/metris/conspiracy/consolidate.lua",
+		"/G/love2dproj/loveTCG/cls/game.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/ambush.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/belledonna.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/coupdegrace.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/arson.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/hemlock.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/arsenic.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/mayhem.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/infighting.lua",
+		"/G/love2dproj/loveTCG/cards/metris/murder/waylay.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/liet.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/esra.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/mogesh.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/tazin.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/orom.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/sacrificiallamb.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/scrivener.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/shepherd.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/cards/daramek/slaves/sacrificiallamb.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/hero/babarus.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/coin/vespitolecoin.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/coin/deramekcoin.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/boarfetish.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/sacredtortoise.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/shrineofrebirth.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/herdingstones.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/sacrificialdais.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/bloodlust.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/shepherdsgift.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/serpentaltar.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/idols/Shepherdsgift.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/riteofbrood.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/riteofcambat.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/ceremonialdance.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/riteofpassage.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/stampede.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/lerpers.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/starvingmob.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/slaves/ratcatcher.lua",
+		"/G/love2dproj/loveTCG/cls/effect.lua",
+		"/G/love2dproj/loveTCG/cls/shop.lua",
+		"/G/love2dproj/loveTCG/cls/info.lua",
+		"/G/love2dproj/loveTCG/lib/firework.lua",
+		"/G/love2dproj/loveTCG/cls/result.lua",
+		"/G/love2dproj/loveTCG/main.lua",
+		"/G/love2dproj/loveTCG/cls/menu.lua",
+		"/G/love2dproj/loveTCG/scenes/result_scene.lua",
+		"/G/love2dproj/loveTCG/cls/button.lua",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/G/love2dproj/loveTCG/scenes/game_scene.lua",
+		"/G/love2dproj/loveTCG/res/assets/cardbackgold.png",
+		"/G/love2dproj/loveTCG/cls/show.lua",
+		"/G/love2dproj/loveTCG/cls/bg.lua",
+		"/G/love2dproj/loveTCG/cls/card.lua",
+		"/G/love2dproj/loveTCG/scenes/shopSCENE.lua",
+		"/G/love2dproj/loveTCG/cardLibs/skirmishLib.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/prosperity/vintner.lua",
+		"/G/love2dproj/loveTCG/cls/turn.lua",
+		"/G/love2dproj/loveTCG/cardLibs/default.lua",
+		"/G/love2dproj/loveTCG/cls/builder.lua",
+		"/G/love2dproj/loveTCG/cls/text.lua",
+		"/G/love2dproj/loveTCG/cls/starter.lua",
+		"/G/love2dproj/loveTCG/cls/collection.lua",
+		"/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
+		"/G/love2dproj/loveTCG/cards/vespitole/prosperity/wealthypatron.lua",
+		"/E/NARUTO SHIPPUDEN Ultimate Ninja STORM 4/火影忍者究极风暴4.xpadderprofile",
+		"/G/love2dproj/loveTCG/cls/play.lua",
+		"/G/love2dproj/loveTCG/cls/deck.lua",
+		"/G/love2dproj/loveTCG/scenes/test.lua",
+		"/G/love2dproj/loveTCG/lib/util.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sofocatro.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/cardinalpocchi.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sisterYsadora.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/regentmarsh.lua",
+		"/G/love2dproj/loveTCG/cls/library.lua",
+		"/G/love2dproj/loveTCG/cls/bank.lua",
+		"/G/love2dproj/loveTCG/cls/grave.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/coin.lua",
+		"/G/love2dproj/loveTCG/cls/scenes/test.lua",
+		"/G/defold/branches/28979/17281/home/main/control/camera.script",
+		"/G/love2dproj/loveTCG/cards/vespitole/wealthypatron.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/madamaline.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/supplicant.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/leadofcharge.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/marshal.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/sibylinescrolls.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/synod.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/vintner.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/merchantsguild.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/tithe.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/militia.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/mercenary.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/palisade.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/catapult.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/rampart.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/soldier.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/knight.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/warship.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/ballista.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/malediction.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bishop.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/holywrath.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/liturgy.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/inquisitor.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/banker.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bounty.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/bureaucrat.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/collecttaxes.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/corruption.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/courtesan.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/courtlyintrigue.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/embargo.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/fief.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/harvest.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/loan.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/masqueradeball.lua"
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -597,64 +635,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"weak",
-			"forgery",
-			"coordi",
-			"charge",
-			"ondying",
-			"delay",
-			"cardplaycount",
-			"sacrif",
-			"Fertility Offering ",
-			"kill",
-			"draw",
-			"weakest",
-			"reset",
-			"kill",
-			"refill",
-			"lose",
-			"delay",
-			"back",
-			"gold",
-			"choose",
-			"returncard",
-			"print",
-			"save",
-			"self",
-			"print",
-			"data",
-			"make",
-			"frag",
-			"builder",
+			"feedall",
+			"userturn",
+			"game over",
 			"shop",
-			"mar",
-			"wealth",
-			"button",
-			"card",
-			"font",
-			"self.selected",
-			"font",
-			"menu",
-			"buttons",
-			"scene",
-			"builder",
-			"button",
-			"selector",
-			"born",
-			"collection",
-			"selector",
-			"selecto",
-			"born",
+			"starter",
+			"effect(",
+			"effect",
+			"turnb",
+			"killcard",
+			"print",
 			"game",
-			"goback",
-			"self.parent.",
-			"goback",
+			"race",
+			"lost",
 			"deck",
-			"money",
-			"bank",
-			"deck",
-			"born",
 			"hand",
+			"game",
+			"size",
+			"deck",
+			"discrip",
 			"cancel",
 			"%platform%",
 			"v",
@@ -724,7 +723,46 @@
 			"reset",
 			"ab.actionMove",
 			"actionMove",
-			"attackcan"
+			"attackcan",
+			"lower",
+			"hp=100",
+			"#weakest==1",
+			":",
+			"：",
+			"cardplay",
+			"getRnd",
+			"size",
+			"insertd",
+			"reset",
+			"print",
+			"test",
+			"cards",
+			"print",
+			"card[i]",
+			"v[i]",
+			"mark",
+			"\"持续\"",
+			"lua",
+			"drawcard",
+			"print",
+			"losemoney",
+			"frame.heroDraw",
+			"draw3",
+			"a.draw3",
+			"draw3",
+			"reset",
+			":",
+			"belongTo",
+			"frame.me",
+			"frame.self",
+			",\"onPlay\",a.reUse",
+			"print",
+			"card",
+			"print",
+			"moveto",
+			":",
+			"print",
+			"upper"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -732,25 +770,19 @@
 		"regex": false,
 		"replace_history":
 		[
-			"strongest",
-			"firework",
-			"result",
-			"progress",
+			"userside",
 			"info",
-			"ui",
-			"starter",
-			"textInput",
-			"text",
-			"menu",
-			"pocket",
-			"collection",
-			"builder",
-			"self.",
-			"grave",
-			"gold",
-			"hero",
-			"library",
-			"bank",
+			"shop",
+			"Effect(self,",
+			"self",
+			"faction",
+			"lose",
+			"show",
+			"play",
+			"self",
+			"scale",
+			"hand",
+			"descrip",
 			"shield",
 			"d3d",
 			"https://draihvow2bzoy.cloudfront.net/static/img",
@@ -832,7 +864,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -841,75 +873,139 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26189,
+						"buffer_size": 27513,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								20356,
-								20368
+								6241,
+								6241
 							]
 						],
 						"settings":
 						{
+							"is_init_dirty_state": true,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 19276.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "cards/endazu/incantations/beholdtheveil.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 674,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								653,
-								653
-							]
-						],
-						"settings":
-						{
-							"auto_name": "beholdtheveil.lua",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 198.0,
+						"translation.y": 6636.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "cls/card.lua",
+					"buffer": 1,
+					"file": "cards/endazu/incantations/banishinggust.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10062,
+						"buffer_size": 717,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1824,
-								1824
+								373,
+								373
+							]
+						],
+						"settings":
+						{
+							"auto_name": "banishinggust.lua",
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "cards/endazu/incantations/odashirsecho.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 851,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								823,
+								823
+							]
+						],
+						"settings":
+						{
+							"auto_name": "odashirsecho.lua",
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 216.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "cards/endazu/incantations/summoningrift.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 905,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								883,
+								883
+							]
+						],
+						"settings":
+						{
+							"auto_name": "summoningrift.lua",
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 216.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "cls/card.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9937,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								633,
+								633
 							]
 						],
 						"settings":
@@ -919,10 +1015,103 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1518.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "cards/endazu/incantations/wordofunmaking.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 724,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								374,
+								374
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "cards/endazu/incantations/whisperedbarbs.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 601,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								601,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "whisperedbarbs.lua",
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "cards/endazu/incantations/songofspring.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 599,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								599
+							]
+						],
+						"settings":
+						{
+							"auto_name": "songofspring.lua",
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -961,7 +1150,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 175.0
+		"height": 125.0
 	},
 	"output.find_results":
 	{
@@ -971,7 +1160,7 @@
 	"project": "tcg.sublime-project",
 	"replace":
 	{
-		"height": 70.0
+		"height": 74.0
 	},
 	"save_all_on_build": true,
 	"select_file":

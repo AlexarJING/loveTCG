@@ -297,7 +297,11 @@ function game:optionsCards(cards,to)
 		return	
 	end
 	self.show.tag = "option"
-	self.show.lastPlace = cards[1].current
+	self.show.lastPlace = {}
+	for i,v in ipairs(cards) do
+		self.show.lastPlace[v] = v.current
+	end
+
 	for i,card in ipairs(cards) do
 		self:transferCard(card,card.current,self.show)
 	end
@@ -322,7 +326,7 @@ function game:chooseCard(card)
 				end		
 			end
 		else
-			self:transferCard(v,v.current,self.show.lastPlace)
+			self:transferCard(v,v.current,self.show.lastPlace[v])
 		end
 	end
 	return true
@@ -777,6 +781,55 @@ function game:killCard(card,passResort)
 	end
 end
 
+function game:destroyCard(card,passResort)
+	if card.ability.onKilled then 
+		if card.ability.onKilled(card,self) then --directly kill
+			self:transferCard(card ,card.current, card.born.grave,_,passResort)
+			return
+		end
+	end
+
+	for i,v in ipairs(self.my.play.cards) do
+		if v.ability.onKillCard and v.ability.onKillCard(v,self,card) then	
+			return
+		end
+	end
+	
+	
+	if card.ability.onDestoryed then
+		if card.ability.onDestoryed(card,self) then
+			self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+			return
+		end
+	end
+
+	for i,v in ipairs(self.my.play.cards) do
+		if v.ability.onDestroyCard then
+			if v.ability.onDestroyCard(v,self,card) then
+				self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+				return
+			end
+		end
+	end
+
+	local check = self.my.hero.card.ability.onDestroyCard
+	if check then
+		if check(self.my.hero.card,self,card) then
+			self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+		end
+	end
+
+	for i,v in ipairs(self.my.play.cards) do
+		if v.instead then
+			self:transferCard(card ,card.current, card.born.deck ,_,passResort)
+			self:killCard(v)
+			return
+		end
+	end
+	self:transferCard(card ,card.current, card.born.grave,_,passResort)
+	
+end
+
 function game:goback(card)
 
 	if card.back then
@@ -1087,8 +1140,10 @@ end
 
 function game:chargeCard(card)
 	card.charge = card.charge+1
+	card:updateCanvas()
 	if card.charge >= card.chargeMax then
 		card.ability.onFullCharge(card,self)
+		card.charge = card.chargeMax
 	end
 end
 
