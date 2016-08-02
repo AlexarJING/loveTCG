@@ -9,6 +9,7 @@ local data = {
 	back = true,
 	chargeInit = 0,
 	chargeMax = 3,
+	charging = true
 }
 
 data.description = {
@@ -22,18 +23,18 @@ data.ability={
 	onHold = function (card,game)
 		game:chargeCard(card)
 	end,
+	onFullCharge = function(card,game)
+		card.charging = false
+	end,
 	onPlay = function (card,game)
-		local candidate = {}
-		for i,v in ipairs(game.my.play.cards) do
-			table.insert(candidate,v)
-		end
-		for i,v in ipairs(game.your.play.cards) do
-			table.insert(candidate,v)
-		end
-		for i,v in ipairs(candidate) do
-			local copy = game:copyCard(v)
+		game.my.needTarget = true
+		game.my.selectTarget = function(game,target)
+			if target.current == game.my.deck or target.current == game.your.deck then return end
+			local copy = game:copyCard(target)
+			copy:reset()
 			copy.born = game.my
 			game:transferCard(copy,copy.current,game.my.hand)
+			return true
 		end
 	end,
 }

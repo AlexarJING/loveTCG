@@ -24,7 +24,7 @@ data.ability={
 	end,
 	onPlay = function (card,game)
 		for i= 1, card.charge do
-			--game:attack(card,nil,true)
+			game:summon("argorethflower")
 		end
 	end,
 }

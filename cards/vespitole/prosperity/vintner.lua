@@ -14,7 +14,6 @@ local data = {
 	last = true,
 	canFeedGold = true,
 	back = true,
-	charge =0
 }
 
 data.description = {
@@ -30,18 +29,12 @@ data.ability={
 		game:gain(card,"my","food") 
 	end,
 	onFeed = function(card,game)
-		card.charge = card.charge + 1
-		card:updateCanvas()
-		if card.charge >= 2 then
-			card.ability.onFullCharge(card,game)
+		if game:feedCard(card) then
+			game:gain(card,"my","food") 
+		else
+			game:gain(card,"my","gold") 
 		end
 	end,
-
-	onFullCharge = function(card,game)
-		game:gain(card,"my","food") 
-		card.charge = 0
-		card:updateCanvas()
-	end
 }
 
 return data

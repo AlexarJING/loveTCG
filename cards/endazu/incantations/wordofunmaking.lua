@@ -9,26 +9,32 @@ local data = {
 	back = true,
 	chargeInit = 0,
 	chargeMax = 3,
+	charging = true,
+	last =true
 }
 
 data.description = {
 	"0/3 charge",
  	"On hold: +1 charge",
  	"On play and full charge",
- 	"Summon Argoreth Flower ",
+ 	"Destroy any card ",
 }
 
 data.ability={
 	onHold = function (card,game)
 		game:chargeCard(card)
 	end,
+	onFullCharge = function(card,game)
+		card.charging = false
+	end,
 	onPlay = function (card,game)
-		if card.charge<chargeMax then return end
-		for i,v in ipairs(game.my.play.cards) do
-			game:destroyCard(v)
-		end
-		for i,v in ipairs(game.your.play.cards) do
-			game:destroyCard(v)
+		game.my.needTarget = true
+		game.my.selectTarget = function(game,target)
+			if target.current == game.my.deck or target.current == game.your.deck then return end
+			if target == card then return end
+			game:killCard(target)
+			game:killCard(card)
+			return true
 		end
 	end,
 }

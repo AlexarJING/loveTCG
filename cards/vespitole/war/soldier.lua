@@ -7,7 +7,7 @@ local data = {
 	profile = {"Some were born to craft songs, and some to craft prayers. Some were born to craft fine works of art. I was born to craft death, and your army will be my masterpiece. –Brynne Galli"},
 	basePrice = 10,
 	hp = 3,
-	block = true,
+	intercept = true,
 	last = true,
 	back = true,
 }

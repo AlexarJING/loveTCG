@@ -7,7 +7,7 @@ local data = {
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
 	basePrice = 4,
 	intercept = true,
-	shield = 2,
+	charge = 2,
 }
 
 data.description = {

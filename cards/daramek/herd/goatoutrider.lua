@@ -9,7 +9,7 @@ local data = {
 	hp = 3,
 	last = true,
 	back = true,
-	block = true,
+	intercepts = true,
 	dodgeRate = 0.5
 }
 

@@ -6,8 +6,8 @@ local data = {
 	rare = 2 ,
 	profile = {"A Mercenary is an Alchemist. He heats cold iron with hot blood, and from that crucible he pours gold. –Duchessa Cyneswith"},
 	basePrice = 5,
-	shield = 2,
-	block = true,
+	charge = 2,
+	intercept = true,
 	last = true,
 	back = true,
 }

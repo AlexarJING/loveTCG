@@ -7,7 +7,7 @@ local data = {
 	profile = {" have spent more time in armor than most have spent awake. My skin is metal, my legs: a horse, and my arm a vengeful sword, honed on bones of weaker men. –Sir Mathias"},
 	basePrice = 12,
 	hp = 4,
-	block = true,
+	intercept = true,
 	last = true,
 	back = true,
 }

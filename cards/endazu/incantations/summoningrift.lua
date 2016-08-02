@@ -22,6 +22,7 @@ data.ability={
 	onHold = function (card,game)
 		game:chargeCard(card)
 	end,
+
 	onPlay = function (card,game)
 		local candidate = {}
 		local lib = game.cardData.index

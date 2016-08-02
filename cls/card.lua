@@ -5,6 +5,7 @@ local Height = 312
 local img_hp = love.graphics.newImage("res/others/hp.png")
 local img_shield = love.graphics.newImage("res/others/shield.png")
 local img_wait  = love.graphics.newImage("res/others/wait.png")
+local img_charge = love.graphics.newImage("res/others/charge.png")
 local rare_1 = love.graphics.newImage("res/others/rare-1.png")
 local rare_2 = love.graphics.newImage("res/others/rare-2.png")
 local rare_3 = love.graphics.newImage("res/others/rare-3.png")
@@ -44,18 +45,30 @@ function card:init(game,data,born,current,state)
 	if state then card:setState(state) end
 end
 
+function card:getSide()
+	if self.current == self.game.up.play then return self.game.up end
+	if self.current == self.game.down.play then return self.game.down end
+end
+
 function card:setState(state)
 	self.hp = state.hp
 	self.last = state.last
-	self.shield = state.shield
+	self.charge = state.charge
+	self.timer = state.timer
 	self:updateCanvas()
 end
+
 
 
 function card:reset()
 	self.hp = self.data.hp
 	self.last = self.data.last
-	self.shield = self.data.shield
+	if not self.memory then
+		self.charge = self.data.chargeInit or self.data.charge
+	end
+	self.charging = self.data.charging
+	self.awaken = self.data.awaken
+	self.timer = self.data.timer
 	self:updateCanvas()
 end
 
@@ -64,8 +77,14 @@ function card:initProperty(data)
 	for k,v in pairs(data) do
 		self[k]=v
 	end
-	self.hp_max = self.hp
-	self.shield_max = self.shield
+
+	self.hp = self.data.hp
+	self.hp_max = self.data.hp
+	self.last = self.data.last
+	self.charge = self.data.chargeInit or self.data.charge
+	self.charging = self.data.charging
+	self.timer = self.data.timer
+
 	self.level = self.level or 1
 	if self.level then
 		self.price = self.basePrice and self.basePrice - self.level + 1
@@ -186,8 +205,15 @@ end
 
 
 function card:draw(color)
-	love.graphics.setColor(255, 255, 255, self.alpha)
+	if self.awaken == false then
+		love.graphics.setColor(100, 100, 100, self.alpha)
+	else
+		love.graphics.setColor(255, 255, 255, self.alpha)
+		
+	end
+	
 	if color then love.graphics.setColor(color) end
+
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
 		love.graphics.draw(self.back, self.x+self.offx, self.y+self.offy, self.rz,
 		 self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
@@ -305,15 +331,16 @@ function card:updateCanvas()
 	end
 
 	--shield
-	if self.shield then
-		love.graphics.setColor(100, 100, 100, 255)
-		for i =1 , self.shield_max do
-			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)
-		end
+	if self.charge and self.intercept then
 		love.graphics.setColor(255,255,255,255)
-		for i =1 , self.shield do
-			love.graphics.draw(img_shield,100 - self.shield_max*17 - (i-1)*17 , 285)
-		end
+		love.graphics.setFont(font_content)
+		love.graphics.draw(img_shield, 80, 283)
+		love.graphics.printf("x"..tostring(self.charge), 100, 283, Width, "left")
+	elseif self.charge then
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.setFont(font_content)
+		love.graphics.draw(img_charge, 80, 283)
+		love.graphics.printf("x"..tostring(self.charge), 100, 283, Width, "left")
 	end
 
 
@@ -325,6 +352,13 @@ function card:updateCanvas()
 		love.graphics.draw(img_wait, 80, 283)
 		love.graphics.printf("x"..tostring(self.last), 100, 283, Width, "left")
 	end
+
+	if self.timer then
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.setFont(font_content)
+		love.graphics.draw(img_wait, 80, 283)
+		love.graphics.printf("x"..tostring(self.timer), 100, 283, Width, "left")
+	end	
 
 	love.graphics.setCanvas()
 

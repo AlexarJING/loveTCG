@@ -7,7 +7,7 @@ local data = {
 	profile = {"You have us until harvest, and not a day after. –Johannas Freeman"},
 	basePrice = 5,
 	hp = 1,
-	block = true,
+	intercept = true,
 	last = true,
 	back = true,
 }

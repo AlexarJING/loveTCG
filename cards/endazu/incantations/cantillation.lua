@@ -15,7 +15,7 @@ data.description = {
 	"1/20 charge",
  	"On hold: +1 charge",
  	"On play: for each charge",
- 	"+ charge to random insciption",
+ 	"+ charge to random inscription",
 }
 
 data.ability={
@@ -23,7 +23,9 @@ data.ability={
 		game:chargeCard(card)
 	end,
 	onPlay = function (card,game)
-		--
+		for i = 1, card.charge do
+			game:chargeCard("random","inscription")
+		end
 	end,
 }
 

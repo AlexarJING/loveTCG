@@ -56,9 +56,9 @@ function game:init(userdata,foedata)
 	}
 
 	self.up.turnDrawCount = 3
-	self.up.turnDrawMax = 4
+	self.up.handsize = 4
 	self.down.turnDrawCount = 3
-	self.down.turnDrawMax = 4
+	self.down.handsize = 4
 
 
 	self.userdata = userdata
@@ -134,6 +134,11 @@ function game:draw()
 	for i,v in ipairs(self.effects) do
 		v:draw()
 	end
+
+	if game.my.needTarget or game.your.needTarget then
+		love.graphics.setFont(game.font_content)
+		love.graphics.printf("select a target", -300, -50, 600, "center")
+	end
 end
 
 
@@ -169,17 +174,21 @@ function game:turnStart()
 	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
 
 	for i,card in ipairs(self.my.play.cards) do
-		if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+		if card.ability.onTurnStart then 
+			if not (card.undead and card.hp ==0) then ---undead
+				card.ability.onTurnStart(card,self)
+			end 
+		end
 	end
 
 	for i,card in ipairs(self.my.play.cards) do
-		if card.last and type(card.last) == "number" then
-			card.last = card.last - 1
-			card:updateCanvas()
-			if card.last<1 then
+		if card.timer then 
+			card.timer = card.timer - 1
+			if card.timer<1 then
+				card.ability:onTimeUp(card,self)
 				self:killCard(card)
 			end
-		end
+		end 
 	end
 
 end
@@ -219,19 +228,43 @@ function game:turnEnd()
 	else
 
 		for i = 1, self.my.turnDrawCount do
-			if #self.my.hand.cards== self.my.turnDrawMax then break end
+			if #self.my.hand.cards== self.my.handsize then break end
 			self:drawCard()
 		end
 		self:refillCard()
 	end
 	
+	for i,card in ipairs(self.my.play.cards) do
+		if card.last and type(card.last) == "number" then
+			card.last = card.last - 1
+			card:updateCanvas()
+			if card.last<1 then
+				self:killCard(card)
+			end
+		end
+	end
+
+	
 	self:turnStart()
+end
+
+function game:activateCard(card)
+	if card.ability.onTurnStart then 
+		if not (card.undead and card.hp ==0) then ---undead
+			card.ability.onTurnStart(card,self)
+		end 
+	end
 end
 
 
 function game:clickCard()
 	if self.my~=self.userside then return end
 	local current = self.hoverCard.current
+	
+	if self.my.needTarget then
+		if self.my.targetSelect(self,self.hoverCard) then self.my.needTarget= false end
+	end
+
 	local useall
 	if love.keyboard.isDown("lshift") then
 		useall = true
@@ -447,6 +480,9 @@ end
 
 function game:playCard(card)
 	card = card or self.hoverCard
+
+	if card.charging then return end
+
 	self.cardPlayCount = self.cardPlayCount + 1
 	self.lastPlayed = card
 
@@ -516,8 +552,11 @@ function game:buyCard(card)
 			card.ability.onBuy(card,self)
 		end
 
-		self:playCard(card)
-		
+		if card.ability.onHold then
+			self:transferCard(card,card.current,self.my.hand)
+		else
+			self:playCard(card)
+		end
 		return true
 	end
 
@@ -643,10 +682,49 @@ function game:feedCardGold(card)
 	if self.my.hero.card.ability.onFeedAlly then 
 		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
 	end
+	return true
 end
+
+function game:feedCardMagic(card)
+	if self.my.resource.magic <1 then return end
+	if card.awaken == false then
+		card.awaken = true
+		card.ability.onAwake(card,self)
+	end
+	self:lose(self.my.hero.card,"my","gold")
+	if card.ability.onFeed then card.ability.onFeed(card,self) end
+	
+	for i,v in ipairs(self.my.play.cards) do
+		v.ability.onFeedAlly(v,self) 
+	end
+
+	if self.my.hero.card.ability.onFeedAlly then 
+		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
+	end
+end
+
+function game:feedCardLife(card)
+	if self.my.resource.hp <1 then return end
+	self:lose(self.my.hero.card,"my","hp")
+	self:healCard(card)
+	if card.ability.onFeed then card.ability.onFeed(card,self) end
+	
+	for i,v in ipairs(self.my.play.cards) do
+		v.ability.onFeedAlly(v,self) 
+	end
+
+	if self.my.hero.card.ability.onFeedAlly then 
+		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
+	end
+	return true
+end
+
 
 function game:feedCard(card)
 	if card.canFeedGold then return self:feedCardGold(card) end
+	if card.canFeedMagic then return self:feedCardMagic(card) end
+	if card.canFeedLife then return self:feedCardLife(card) end
+
 	if self.my.resource.food <1 and self.my.resource.magic < 1 then return end
 	card = card or self.hoverCard
 	if not card.hp and not card.isHero then return end
@@ -678,11 +756,35 @@ function game:feedCard(card)
 	return true
 end
 
+
+
+
 function game:healCard(card)
 	if card.isHero then
 		self.my.resource.hp = self.my.resource.hp + 1
-	else
+	elseif card then
 		if not card.hp then return end
+		card.hp = card.hp + 1
+		if card.hp>card.hp_max then card.hp = card.hp_max end
+	else
+
+		local lowest 
+		local value = 100
+		for i,v in ipairs(self.my.play.cards) do
+			if v.hp and v.hp_max-v.hp>0 and v.hp<value then 
+				lowest = {v}
+				value = v.hp
+			elseif v.hp and v.hp_max-v.hp>0 and v.hp==value then 
+				table.insert(lowest,v)
+			end
+		end
+
+		if not lowest then 
+			self.my.resource.hp = self.my.resource.hp + 1
+			return 
+		end
+
+		local card = table.random(lowest)
 		card.hp = card.hp + 1
 		if card.hp>card.hp_max then card.hp = card.hp_max end
 	end
@@ -711,26 +813,62 @@ function game:attackCard(card)
 end
 
 function game:damageCard(card)
-	if card.shield and card.shield>0 then
-		card.shield = card.shield - 1
+	if card.charge and card.charge>0 then
+		card.charge = card.charge - 1
 	else
 		card.hp = card.hp - 1
 	end
 	card:updateCanvas()
 	if card.hp then
-		if card.hp < 1 then 
+		if card.hp < 1 and not card.undead then 
+			card.hp = 0
 			if card.onDying then 
 				return card.onDying(card,self)
 			end
 			return "death"
 		end
 	else
-		if card.shield < 1 then return "death" end
+		if card.charge < 1 then return "death" end
 	end
 
 end
 
 function game:killCard(card,passResort)
+	if card.current == self.my.bank or card.current == self.your.bank then 
+		self:transferCard(card ,card.current, card.born.grave,_,passResort) 
+	end
+
+	if card.current == self.my.hand or card.current == self.your.hand then 
+		self:transferCard(card ,card.current, card.born.grave,_,passResort) 
+	end
+--------------------------------------------------
+	
+	if card:getSide() == self.my then 
+		for i,v in ipairs(self.my.play.cards) do
+			if v.ability.onAllyDie then
+				v.ability.onAllyDie(v,self,card)
+			end
+		end
+		for i,v in ipairs(self.my.play.cards) do
+			if v.ability.onFoeDie then
+				v.ability.onFoeDie(v,self,card)
+			end
+		end
+	else
+		for i,v in ipairs(self.my.play.cards) do
+			if v.ability.onFoeDie then
+				v.ability.onFoeDie(v,self,card)
+			end
+		end
+		for i,v in ipairs(self.my.play.cards) do
+			if v.ability.onAllyDie then
+				v.ability.onAllyDie(v,self,card)
+			end
+		end
+	end
+	
+
+
 	if card.ability.onKilled then 
 		if card.ability.onKilled(card,self) then --directly kill
 			self:transferCard(card ,card.current, card.born.grave,_,passResort)
@@ -841,8 +979,28 @@ end
 
 function game:attack(from,to,ignore)
 	if not from then from = self.my.hero.card end
+	local my,your
+	if from.current == self.my.play then 
+		my = self.my
+		your = self.your
+	else
+		my = self.your
+		your = self.my
+	end
 
-	local yourCards = self.your.play.cards
+	if to == "self" then
+		local tmp = your
+		your = my
+		my = tmp
+	end
+
+	local yourCards = your.play.cards
+
+	for i,card in ipairs(yourCards) do
+		if card.ability.onAnyAttack then
+			card.ability.onAnyAttack(card,self,from)
+		end
+	end
 
 	for i,card in ipairs(yourCards) do
 		if card.cancel and card.cancel>0 then
@@ -860,7 +1018,7 @@ function game:attack(from,to,ignore)
 	else
 		local candidate={}
 		for i,card in ipairs(yourCards) do
-			if card.block and not ignore then
+			if card.intercept and not ignore then
 				table.insert(candidate, card)
 			end
 		end
@@ -875,21 +1033,26 @@ function game:attack(from,to,ignore)
 
 				local weakest
 				local weakest_hp = 10
-				for i,v in ipairs(self.my.play.cards) do
-					if v.hp and not v.cannotScrificed and v.hp<weakest_hp then
+				for i,v in ipairs(my.play.cards) do
+					if v.hp and v.hp<weakest_hp then
 						weakest = {v}
 						weakest_hp = v.hp
-					elseif v.hp and not v.cannotScrificed and v.hp== weakest then
+					elseif v.hp and v.hp== weakest_hp then
 						table.insert(weakest,v)
 					end
 				end
-				if not weakest then return end
-				target = weakest[love.math.random(#weakest)]
+				
+				if weakest then
+					target = weakest[love.math.random(#weakest)]
+				else
+					target = your.hero.card
+				end
+				
 			elseif to == "hero" then
-				target = self.your.hero.card
+				target = your.hero.card
 			else
 				for i,v in ipairs(yourCards) do
-					if v.hp or v.shield then
+					if v.hp or v.charge then
 						table.insert(candidate, v)
 					end
 				end
@@ -906,8 +1069,23 @@ function game:attack(from,to,ignore)
 			from:standout()
 
 		else -- for blockers
-			table.sort( candidate, function(a,b) return a.hp>b.hp end)
-			target = candidate[1]
+			local strongest
+			local strongest_value = 0
+			for i,v in ipairs(my.play.cards) do
+				if (v.hp and v.hp>strongest_value) or (v.charge and v.charge>strongest_value) then
+					strongest = {v}
+					strongest_value = v.hp
+				elseif (v.hp and v.hp== strongest_value) or (v.charge and v.charge == strongest_value) then
+					table.insert(strongest,v)
+				end
+			end
+			
+			if strongest then
+				target = table.random(strongest)
+			else
+				error("check intercept")
+			end
+
 			if to then
 				effect = Effect(self,"attack",to,target,false,0.5,"inBack",true)
 				local nextFunc = function()
@@ -929,8 +1107,8 @@ function game:attack(from,to,ignore)
 			end
 		end
 
-		if from == self.my.hero.card then
-			for i,v in ipairs(self.my.play.cards) do
+		if from == my.hero.card then
+			for i,v in ipairs(my.play.cards) do
 				if v.ability.onHeroAttack then
 					v.ability.onHeroAttack(v,game)
 				end
@@ -942,7 +1120,7 @@ function game:attack(from,to,ignore)
 			return
 		end
 
-		local foe = {self.your.hero.card,unpack(self.your.play.cards)}
+		local foe = {your.hero.card,unpack(your.play.cards)}
 		for i,v in ipairs(foe) do
 			if v.ability.onFoeAttack then
 				local t = v.ability.onFoeAttack(v,self,target)
@@ -960,15 +1138,15 @@ function game:attack(from,to,ignore)
 			effect:addCallback(function() target:vibrate(_,_,
 				function()
 					--self:goback(target)
-					self.your.deck:resort()
-					self.your.play:resort()
+					your.deck:resort()
+					your.play:resort()
 				end) end)
 			self:killCard(target,true)
 		elseif result == "toHand" then
 			self:transferCard(target ,target.current, target.my.hand ,_,true)
 			effect:addCallback(function() target:vibrate(_,_,
 				function()
-					self.my.hand:resort()
+					my.hand:resort()
 				end)
 			end)
 		else
@@ -980,15 +1158,29 @@ end
 
 
 function game:attackHero(from)
-	target = self.your.hero.card
-	self.your.resource.hp = self.your.resource.hp -1
-	local effect = Effect(self,"attack",from,self.your.hero,false,1,"inBack" )
+	local my,your
+	if from.current == self.my.play then 
+		my = self.my
+		your = self.your
+	else
+		my = self.your
+		your = self.my
+	end
+
+	target = your.hero.card
+	your.resource.hp = your.resource.hp -1
+	local effect = Effect(self,"attack",from,your.hero,false,1,"inBack" )
 	effect:addCallback(function() target:vibrate() end)
 	effect:addCallback(
 		function() 
-			self.your.hero:updateResource()
-			if self.your.resource.hp < 1 then
-				if game.userside == self.your then
+			your.hero:updateResource()
+			if your.resource.hp < 1 then
+				for i,v in ipairs(your.play.cards) do
+					if v.ability.onHeroAttacked then
+						v.ability.onHeroAttacked(v,self,from)
+					end
+				end
+				if game.userside == your then
 					self:loser()
 				else
 					self:winner()
@@ -1138,13 +1330,61 @@ function game:copyCard(card)
 	return Card(self,card.data,card.born,card.current)
 end
 
-function game:chargeCard(card)
+function game:chargeCard(card,cond)
+	if not card.charge then return end
+	if card == "random" then
+		local candidate = {}
+		for i,v in ipairs(self.my.play.cards) do
+			if cond and v.category == cond then
+				table.insert(candidate)
+			elseif not cond then
+				table.insert(candidate)
+			end
+		end
+		for i,v in ipairs(self.my.hand.cards) do
+			if cond and v.category == cond then
+				table.insert(candidate)
+			elseif not cond then
+				table.insert(candidate)
+			end
+		end
+		return	self:chargeCard(table.random(candidate))
+	elseif card =="all" then
+		for i,v in ipairs(self.my.play.cards) do
+			self:chargeCard(v)
+		end
+		for i,v in ipairs(self.my.hand.cards) do
+			self:chargeCard(v)
+		end
+		return
+	end
+
 	card.charge = card.charge+1
 	card:updateCanvas()
 	if card.charge >= card.chargeMax then
 		card.ability.onFullCharge(card,self)
 		card.charge = card.chargeMax
 	end
+end
+
+function game:dischargeCard(card)
+	card.charge = card.charge-1
+	card:updateCanvas()
+	if card.charge <= 0 then
+		card.charge = 0
+		if card.awaken == nil then
+			self:killCard(card)
+		elseif card.awaken ==true then
+			card.awaken = false
+			card.ability.onSleep(card,self) 
+		end
+	end
+end
+
+function game:summon(id)
+	local data = game.cardData.short[id]
+	local c = game.my.library:makeCard(data)
+	game:transferCard(c,c.current,game.my.play)
 end
 
 function game:AI(dt)
