@@ -1,13 +1,13 @@
 local data = {
-	id = "birondelle",
-	name = "Birondelle",
-	faction= "metris",
+	id = "raktabaan",
+	name = "Raktaba'an",
+	faction= "endazu",
 
 	profile = {"no money, you can do nothing!"},
 
 	isHero = true,
-	rare = 4,
-	hp = 30 
+	rare = 2,
+	hp = 30
 }
 
 data.description = {
@@ -16,11 +16,10 @@ data.description = {
 }
 
 data.ability={
-	--onCardBuy(hero,game,card)
 
-	onCardBuy= function (card,game,target)
-		if love.math.random()<0.15 then
-			game:refill("your")
+	onCardPlay= function (card,game,target)
+		if target.category == "incantations" then
+			game:gain(target,"my","magic")
 		end
 	end
 }

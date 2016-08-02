@@ -45,14 +45,12 @@ function game:init(userdata,foedata)
 		food = 0,
 		magic = 0,
 		skull = 0,
-		hp = 30
 	}
 	self.down.resource={
 		gold = 100,
 		food = 0,
 		magic =0,
 		skull = 0,
-		hp = 30
 	}
 
 	self.up.turnDrawCount = 3
@@ -165,15 +163,26 @@ function game:gameStart()
 end
 
 
+function game:ally()
+	return {self.my.hero.card,unpack(self.my.play.cards)}
+end
+
+function game:foe()
+	return {self.your.hero.card,unpack(self.your.play.cards)}
+end
+
 function game:turnStart()
 	self.turnCount = self.turnCount + 1
 	
-	
+	local ally = self:ally()	
 
-	local card = self.my.hero.card
-	if card.ability.onTurnStart then card.ability.onTurnStart(card,self) end
+	for i,card in ipairs(ally) do
+		if card.ability.onTurnPre then 	
+			card.ability.onTurnPre(card,self)
+		end
+	end
 
-	for i,card in ipairs(self.my.play.cards) do
+	for i,card in ipairs(ally) do
 		if card.ability.onTurnStart then 
 			if not (card.undead and card.hp ==0) then ---undead
 				card.ability.onTurnStart(card,self)
@@ -181,7 +190,7 @@ function game:turnStart()
 		end
 	end
 
-	for i,card in ipairs(self.my.play.cards) do
+	for i,card in ipairs(ally) do
 		if card.timer then 
 			card.timer = card.timer - 1
 			if card.timer<1 then
@@ -195,6 +204,8 @@ end
 
 function game:turnEnd()
 
+	local ally = self:ally()
+
 	if #self.show.cards==1 then
 		self:returnCard(self.show.cards[1])
 	elseif #self.show.cards>1 then
@@ -203,14 +214,13 @@ function game:turnEnd()
 
 
 
-	for i,card in ipairs(self.my.play.cards) do
+	for i,card in ipairs(ally) do
 		if card.onTurnEnd then card.onTurnEnd(card,self) end
 	end
 
-	local combo 
-	for i,v in ipairs(self.my.play.cards) do
+
+	for i,v in ipairs(ally) do
 		if v.combo and self.comboCount<3 then
-			combo = true
 			self.comboCount = self.comboCount + 1
 			self:killCard(v)
 			self:turnStart()
@@ -226,7 +236,6 @@ function game:turnEnd()
 	if self.my.hero.ability.onDrawHand then
 		self.my.hero.ability.onDrawHand(self)
 	else
-
 		for i = 1, self.my.turnDrawCount do
 			if #self.my.hand.cards== self.my.handsize then break end
 			self:drawCard()
@@ -234,8 +243,8 @@ function game:turnEnd()
 		self:refillCard()
 	end
 	
-	for i,card in ipairs(self.my.play.cards) do
-		if card.last and type(card.last) == "number" then
+	for i,card in ipairs(ally) do
+		if type(card.last) == "number" then
 			card.last = card.last - 1
 			card:updateCanvas()
 			if card.last<1 then
@@ -748,10 +757,10 @@ function game:feedCard(card)
 
 	if card.ability.onFeed then card.ability.onFeed(card,self) end
 	if self.my.hero.card.ability.onFeedAlly then 
-		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self) 
+		self.my.hero.card.ability.onFeedAlly(self.my.hero.card,self,card) 
 	end
 	for i,v in ipairs(self.my.play.cards) do
-		v.ability.onFeedAlly(v,self) 
+		v.ability.onFeedAlly(v,self,card) 
 	end
 	return true
 end

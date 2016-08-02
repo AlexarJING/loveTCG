@@ -7,6 +7,7 @@ local data = {
 
 	isHero = true,
 	rare = 4,
+	hp = 30
 }
 
 data.description = {

@@ -5,6 +5,7 @@ local data = {
 	profile = {"no money, you can do nothing!"},
 	isHero = true,
 	rare = 3,
+	hp = 30
 }
 
 data.description = {
