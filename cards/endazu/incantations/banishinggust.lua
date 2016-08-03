@@ -1,5 +1,5 @@
 local data = {
-	id = "banishinggust",
+	id = "sandstorm",
 	name = "Banishing Gust",
 	faction = "endazu",
 	category = "incantations",

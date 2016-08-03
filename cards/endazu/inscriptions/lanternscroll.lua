@@ -1,5 +1,5 @@
 local data = {
-	id = "laternscroll",
+	id = "writofrecovery",
 	name = "Latern Scroll",
 	faction = "endazu",
 	category = "inscriptions",

@@ -28,6 +28,7 @@ function collection:init(parent)
 
 
 	self.cards={}
+	
 	for faction,tab in pairs(self.userdata.cards) do	
 		self.cards[faction]={}
 		for category, d in pairs(tab) do

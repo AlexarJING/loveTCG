@@ -1,6 +1,6 @@
 
 local data = {
-	id = "shrineofrebirth",
+	id = "bloodbog",
 	name = "Shrine of Rebirth",
 	faction = "daramek",
 	category = "idols",

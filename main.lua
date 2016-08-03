@@ -1,4 +1,6 @@
 require "include"
+
+
 function love.load()
     gameState={}
     for _,name in ipairs(love.filesystem.getDirectoryItems("scenes")) do

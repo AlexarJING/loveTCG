@@ -1,5 +1,5 @@
 local data = {
-	id = "boarunguent",
+	id = "pigunguent",
 	name = "Boar Unguent",
 	faction = "daramek",
 	category = "herd",

@@ -1,5 +1,5 @@
 local data = {
-	id = "gildedwarriors",
+	id = "gildedwarrior",
 	name = "Gilded Warriors",
 	faction = "endazu",
 	category = "anima",

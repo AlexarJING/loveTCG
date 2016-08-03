@@ -1,6 +1,6 @@
 local data = {
-	id = "belledonna",
-	name = "Belledonna",
+	id = "belladonna",
+	name = "Belladonna",
 	faction = "metris",
 	category = "murder",
 	rare = 2 ,

@@ -40,5 +40,7 @@ function scene:mousepressed(x,y,key)
 end
 
 function scene:leave()
+	self.builder.collection.cards=nil
+	collectgarbage("collect")
 end
 return scene

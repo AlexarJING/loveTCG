@@ -1,5 +1,5 @@
 local data = {
-	id = "riteofpassage",
+	id = "riteofkin",
 	name = "Rite of Passage",
 	faction = "daramek",
 	category = "rituals",

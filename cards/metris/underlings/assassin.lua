@@ -1,6 +1,6 @@
 local data = {
-	id = "assasin",
-	name = "Assasin",
+	id = "assassin",
+	name = "Assassin",
 	faction = "metris",
 	category = "underlings",
 	rare = 3 ,

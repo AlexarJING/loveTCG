@@ -21,7 +21,6 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 		for i,id in ipairs(lfs.getDirectoryItems("cards/"..faction.."/"..category)) do
 			local id = string.sub(id,1,-5)
 			local d = require ("cards/"..faction.."/"..category.."/"..id)
-
 			data[faction][category][id] = d
 			data.short[id] = d
 			index=index+1

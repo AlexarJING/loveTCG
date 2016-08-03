@@ -28,9 +28,8 @@ function scene:update(dt)
 end 
 
 function scene:keypressed(key)
-	if key == "space" then
-		game.turnButton:endturn()
-	end
+	game:keypress(key)
+	
 end
 
 function scene:mousepressed(x,y,key)

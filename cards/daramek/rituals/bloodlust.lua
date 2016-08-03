@@ -1,5 +1,5 @@
 local data = {
-	id = "bloodlust",
+	id = "riteofbattle",
 	name = "Bloodlust",
 	faction = "daramek",
 	category = "rituals",

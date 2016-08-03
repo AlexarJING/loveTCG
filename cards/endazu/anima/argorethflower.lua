@@ -1,5 +1,5 @@
 local data = {
-	id = "argorethflower",
+	id = "argorathflower", --argorathflower
 	name = "Argoreth Flower",
 	faction = "endazu",
 	category = "anima",

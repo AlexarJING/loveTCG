@@ -1,5 +1,5 @@
 local data = {
-	id = "shepherdsgift",
+	id = "shepherdmonument",
 	name = "Shepherd's Gift",
 	faction = "daramek",
 	category = "idols",

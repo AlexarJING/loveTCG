@@ -7,23 +7,7 @@ img.magic = love.graphics.newImage("res/others/magic.png")
 img.attack = love.graphics.newImage("res/others/skull.png")
 img.shield = love.graphics.newImage("res/assets/shield.png")
 
---[[
-img.attack = love.graphics.newParticleSystem(love.graphics.newImage("res/others/skull.png"), 64)
-local p = img.attack
-p:setParticleLifetime(0.1, 1) 
-p:setEmissionRate(32)
-p:setSizeVariation(1)
-p:setSizes(1,0.5)
-p:setLinearAcceleration(-200, -200, 200, 200)
-p:setColors(255, 255, 255, 255, 255, 255, 255, 0) 
 
-img.shield = love.graphics.newParticleSystem(love.graphics.newImage("res/assets/shield.png"), 64)
-local p = img.shield
-p:setParticleLifetime(1, 2) 
-p:setEmissionRate(10)
-p:setSizeVariation(1)
-p:setSizes(1,1.3)
-p:setColors(255, 255, 0, 200, 255, 255, 0, 0) ]]
 
 function effect:init(parent,tag,from,to,fading,during,easing,manual)
 	self.parent = parent
@@ -32,22 +16,35 @@ function effect:init(parent,tag,from,to,fading,during,easing,manual)
 	end
 	self.tag = tag
 	self.img = img[tag]
+	self.w = self.img:getWidth()
+	self.h = self.img:getHeight()
 	self.x = from.x
 	self.y = from.y
+
+	self.mx =  (love.math.random()-0.5)*30 + self.x / 2 
+	self.my = (love.math.random()-0.5)*30 + self.y / 2
 	self.alpha = 255
-	self.tween = Tween.new(during, self, {x=to.x,y=to.y,alpha = fading and 0 or 255}, easing or "inBack")
+
 	self.shadow = {}
 	self.callbacks = {}
-	self.tween.callback = function() 
-		table.removeItem(game.effects,self)
-		for i,v in ipairs(self.callbacks) do
-			v()
-		end
-	end
+	
 	self.shadowCount = 5
 	for i = 1, self.shadowCount do
 		self.shadow[i]={x=self.x,y=self.y}
 	end
+	
+	self.tween = Tween.new(during/2, self, {x=self.mx,y=self.my}, easing or "inBack")
+	self.tween.callback = function()
+		self.tween = Tween.new(during/2, self, {x=to.x,y=to.y,alpha = fading and 0 or 255}, easing or "inBack")
+		self.tween.callback = function() 
+			table.removeItem(parent.effects,self)
+			for i,v in ipairs(self.callbacks) do
+				v()
+			end
+		end
+	end
+
+	
 end
 
 function effect:setCallback(func)
@@ -60,16 +57,6 @@ end
 
 function effect:update(dt)
 	self.tween:update(dt)
-	--[[
-	if self.tag =="attack" or self.tag == "shield" then 
-		self.img:update(dt) 
-	else
-		self.shadow[1].x = self.x ; self.shadow[1].y = self.y
-		for i= self.shadowCount,2,-1 do
-			self.shadow[i].x = self.shadow[i-1].x
-			self.shadow[i].y = self.shadow[i-1].y
-		end
-	end]]
 
 	self.shadow[1].x = self.x ; self.shadow[1].y = self.y
 	for i= self.shadowCount,2,-1 do
@@ -80,16 +67,11 @@ end
 
 
 function effect:draw()
-	if self.tag == "shield" then 
-		love.graphics.setColor(255, 255, 255, 255)
-		love.graphics.draw(self.img,self.x-70,self.y-100)
-	else
-		for i,v in ipairs(self.shadow) do
-			love.graphics.setColor(255, 255, 255, self.alpha/i)
-			love.graphics.draw(self.img, v.x,v.y)
-		end
+
+	for i,v in ipairs(self.shadow) do
+		love.graphics.setColor(255, 255, 255, self.alpha/i)
+		love.graphics.draw(self.img, v.x,v.y,0,1,1,self.w/2,self.h/2)
 	end
-	
 	
 end
 

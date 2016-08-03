@@ -20,15 +20,20 @@ function hero:init(game,root)
         self.y = 280      
     end
 
-    self.resource ={}
-    
+
 end
 
 
 function hero:setHero(data)
 	local d = self.game.cardData[data.faction].hero[data.hero]
     self.card =  Card(self.game,d,self.root,self)
-    self:updateResource()
+    
+    self.card.hp = self.card.hp or 30
+    self.card.food = self.card.food or 0
+    self.card.magic = self.card.magic or 0
+    self.card.skull = self.card.skull or 0
+    self.card.gold = self.card.gold or 0
+
 end
 
 
@@ -38,11 +43,6 @@ function hero:update(dt)
     end
 end
 
-function hero:updateResource()
-    for k,v in pairs(self.parent.resource) do
-        self.resource[k] = v
-    end
-end
 
 function hero:draw()
     if self.card then
@@ -56,22 +56,22 @@ function hero:draw()
     	love.graphics.draw(img_magic, self.x-170,self.y)
     	love.graphics.draw(img_skull, self.x-170,self.y+30)
         love.graphics.draw(img_heart, self.x-170,self.y+60)
-    	love.graphics.print(" x "..self.resource.gold , self.x-150,self.y-65)
-		love.graphics.print(" x "..self.resource.food , self.x-150,self.y-35)
-		love.graphics.print(" x "..self.resource.magic , self.x-150,self.y-5)
-		love.graphics.print(" x "..self.resource.skull , self.x-150,self.y+25)
-        love.graphics.print(" x "..self.resource.hp , self.x -150,self.y+55)
+    	love.graphics.print(" x "..self.card.gold , self.x-150,self.y-65)
+		love.graphics.print(" x "..self.card.food , self.x-150,self.y-35)
+		love.graphics.print(" x "..self.card.magic , self.x-150,self.y-5)
+		love.graphics.print(" x "..self.card.skull , self.x-150,self.y+25)
+        love.graphics.print(" x "..self.card.hp , self.x -150,self.y+55)
     else
     	love.graphics.draw(img_gold, self.x+70,self.y-60)
-    	love.graphics.print(" x "..self.resource.gold , self.x+90,self.y-65)
+    	love.graphics.print(" x "..self.card.gold , self.x+90,self.y-65)
     	love.graphics.draw(img_food, self.x+70,self.y-30)
-    	love.graphics.print(" x "..self.resource.food , self.x+90,self.y-35)
+    	love.graphics.print(" x "..self.card.food , self.x+90,self.y-35)
     	love.graphics.draw(img_magic, self.x+70,self.y)
-    	love.graphics.print(" x "..self.resource.magic , self.x+90,self.y-5)
+    	love.graphics.print(" x "..self.card.magic , self.x+90,self.y-5)
     	love.graphics.draw(img_skull, self.x+70,self.y+30)
-    	love.graphics.print(" x "..self.resource.skull , self.x+90,self.y+25)
+    	love.graphics.print(" x "..self.card.skull , self.x+90,self.y+25)
         love.graphics.draw(img_heart, self.x+70,self.y+60)
-        love.graphics.print(" x "..self.resource.hp , self.x +90,self.y+55)
+        love.graphics.print(" x "..self.card.hp , self.x +90,self.y+55)
     end
 end
 

@@ -1,6 +1,6 @@
 local data = {
-	id = "informent",
-	name = "Informent",
+	id = "informant",
+	name = "Informant",
 	faction = "metris",
 	category = "underlings",
 	rare = 2 ,
@@ -15,6 +15,7 @@ data.description = {
 	"On turn: Draw from foe",
 	"50%: destroy when killed ",
 }
+
 
 data.ability={
 	onBuy = function (card,game) 

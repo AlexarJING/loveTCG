@@ -1,5 +1,5 @@
 local data = {
-	id = "embezzle",
+	id = "embezzlement",
 	name = "Embezzle",
 	faction = "metris",
 	category = "espionage",

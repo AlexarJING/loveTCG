@@ -1,5 +1,5 @@
 local data = {
-	id = "esra",
+	id = "ezra",
 	name = "Esra",
 	faction= "daramek",
 	profile = {"no money, you can do nothing!"},

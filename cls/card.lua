@@ -27,8 +27,11 @@ local img_frame = {
 
 
 local cardImage = {}
-local font_title = love.graphics.newFont(30)
-local font_content = love.graphics.newFont(20)
+local font_title = love.graphics.newFont(20)
+local font_content = love.graphics.newFont(18)
+
+local btw = img_back.normal:getWidth()
+local bth = img_back.normal:getHeight()
 
 
 function card:init(game,data,born,current,state)
@@ -39,7 +42,7 @@ function card:init(game,data,born,current,state)
 	self:initProperty(data)
 	self:initImage()
 	self:updateCanvas()
-	self:initBack()
+	--self:initBack()
 	self.tweens={}
 	self.tweenStack = {}
 	if state then card:setState(state) end
@@ -82,6 +85,8 @@ function card:initProperty(data)
 	self.hp_max = self.data.hp
 	self.last = self.data.last
 	self.charge = self.data.chargeInit or self.data.charge
+	self.chargeMax = self.data.chargeMax
+
 	self.charging = self.data.charging
 	self.timer = self.data.timer
 
@@ -106,15 +111,7 @@ function card:initProperty(data)
 end
 
 local textHeight = 150
-function card:initBack()
-	local tw = self.cardback:getWidth()
-	local th = self.cardback:getHeight()
-	self.back = love.graphics.newCanvas(Width,Height)
-	love.graphics.setCanvas(self.back)
-	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.draw(self.cardback, 0, 0, 0, Width/tw,Height/th)
-	love.graphics.setCanvas()
-end
+
 
 local count = 0
 
@@ -216,24 +213,22 @@ function card:draw(color)
 
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
 		love.graphics.draw(self.back, self.x+self.offx, self.y+self.offy, self.rz,
-		 self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
+		 self.scale*math.cos(self.ry)*Width/btw, -self.scale*math.cos(self.rx)*Height/bth, Width/2, Height/2)
 	else
+		love.graphics.push()
+		love.graphics.translate(self.x+self.offx-Width/2, self.y+self.offy-Height/2)
+		love.graphics.rotate(self.rz)
+		love.graphics.scale(self.scale*math.cos(self.ry)*Width/self.tw, self.scale*math.cos(self.rx)*Height/self.th)
+		self:drawCard()
+		love.graphics.pop()
+		--[[
 		love.graphics.draw(self.predraw, self.x+self.offx, self.y+self.offy, self.rz,
-		 self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
+		 self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)]]
 	end
 	
 end
 
-function card:needRedraw()
-	if self.hp == self.ohp and self.shield == self.oshield and self.last == self.olast then
-		return false
-	end
 
-	self.ohp = self.hp
-	self.shield = self.oshield
-	self.last = self.olast
-	return true
-end
 
 local mask_shader = love.graphics.newShader [[
    vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
@@ -245,6 +240,10 @@ local mask_shader = love.graphics.newShader [[
    }
 ]]
 
+function card:drawCard()
+
+
+end
 
 function card:updateCanvas()
 	love.graphics.setColor(255,255,255,255)
@@ -319,7 +318,7 @@ function card:updateCanvas()
 	
 
 	
-	if self.hp then
+	if self.hp and not self.isHero then
 		love.graphics.setColor(100, 100, 100, 255)
 		for i =1 , self.hp_max do
 			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)

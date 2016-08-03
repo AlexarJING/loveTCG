@@ -1,5 +1,5 @@
 local data = {
-	id = "curryfavor",
+	id = "curryfavors",
 	name = "Curry Favor",
 	faction = "metris",
 	category = "conspiracy",
