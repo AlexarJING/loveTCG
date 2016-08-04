@@ -1,5 +1,5 @@
 local data = {
-	id = "metriscoin",
+	id = "endazucoin",
 	name = "coin",
 	faction = "metris",
 	--category = "coin",

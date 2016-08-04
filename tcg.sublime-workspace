@@ -4,12 +4,16 @@
 		"selected_items":
 		[
 			[
-				"scal",
-				"love.graphics.scale"
+				"print",
+				"love.graphics.print"
 			],
 			[
 				"for",
-				"fori	for i,v in ipairs()"
+				"forp	for k,v in pairs()"
+			],
+			[
+				"scal",
+				"love.graphics.scale"
 			],
 			[
 				"colle",
@@ -18,10 +22,6 @@
 			[
 				"tab",
 				"table.sort	table.sort"
-			],
-			[
-				"print",
-				"love.graphics.printf"
 			],
 			[
 				"hover",
@@ -360,26 +360,43 @@
 	"buffers":
 	[
 		{
-			"file": "main.lua",
-			"settings":
-			{
-				"buffer_size": 288,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 27786,
+				"buffer_size": 28596,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cls/card.lua",
+			"file": "cls/deck.lua",
 			"settings":
 			{
-				"buffer_size": 10889,
+				"buffer_size": 1501,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cards/vespitole/faith/sibyllinescrolls.lua",
+			"settings":
+			{
+				"buffer_size": 713,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/cursor.lua",
+			"settings":
+			{
+				"buffer_size": 845,
+				"line_ending": "Windows",
+				"name": "cursor.lua"
+			}
+		},
+		{
+			"file": "cls/effect.lua",
+			"settings":
+			{
+				"buffer_size": 1914,
 				"line_ending": "Windows"
 			}
 		}
@@ -449,15 +466,44 @@
 	"expanded_folders":
 	[
 		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/cards/endazu/anima",
-		"/F/Love2D Project/loveTCG/cards/endazu/goetia",
-		"/F/Love2D Project/loveTCG/cards/endazu/incantations",
-		"/F/Love2D Project/loveTCG/cards/endazu/inscriptions",
+		"/F/Love2D Project/loveTCG/cards",
+		"/F/Love2D Project/loveTCG/cards/vespitole",
+		"/F/Love2D Project/loveTCG/cards/vespitole/coin",
+		"/F/Love2D Project/loveTCG/cards/vespitole/faith",
 		"/F/Love2D Project/loveTCG/cls"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/loveTCG/cards/vespitole/coin/vespitolecoin.lua",
+		"/F/Love2D Project/loveTCG/cls/turn.lua",
+		"/F/Love2D Project/loveTCG/cls/button.lua",
+		"/F/Love2D Project/loveTCG/cls/console.lua",
+		"/F/Love2D Project/loveTCG/scenes/game_scene.lua",
+		"/F/Love2D Project/space war/scr/game/message.lua",
 		"/F/Love2D Project/loveTCG/main.lua",
+		"/F/Love2D Project/loveTCG/cls/game.lua",
+		"/F/Love2D Project/loveTCG/lib/util.lua",
+		"/F/Love2D Project/loveTCG/cls/library.lua",
+		"/F/Love2D Project/loveTCG/cards/daramek/coin/deramekcoin.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/bantlingcrown.lua",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
+		"/F/Love2D Project/loveTCG/cls/debug.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/swindlersmark.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/championspaiza.lua",
+		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/incantations/summoningrift.lua",
+		"/F/Love2D Project/loveTCG/cards/metris/underlings/cutpurse.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/hero/madamaline.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/fecundcharm.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/ferrymanstoll.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/wishingcoin.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/crossandpile.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/serpentsseal.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/obolcornucopia.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/divinercharms.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/vicardoubloon.lua",
+		"/F/Love2D Project/loveTCG/cards/coins/foolsgeld.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/coin/endazucoin.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/inscriptions/papervipers.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/inscriptions/lanternscroll.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/anima/gildedwarriors.lua",
@@ -468,7 +514,6 @@
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/poemofblight.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/whisperedbarbs.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/banishinggust.lua",
-		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofpassage.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/slaves/lepers.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/herdofaurochs.lua",
@@ -479,7 +524,6 @@
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/direboar.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/goatoutrider.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/herd/colossalaurochs.lua",
-		"/F/Love2D Project/loveTCG/cls/game.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/murder/hemlock.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/assassin.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/informant.lua",
@@ -491,12 +535,10 @@
 		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ceremonialdance.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/rituals/carnage.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/rituals/bloodlust.lua",
-		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cls/collection.lua",
 		"/F/Love2D Project/loveTCG/scenes/builder_scene.lua",
 		"/C/Users/Alexar/Desktop/screenshot/system.txt",
 		"/F/Love2D Project/loveTCG/cls/hero.lua",
-		"/F/Love2D Project/loveTCG/scenes/game_scene.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/curryfavor.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/murder/belladonna.lua",
 		"/F/Love2D Project/loveTCG/cls/effect.lua",
@@ -509,7 +551,6 @@
 		"/F/Love2D Project/loveTCG/cards/endazu/goetia/bishmog.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/prosperity/vintner.lua",
 		"/F/Love2D Project/loveTCG/cards/daramek/slaves/overseer.lua",
-		"/F/Love2D Project/loveTCG/cards/endazu/coin/endazucoin.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/inscriptions/gravecontract.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/songofspring.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/anima/underworldbarge.lua",
@@ -536,7 +577,6 @@
 		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/misdirect.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/murder/satchelbomb.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/inscriptions/wardingcircle.lua",
-		"/F/Love2D Project/loveTCG/cards/endazu/incantations/summoningrift.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/wordofunmaking.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/odashirsecho.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/incantations/beholdtheveil.lua",
@@ -546,7 +586,6 @@
 		"/F/Love2D Project/loveTCG/cards/metris/hero/loquori.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/hero/valdorian.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/charlatan.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/underlings/cutpurse.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/tavernwench.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/apothecary.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/bodyguard.lua",
@@ -562,29 +601,7 @@
 		"/F/Love2D Project/loveTCG/cards/metris/espionage/sabotage.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/espionage/reconnaissance.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/espionage/forgery.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/coin/metriscoin.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/stratagem.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/infiltrate.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/cleverplanning.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/consolidate.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/subterfuge.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/seduce.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/conspiracy/undermine.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/goldpanner.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofbrood.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/riteofcambat.lua",
-		"/C/Users/Alexar/Downloads/debugWorldDraw.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/scavengers.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/orphangang.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/slaves/lerpers.lua",
-		"/F/Love2D Project/war of omens/loadCards.lua",
-		"/C/Users/Alexar/Desktop/xml/cards.txt",
-		"/F/Love2D Project/war of omens/abilities.lua",
-		"/F/Love2D Project/loveTCG/cls/play.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/festival.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/repopulate.lua"
+		"/F/Love2D Project/loveTCG/cards/metris/coin/metriscoin.lua"
 	],
 	"find":
 	{
@@ -603,6 +620,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print",
+			"caret",
+			"font2",
+			"utf8",
+			"game",
+			"console",
+			"color",
+			"msg",
+			"language",
+			"console",
+			"print",
+			"table.copy",
+			"mousex",
+			"carddata",
+			"bank",
+			"cardback",
 			"initba",
 			"foedata",
 			"self.resource",
@@ -714,23 +747,7 @@
 			"frame.upper.hand.defautCardX",
 			"defaut",
 			"losernd",
-			"print",
-			"you",
-			"discard",
-			"lastch",
-			"onDie",
-			"discard",
-			"input",
-			"print",
-			"frame.you",
-			"herodw",
-			"where",
-			"attackweak",
-			"shield",
-			"refillba",
-			"sheph",
-			"sh",
-			"bank.refill"
+			"print"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -738,6 +755,14 @@
 		"regex": false,
 		"replace_history":
 		[
+			"font",
+			"string",
+			"self.parent",
+			"self",
+			"",
+			"self",
+			"console",
+			"debug",
 			"self.card",
 			"your",
 			"my",
@@ -843,24 +868,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "main.lua",
+					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 288,
+						"buffer_size": 28596,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18,
-								18
+								9464,
+								9464
 							]
 						],
 						"settings":
@@ -870,57 +895,117 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 9464.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "cls/deck.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1501,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								416,
+								416
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 66.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "cls/game.lua",
+					"buffer": 2,
+					"file": "cards/vespitole/faith/sibyllinescrolls.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 27786,
+						"buffer_size": 713,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								493,
-								493
+								618,
+								618
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "ASCII",
+							"origin_encoding": "UTF-8",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 198.0,
+						"translation.y": 66.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "cls/card.lua",
+					"buffer": 3,
+					"file": "cls/cursor.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10889,
+						"buffer_size": 845,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5717,
-								5717
+								813,
+								813
+							]
+						],
+						"settings":
+						{
+							"auto_name": "cursor.lua",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "cls/effect.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1914,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								871,
+								871
 							]
 						],
 						"settings":
@@ -930,10 +1015,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4314.0,
+						"translation.y": 1254.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

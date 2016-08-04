@@ -1,24 +1,27 @@
 local data = {
-	id = "vespitolecoin",
-	name = "coin",
-	faction = "vespitole",
+	id = "vicardoubloon",
+	name = "Vicar Doubloon",
+	faction = "coins",
 	--category = "coin",
-	rare = 0 ,
+	rare = "E" ,
 
 	profile = {"no money, you can do nothing!"},
 
 	back = true,
-
 	isCoin = true,
 }
 
 data.description = {
 	"play: +1 gold",
+	"20% change: +1 gold"
 }
 
 data.ability={
 	onPlay = function(card,game)
-		game:gain(card,"my","gold",1)
+		game:gain(card,"my","gold")
+		if love.math.random()<0.2 then
+			game:gain(card,"my","gold")
+		end
 	end,
 }
 

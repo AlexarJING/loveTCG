@@ -31,7 +31,7 @@ function button:update()
 		if self.onClick  and self.enable then self.onClick(self) end
 		self.down=false
 	end
-
+	return self.hover
 end
 
 function button:draw()

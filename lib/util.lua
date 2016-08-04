@@ -218,15 +218,13 @@ function string.split(str,keyword)
 	end
 end
 
-function table.copy(st,copyto,ifcopyfunction)
+function table.copy(st,copyto,passfunction)
 	copyto=copyto or {}
 	for k, v in pairs(st or {}) do
 		if type(v) == "table" then
-			copyto[k] = table.copy(v,copyto[k],ifcopyfunction)          
-		elseif type(v) == "function" then 
-			if ifcopyfunction then
-				copyto[k] = v
-			end
+			copyto[k] = table.copy(v,copyto[k],passfunction)          
+		elseif type(v) == "function" and not passfunction then 		
+			copyto[k] = v
 		else 
 			copyto[k] = v
 		end

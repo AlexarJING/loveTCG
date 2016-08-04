@@ -56,16 +56,13 @@ function library:init(game,root)
 
 end
 
-function library:makeCard(data)
-    return Card(self.game,data,self.root,self)
-end
 
 
 function library:setCards(data)
-    --local lib = data.lib
-    local lib = self.root=="down" and testlib or data.lib
+    local lib = data.lib
+    --local lib = self.root=="down" and testlib or data.lib
     for i,v in ipairs(lib) do
-        local d= table.copy(self.game.cardData.short[v.id],_,true)
+        local d= table.copy(self.game.cardData.short[v.id])
         d.level = v.level
         d.exp = v.exp
         table.insert(self.cards, d)

@@ -27,17 +27,17 @@ function scene:update(dt)
     game.rightClick = false
 end 
 
+function scene:textinput(t)
+	game:textinput(t)
+end
+
 function scene:keypressed(key)
-	game:keypress(key)
-	
+	game:keypress(key)	
 end
 
 function scene:mousepressed(x,y,key)
-	if key == 1 then
-		game.click = true
-	else 
-		game.rightClick = true
-	end
+	game:mousepressed(key)
+	
 end
 
 function scene:leave()

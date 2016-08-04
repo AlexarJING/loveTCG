@@ -32,21 +32,28 @@ function turn:update(dt)
 		self.orientation = - self.orientation
 		self.game:turnEnd()
 	end
-	self:checkMouse()
+	return self:checkMouse()
 end
 
-function turn:checkMouse()
-	if not  self.game.click then return end
-	if self.game.my ~= self.game.userside then return end
-
+function turn:checkHover()
 	local x , y = self.game.mousex , self.game.mousey
 
 	if x > self.x - self.d and x < self.x + self.d and
 		y > self.y - self.d and y < self.y + self.d then
+		return true
+	end
+end
+
+function turn:checkMouse()
+	self.hover = self:checkHover()
+
+	if self.hover and self.game.click and not (self.game.my ~= self.game.userside and self.game.aiToggle) then
 		self.timer = self.turntime
 		self.orientation = - self.orientation
 		self.game:turnEnd()
 	end
+
+	return self.hover
 end
 
 function turn:endturn()

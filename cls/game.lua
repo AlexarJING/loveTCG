@@ -14,44 +14,11 @@ local foeLibs={}
 foeLibs[1] = require("cardLibs/skirmishLib")
 
 
-local function getPos(self,index,level)
-	print(index)
-	local x = -500 + 50*(index%20)
-	local y = -300 + 70*math.floor(index/20)
-	return x ,y 
-end
+
 
 
 function game:init(userdata,foedata)
 	
-	self.cards ={}
-	local index =0
-	for faction,tab in pairs(self.cardData) do	
-		if faction == "short" or faction == "index" or faction == "rarity" then
-
-		else
-			self.cards[faction]={}
-			for category, d in pairs(tab) do
-				
-				self.cards[faction][category]={}
-				for id,data in pairs(d) do
-					self.cards[faction][category][id]={}
-					index = index + 1
-					for level = 1 , 1 do
-						local cd = table.copy(self.cardData.short[id])
-						cd.level = level
-						cd.exp = data.exp
-						local card =Card(self,cd,nil,self)
-						card.index = index
-						card.x,card.y = getPos(self,index,level)
-						self.cards[faction][category][id][level] = card
-					end
-						
-				end
-			end
-		end
-	end
-
 	self.bg = require "cls/bg"("table2d")
 	self.up = {}
 	self.down = {}
@@ -66,6 +33,13 @@ function game:init(userdata,foedata)
 	end
 	self.show = require "cls/show"(self)
 	self.turnButton = require "cls/turn"(self)
+	self.debug = require "cls/debug"(self)
+	self.console = require "cls/console"(self,-640,360,1280,300)
+	self.cursor = require "cls/cursor"(self)
+
+	self.console.cmd.endturn = function()
+		self:endturn()
+	end
 
 	self.aiLevel = 1
 	
@@ -99,6 +73,8 @@ function game:init(userdata,foedata)
 	self.up.resource=self.up.hero.card
 	self.down.resource=self.down.hero.card
 
+	self.aiToggle = true
+
 	self:gameStart()
 end
 
@@ -106,6 +82,8 @@ function game:update(dt)
 	delay:update(dt)
 	self.hoverCard = nil
 	
+	
+
 	if self.gameMode == "skirmish" and self.my ~= self.userside then
 		self:AI(dt)
 	end
@@ -119,18 +97,7 @@ function game:update(dt)
 		self[side].grave:update(dt)
 	end
 
-
-	for faction,tab in pairs(self.cards) do	
-		for category, tab in pairs(tab) do
-			for id ,tab in pairs(tab) do
-				for level, card in ipairs(tab) do
-					card:update(dt)
-				end		
-			end
-		end
-	end
-
-
+	self.debug:update(dt)
 	self.show:update(dt)
 
 	for i,e in ipairs(self.effects) do
@@ -138,15 +105,24 @@ function game:update(dt)
 	end
 
 	if self.hoverCard and self.click then
+		if self.hoverCard.current == self.debug then 
+			self.debug:click(self.hoverCard)
+			return 
+		end
 		self:clickCard()
 	end
 
 	if self.hoverCard and self.rightClick then
 		if self.my~=self.userside then return end
+		if self.hoverCard.current == self.debug then 
+			self.debug:rightClick(self.hoverCard)
+			return 
+		end
 		self:showCard(self.hoverCard)
 	end
 
-	self.turnButton:update(dt)
+	self.hover = self.turnButton:update(dt) or self.hoverCard
+	self.cursor:update(self.hover)
 end
 
 function game:draw()
@@ -164,15 +140,7 @@ function game:draw()
 		self[side].deck:draw()
 	end
 
-	for faction,tab in pairs(self.cards) do	
-		for category, tab in pairs(tab) do
-			for id ,tab in pairs(tab) do
-				for level, card in ipairs(tab) do
-					card:draw()
-				end		
-			end
-		end
-	end
+	self.debug:draw()
 
 	self.show:draw()
 
@@ -188,6 +156,20 @@ function game:draw()
 		love.graphics.setFont(self.font_content)
 		love.graphics.printf("select a target", -300, -50, 600, "center")
 	end
+
+	self.console:draw()
+
+	if self.aiToggle then 
+		love.graphics.setColor(0, 255, 0, 255)
+		love.graphics.setFont(self.font_content)
+		love.graphics.print("AI: on", -640,-320)
+	else
+		love.graphics.setColor(255, 0, 0, 255)
+		love.graphics.setFont(self.font_content)
+		love.graphics.print("AI: off", -640,-320)
+	end
+
+	self.cursor:draw()
 end
 
 
@@ -211,6 +193,10 @@ function game:gameStart()
 		self:drawCard("down")
 	end
 	self:turnStart()
+end
+
+function game:endturn()
+	self.turnButton:endturn()
 end
 
 
@@ -327,16 +313,41 @@ function game:activateCard(card)
 	end
 end
 
+function game:textinput(t)
+	self.console:textinput(t)
+end
+
 function game:keypress(key)
-	if self.my~=self.userside then return end
+	self.console:keypressed(key)
+	if self.keyLock then return end
+	if self.my~=self.userside and self.aiToggle then return end
 	if key == "space" then
 		self.turnButton:endturn()
+	elseif key == "f1" then
+		self.debug.enable = not self.debug.enable
+		self.my.hero.card.gold = 999
+		self.my.hero.card.food = 999
+		self.my.hero.card.magic = 999
+		self.my.hero.card.skull = 999
+	elseif key == "f2" then
+		self.console:toggle(not self.console.enable)
+	elseif key == "f3" then
+		self.aiToggle = not self.aiToggle
 	end
 end
 
+function game:mousepressed(key)
+	self.console:mousepressed(key)
+	if self.keyLock then return end
+	if key == 1 then
+		self.click = true
+	else 
+		self.rightClick = true
+	end
+end
 
 function game:clickCard()
-	if self.my~=self.userside then return end
+	if self.my~=self.userside and  self.aiToggle then return end
 
 	local current = self.hoverCard.current
 	local card = self.hoverCard
@@ -424,8 +435,8 @@ end
 function game:chooseCard(card)
 
 	self.show.tag = nil
-	
-	for i,v in ipairs(self.show.cards) do
+	local cards = {unpack(self.show.cards)}
+	for i,v in ipairs(cards) do
 		if v==card then
 			if self.show.onChoose then 
 				self.show.onChoose(card,self)
@@ -506,7 +517,10 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 			self:transferCard(card,to)
 			return v
 		end
-		
+	elseif type(id) == "table" then --id 为卡牌时 直接加入
+		id:reset()
+		self:transferCard(id,to)
+		return id
 	else --随机
 		if #self.my.deck.cards == 0 then return end
 		local card = table.random(self[whose].deck.cards)
@@ -529,10 +543,18 @@ function game:refillCard(whose,id,level)
 	end
 
 	local data
-	if type(id)=="string" then --名字
+	if id =="any" then
+		local target
+		repeat
+			target = lib[love.math.random(#lib)]
+		until not target.isHero
+		data = target
+	elseif type(id)=="string" then --名字
 		data = self.cardData.short[id]
 	elseif type(id) == "function" then --条件
 		data= id(self[whose].library.cards)
+	elseif type(id) == "table" then
+		data = table.copy(id)
 	else
 		data = table.random(self[whose].library.cards)
 	end
@@ -576,11 +598,13 @@ function game:playCard(card)
 		end
 	end
 
+
 	if card.ability.onPlay then card.ability.onPlay(card,self) end
 
 	if card.last or card.hp then
 		self:transferCard(card,self.my.play)
 	else
+
 		self:killCard(card)
 	end
 	
@@ -589,7 +613,7 @@ end
 
 function game:buyCard(card)
 
-	if self.my.resource.gold + self.my.resource.magic < card.price then  return end
+	if card.price and self.my.resource.gold + self.my.resource.magic < card.price then  return end
 
 	self.lastBought = card
 	
@@ -607,10 +631,11 @@ function game:buyCard(card)
 		end
 	end
 
-
-	for i = 1 , card.price do
-		if not self:lose(card,"my","gold") then 
-			self:lose(card,"my","magic") 
+	if card.price then
+		for i = 1 , card.price do
+			if not self:lose(card,"my","gold") then 
+				self:lose(card,"my","magic") 
+			end
 		end
 	end
 
@@ -631,6 +656,7 @@ end
 local res = {"gold","food","magic","skull"}
 
 function game:gain(card,who,what)
+
 	if what == "random" then 
 		what = table.random(res) 
 	end
@@ -650,7 +676,7 @@ function game:gain(card,who,what)
 	local res = self[who].resource
 	res[what] = res[what] + 1
 
-	local e = Effect(self,what,card,self.my.hero,false,1)
+	Effect(self,what,card,self.my.hero,false,1)
 	
 end
 
@@ -688,7 +714,6 @@ function game:feedCardAll()
 	if self.my.resource.food>0 then
 		for i = 1, self.my.resource.food do
 			delay:new(i*0.3,nil,self.feedCard,self)
-			--self:feedCard()
 		end
 	elseif self.my.resource.magic>0 then
 		for i = 1, self.my.resource.magic do
@@ -701,7 +726,6 @@ function game:attackCardAll(target)
 	if self.my.resource.skull>0 then
 		for i = 1, self.my.resource.skull do
 			delay:new(i*0.1,nil,self.attackCard,self,target)
-			--self:attackCard()
 		end
 	elseif self.my.resource.magic>0 then
 		for i = 1, self.my.resource.magic do
@@ -713,7 +737,7 @@ end
 
 
 
-function game:feedCard(card,all)
+function game:feedCard(card,all,what)
 	if all then
 		if self.my.resource.food>0 then
 			for i = 1, self.my.resource.food do
@@ -727,7 +751,7 @@ function game:feedCard(card,all)
 		return
 	end
 
-	local food = card.food or "food"
+	local food = (what or card.food) or "food"
 	local amount = card.feedAmount or 1
 	local resource = self.my.resource
 	
@@ -911,6 +935,11 @@ function game:killCard(card,passResort)
 
 	if card.current == self.my.hand or card.current == self.your.hand then 
 		self:transferCard(card , card.born.deck,_,passResort) 
+	end
+
+
+	if card.current == self.show then 
+		self:transferCard(card , self.my.deck,_,passResort) 
 	end
 --------------------------------------------------
 	
@@ -1277,6 +1306,9 @@ function game:summon(id)
 end
 
 function game:AI(dt)
+
+	if not self.aiToggle then return end
+
 	if self.aiEnd then return end
 	self.aiCD = self.aiCD - dt
 	if self.aiCD > 0 then return end
@@ -1289,7 +1321,7 @@ function game:AI(dt)
 	end
 
 	delay:new(2,nil,function() 
-		self.turnButton:endturn()
+		self:endturn()
 		self.aiCD = 0.5
 		self.aiEnd=false
 	end)

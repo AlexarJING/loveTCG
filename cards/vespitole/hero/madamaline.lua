@@ -19,12 +19,7 @@ data.ability={
 	
 	onTurnStart = function(card,game) 
 		if game.turnCount == 1 then
-			game:transferCard(game.my.hand.cards[1],game.my.hand,game.my.deck)
-			game:transferCard(game.my.hand.cards[1],game.my.hand,game.my.deck)
-			local data = table.copy(game.cardData.vespitrole.courtsan,{},true)
-			data.level = 3
-			game:transferCard(game.my.library:makeCard(data),game.my.library,game.my.hand)
-			game:transferCard(game.my.library:makeCard(data),game.my.library,game.my.hand)
+			game:summon("courtsan")
 		end
 	end,
 }

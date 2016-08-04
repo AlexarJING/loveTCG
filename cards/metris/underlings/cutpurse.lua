@@ -18,9 +18,9 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		if res then game:game(card,"my",res) end
-		local res = game:lose(card,"your","random")
-		if res then game:game(card,"my",res) end
+		if game:lose(card,"your","random") then
+			game:gain(card,"my",res) 
+		end
 	end,
 	--onFoeGain(card,self,who,what)
 	onFoeGain = function (card,game,who,what) 

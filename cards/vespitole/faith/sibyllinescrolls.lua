@@ -26,9 +26,8 @@ data.ability={
 		local cards = {unpack(game.my.deck.cards)}
 		for i = 1,3 do
 			if #cards==0 then break end
-			local index = love.math.random(#cards)
-			table.insert(candidate, cards[index])
-			table.remove(cards, index)
+			local c = table.pickRandom(cards)
+			table.insert(candidate, c)
 		end
 		if #candidate == 0 then return end
 		game:optionsCards(candidate)

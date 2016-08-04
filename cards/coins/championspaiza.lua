@@ -1,24 +1,27 @@
 local data = {
-	id = "vespitolecoin",
-	name = "coin",
-	faction = "vespitole",
+	id = "championspaiza",
+	name = "Champion's Paiza",
+	faction = "coins",
 	--category = "coin",
-	rare = 0 ,
+	rare = "E" ,
 
 	profile = {"no money, you can do nothing!"},
 
 	back = true,
-
 	isCoin = true,
 }
 
 data.description = {
 	"play: +1 gold",
+	"10% change: restock any card"
 }
 
 data.ability={
 	onPlay = function(card,game)
-		game:gain(card,"my","gold",1)
+		game:gain(card,"my","gold")
+		if love.math.random()<0.1 then
+			game:refillCard("my","any")
+		end
 	end,
 }
 

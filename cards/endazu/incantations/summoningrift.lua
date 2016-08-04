@@ -32,7 +32,7 @@ data.ability={
 			repeat
 				target = lib[love.math.random(#lib)]
 			until not target.isHero
-			local tCard = game.my.library:makeCard(target)
+			local tCard = game:makeCard(target)
 			tCard.born = game.my
 			tCard.current = game.my.grave
 			table.insert(candidate,tCard)

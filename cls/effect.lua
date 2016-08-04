@@ -10,6 +10,7 @@ img.shield = love.graphics.newImage("res/assets/shield.png")
 
 
 function effect:init(parent,tag,from,to,fading,during,easing,manual)
+	during = 0.5
 	self.parent = parent
 	if not manual then
 		table.insert(parent.effects, self)
@@ -21,8 +22,8 @@ function effect:init(parent,tag,from,to,fading,during,easing,manual)
 	self.x = from.x
 	self.y = from.y
 
-	self.mx =  (love.math.random()-0.5)*30 + self.x / 2 
-	self.my = (love.math.random()-0.5)*30 + self.y / 2
+	self.mx =  (love.math.random()-0.5)*100 + self.x / 1.2
+	self.my = (love.math.random()-0.5)*100 + self.y / 1.2
 	self.alpha = 255
 
 	self.shadow = {}
@@ -33,9 +34,9 @@ function effect:init(parent,tag,from,to,fading,during,easing,manual)
 		self.shadow[i]={x=self.x,y=self.y}
 	end
 	
-	self.tween = Tween.new(during/2, self, {x=self.mx,y=self.my}, easing or "inBack")
+	self.tween = Tween.new(during/2, self, {x=self.mx,y=self.my}, easing or "outQuad")
 	self.tween.callback = function()
-		self.tween = Tween.new(during/2, self, {x=to.x,y=to.y,alpha = fading and 0 or 255}, easing or "inBack")
+		self.tween = Tween.new(during/2, self, {x=to.x,y=to.y,alpha = fading and 0 or 255}, easing or "inQuad")
 		self.tween.callback = function() 
 			table.removeItem(parent.effects,self)
 			for i,v in ipairs(self.callbacks) do

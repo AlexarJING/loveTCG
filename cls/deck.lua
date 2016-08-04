@@ -19,12 +19,9 @@ function deck:init(game,root)
    
 end
 
-function deck:goback(card)
-    card:addAnimate(0.5,{y=self.y},"inBack")
-    card:addAnimate(0.5,{x=self.x,rz=0,rx=3.14,scale=self.scale},"outQuad")
-end
 
 function deck:resort()
+    
     for i,card in ipairs(self.cards) do
         card:setAnimate(0.5,{y=self.y},"inBack")
         card:setAnimate(0.5,{x=self.x,rz=0,rx=3.14,scale=self.scale},"outQuad")
