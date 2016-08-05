@@ -15,6 +15,7 @@ data.description = {
 
 data.ability={
 	onDrawHand = function (game)
+		if #self.my.hand.cards>= self.my.turnDrawMax then game:refillCard();return end
 		game:drawCard("my",function()
 			local candidate = {}
 			for i,v in ipairs(game.my.deck.cards) do
@@ -25,7 +26,7 @@ data.ability={
 		end)
 
 		for i = 1, self.my.turnDrawCount-1 do
-			if #self.my.hand.cards== self.my.turnDrawMax then break end
+			if #self.my.hand.cards>= self.my.turnDrawMax then break end
 			self:drawCard()
 		end
 		game:refillCard()

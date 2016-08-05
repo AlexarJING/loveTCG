@@ -12,7 +12,8 @@ local data = {
 	hp = 1,
 	block = false,
 	last = true,
-	canFeedGold = true,
+	food = "gold",
+	feedAmout = 2,
 	back = true,
 }
 

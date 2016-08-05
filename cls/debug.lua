@@ -26,19 +26,17 @@ function debug:init(game,root)
 			end
 		else
 			for category, d in pairs(tab) do
-				if category == "hero" or category == "coin" then
-				-------
-				else
-					for id,data in pairs(d) do
-						index = index + 1		
-						local cd = table.copy(game.cardData.short[id])
-						local card =Card(self,cd,nil,self)
-						card.current = self
-						card.x,card.y = getPos(self,index,level)
-						self.cards[index] = card					
-					end
-
+				
+				for id,data in pairs(d) do
+					index = index + 1		
+					local cd = table.copy(game.cardData.short[id])
+					local card =Card(self,cd,nil,self)
+					card.current = self
+					card.x,card.y = getPos(self,index,level)
+					self.cards[index] = card					
 				end
+
+				
 			end
 		end
 	end
@@ -47,13 +45,20 @@ function debug:init(game,root)
 end
 
 function debug:rightClick(card)
+	if card.isHero then return end
 	self.game:refillCard("my",card.data)
 	self.enable = false
 end
 
 function debug:click(card)
-	local copy = self.game:makeCard(card.data)
-	self.game:drawCard("my",copy)
+	
+	if card.isHero then
+		self.game.my.hero:setHero({faction=card.faction,hero = card.id})
+	else
+		local copy = self.game:makeCard(card.data)
+		self.game:drawCard("my",copy)
+	end
+	
 	self.enable = false
 end
 

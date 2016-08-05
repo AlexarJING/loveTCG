@@ -23,7 +23,7 @@ function builder:init()
 	self.pocket = Pocket(self)
 	self.menu = Menu(self)
 	self.info = Info(self)
-
+	self.cursor = require "cls/cursor"(self)
 	self.state = "menu"
 	self.coins = {}
 end
@@ -46,6 +46,7 @@ function builder:update(dt)
 		self.click = false
 		self.rightClick = false
 	end
+	self.cursor:update(self.hoverCard)
 end
 
 local hoverColor = {255, 0, 0, 255}
@@ -64,6 +65,7 @@ function builder:draw()
 		end
 	end
 	self.info:draw()
+	self.cursor:draw()
 end
 
 return builder

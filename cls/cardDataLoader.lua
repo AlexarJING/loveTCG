@@ -27,6 +27,7 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 			data.coins[id] = d
 			data.index[index] = d
 			data.short[id] = d
+			print(d.name)
 			table.insert(data.rarity[d.rare], d)
 		else
 			data[faction][category]={}
@@ -37,7 +38,7 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 				data.short[id] = d
 				index=index+1
 				data.index[index] = d
-
+				print(d.name)
 				table.insert(data.rarity[d.rare], d)
 			end	
 		end

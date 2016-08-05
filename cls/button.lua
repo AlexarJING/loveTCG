@@ -31,6 +31,7 @@ function button:update()
 		if self.onClick  and self.enable then self.onClick(self) end
 		self.down=false
 	end
+	if self.parent.cursor and self.hover then self.parent.cursor.hover = true end
 	return self.hover
 end
 

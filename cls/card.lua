@@ -47,8 +47,14 @@ function card:init(game,data,born,current,state)
 end
 
 function card:getSide()
-	if self.current == self.game.up.play then return self.game.up end
-	if self.current == self.game.down.play then return self.game.down end
+	local my = self.game.my
+	local your = self.game.your
+	if self.current == my.play or self.current == my.hero 
+		or self.current == my.bank or self.current == my.hand then
+		return my, your
+	else
+		return your,my
+	end
 end
 
 function card:setState(state)
@@ -99,9 +105,7 @@ function card:initProperty(data)
 	self.scale = self.current.scale or 0.5
 	self.w = Width
 	self.h = Height
-	self.vduration=0
-	self.offx=0
-	self.offy=0
+	self.magnitude = 0
 	self.alpha = 255
 	self.cardback = self.back and img_back[self.back] or img_back.normal
 end
@@ -156,7 +160,6 @@ end
 
 function card:update(dt)
 
-	self:vibrateUpdate(dt)
 
 	self:updateTweens(dt)
 	
@@ -166,17 +169,22 @@ function card:update(dt)
 end
 
 function card:updateTweens(dt)
+	local finish = true
 	for k,v in pairs(self.tweens) do
 		if v:update(dt) then
 			local tween = self.tweenStack[k] and self.tweenStack[k][1]
 			if tween then
+				finish = false
 				self.tweens[k] = tween
 				table.remove(self.tweenStack[k], 1)
 			else
 				self.tweens[k] = nil
 			end
+		else
+			finish = false
 		end
 	end
+	self.stopMoving = finish
 end
 
 function card:addAnimate(duration , target , easing , delay, callback)
@@ -214,26 +222,20 @@ function card:draw(color)
 	
 	if color then love.graphics.setColor(color) end
 
+	local offx = 2*(love.math.random()-0.5)*self.magnitude
+	local offy = 2*(love.math.random()-0.5)*self.magnitude
+
 	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then
-		love.graphics.draw(backCanvas, self.x+self.offx, self.y+self.offy, self.rz,
+		love.graphics.draw(backCanvas, self.x+offx, self.y+offy, self.rz,
 		 self.scale*math.cos(self.ry), -self.scale*math.cos(self.rx), Width/2, Height/2)
 	else
-		love.graphics.draw(self.predraw, self.x+self.offx, self.y+self.offy, self.rz,
+		love.graphics.draw(self.predraw, self.x+offx, self.y+offy, self.rz,
 		 self.scale*math.cos(self.ry), self.scale*math.cos(self.rx), Width/2, Height/2)
 	end
 	
 end
 
-function card:needRedraw()
-	if self.hp == self.ohp and self.shield == self.oshield and self.last == self.olast then
-		return false
-	end
 
-	self.ohp = self.hp
-	self.shield = self.oshield
-	self.last = self.olast
-	return true
-end
 
 local mask_shader = love.graphics.newShader [[
    vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
@@ -310,23 +312,25 @@ function card:updateCanvas()
 			love.graphics.draw(rare_3, 5,150)
 		elseif self.rare == 4 then
 			love.graphics.draw(rare_4, 5,150)
-		elseif self.rare == "hero" then
+		elseif self.rare == "H" then
 			love.graphics.draw(rare_h, 5,150)
+		elseif self.rare =="E" then
+			love.graphics.draw(rare_e, 5,150)
 		end
 	end
 
 
 	
-
+	--Width
 	
 	if self.hp and not self.isHero then
 		love.graphics.setColor(100, 100, 100, 255)
 		for i =1 , self.hp_max do
-			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, Width/2 - self.hp_max*10 + (i-1)*20, 285)
 		end
 		love.graphics.setColor(255,255,255,255)
 		for i =1 , self.hp do
-			love.graphics.draw(img_hp, 118 - self.hp_max*17 + (i-1)*17, 285)
+			love.graphics.draw(img_hp, Width/2 - self.hp_max*10 + (i-1)*20, 285)
 		end
 	end
 
@@ -366,24 +370,11 @@ end
 
 
 
-function card:vibrate(duration, magnitude,vfunc)
-    self.vduration, self.vMagnitude = duration or 0.3, magnitude or 5
-    self.vfunc = vfunc
+function card:vibrate(duration, magnitude,func)
+	self.magnitude = magnitude or 5
+    self:addAnimate(duration or 0.5 ,{magnitude = 0},"outQuad",nil,func)
 end
 
-
-function card:vibrateUpdate(dt)
-	if self.vduration<=0 then return end
-	self.vduration = self.vduration -dt
-	self.vMagnitude = self.vMagnitude*0.98
-	self.offx = love.math.random(-self.vMagnitude, self.vMagnitude)
-    self.offy = love.math.random(-self.vMagnitude, self.vMagnitude)
-    if self.vduration<=0 then 
-    	self.offx=0
-    	self.offy=0
-    	if self.vfunc then self.vfunc() end
-    end
-end
 
 function card:standout()
 	local tween = self.tweenStack.y and self.tweenStack.y[#self.tweenStack.y]
@@ -401,7 +392,7 @@ function card:standout()
 	self:addAnimate(0.3,{y=y},"linear")
 end
 
-function card:turnaround()
+function card:turnaround(func)
 	self:setAnimate(0.3,{rx=3.14},"linear")
 	self:addAnimate(0.3,{rx=0},"linear")
 end

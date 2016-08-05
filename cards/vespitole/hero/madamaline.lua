@@ -20,6 +20,7 @@ data.ability={
 	onTurnStart = function(card,game) 
 		if game.turnCount == 1 then
 			game:summon("courtsan")
+			game:summon("courtsan")
 		end
 	end,
 }
