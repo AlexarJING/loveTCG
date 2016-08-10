@@ -1,5 +1,5 @@
 local data = {
-	id = "ezra",
+	img_name = "ezra",
 	name = "Esra",
 	faction= "daramek",
 	profile = {"no money, you can do nothing!"},
@@ -30,6 +30,7 @@ data.ability={
 			self:drawCard()
 		end
 		game:refillCard()
+		return true
 	end,
 }
 

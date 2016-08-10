@@ -1,5 +1,5 @@
 local data = {
-	id = "catapult",
+	img_name = "catapult",
 	name = "catapult",
 	faction = "vespitole",
 	category = "war",
@@ -20,7 +20,11 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) game:drawCard() end,
-	onTurnStart = function (card,game) game:attack(card,nil,true) end,
+	onTurnStart = function (card,game) 
+		for i = 1, 3 do
+			game:attack(card,nil,true)
+		end
+	end,
 }
 
 return data

@@ -1,5 +1,5 @@
 local data = {
-	id = "enchantedtreaty",
+	img_name = "enchantedtreaty",
 	name = "Enchanted Treaty",
 	faction = "endazu",
 	category = "inscriptions",

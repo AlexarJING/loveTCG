@@ -1,5 +1,5 @@
 local data = {
-	id = "pigunguent",
+	img_name = "pigunguent",
 	name = "Boar Unguent",
 	faction = "daramek",
 	category = "herd",
@@ -19,13 +19,10 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) 
-		game:refill("my","herdofboars",card)
-		for i,v in ipairs(game.my.play.cards) do
-			if v.id == "herdofgoats" or v.id == "direboar" then
-				v.ability.onTurnStart(game,v)
-			end
-		end
-		game:feedHeroWith("magic")
+		game:refillCard("my","herdofboars",card.level)
+		game:activateCard(card,"herdofboars")
+		game:activateCard(card,"direboar")
+		game:feedCard(game.my.hero.card,false,"magic")
 	end,
 }
 

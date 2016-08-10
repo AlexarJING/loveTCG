@@ -1,5 +1,5 @@
 local data = {
-	id = "argorathflower", --argorathflower
+	img_name = "argorathflower", --argorathflower
 	name = "Argoreth Flower",
 	faction = "endazu",
 	category = "anima",

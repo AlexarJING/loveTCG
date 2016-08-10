@@ -1,5 +1,5 @@
 local data = {
-	id = "militia",
+	img_name = "militia",
 	name = "Militia",
 	faction = "vespitole",
 	category = "war",
@@ -23,7 +23,7 @@ data.ability={
 	onPlay = function (card,game) game:drawCard() end,
 	onTurnStart = function (card,game) game:attack(card)end,
 	onFeed = function (card,game) game:attack(card) end,
-	onAttacked = function(card,game,from) if love.math.random()<0.25 then game:attack(card,from) end end
+	onAttacked = function(card,game,from) if love.math.random()<0.25 then game:attack(card) end end
 }
 
 return data

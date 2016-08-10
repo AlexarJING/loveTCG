@@ -1,5 +1,5 @@
 local data = {
-	id = "raktabaan",
+	img_name = "raktabaan",
 	name = "Raktaba'an",
 	faction= "endazu",
 

@@ -1,5 +1,5 @@
 local data = {
-	id = "birondelle",
+	img_name = "birondelle",
 	name = "Birondelle",
 	faction= "metris",
 
@@ -20,7 +20,7 @@ data.ability={
 
 	onCardBuy= function (card,game,target)
 		if love.math.random()<0.15 then
-			game:refill("your")
+			game:refillCard("your")
 		end
 	end
 }

@@ -1,5 +1,5 @@
 local data = {
-	id = "burglary",
+	img_name = "burglary",
 	name = "Burglary",
 	faction = "metris",
 	category = "espionage",
@@ -16,7 +16,16 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game)
-		game.my.canRob = true
+		local cheapest
+		local price = 100
+		for i,v in ipairs(game.your.bank.cards) do
+			if v.price<price then
+				cheapest = v
+				price = v.price
+			end
+		end
+		if not cheapest then return end
+		game:transferCard(cheapest,game.my.hand)
 	end,
 }
 

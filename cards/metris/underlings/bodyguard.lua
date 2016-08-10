@@ -1,5 +1,5 @@
 local data = {
-	id = "bodyguard",
+	img_name = "bodyguard",
 	name = "Bodyguard",
 	faction = "metris",
 	category = "underlings",
@@ -8,7 +8,7 @@ local data = {
 	basePrice = 5,
 	hp = 4,
 	last = true,
-	block = true
+	intercept = true
 }
 
 data.description = {

@@ -1,5 +1,5 @@
 local data = {
-	id = "cutpurse",
+	img_name = "cutpurse",
 	name = "Cut Purse",
 	faction = "metris",
 	category = "underlings",
@@ -18,15 +18,13 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		if game:lose(card,"your","random") then
-			game:gain(card,"my",res) 
-		end
+		game:steal(card,"random")
 	end,
-	--onFoeGain(card,self,who,what)
-	onFoeGain = function (card,game,who,what) 
+
+	onFoeGain = function (card,game,what) 
+
 		if love.math.random()<0.05 then
-			game:gain(card,"your",what)
-			game:gain(card,"my",what)
+			game:steal(card,what)
 		end
 	end,
 

@@ -1,5 +1,5 @@
 local data = {
-	id = "infighting",
+	img_name = "infighting",
 	name = "Infighting",
 	faction = "metris",
 	category = "murder",
@@ -16,15 +16,12 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game)
-		local candidate = {}
-		for i,v in ipairs(game.your.play.cards) do
-			if v.hp then table.insert(candidate,v) end
-		end
+		local candidate = game:foe(card,false,true)
 		if #candidate == 0 then
 			game:refill()
 		else
-			for i= 1, #candidate do
-				game:attack(card)
+			for i,v in ipairs(candidate) do
+				game:attack(v,"infighting")
 			end
 		end
 	end,

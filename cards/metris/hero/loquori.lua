@@ -1,5 +1,5 @@
 local data = {
-	id = "loquori",
+	img_name = "loquori",
 	name = "Loquori",
 	faction= "metris",
 
@@ -16,10 +16,9 @@ data.description = {
 }
 
 data.ability={
-	onFoeGain = function (card,game,who,what) 
+	onFoeGain = function (card,game,what) 
 		if love.math.random()<0.05 then
-			game:gain(card,"your",what)
-			game:gain(card,"my",what)
+			game:steal(card,what)
 		end
 	end,
 }

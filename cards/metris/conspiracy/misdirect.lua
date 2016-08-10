@@ -1,5 +1,5 @@
 local data = {
-	id = "misdirect",
+	img_name = "misdirect",
 	name = "Misdirect",
 	faction = "metris",
 	category = "conspiracy",
@@ -8,6 +8,7 @@ local data = {
 	basePrice = 4,
 	intercept = true,
 	charge = 2,
+	last = true
 }
 
 data.description = {
@@ -18,7 +19,7 @@ data.description = {
 
 data.ability={
 	onAttacked = function(card,game,from)		
-		game:attack(card,from)
+		game:attack(card)
 	end,
 }
 

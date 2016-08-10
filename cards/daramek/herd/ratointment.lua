@@ -1,5 +1,5 @@
 local data = {
-	id = "ratointment",
+	img_name = "ratointment",
 	name = "Rat Ointment",
 	faction = "daramek",
 	category = "herd",
@@ -19,12 +19,13 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) 
-		game:refill("my","herdofrats",card)
-		if game:sactrificeCard("herdofrats") then
+		game:refillCard("my","herdofrats",card.level)
+
+		if game:sacrificeCard("herdofrats") then
 			local d = game.cardData.short.warrats
 			d.level = card.level
-			local copy = game.my.library:makeCard(d)
-			game:playCard(copy)
+			local copy = game:makeCard(d)
+			game:drawCard("my",copy)
 		end
 	end,
 }

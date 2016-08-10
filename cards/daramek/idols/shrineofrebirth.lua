@@ -1,6 +1,6 @@
 
 local data = {
-	id = "bloodbog",
+	img_name = "bloodbog",
 	name = "Shrine of Rebirth",
 	faction = "daramek",
 	category = "idols",

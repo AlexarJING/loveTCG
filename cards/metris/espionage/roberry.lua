@@ -1,5 +1,5 @@
 local data = {
-	id = "robbery",
+	img_name = "robbery",
 	name = "Robbery",
 	faction = "metris",
 	category = "espionage",
@@ -16,9 +16,7 @@ data.description = {
 data.ability={
 	onPlay = function(card,game)		
 		for i = 1, 2 do
-			if res then game:game(card,"my",res) end
-			local res = game:lose(card,"your","random")
-			if res then game:game(card,"my",res) end
+			game:steal(card,"random")
 		end
 	end,
 }

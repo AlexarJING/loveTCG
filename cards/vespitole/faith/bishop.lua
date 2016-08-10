@@ -1,5 +1,5 @@
 local data = {
-	id = "bishop",
+	img_name = "bishop",
 	name = "Bishop",
 	faction = "vespitole",
 	category = "faith",
@@ -9,7 +9,7 @@ local data = {
 	basePrice = 10,
 	hp = 3,
 
-	block = false,
+	intercept = false,
 
 	last = true,
 

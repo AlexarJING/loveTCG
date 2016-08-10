@@ -1,5 +1,5 @@
 local data = {
-	id = "paperviper",
+	img_name = "paperviper",
 	name = "Paper Vipers",
 	faction = "endazu",
 	category = "inscriptions",

@@ -1,5 +1,5 @@
 local data = {
-	id = "wealthypatron",
+	img_name = "wealthypatron",
 	name = "Wealthy Patron",
 	faction = "vespitole",
 
@@ -10,8 +10,6 @@ local data = {
 
 	basePrice = 6,
 	hp = 1,
-
-	block = false,
 
 	last = true,
 

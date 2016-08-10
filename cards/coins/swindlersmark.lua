@@ -1,5 +1,5 @@
 local data = {
-	id = "swindlersmark",
+	img_name = "swindlersmark",
 	name = "Swindler's Mark",
 	faction = "coins",
 	--category = "coin",
@@ -20,9 +20,7 @@ data.ability={
 	onPlay = function(card,game)
 		game:gain(card,"my","gold")
 		if love.math.random()<0.12 then
-			if game:lose(card,"your","random") then
-				game:gain(card,"my",res) 
-			end
+			game:steal(card,"random")
 		end
 	end,
 }

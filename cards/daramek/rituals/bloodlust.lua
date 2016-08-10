@@ -1,5 +1,5 @@
 local data = {
-	id = "riteofbattle",
+	img_name = "riteofbattle",
 	name = "Bloodlust",
 	faction = "daramek",
 	category = "rituals",
@@ -19,16 +19,20 @@ data.ability={
 	onPlay = function (card,game)
 		local options = {}
 		for i,v in ipairs(game.your.play.cards) do
-			if v.hp then table.insert(options,v.hp) end
+			if v.hp then table.insert(options,v) end
 		end
 		if not options[1] then return end
 
 		game:optionsCards(options)
 		
 		game.show.onChoose = function(target,game)
+			for i,v in ipairs(game.show.cards) do
+				game:transferCard(v,game.your.play)
+			end
+			
 			repeat
 				game:attack(card,target)
-			until target.hp<1
+			until target.current~=game.your.play
 			game:killCard(card)
 		end		
 	end,

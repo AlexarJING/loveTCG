@@ -1,5 +1,5 @@
 local data = {
-	id = "liturgy",
+	img_name = "liturgy",
 	name = "Liturgy",
 	faction = "vespitole",
 
@@ -20,10 +20,9 @@ data.description = {
 data.ability={
 	onPlay = function(card,game) 
 		game:drawCard()
-		for i = 1, #game.my.play.cards do
-			if game.my.play.cards[i].hp then game:gain(v,"my","magic") end
+		for i,v in ipairs(game:ally()) do
+			game:gain(v,"my","magic")
 		end
-		game:gain(v,"my","magic")
 	end,
 	
 }

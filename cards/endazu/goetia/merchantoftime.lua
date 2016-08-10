@@ -1,5 +1,5 @@
 local data = {
-	id = "merchantoftime",
+	img_name = "merchantoftime",
 	name = "Merchant of Time",
 	faction = "endazu",
 	category = "goetia",

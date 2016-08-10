@@ -1,5 +1,5 @@
 local data = {
-	id = "culltheherd",
+	img_name = "culltheherd",
 	name = "Cull the Herd",
 	faction = "daramek",
 	category = "rituals",
@@ -19,7 +19,7 @@ data.ability={
 	onPlay = function (card,game)
 		local check
 		for i,v in ipairs(game.my.play.cards) do
-			if v.hp then 
+			if v.hp and not v.cannotScrifice then 
 				check = true
 				break
 			end

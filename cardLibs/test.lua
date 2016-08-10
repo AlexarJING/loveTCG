@@ -88,16 +88,20 @@ data.cards = {
 	}
 }
 
-data.coins = {}
+data.coins = {
+	[1] = "bantlingcrown",
+	[2] = "bantlingcrown",
+	[3] = "championspaiza"
+}
 
 data.heros = {	
 	vespitole ={
-		["captainviatrix"]= {exp = 0 , level = 1, lib ={}},
-		["cardinalpocci"]= {exp = 0 , level = 1, lib ={}},
-		["madamaline"]= {exp = 0 , level = 1, lib ={}},
-		["regentmarsh"]= {exp = 0 , level = 1, lib ={}},
-		["sofocatro"]= {exp = 0 , level = 1, lib ={}},
-		["ysadora"]= {exp = 0 , level = 1, lib = {}}
+		["captainviatrix"]= {exp = 0 , level = 1, lib ={} ,deck = {}},
+		["cardinalpocci"]= {exp = 0 , level = 1, lib ={},deck = {}},
+		["madamaline"]= {exp = 0 , level = 1, lib ={},deck = {}},
+		["regentmarsh"]= {exp = 0 , level = 1, lib ={},deck = {}},
+		["sofocatro"]= {exp = 0 , level = 1, lib ={},deck = {}},
+		["ysadora"]= {exp = 0 , level = 1, lib = {},deck = {}}
 		},
 	metris ={},
 	daramek ={},

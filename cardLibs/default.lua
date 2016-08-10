@@ -127,7 +127,8 @@ data.heros = {
 				["category"]="faith",
 				["faction"]="vespitole",
 				["id"]="prayer",}
-		}}
+		},
+	deck={}}
 		},
 	metris ={},
 	daramek ={},

@@ -1,5 +1,5 @@
 local data = {
-	id = "warpigs",
+	img_name = "warpigs",
 	name = "Dire Boar",
 	faction = "daramek",
 	category = "herd",
@@ -18,10 +18,10 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		game:attack(card)
-		game:attack(card)
-		game:attack(card)
 		game:sacrificeCard("weakest")
+		game:attack(card)
+		game:attack(card)
+		game:attack(card)
 	end,
 }
 

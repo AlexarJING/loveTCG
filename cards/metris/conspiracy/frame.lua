@@ -1,5 +1,5 @@
 local data = {
-	id = "frame",
+	img_name = "frame",
 	name = "Frame",
 	faction = "metris",
 	category = "conspiracy",
@@ -8,17 +8,18 @@ local data = {
 	basePrice = 8,
 	intercept = true,
 	charge = 5,
+	last = true
 }
 
 data.description = {
 	"Intercept 5 attacks",
- 	"Rediect attack to foe",
+ 	"Redirect attack to foe",
  	"Destroy after use ",
 }
 
 data.ability={
 	onAttacked = function(card,game,from)		
-		game:attack(card,from)
+		game:attack(card)
 	end,
 }
 

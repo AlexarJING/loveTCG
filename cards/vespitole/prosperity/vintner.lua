@@ -1,5 +1,5 @@
 local data = {
-	id = "vintner",
+	img_name = "vintner",
 	name = "Vintner",
 	faction = "vespitole",
 
@@ -10,9 +10,9 @@ local data = {
 
 	basePrice = 6,
 	hp = 1,
-	block = false,
+	intercept = false,
 	last = true,
-	food = "gold",
+	foodType = "gold",
 	feedAmout = 2,
 	back = true,
 }
@@ -30,11 +30,7 @@ data.ability={
 		game:gain(card,"my","food") 
 	end,
 	onFeed = function(card,game)
-		if game:feedCard(card) then
-			game:gain(card,"my","food") 
-		else
-			game:gain(card,"my","gold") 
-		end
+		game:gain(card,"my","food") 
 	end,
 }
 

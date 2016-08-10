@@ -11,7 +11,7 @@ function show:init(game)
 
 end
 
-function show:resort()
+function show:rearrange()
 
     for i,card in ipairs(self.cards) do
         local x = self.x +( -#self.cards/2 +i -0.5) * card.w * self.scale    

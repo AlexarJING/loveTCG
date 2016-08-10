@@ -1,5 +1,5 @@
 local data = {
-	id = "sandstorm",
+	img_name = "sandstorm",
 	name = "Banishing Gust",
 	faction = "endazu",
 	category = "incantations",

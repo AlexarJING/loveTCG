@@ -1,5 +1,5 @@
 local data = {
-	id = "riteofclan",
+	img_name = "riteofclan",
 	name = "Ceremonial Dance",
 	faction = "daramek",
 	category = "rituals",
@@ -21,8 +21,8 @@ data.ability={
 		card.lastBought = game.lastBought
 	end,
 	onCardBuy = function (card,game,bought)
-		local copy = game:copyCard( bought)
-		game:transferCard(copy,copy.current,game.my.hand)
+		local copy = game:copyCard(bought)
+		game:transferCard(copy,game.my.hand)
 		game:killCard(card)
 	end,
 	

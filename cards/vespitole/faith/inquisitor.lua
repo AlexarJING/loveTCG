@@ -1,5 +1,5 @@
 local data = {
-	id = "inquisitor",
+	img_name = "inquisitor",
 	name = "Inquisitor",
 	faction = "vespitole",
 
@@ -11,7 +11,7 @@ local data = {
 	basePrice = 14,
 	hp = 2,
 
-	block = false,
+	intercept = false,
 
 	last = true,
 
@@ -28,27 +28,11 @@ data.ability={
 	onPlay = function(card,game) game:drawCard() end,
 	onTurnStart = function(card,game) 
 		game:gain(card,"my","skull")
-		local weakest
-		local weakHP=100
-		for i,v in ipairs(game.your.play.cards) do
-			if v.hp and v.hp<weakHP then
-				weakest = v
-				weakHP = v.hp
-			end
-		end
-		game:attack(card,weakest)
+		game:attack(card,"weakest")
 	end,
 	onFeed = function(card,game)
 		game:gain(card,"my","skull")
-		local weakest
-		local weakHP=100
-		for i,v in ipairs(game.your.play.cards) do
-			if v.hp and v.hp<weakHP then
-				weakest = v
-				weakHP = v.hp
-			end
-		end
-		game:attack(card,weakest)
+		game:attack(card,"weakest")
 	end,
 }
 

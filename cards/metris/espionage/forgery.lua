@@ -1,5 +1,5 @@
 local data = {
-	id = "forgery",
+	img_name = "forgery",
 	name = "Forgery",
 	faction = "metris",
 	category = "espionage",
@@ -19,7 +19,8 @@ data.ability={
 	onFoeBuy = function(card,game,target)
 		local copy = game:copyCard(target)
 		copy.born = card.born
-		game:transferCard(copy,copy.current,card.born.hand)
+		game:transferCard(copy,card.born.hand)
+		game:killCard(card)
 	end,
 }
 

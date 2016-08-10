@@ -1,5 +1,5 @@
 local data = {
-	id = "courtlyintrigue",
+	img_name = "courtlyintrigue",
 	name = "Courtly Intrigue",
 	faction = "vespitole",
 

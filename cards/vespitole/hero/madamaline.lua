@@ -1,5 +1,5 @@
 local data = {
-	id = "madamaline",
+	img_name = "madamaline",
 	name = "Madam Aline",
 	faction= "vespitole",
 
@@ -19,8 +19,8 @@ data.ability={
 	
 	onTurnStart = function(card,game) 
 		if game.turnCount == 1 then
-			game:summon("courtsan")
-			game:summon("courtsan")
+			game:summon("courtesan")
+			game:summon("courtesan")
 		end
 	end,
 }

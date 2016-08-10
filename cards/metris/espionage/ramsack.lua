@@ -1,5 +1,5 @@
 local data = {
-	id = "ransack",
+	img_name = "ransack",
 	name = "Ransack",
 	faction = "metris",
 	category = "espionage",
@@ -27,7 +27,7 @@ data.ability={
 		if #candidate == 0 then return end
 		game:optionsCards(candidate)
 		game.show.onChoose = function(card,game)
-			game:transferCard(card,card.current,game.my.hand)
+			game:transferCard(card,game.my.hand)
 			if card.isCoin then
 				for i = 1,6 do
 					game:gain(card,"my","gold")

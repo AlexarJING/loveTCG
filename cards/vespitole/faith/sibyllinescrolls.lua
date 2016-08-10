@@ -1,5 +1,5 @@
 local data = {
-	id = "sibyllinescrolls",
+	img_name = "sibyllinescrolls",
 	name = "Sibylline Scrolls",
 	faction = "vespitole",
 
@@ -9,7 +9,7 @@ local data = {
 	profile = {"There are no new ideas. Everything has already been recorded by historians or predicted by sibyls. –Mantessaro Bibliothecarius"},
 	basePrice = 6,
 
-	block = false,
+	intercept = false,
 
 	back = true,
 }

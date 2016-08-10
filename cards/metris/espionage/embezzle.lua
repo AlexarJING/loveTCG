@@ -1,5 +1,5 @@
 local data = {
-	id = "embezzlement",
+	img_name = "embezzlement",
 	name = "Embezzle",
 	faction = "metris",
 	category = "espionage",
@@ -16,8 +16,7 @@ data.description = {
 
 data.ability={
 	onTurnStart = function(card,game)
-		if res then game:game(card,"my",res) end
-		game:gain(card,"my","skull")
+		game:steal(card,"random")
 	end,
 }
 

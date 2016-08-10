@@ -1,5 +1,5 @@
 local data = {
-	id = "overseer",
+	img_name = "overseer",
 	name = "Overseer",
 	faction = "daramek",
 	category = "slaves",
@@ -18,7 +18,7 @@ data.description = {
 
 data.ability={
 	onCardPlay = function (card,game,target)
-		game:activateCard(target)
+		game:activateCard(card,target)
 	end,
 }
 

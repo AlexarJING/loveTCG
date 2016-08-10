@@ -26,7 +26,6 @@ function info:update(dt)
 end
 
 function info:newUserFile(name)
-	print(name)
 	if name == "test" then
 	self.data ={
 					name = name,

@@ -1,5 +1,5 @@
 local data = {
-	id = "unstablerunes",
+	img_name = "unstablerunes",
 	name = "Unstable Runes",
 	faction = "endazu",
 	category = "inscriptions",

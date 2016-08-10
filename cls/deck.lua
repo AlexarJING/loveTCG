@@ -20,7 +20,7 @@ function deck:init(game,root)
 end
 
 
-function deck:resort()
+function deck:rearrange()
     
     for i,card in ipairs(self.cards) do
         card:setAnimate(0.5,{y=self.y},"inBack")
@@ -31,11 +31,12 @@ end
 
 function deck:setCards(data)
     
+    self.cards = {}
 
     for i = 1, 10 do
         local card
-        if data.coins[i] then
-            card = Card(self.game,self.game.cardData.short[data.coins[i]],self.root,self)
+        if data.deck[i] then
+            card = Card(self.game,self.game.cardData.short[data.deck[i]],self.root,self)
         else
             card = Card(self.game,self.game.cardData.short[data.faction.."coin"],self.root,self)
         end

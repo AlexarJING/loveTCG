@@ -1,5 +1,5 @@
 local data = {
-	id = "benediction",
+	img_name = "benediction",
 	name = "Benediction",
 	faction = "vespitole",
 
@@ -21,14 +21,7 @@ data.description = {
 data.ability={
 	onPlay = function(card,game)
 		game:drawCard()
-		if game.my.hero.card.ability.onTurnStart then
-			game.my.hero.card.ability.onTurnStart(game.my.hero.card,game)
-		end
-		for i,v in ipairs(game.my.play.cards) do
-			if v.ability.onTurnStart then
-				v.ability.onTurnStart(v,game)
-			end
-		end
+		game:activateCard(card,"all",true)
 	end,
 
 }

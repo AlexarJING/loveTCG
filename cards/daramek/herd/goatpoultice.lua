@@ -1,13 +1,11 @@
 local data = {
-	id = "goatpoultice",
+	img_name = "goatpoultice",
 	name = "Goat Poultice",
 	faction = "daramek",
 	category = "herd",
 	rare = 3 ,
 	profile = {"Gather the coarse, waxy hairs from adult males. The more the better. Soak them in an open basket with water and finch weed. They will swell and yellow until a jelly forms that must be collected with the shell of a hess beetle.–Esra"},
 	basePrice = 4,
-	--hp = 2,
-	--last = true,
 	back = true,
 }
 
@@ -19,13 +17,9 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) 
-		game:refill("my","herdofgoats",card)
-		game:drawCard("my","herdofgoats",card)
-		for i,v in ipairs(game.my.play.cards) do
-			if v.id == "herdofgoats" then
-				v.ability.onTurnStart(game,v)
-			end
-		end
+		game:refillCard("my","herdofgoats",card.level)
+		game:drawCard("my","herdofgoats",_,card.level)
+		game:activateCard(card,"herdofgoats")
 	end,
 }
 

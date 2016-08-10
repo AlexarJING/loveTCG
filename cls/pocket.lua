@@ -25,6 +25,7 @@ function pocket:init(parent)
 	self.scale = 0.5
 	
 	self.slot = {}
+	self.slot2 = {}
 	self:load()
 	self:save()
 end
@@ -35,7 +36,10 @@ function pocket:load()
 	local hero = self.parent.hero
 	local data = self.userdata
 	local cards = self.collection.cards
+	local coins = self.collection.coins
 	local collection = self.collection
+
+	self.show = self.collection.show
 
 	for i = 1,10 do		
 		local c = self.slot[i]
@@ -48,6 +52,18 @@ function pocket:load()
 		end
 	end
 
+	for i = 1,10 do		
+		local c = self.slot2[i]
+		if c then
+			self.slot2[i] = nil
+			c.slot = nil
+			c.current = collection
+			local x,y = getPosForCollection(self,c.index,1)
+			c:addAnimate(0.5,{x=x,y=y},"inBack")
+		end
+	end
+
+
 	for i,d in ipairs(data.heros[faction][hero].lib) do
 		local card = cards[faction][d.category][d.id][d.level]
 		local x, y = getPos(self,i)
@@ -56,12 +72,51 @@ function pocket:load()
 		card:addAnimate(0.5,{x=x,y=y},"inBack")
 		self.slot[i]=card
 	end
+
+	for i,v in ipairs(data.heros[faction][hero].deck) do
+		for j = i , #coins do
+			if v == coins[j].id then
+				local card = coins[j]
+				local x, y = getPos(self,i)
+				card.current = self
+				card.slot = i
+				card:addAnimate(0.5,{x=x,y=y},"inBack")
+				self.slot2[i]=card
+				break
+			end
+		end	
+	end
 end
+
+function pocket:update_forCoin(dt)
+	for i = 1, 10 do 
+		if self.slot2[i] then
+			self.slot2[i]:update(dt)
+		end
+	end
+
+	local hoverCard = self.parent.hoverCard
+	local collection = self.parent.collection
+
+	if hoverCard and self.parent.click and hoverCard.current == self then						
+		self.slot2[hoverCard.slot] = nil
+		hoverCard.slot = nil
+		hoverCard.current = collection
+		local x,y = getPosForCollection(self,hoverCard.index,hoverCard.level)
+		hoverCard:addAnimate(0.5,{x=x,y=y},"inBack")
+		self.parent.click = false
+	end
+
+end
+
 
 
 function pocket:update(dt)
 	self.faction = self.parent.faction
-	self.hero = self.parent.hero
+	self.show = self.parent.collection.show
+
+	if self.show =="coin" then return self:update_forCoin(dt) end
+
 	for i = 1, 10 do 
 		if self.slot[i] then
 			self.slot[i]:update(dt)
@@ -95,13 +150,22 @@ function pocket:save()
 				category = card.category})
 		end
 	end
+
+	local data2 = {}
+	for i = 1, 10 do
+		if self.slot2[i] then
+			local card= self.slot2[i]
+			table.insert(data2 , card.id)
+		end
+	end
 	self.userdata.heros[self.parent.faction][self.parent.hero].lib = data
+	self.userdata.heros[self.parent.faction][self.parent.hero].deck = data2
 	self.parent.lib = data
+	self.parent.deck = data2
 
 
 	local file = love.filesystem.newFile("system", "w")
-	local data = table.save(self.parent.userdata)
-	file:write(data)
+	file:write(table.save(self.parent.userdata))
 	file:close()
 
 end
@@ -116,9 +180,17 @@ function pocket:draw()
 		love.graphics.ellipse( "fill", x, y+80, 80, 20 )
 	end
 
-	for i = 1, 10 do 
-		if self.slot[i] then
-			self.slot[i]:draw()
+	if self.show == "card" then
+		for i = 1, 10 do 
+			if self.slot[i] then
+				self.slot[i]:draw()
+			end
+		end
+	else
+		for i = 1, 10 do 
+			if self.slot2[i] then
+				self.slot2[i]:draw()
+			end
 		end
 	end
 end

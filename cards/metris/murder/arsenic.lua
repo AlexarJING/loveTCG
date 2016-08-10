@@ -1,5 +1,5 @@
 local data = {
-	id = "arsenic",
+	img_name = "arsenic",
 	name = "Arsenic",
 	faction = "metris",
 	category = "murder",
@@ -16,15 +16,15 @@ data.description = {
  	"Ignores intercept ",
 }
 
+
+
 data.ability={
 	onTurnStart = function(card,game)
-		local candidate = {}
+		
 		for i,v in ipairs(game.my.play.cards) do
-			if v.poison then table.insert(candidate,v) end
+			if v.poison then game:attack(card,"hero",true) end
 		end
-		for i = 1, #candidate do
-			game:attack(card,"hero",true)
-		end
+
 	end,
 }
 

@@ -19,7 +19,7 @@ function hand:init(game,root)
 end
 
 
-function hand:resort()
+function hand:rearrange()
     if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
             local x 

@@ -1,5 +1,5 @@
 local data = {
-	id = "haltingrebuke",
+	img_name = "haltingrebuke",
 	name = "Halting Rebuke",
 	faction = "endazu",
 	category = "incantations",
@@ -10,7 +10,7 @@ local data = {
 	last = true,
 	chargeInit = 2,
 	chargeMax = 10,
-	block = true
+	intercept = true
 }
 
 data.description = {

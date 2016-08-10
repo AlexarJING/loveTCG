@@ -1,5 +1,5 @@
 local data = {
-	id = "festival",
+	img_name = "festival",
 	name = "Festival",
 	faction = "daramek",
 	category = "rituals",
@@ -33,12 +33,11 @@ data.ability={
 		)
 		game:refillCard("my",function(cards) 
 			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.category == "ritual" and v.id~="festival" then
+			for k,v in pairs(cards.daramek.rituals) do
+				if v.id~="festival" then
 					table.insert(candidate, v)
 				end
 			end
-			if not candidate[1] then return end
 			return candidate[love.math.random(#candidate)]
 		end)
 	end,

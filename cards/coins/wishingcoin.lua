@@ -1,5 +1,5 @@
 local data = {
-	id = "wishingcoin",
+	img_name = "wishingcoin",
 	name = "Wishing Coin",
 	faction = "coins",
 	--category = "coin",

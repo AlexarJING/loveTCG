@@ -1,5 +1,5 @@
 local data = {
-	id = "ysadora",
+	img_name = "ysadora",
 	name = "Sister Ysadora",
 	faction= "vespitole",
 
@@ -17,7 +17,7 @@ data.description = {
 data.ability={
 	onAttack = function(card,game) 
 		if love.math.random()<0.75 then
-			game.my.resource.hp = game.my.resource.hp + 1
+			game:healCard(card)
 		end
 	end,
 }

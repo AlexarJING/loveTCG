@@ -1,5 +1,5 @@
 local data = {
-	id = "mayhem",
+	img_name = "mayhem",
 	name = "Mayhem",
 	faction = "metris",
 	category = "murder",
@@ -15,20 +15,16 @@ data.description = {
 }
 
 data.ability={
-	onTurnStart = function(card,game)		
+	onPlay = function(card,game)		
 		local discard = false
 
-		for i,v in ipairs(game.your.play.cards) do
-			if v.hp then 
-				game:killCard(v) 
-				discard = true
-			end
+		for i,v in ipairs(game:foe(card,true,true)) do	
+			game:transferCard(v,v.born.deck)
+			discard = true	
 		end
 		
-		for i,v in ipairs(game.my.play.cards) do
-			if v.hp then 
-				game:killCard(v) 
-			end
+		for i,v in ipairs(game:ally(card,true,true)) do
+			game:transferCard(v,v.born.deck)
 		end
 
 		if not discard then 

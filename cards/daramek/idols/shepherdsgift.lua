@@ -1,5 +1,5 @@
 local data = {
-	id = "shepherdmonument",
+	img_name = "shepherdmonument",
 	name = "Shepherd's Gift",
 	faction = "daramek",
 	category = "idols",

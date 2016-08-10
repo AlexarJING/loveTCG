@@ -1,5 +1,5 @@
 local data = {
-	id = "knight",
+	img_name = "knight",
 	name = "Knight",
 	faction = "vespitole",
 	category = "war",
@@ -23,7 +23,7 @@ data.ability={
 	onPlay = function (card,game) game:drawCard() end,
 	onTurnStart = function (card,game) game:attack(card)end,
 	onFeed = function (card,game) game:attack(card) end,
-	onAttacked = function(card,game,from)  game:attack(card,from) end
+	onAttacked = function(card,game,from)  game:attack(card) end
 }
 
 return data

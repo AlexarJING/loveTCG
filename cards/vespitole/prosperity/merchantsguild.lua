@@ -1,5 +1,5 @@
 local data = {
-	id = "merchantsguild",
+	img_name = "merchantsguild",
 	name = "Merchant Guild",
 	faction = "vespitole",
 	category = "prosperity",

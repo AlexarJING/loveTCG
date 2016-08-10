@@ -27,8 +27,8 @@ local img_frame = {
 
 
 local cardImage = {}
-local font_title = love.graphics.newFont(30)
-local font_content = love.graphics.newFont(20)
+local font_title = love.graphics.newFont(22)
+local font_content = love.graphics.newFont(18)
 
 local backCanvas
 
@@ -36,7 +36,6 @@ function card:init(game,data,born,current,state)
 	self.game = game
 	self.born = game[born]
 	self.current = current
-	self.data = data
 	self:initProperty(data)
 	self:initImage()
 	self:updateCanvas()
@@ -46,16 +45,33 @@ function card:init(game,data,born,current,state)
 	if state then card:setState(state) end
 end
 
-function card:getSide()
+function card:getSide(who)
+	who = who or "my"
+	local my,your
+	
 	local my = self.game.my
 	local your = self.game.your
+	
+
 	if self.current == my.play or self.current == my.hero 
-		or self.current == my.bank or self.current == my.hand then
-		return my, your
+		or self.current == my.bank or self.current == my.hand 
+		or self.current == my.deck or self.current == my.grave then
+		
+		if who == "my" then
+			return my, your
+		else
+			return your,my
+		end
 	else
-		return your,my
+		if who == "my" then
+			return your,my
+		else
+			return my,your
+		end
 	end
 end
+
+
 
 function card:setState(state)
 	self.hp = state.hp
@@ -81,12 +97,10 @@ end
 
 
 function card:initProperty(data)
-	for k,v in pairs(data) do
-		self[k]=v
-	end
-
+	table.copy(data,self)
+	self.data = data
 	self.hp = self.data.hp
-	self.hp_max = self.data.hp
+	self.hp_max = self.isHero and 300 or self.data.hp
 	self.last = self.data.last
 	self.charge = self.data.chargeInit or self.data.charge
 	self.charging = self.data.charging
@@ -125,7 +139,7 @@ local count = 0
 
 function card:initImage()
 	if not cardImage[self.id] then
-		cardImage[self.id]= love.graphics.newImage("res/cards/"..self.id..".png")
+		cardImage[self.id]= love.graphics.newImage("res/cards/"..self.img_name..".png")
 		count = count+1
 	end
 		
@@ -336,32 +350,40 @@ function card:updateCanvas()
 
 	--shield
 	if self.charge and self.intercept then
+		love.graphics.setColor(0, 0, 50, 200)
+		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setFont(font_content)
-		love.graphics.draw(img_shield, 80, 283)
-		love.graphics.printf("x"..tostring(self.charge), 100, 283, Width, "left")
+		love.graphics.draw(img_shield, 5, 50)
+		love.graphics.printf("x"..tostring(self.charge), 25, 50, Width, "left")
 	elseif self.charge then
+		love.graphics.setColor(0, 0, 50, 200)
+		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setFont(font_content)
-		love.graphics.draw(img_charge, 80, 283)
-		love.graphics.printf("x"..tostring(self.charge), 100, 283, Width, "left")
+		love.graphics.draw(img_charge, 5, 50)
+		love.graphics.printf("x"..tostring(self.charge), 25, 50, Width, "left")
 	end
 
 
 	--last 
 
 	if self.last and type(self.last) == "number" then
+		love.graphics.setColor(0, 0, 50, 200)
+		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setFont(font_content)
-		love.graphics.draw(img_wait, 80, 283)
-		love.graphics.printf("x"..tostring(self.last), 100, 283, Width, "left")
+		love.graphics.draw(img_wait, 5, 50)
+		love.graphics.printf("x"..tostring(self.last), 25, 50, Width, "left")
 	end
 
 	if self.timer then
+		love.graphics.setColor(0, 0, 50, 200)
+		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setFont(font_content)
-		love.graphics.draw(img_wait, 80, 283)
-		love.graphics.printf("x"..tostring(self.timer), 100, 283, Width, "left")
+		love.graphics.draw(img_wait, 5, 50)
+		love.graphics.printf("x"..tostring(self.timer), 25, 50, Width, "left")
 	end	
 
 	love.graphics.setCanvas()
@@ -372,7 +394,7 @@ end
 
 function card:vibrate(duration, magnitude,func)
 	self.magnitude = magnitude or 5
-    self:addAnimate(duration or 0.5 ,{magnitude = 0},"outQuad",nil,func)
+    self:setAnimate(duration or 0.5 ,{magnitude = 0},"outQuad",nil,func)
 end
 
 
@@ -393,8 +415,14 @@ function card:standout()
 end
 
 function card:turnaround(func)
-	self:setAnimate(0.3,{rx=3.14},"linear")
-	self:addAnimate(0.3,{rx=0},"linear")
+	self:setAnimate(0.3,{ry=3.14},"linear")
+	self:addAnimate(0.3,{ry=0},"linear")
+end
+
+function card:cast(name,...)
+	if self.ability[name] then
+		return self.ability[name](self,self.game,...)
+	end
 end
 
 return card

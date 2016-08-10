@@ -1,5 +1,5 @@
 local data = {
-	id = "wordofblight",
+	img_name = "wordofblight",
 	name = "Poem of Blight",
 	faction = "endazu",
 	category = "incantations",

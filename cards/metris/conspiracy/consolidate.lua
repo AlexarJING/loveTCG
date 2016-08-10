@@ -1,5 +1,5 @@
 local data = {
-	id = "consolidate",
+	img_name = "consolidate",
 	name = "Consolidate",
 	faction = "metris",
 	category = "conspiracy",
@@ -18,16 +18,10 @@ data.description = {
 
 data.ability={
 	onTurnStart = function(card,game)		
-		game:healAll()
-	end,
-	onDestroyed = function (card,game,target)
-		--[[
-		if  love.math.random()<0.5 then
-			return true
-		end]]
+		game:healCard("all")
 	end,
 	onDestroyCard = function (card,game,target)
-		if  target.hp and target.born == game.my  and love.math.random()<0.5 then
+		if  target.hp and target.born == card:getSide()  and love.math.random()<0.5 then
 			return true
 		end
 	end

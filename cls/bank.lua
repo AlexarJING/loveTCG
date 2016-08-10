@@ -31,7 +31,7 @@ function bank:init(game,root)
 end
 
 
-function bank:resort()
+function bank:rearrange()
     if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
             local y 
@@ -46,7 +46,7 @@ function bank:resort()
         local card = self.cards[1]
         card:setAnimate(moveSpeed,{x = self.outx, y = self.outy,rz = 0,rx=0,scale=self.scale})
         table.remove(self.cards, 1)
-        self:resort()
+        self:rearrange()
     end
 end
 

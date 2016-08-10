@@ -1,5 +1,5 @@
 local data = {
-	id = "coordinate",
+	img_name = "coordinate",
 	name = "Coordinate",
 	faction = "metris",
 	category = "conspiracy",
@@ -16,24 +16,26 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game)
-		for i,v in ipairs(game.my.play.cards) do
+		for i,v in ipairs(game:ally(card,true)) do
 			if v.faction == "metris" then
 				if v.charge  then 
 					v.charge = v.charge + 2 
-					if v.charge>=v.chargeMax then
+					if v.chargeMax and v.charge>=v.chargeMax then
 						v.ability.onFullCharge(v,game)
 					end 
 				end
 				
 				if v.timer then
 					v.timer = v.timer - 1
-					if v.timer<1 then v.ability.onTimeUp(v,game) end 
+					if v.timer<1 then v:cast("onTimeUp");game:killCard(v) end 
 				end
-				
-					
-				if v.last then 
+								
+				if type(v.last) == "number" then 
 					v.last = v.last + 2
 				end
+
+				v:updateCanvas()
+				v:turnaround()
 			end
 		end
 	end,

@@ -1,5 +1,5 @@
 local data = {
-	id = "gretta",
+	img_name = "gretta",
 	name = "Gretta",
 	faction= "metris",
 
@@ -23,7 +23,9 @@ data.ability={
 	end,
 
 	onAttacked = function (card,gamem,from)
-		game:attack(card,from)
+		if love.math.random()<0.2 then
+			game:attack(card)
+		end
 	end
 }
 

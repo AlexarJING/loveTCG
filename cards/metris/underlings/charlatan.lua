@@ -1,5 +1,5 @@
 local data = {
-	id = "charlatan",
+	img_name = "charlatan",
 	name = "Charlatan",
 	faction = "metris",
 	category = "underlings",
@@ -9,7 +9,8 @@ local data = {
 	hp = 1,
 	last = true,
 	charge = 0,
-	canFeedGold=true
+	chargeMax = 3,
+	foodType = "gold"
 }
 
 data.description = {
@@ -20,22 +21,15 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		card.charge = card.charge + 1
-		card:updateCanvas()
-		if card.charge>= card.chargeMax then
-			card.ability.onFullCharge(card,game)
-		end
+		game:chargeCard(card)
 	end,
 	onFeed = function (card,game) 
-		card.charge = card.charge + 1
-		card:updateCanvas()
-		if card.charge>= card.chargeMax then
-			card.ability.onFullCharge(card,game)
-		end
+		game:chargeCard(card)
 	end,
 	onFullCharge = function (card,game) 
+		print(card.charge)
 		card.charge = 0
-		game:refill("your")
+		game:refillCard("your")
 		card:updateCanvas()
 	end,
 

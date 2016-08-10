@@ -1,5 +1,5 @@
 local data = {
-	id = "impersonate",
+	img_name = "impersonate",
 	name = "Impersonate",
 	faction = "metris",
 	category = "espionage",
@@ -18,7 +18,7 @@ data.ability={
 	onPlay = function(card,game)
 		local target = table.random(game.your.hand.cards)
 		if not target then return end
-		game:transferCard(target,target.current,game.my.hand)
+		game:transferCard(target,game.my.hand)
 	end,
 }
 

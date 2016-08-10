@@ -19,7 +19,8 @@ function play:init(game,root)
     self.scale = 0.5 
 end
 
-function play:resort()
+function play:rearrange()
+
     if #self.cards<=self.maxCount then
         for i,card in ipairs(self.cards) do
             local x 

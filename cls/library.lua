@@ -1,45 +1,6 @@
 local library = Class("library")
 local Card = require "cls/card"
 
-local testlib = {
-    [1]={
-        ["level"]=1,
-        ["exp"]=0,
-        ["category"]="herd",
-        ["faction"]="daramek",
-        ["id"]="herdofrats",
-    },
-    [2]={
-        ["level"]=1,
-        ["exp"]=0,
-        ["category"]="rituals",
-        ["faction"]="daramek",
-        ["id"]="ritualslaughter",
-    },
-    [3]={
-        ["level"]=1,
-        ["exp"]=0,
-        ["category"]="rituals",
-        ["faction"]="daramek",
-        ["id"]="culltheherd",
-    },
-    [4]={
-        ["level"]=1,
-        ["exp"]=0,
-        ["category"]="herd",
-        ["faction"]="daramek",
-        ["id"]="herdofgoats",
-    },
-    [5]={
-        ["level"]=1,
-        ["exp"]=0,
-        ["category"]="herd",
-        ["faction"]="daramek",
-        ["id"]="herdofrats",
-    },
-}
-
-
 
 function library:init(game,root)
     self.cards={}
@@ -59,8 +20,8 @@ end
 
 
 function library:setCards(data)
+    self.cards = {}
     local lib = data.lib
-    --local lib = self.root=="down" and testlib or data.lib
     for i,v in ipairs(lib) do
         local d= table.copy(self.game.cardData.short[v.id])
         d.level = v.level

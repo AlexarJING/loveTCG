@@ -17,24 +17,18 @@ function grave:init(game,root)
 
 end
 
-function grave:goback(card)
-    card:animate(1,{x=self.x,y=self.y,rz=0,rx=3.14},"outQuad")
-end
 
---[[
-function grave:resort()
+
+
+function grave:rearrange()
     for i,card in ipairs(self.cards) do
-        card:animate(1,{x=self.x,y=self.y,rz=0,rx=3.14},"outQuad")
+        card:setAnimate(0.5,{x=self.x,y=self.y,rz=0,rx=3.14,scale = 0.5},"outQuad")
     end
-end]]
+end
 
 function grave:update(dt)
     for i,card in ipairs(self.cards) do
         card:update(dt)
-        if not card.tweens.x then
-            table.remove(self.cards, i)
-            return
-        end
     end
 end
 

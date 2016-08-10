@@ -1,6 +1,6 @@
 local data = {
-	id = "bodyguard",
-	name = "Bodyguard",
+	img_name = "toady",
+	name = "Lackey",
 	faction = "metris",
 	category = "underlings",
 	rare = 3 ,
@@ -18,17 +18,23 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) 
-		game:refill("my",function(cards)
-			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.category == "underlings" then
-					table.insert(candidate, v)
+		
+		card.ability = card.data.ability
+
+		delay:new(0.01,nil,function() 
+			game:refillCard("my",function(cards)
+				local candidate = {}
+				local index = 0
+				for k,v in pairs(cards.metris.underlings) do
+					index = index + 1
+					candidate[index] = v
 				end
-			end
-			if not candidate[1] then return end
-			return table.random(candidate)
+				return table.random(candidate)
+			end,card.level) 
 		end)
+		
 		card.ability = {}
+		
 		for k,v in pairs(game.my.hero.card.ability) do
 			card.ability[k]=v
 		end

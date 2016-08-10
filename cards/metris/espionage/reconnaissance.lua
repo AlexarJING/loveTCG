@@ -1,5 +1,5 @@
 local data = {
-	id = "reconnaissance",
+	img_name = "reconnaissance",
 	name = "Reconnaissance",
 	faction = "metris",
 	category = "espionage",
@@ -15,7 +15,7 @@ data.description = {
 }
 
 data.ability={
-	onPlay = function(card,game)
+	onTurnStart = function(card,game)
 		game:gain(card,"my","skull")
 		game:gain(card,"my","skull")
 	end,

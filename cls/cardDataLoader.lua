@@ -27,18 +27,19 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 			data.coins[id] = d
 			data.index[index] = d
 			data.short[id] = d
-			print(d.name)
+			d.id = id
 			table.insert(data.rarity[d.rare], d)
 		else
 			data[faction][category]={}
 			for i,id in ipairs(lfs.getDirectoryItems("cards/"..faction.."/"..category)) do
 				local id = string.sub(id,1,-5)
 				local d = require ("cards/"..faction.."/"..category.."/"..id)
+				d.id = id
 				data[faction][category][id] = d
 				data.short[id] = d
 				index=index+1
 				data.index[index] = d
-				print(d.name)
+				
 				table.insert(data.rarity[d.rare], d)
 			end	
 		end

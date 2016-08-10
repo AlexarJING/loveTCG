@@ -1,5 +1,5 @@
 local data = {
-	id = "beholdtheveil",
+	img_name = "beholdtheveil",
 	name = "Behold the Veil",
 	faction = "endazu",
 	category = "incantations",

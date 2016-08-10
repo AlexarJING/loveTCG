@@ -1,5 +1,5 @@
 local data = {
-	id = "barrelbomb",
+	img_name = "barrelbomb",
 	name = "Barrel Bomb",
 	faction = "metris",
 	category = "murder",
@@ -7,7 +7,7 @@ local data = {
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},
 	basePrice = 10,
 	timer = 3,
-	bomb = true
+	bomb = true,	last = true,
 }
 
 data.description = {

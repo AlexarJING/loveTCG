@@ -1,5 +1,5 @@
 local data = {
-	id = "marshall",
+	img_name = "marshall",
 	name = "Marshall",
 	faction = "vespitole",
 	category = "war",
@@ -9,6 +9,7 @@ local data = {
 	hp = 1,
 	last = true,
 	back = true,
+	activator = true
 }
 
 data.description = {
@@ -19,15 +20,8 @@ data.description = {
 
 data.ability={
 	onPlay = function (card,game) game:drawCard() end,
-	onTurnStart = function (card,game) 
-		if game.my.hero.card.ability.onTurnStart then
-			game.my.hero.card.ability.onTurnStart(game.my.hero.card,game)
-		end
-		for i,v in ipairs(game.my.play.cards) do
-			if v.ability.onTurnStart and v.id~="marshall" then
-				v.ability.onTurnStart(v,game)
-			end
-		end
+	onTurnStart = function (card,game)
+		game:activateCard(card,"all")
 	end,
 }
 

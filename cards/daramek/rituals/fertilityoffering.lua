@@ -1,5 +1,5 @@
 local data = {
-	id = "fertilityoffering",
+	img_name = "fertilityoffering",
 	name = "Fertility Offering",
 	faction = "daramek",
 	category = "rituals",

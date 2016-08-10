@@ -1,5 +1,5 @@
 local data = {
-	id = "informant",
+	img_name = "informant",
 	name = "Informant",
 	faction = "metris",
 	category = "underlings",
@@ -19,16 +19,17 @@ data.description = {
 
 data.ability={
 	onBuy = function (card,game) 
-		game:refill("my",function(cards)
-			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.category == "espionage" then
-					table.insert(candidate, v)
+		delay:new(0.01,nil,function() 
+			game:refillCard("my",function(cards)
+				local candidate = {}
+				local index = 0
+				for k,v in pairs(cards.metris.espionage) do
+					index = index + 1
+					candidate[index] = v
 				end
-			end
-			if not candidate[1] then return end
-			return table.random(candidate)
-		end) 
+				return table.random(candidate)
+			end,card.level) 
+		end)
 	end,
 	onTurnStart = function (card,game) game:drawCard("your") end,
 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end

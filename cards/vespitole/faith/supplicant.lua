@@ -1,5 +1,5 @@
 local data = {
-	id = "supplicant",
+	img_name = "supplicant",
 	name = "supplicant",
 	faction = "vespitole",
 
@@ -10,11 +10,6 @@ local data = {
 
 	basePrice = 7,
 	hp = 2,
-
-	block = false,
-
-	last = true,
-
 	back = true,
 }
 
@@ -28,11 +23,9 @@ data.ability={
 	onPlay = function(card,game) game:drawCard() end,
 	onTurnStart = function(card,game) 
 		game:gain(card,"my","magic")
-		game:gain(card,"my","magic") 
 	end,
 	onFeed = function(card,game)
 		game:gain(card,"my","magic")
-		game:gain(card,"my","magic") 
 	end,
 }
 

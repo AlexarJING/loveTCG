@@ -1,5 +1,5 @@
 local data = {
-	id = "wargoats",
+	img_name = "wargoats",
 	name = "Goat Outrider",
 	faction = "daramek",
 	category = "herd",
@@ -19,7 +19,9 @@ data.description = {
 }
 
 data.ability={
-	onAttacked = function(card,game,from) if love.math.random()<0.25 then game:attack(card,from) end end
+	onAttacked = function(card,game,from) 
+		if love.math.random()<0.5 then game:attack(card) end 
+	end
 }
 
 return data

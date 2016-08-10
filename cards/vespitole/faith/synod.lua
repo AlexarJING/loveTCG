@@ -1,5 +1,5 @@
 local data = {
-	id = "synod",
+	img_name = "synod",
 	name = "Synod",
 	faction = "vespitole",
 
@@ -21,7 +21,7 @@ data.description = {
 data.ability={
 	onPlay = function(card,game) game:drawCard() end,
 	onTurnStart = function(card,game) 
-		game:refill()
+		game:refillCard(card)
 	end,
 }
 

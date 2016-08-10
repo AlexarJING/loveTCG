@@ -1,5 +1,5 @@
 local data = {
-	id = "leadthecharge",
+	img_name = "leadthecharge",
 	name = "Lead the Charge",
 	faction = "vespitole",
 	category = "war",
@@ -17,8 +17,8 @@ data.description = {
 }
 
 data.ability={
-	onPlay = function (card,game) game:drawCard() end,
-	onTurnStart = function (card,game) 
+	onPlay = function (card,game)
+		game:drawCard()
 		game:attack(card,nil,true) 
 		game:attack(card,nil,true) 
 	end,

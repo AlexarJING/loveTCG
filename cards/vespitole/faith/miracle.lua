@@ -1,5 +1,5 @@
 local data = {
-	id = "miracle",
+	img_name = "miracle",
 	name = "Miracle",
 	faction = "vespitole",
 
@@ -20,13 +20,7 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game) 
-		local lib = game.cardData.index
-		local target
-		repeat
-			target = lib[love.math.random(#lib)]
-		until not target.isHero
-		local tCard = game.my.library:makeCard(target)
-		game:transferCard(tCard,{},game.my.hand) --card ,from,to 
+		game:drawCard("my","random") --whose,id
 	end,
 }
 

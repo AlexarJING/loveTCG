@@ -22,7 +22,8 @@ function collection:init(parent)
 	self.x = -150
 	self.y = -200
 	self.scale = 0.5
-	
+	self.show = "card"
+
 	self.hero = self.parent.hero
 	self.faction = self.parent.faction
 
@@ -50,6 +51,17 @@ function collection:init(parent)
 			end
 		end
 	end
+
+	self.coins = {}
+
+	for i,id in ipairs(self.userdata.coins) do
+		local cd = table.copy(cardData.short[id])
+		local card =Card(self.parent,cd,nil,self)
+		card.index = i
+		card.x,card.y = getPos(self,i,1)
+		self.coins[i] = card
+	end
+
 	self.ui = {}
 
 	self.categoryBtn ={}
@@ -57,13 +69,26 @@ function collection:init(parent)
 	for category,data in pairs(self.cards[self.faction]) do
 		self.category = self.category or category
 		i = i + 1
-		local btn =  Button(self,self.x+i*150+100 ,self.y-130,80,30,category)
+		local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,category)
 		btn.onClick = function(btn) 
+			self.show = "card"
 			self.category = btn.text 
 			self.parent.category = btn.text
 		end
 		self.categoryBtn[category] = btn
 	end
+	
+	i = i + 1 
+	local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,"coins")
+	btn.onClick = function(btn) 
+		self.show = "coin"
+		self.category = btn.text 
+		self.parent.category = btn.text
+	end
+	self.categoryBtn["coins"] = btn
+
+
+
 	self.parent.category = self.category
 
 	local btn = Button(self,self.x+70, self.y - 130, 80,30, "save")
@@ -73,17 +98,48 @@ function collection:init(parent)
 	end
 end
 
+function collection:update_forCoin(dt)
+	
+	for i,card in ipairs(self.coins) do
+		if not card.slot then
+			card:update(dt)
+		end
+	end
+
+	local hoverCard = self.parent.hoverCard
+	local pocket = self.parent.pocket
+	if hoverCard and self.parent.click and  hoverCard.current == self then			
+		local pos
+		for i = 1, 10 do
+			if pocket.slot2[i]==nil then
+				pos = i
+				break
+			end
+		end
+		if not pos then return end
+		hoverCard.slot = pos
+		pocket.slot2[pos] = hoverCard
+		hoverCard.current = pocket
+		local x,y = getPosForPocket(self,hoverCard.slot)
+		hoverCard:addAnimate(0.5,{x=x,y=y},"inBack")
+		self.parent.click = false
+	end
+
+end
 
 function collection:update(dt)
-	local faction = self.parent.faction
-	local hero = self.parent.hero
-	local category = self.category
-
 
 	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
+	
+
 	for i,btn in ipairs(self.ui) do
 		btn:update(dt)
 	end
+
+	if self.show == "coin" then return self:update_forCoin(dt) end
+
+	local faction = self.parent.faction
+	local category = self.parent.category
 
 	for id,tab in pairs(self.cards[faction][category]) do
 		for level,card in ipairs(tab) do
@@ -93,6 +149,7 @@ function collection:update(dt)
 		end
 	end
 
+	
 	local hoverCard = self.parent.hoverCard
 	local pocket = self.parent.pocket
 	if hoverCard and self.parent.click and  hoverCard.current == self then			
@@ -116,6 +173,7 @@ end
 
 function collection:draw()
 	
+
 	local faction = self.parent.faction
 	local hero = self.parent.hero
 	local category = self.category
@@ -130,12 +188,19 @@ function collection:draw()
 		love.graphics.rectangle("fill", x-55, y-80, 110, 160)
 	end
 
+	if self.show == "card" then
 
-	for id,tab in pairs(self.cards[faction][category]) do
-		for level,card in ipairs(tab) do
+		for id,tab in pairs(self.cards[faction][category]) do
+			for level,card in ipairs(tab) do
+				card:draw()
+			end
+		end
+	else
+		for i,card in ipairs(self.coins) do
 			card:draw()
 		end
 	end
+
 end
 
 return collection

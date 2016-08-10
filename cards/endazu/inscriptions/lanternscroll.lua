@@ -1,5 +1,5 @@
 local data = {
-	id = "writofrecovery",
+	img_name = "writofrecovery",
 	name = "Latern Scroll",
 	faction = "endazu",
 	category = "inscriptions",

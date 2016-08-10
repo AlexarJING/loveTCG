@@ -1,5 +1,5 @@
 local data = {
-	id = "tavernwench",
+	img_name = "tavernwench",
 	name = "Tarvern Wench",
 	faction = "metris",
 	category = "underlings",
@@ -18,19 +18,9 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		local weakest
-		local weakest_hp = 10
-		for i,v in ipairs(self.my.play.cards) do
-			if v.hp and not v.cannotScrificed and v.hp<weakest_hp then
-				weakest = {v}
-				weakest_hp = v.hp
-			elseif v.hp and not v.cannotScrificed and v.hp== weakest then
-				table.insert(weakest,v)
-			end
-		end
+		local weakest = game:weakestAlly(game.your)
 		if weakest then 
-			local target = weakest[love.math.random(#weakest)]
-			game:transferCard(target,target.current,game.my.play)
+			game:transferCard(weakest,game.my.play)
 		else 
 			game:gain(card,"my","skull")
 		end

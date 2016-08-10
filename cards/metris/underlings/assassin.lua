@@ -1,5 +1,5 @@
 local data = {
-	id = "assassin",
+	img_name = "assassin",
 	name = "Assassin",
 	faction = "metris",
 	category = "underlings",
@@ -17,12 +17,12 @@ data.description = {
 }
 
 data.ability={
-	onGain = function (card,game,who,what)  --card.ability.onGain(card,self,who,what)
+	onGain = function (card,game,what)  --card.ability.onGain(card,self,who,what)
 		if what == "skull" then
 			game:attack(card,"weakest")
 		end
 	end,
-	onTurnStart = function (card,game) game:drawCard("your") end,
+	onTurnStart = function (card,game) game:attack(card,"weakest") end,
 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
 }
 

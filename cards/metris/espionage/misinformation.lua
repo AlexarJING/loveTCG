@@ -1,5 +1,5 @@
 local data = {
-	id = "misinformation",
+	img_name = "misinformation",
 	name = "Misinformation",
 	faction = "metris",
 	category = "espionage",
@@ -9,54 +9,50 @@ local data = {
 }
 
 data.description = {
-	"Steal the cheapest card",
-	"from your foe's bank",
- 	"Destroy after use",
+	"Pick a card from Foe's Bank",
+	"remove it and self",
 }
 
 data.ability={
 	onPlay = function(card,game)
-		local candidate = {}
+		
 		local cards = {unpack(game.your.bank.cards)}
 		if #cards == 0 then return end
-		game:optionsCards(candidate)
-		game.show.onChoose = function(card,game,target)
-			local cards = game.my.library.cards
 
-			for i = #cards , 1, -1 do
-				if cards[i].id == target.id then
-					table.remove(cards,i)
-				end
-			end
-			
-			local cards = game.my.bank.cards
-
-			for i = #cards , 1, -1 do
-				if cards[i].id == target.id then
-					game:killCard(cards[i])
+		game:optionsCards(cards)
+		game.show.onChoose = function(target,game)
+	
+			for i,v in ipairs(game.your.library.cards) do
+				if v.id == target.id and v.level == target.level then
+					table.remove(game.your.library.cards, i)
 				end
 			end
 
+		
 			for i,v in ipairs(game.show.cards) do
-				game:transferCard(v,v.current,v.born.grave)
+				game:transferCard(v,v.born.grave)
 			end
+		
+
 		end
 	end,
 	onKilled = function (card,game)
-		local cards = game.my.library.cards
-
-		for i = #cards , 1, -1 do
-			if cards[i].id == card.id then
-				table.remove(cards,i)
+		for i,v in ipairs(game.my.library.cards) do
+			if v.id == card.id and v.level == card.level then
+				table.remove(game.my.library.cards, i)
 			end
 		end
 		
-		local cards = game.my.bank.cards
+		for i,v in ipairs(game.my.bank.cards) do
+			if v.id == card.id and v.level == card.level then
+				game:transferCard(v,v.current,v.born.grave)
+			end	
+		end
 
-		for i = #cards , 1, -1 do
-			if cards[i].id == card.id then
-				game:killCard(cards[i])
-			end
+		for i,v in ipairs(game.my.hand.cards) do
+			if v.id == card.id and v.level == card.level then
+				game:transferCard(v,v.current,v.born.grave)
+			end	
 		end
 	end
 }

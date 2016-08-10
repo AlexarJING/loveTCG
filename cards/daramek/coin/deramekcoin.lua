@@ -1,15 +1,11 @@
 local data = {
-	id = "daramekcoin",
+	img_name = "daramekcoin",
 	name = "coin",
 	faction = "daramek",
 	--category = "coin",
 	rare = 0 ,
-
 	profile = {"no money, you can do nothing!"},
-
-
 	back = true,
-
 	isCoin = true,
 }
 
@@ -19,7 +15,7 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game)
-		game:gain(card,"my","gold",1)
+		game:gain(card,"my","gold")
 	end,
 }
 

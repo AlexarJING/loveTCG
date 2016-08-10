@@ -1,5 +1,5 @@
 local data = {
-	id = "songofspring",
+	img_name = "songofspring",
 	name = "Song of Spring",
 	faction = "endazu",
 	category = "incantations",

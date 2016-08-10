@@ -112,6 +112,10 @@ function shop:checkUpgrade(index)
 	local data
 	if card.isHero then
 		data = self.data.collection.heros[card.faction][card.id]
+	elseif card.isCoin then
+		table.insert(self.data.collection.coins,card.id)
+		self.showTag[index] = "new"
+		return
 	else
 		data = self.data.collection.cards[card.faction][card.category][card.id]
 	end
@@ -128,6 +132,8 @@ function shop:checkUpgrade(index)
 	else
 		if card.isHero then
 			self.data.collection.heros[card.faction][card.id] = {exp=0,level = 1,lib={}}
+		elseif card.isCoin then
+			self.data.collection.coins[card.id] = {exp=0,level = 1}
 		else
 			self.data.collection.cards[card.faction][card.category][card.id] = {exp=0,level = 1}
 		end

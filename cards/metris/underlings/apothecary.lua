@@ -1,5 +1,5 @@
 local data = {
-	id = "apothecary",
+	img_name = "apothecary",
 	name = "Apothecary",
 	faction = "metris",
 	category = "underlings",
@@ -19,25 +19,14 @@ data.description = {
 
 data.ability={
 	onFeed = function (card,game) 
-		game:refill("my",function(cards)
-			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.poison then
-					table.insert(candidate, v)
-				end
-			end
-			if not candidate[1] then return end
-			return table.random(candidate)
-		end) 
+		
+		local poisons = {"belladonna", "hemlock" , "arsenic"}
+		print(table.random(poisons))
+		game:refillCard("my",table.random(poisons))
+
 	end,
 	onTurnStart = function (card,game)
-		for i,v in ipairs(game.my.play.cards) do
-			if v.hp then 
-				v.hp = v.hp_max
-				v:updateCanvas()
-			end	
-		end 
-
+		game:healCard("all",true)
 	end,
 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
 }

@@ -1,5 +1,5 @@
 local data = {
-	id = "warrats",
+	img_name = "warrats",
 	name = "War Rats",
 	faction = "daramek",
 	category = "herd",
@@ -17,8 +17,8 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		game:attack()	--card,who,what
-		game:attack()
+		game:attack(card)	--card,who,what
+		game:attack(card)
 	end,
 }
 

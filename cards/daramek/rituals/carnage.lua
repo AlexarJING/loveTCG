@@ -1,5 +1,5 @@
 local data = {
-	id = "riteofwar",
+	img_name = "riteofwar",
 	name = "Carange",
 	faction = "daramek",
 	category = "rituals",
@@ -17,7 +17,7 @@ data.description = {
 data.ability={
 	onPlay = function (card,game)	
 		while true do
-			local sacrificed = game:sacrificeCard()
+			local sacrificed = game:sacrificeCard("random")
 			if not sacrificed then return end
 			for i = 1, sacrificed.hp do
 				game:attack(card)

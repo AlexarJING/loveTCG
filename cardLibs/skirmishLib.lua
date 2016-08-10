@@ -72,7 +72,7 @@ local data = {
 				["faction"]="vespitole",
 				["id"]="prayer",}
 			},
-	coins = {},
+	deck = {},
 }
 
 local function chooseShow(game)

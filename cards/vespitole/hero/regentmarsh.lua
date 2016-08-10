@@ -1,5 +1,5 @@
 local data = {
-	id = "regentmarsh",
+	img_name = "regentmarsh",
 	name = "Regent Marsh",
 	faction= "vespitole",
 
@@ -11,7 +11,8 @@ local data = {
 }
 
 data.description = {
-	"feed ally: 50% attack",
+	"feed ally: ",
+	"50% attack",
 }
 
 data.ability={
