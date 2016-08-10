@@ -349,13 +349,13 @@ function card:updateCanvas()
 	end
 
 	--shield
-	if self.charge and self.intercept then
+	if (self.charge and self.intercept) or self.cancel then
 		love.graphics.setColor(0, 0, 50, 200)
 		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setFont(font_content)
 		love.graphics.draw(img_shield, 5, 50)
-		love.graphics.printf("x"..tostring(self.charge), 25, 50, Width, "left")
+		love.graphics.printf("x"..tostring(self.charge or self.cancel), 25, 50, Width, "left")
 	elseif self.charge then
 		love.graphics.setColor(0, 0, 50, 200)
 		love.graphics.rectangle("fill", 0, 50, 50, 22,5,5)

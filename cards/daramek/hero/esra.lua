@@ -14,20 +14,19 @@ data.description = {
 }
 
 data.ability={
-	onDrawHand = function (game)
-		if #self.my.hand.cards>= self.my.turnDrawMax then game:refillCard();return end
-		game:drawCard("my",function()
-			local candidate = {}
-			for i,v in ipairs(game.my.deck.cards) do
-				if v.hp then table.insert(candidate,v) end
-			end
-			if not candidate[1] then return end
-			return candidate[love.math.random(#candidate)]
-		end)
+	onDrawHand = function (card,game)
+		
+		if #game.my.hand.cards>= game.my.handsize then game:refillCard();return end
+		
 
-		for i = 1, self.my.turnDrawCount-1 do
-			if #self.my.hand.cards>= self.my.turnDrawMax then break end
-			self:drawCard()
+		local drawCount = game.my.handsize
+		if game:drawCard("my","ally") then
+			drawCount = drawCount -1
+		end
+
+		for i = 1, drawCount do
+			if #game.my.hand.cards>= game.my.handsize then break end
+			game:drawCard()
 		end
 		game:refillCard()
 		return true

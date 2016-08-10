@@ -20,18 +20,20 @@ data.description = {
 }
 
 data.ability={
-	onFeedMagic = function(card,game)
-		game:chargeCard(card)
+	onFeedAlly = function(card,game,who,what)
+		if who == game.my.hero.card and what == "magic" then 
+			game:chargeCard(card)
+		end
 	end,
+	
 	onFullCharge = function(card,game)
-		game:drawCard("my",function(cards)
-			for i,v in ipairs(cards) do
-				if string.find(v.id,"herdof") then
-					return v
-				end
-			end
-		end)
-		card.charge=0
+		
+		local herds = {"herdofaurochs","herdofboars","herdofgoats","herdofrats"}
+		local data = game.cardData.short[table.random(herds)]
+		local c = game:makeCard(data)
+		game:transferCard(c,game.my.hand)
+		card.charge = 0
+		card:updateCanvas()
 	end
 }
 

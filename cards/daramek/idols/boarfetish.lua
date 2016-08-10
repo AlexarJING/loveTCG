@@ -16,8 +16,10 @@ data.description = {
 }
 
 data.ability={
-	onFeedMagic = function(card,game)
-		game:attack(card)
+	onFeedAlly = function(card,game,who,what)
+		if who == game.my.hero.card and what == "magic" then 
+			game:attack(card)
+		end
 	end
 }
 

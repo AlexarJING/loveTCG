@@ -1,6 +1,6 @@
 local data = {
-	img_name = "mogesh",
-	name = "Mogesh",
+	img_name = "babarus",
+	name = "Babarus",
 	faction= "daramek",
 	profile = {"no money, you can do nothing!"},
 	isHero = true,
@@ -14,11 +14,11 @@ data.description = {
 }
 
 data.ability={
-	onGain = function(card,game,who,what) --self.my.hero.card,self,who,what
-		if who ~= "my" then return end
+	onGain = function(card,game,what) --self.my.hero.card,self,who,what
 		if (what == "skull" or what == "food")
 			and love.math.random()<0.5 then
-			return "magic"
+			game:lose(card,"my",what)
+			game:gain(card,"my","magic")
 		end 
 	end
 }

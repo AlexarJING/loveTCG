@@ -19,7 +19,7 @@ data.ability={
 	onPlay = function (card,game)
 		local candidate = {}
 		for i,v in ipairs(game.my.play.cards) do
-			if v.hp>0 and not v.cannotScrifice then
+			if v.hp and v.hp>0 and not v.cannotScrifice then
 				table.insert(candidate, v)
 			end
 		end

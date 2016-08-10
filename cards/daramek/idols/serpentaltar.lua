@@ -16,9 +16,11 @@ data.description = {
 }
 
 data.ability={
-	onHeroAttack = function(card,game)
-		if love.math.random()<0.25 then game:attack(card) end
-	end
+	onAllyAttack = function(card,game,who)
+		if who == game.my.hero.card then 
+			if love.math.random()<0.25 then game:attack(card) end
+		end
+	end,
 }
 
 return data

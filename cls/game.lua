@@ -183,10 +183,10 @@ function game:keypress(key)
 		self.turnButton:endturn()
 	elseif key == "f1" then
 		self.debug.enable = not self.debug.enable
-		self.my.hero.card.gold = 999
-		self.my.hero.card.food = 999
+		self.my.hero.card.gold = 0
+		self.my.hero.card.food = 0
 		self.my.hero.card.magic = 999
-		self.my.hero.card.skull = 999
+		self.my.hero.card.skull = 0
 	elseif key == "f2" then
 		self.console:toggle(not self.console.enable)
 	elseif key == "f3" then
@@ -644,6 +644,7 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 		for i,v in ipairs(self[whose].deck.cards) do
 			if v.hp then table.insert(candidate,v) end
 		end
+
 		if not candidate[1] then return end
 		local target = table.random(candidate)
 		self:transferCard(target,to)
@@ -1093,7 +1094,7 @@ function game:killCard(card,passrearrange)
 	
 	if card:getSide() == self.my then  --自家牌kill
 		for i,v in ipairs(self:ally(card,true)) do
-			v:cast("onAllyDie",card)
+			if v:cast("onAllyDie",card) then return end
 		end
 		for i,v in ipairs(self:foe(card,true)) do
 			v:cast("onFoeDie",card)
@@ -1103,7 +1104,7 @@ function game:killCard(card,passrearrange)
 			v:cast("onFoeDie",card)
 		end
 		for i,v in ipairs(self:foe(card,true)) do
-			v:cast("onAllyDie",card)
+			if v:cast("onAllyDie",card) then return end
 		end
 	end
 	
@@ -1184,6 +1185,7 @@ function game:attack(from,to,ignore)
 			card.cancel = card.cancel -1
 			Effect(self,"attack",from,card,false,1,"inBack")
 			Effect(self,"shield",card,card,false,1,"inBack")
+			card:updateCanvas()
 			return
 		end
 	end
@@ -1194,7 +1196,7 @@ function game:attack(from,to,ignore)
 	end
 
 	for i,card in ipairs(ally) do
-		card:cast("onAnyAttack",from)
+		card:cast("onAllyAttack",from)
 	end
 
 
@@ -1225,12 +1227,12 @@ function game:attack(from,to,ignore)
 			end
 			effect = Effect(self,"attack",from,target,false,1,"inBack")	
 			--effect:addCallback(function() target:vibrate() end)
-			from:standout()
-
-		else -- for intercepters
+		else -- for intercepters	
 			target = self:attackOrder(candidate)
 		end	
 	end
+
+	
 
 	if type(to) == "table" and to~=target then
 		effect = Effect(self,"attack",to,target,false,0.5,"inBack",true)
@@ -1245,10 +1247,10 @@ function game:attack(from,to,ignore)
 		tmp:addCallback(function()target:standout() end)
 		tmp:addCallback(shieldFunc)
 		tmp:addCallback(nextFunc)
-		from:standout()
+
 	else
 		effect = Effect(self,"attack",from,target,false,0.5,"inBack")
-		from:standout()
+
 	end
 
 
@@ -1271,7 +1273,7 @@ function game:attack(from,to,ignore)
 		end
 	end
 
-	
+	from:standout()
 
 	if target.dodgeRate and love.math.random()<target.dodgeRate then
 		effect:addCallback(function() target:turnaround() end)
@@ -1285,10 +1287,9 @@ function game:attack(from,to,ignore)
 
 
 	if result == "death" then
-
+		self:checkGameOver(target)
 		effect:addCallback(function() target:vibrate(_,_,
 			function()
-				self:checkGameOver(target)
 				self:rearrangeAllCards()
 			end) end)
 		self:killCard(target,true)

@@ -17,10 +17,10 @@ data.description = {
 }
 
 data.ability={
-	onKillCard = function(card,game,target)
+	onAllyDie = function(card,game,target)
 		if love.math.random()<0.1 then
-			card:reset()
-			gain:transferCard(card ,card.current, game.my.hand)
+			target:reset()
+			game:transferCard(target , target:getSide().hand)
 			return true
 		end
 	end

@@ -15,13 +15,13 @@ data.description = {
 }
 
 data.ability={
-	onFeedMagic = function(card,game)
+	onFeedAlly = function(card,game,who,what)
 		local victim = game:sacrificeCard("strongest")
 		if not victim then return end
 		for i = 1,victim.hp do
 			game:attack()
 		end
-	end
+	end,
 }
 
 return data

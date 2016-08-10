@@ -17,7 +17,7 @@ data.ability={
 	onPlay = function(card,game)
 		for i,v in ipairs(game.my.play.cards) do
 			if v.hp then
-				game:attack(card)
+				game:attack(v)
 			end
 		end
 	end
