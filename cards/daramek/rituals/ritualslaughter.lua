@@ -26,6 +26,7 @@ data.ability={
 		if not candidate[1] then return end
 		game:optionsCards(candidate)
 		game.show.onChoose = function(card,game)
+			game:transferCard(card,game.my.play)
 			for i = 1, card.hp+1 do
 				delay:new((i-1)*0.2,nil,game.gain,game,card,"my","random")
 			end

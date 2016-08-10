@@ -899,7 +899,7 @@ function game:feedCard(card,all,what)
 	end
 
 	for i = 1, amount do
-		self:lose(self.my.hero.card,"my",food)
+		if not what  then  self:lose(self.my.hero.card,"my",food) end
 		self:healCard(card)
 	end
 
@@ -1356,13 +1356,11 @@ function game:sacrificeCard(target)
 	if not target then return end
 
 	for i,v in ipairs(ally) do
-		if v.onSacrificeAlly then
-			v.onSacrificeAlly(v,self,target)
-		end
+		v:cast("onSacrificeAlly",target)
 	end
 		
-
-	if target.ability.onSacrifice then target.ability.onSacrifice(target,self) end
+	target:cast("onSacrifice")
+	
 	self:killCard(target)
 	return target
 end

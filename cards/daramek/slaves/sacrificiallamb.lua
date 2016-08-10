@@ -19,9 +19,9 @@ data.description = {
 }
 
 data.ability={
-	onScrifice = function(card,game)
+	onSacrifice = function(card,game)
 		game:gain(card,"my","random")
-		game:feedHeroWith("magic")
+		game:feedCard(game.my.hero.card,false,"magic")
 	end
 }
 

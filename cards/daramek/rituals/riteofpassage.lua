@@ -18,7 +18,7 @@ data.description = {
 
 data.ability={
 	onCardPlay = function (card,game)
-		game:feedHeroWith("magic")
+		game:feedCard(game.my.hero.card,false,"magic")
 	end,
 }
 

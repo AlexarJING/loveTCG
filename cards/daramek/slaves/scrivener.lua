@@ -20,30 +20,32 @@ data.description = {
 
 data.ability={
 	onTurnStart = function (card,game) 
-		game:drawCard("my",function(cards)
-			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.category=="rituals" then
-					table.insert(candidate,v)
+		game:drawCard("my",
+			function(cards) 
+				local candidate = {}
+				for i,v in ipairs(cards) do
+					if v.category == "ritual" and v.id~="festival" then
+						table.insert(candidate, v)
+					end
 				end
+				if not candidate[1] then return end
+				return candidate[love.math.random(#candidate)]
 			end
-			if not candidate[1] then return end
-			return candidate[love.math.random(#candidate)]
-		end)
-		card.currentCardPlayed = game.cardPlayCount
+		)
 	end,
 	onPlay = function (card,game)
-		game:drawCard("my",function(cards)
-			local candidate = {}
-			for i,v in ipairs(cards) do
-				if v.category=="rituals" then
-					table.insert(candidate,v)
+		game:drawCard("my",
+			function(cards) 
+				local candidate = {}
+				for i,v in ipairs(cards) do
+					if v.category == "ritual" and v.id~="festival" then
+						table.insert(candidate, v)
+					end
 				end
+				if not candidate[1] then return end
+				return candidate[love.math.random(#candidate)]
 			end
-			if not candidate[1] then return end
-			return candidate[love.math.random(#candidate)]
-		end)
-		card.currentCardPlayed = game.cardPlayCount
+		)
 	end,
 	always = function (card,game)
 		if card.current.root ~= game.turn then return end
