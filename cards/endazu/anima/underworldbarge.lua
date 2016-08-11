@@ -28,7 +28,7 @@ data.ability={
 
 	onKilled = function (card,game)
 		for i = 1, card.charge do
-			game:summon("gildedwarriors")
+			game:summon(card,"gildedwarriors")
 		end
 	end
 }

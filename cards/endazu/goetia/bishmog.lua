@@ -8,11 +8,12 @@ local data = {
 	basePrice = 5,
 	back = true,
 	chargeInit = 1,
-	chargeMax = 3,
+	chargeMax = 5,
+	chargeMin= 1,
 	hp = 1,
-	canFeedLife = true,
-	memory =true
-
+	foodType = "hp",
+	feedAmount = 3,
+	connected = true
 }
 
 data.description = {
@@ -20,31 +21,23 @@ data.description = {
  	"1 hp per charge",
  	"Feed 3 Life: permanent +1 charge",
  	"On turn, for each charge:",
- 	"If attacked: +1 magic"
+ 	"self attack: +1 magic"
 }
 
 data.ability={
 	onPlay = function(card,game)
 		card.hp = card.charge
 		card.hp_max = card.charge
+		card:updateCanvas()
 	end,
 
 	onFeed = function(card,game)
-		if game:feedCard(card) then
-			if game:feedCard(card) then
-				game:chargeCard(card)
-			else
-				game:gain(card,"my","hp")
-				game:gain(card,"my","hp")
-			end
-		else
-			game:gain(card,"my","hp") 
-		end
+		game:chargeCard(card,true)
 	end,
 
 	onTurnStart = function(card,game,from)
 		for i = 1, card.charge do
-			game:attack(card,"self")
+			game:attack(card,"infighting")
 			game:gain(card,"my","magic")
 		end
 	end,

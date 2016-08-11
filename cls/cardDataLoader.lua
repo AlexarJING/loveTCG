@@ -11,7 +11,6 @@ data.rarity = {
 	["E"]={}
 }
 
-data.coins = {}
 
 local lfs = love.filesystem
 local index=0
@@ -24,7 +23,7 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 			local id = string.sub(category,1,-5)
 			index=index+1
 			local d = require ("cards/"..faction.."/"..id)
-			data.coins[id] = d
+			data[faction][id] = d
 			data.index[index] = d
 			data.short[id] = d
 			d.id = id

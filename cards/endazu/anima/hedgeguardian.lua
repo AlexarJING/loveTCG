@@ -9,9 +9,9 @@ local data = {
 	back = true,
 	chargeInit = 1,
 	chargeMax = 5,
-
-	memory = true,
-	intercept=true
+	chargeMin = 1,
+	intercept=true,
+	connected= true
 }
 
 data.description = {
@@ -25,6 +25,7 @@ data.ability={
 	onPlay = function(card,game)
 		card.hp = card.charge
 		card.hp_max = card.charge
+		card:updateCanvas()
 	end,
 
 	onHold = function(card,game)
@@ -32,7 +33,7 @@ data.ability={
 	end,
 
 	onAttacked = function(card,game,from)
-		game:summon("argorethflower")
+		game:summon(card,"conjuredargoreth")
 	end
 }
 

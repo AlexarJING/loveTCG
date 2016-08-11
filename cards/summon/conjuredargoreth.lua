@@ -1,23 +1,20 @@
 local data = {
-	img_name = "argorathflower", --argorathflower
-	name = "Argoreth Flower",
-	faction = "endazu",
-	category = "anima",
+	img_name = "conjuredargoreth", --argorathflower
+	name = "Conjured Argoreth",
+	faction = "summon",
 	rare = 1,
 	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
 	basePrice = 3,
-	back = true,
 	chargeInit = 1,
-	chargeMax = 4,
-	chargeMin = 1,
+	chargeMax = 1,
 	last = true,
 	hp = 1,
 }
 
 data.description = {
-	"1/4 charge",
- 	"hold: permanent +1 charge",
- 	"turn: for each charge, + magic",
+	"1/1 charge",
+ 	"turn: + magic",
+ 	"discard after use"
 }
 
 data.ability={

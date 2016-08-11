@@ -9,9 +9,11 @@ local data = {
 	back = true,
 	chargeInit = 1,
 	chargeMax = 5,
+	chargeMin = 1,
 	hp = 1,
-	canFeedLife = true,
-	memory =true
+	foodType = "hp",
+	feedAmount = 2,
+	connected = true
 
 }
 
@@ -27,14 +29,13 @@ data.ability={
 	onPlay = function(card,game)
 		card.hp = card.charge
 		card.hp_max = card.charge
+		card:updateCanvas()
 	end,
 
 	onFeed = function(card,game)
-		if game:feedCard(card) then
-			game:chargeCard(card)
-		else
-			game:gain(card,"my","hp") 
-		end
+		
+		game:chargeCard(card,true)
+		
 	end,
 
 	onTurnStart = function(card,game,from)

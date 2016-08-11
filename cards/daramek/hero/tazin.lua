@@ -16,7 +16,7 @@ data.description = {
 data.ability={
 	onFoeAttack = function(card,game)
 		if love.math.random()<0.25 then
-			game:attack()
+			game:attack(card)
 		end
 	end
 }

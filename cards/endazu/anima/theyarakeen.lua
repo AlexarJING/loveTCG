@@ -9,9 +9,9 @@ local data = {
 	back = true,
 	chargeInit = 1,
 	chargeMax = 20,
+	chargeMin = 1,
 	last = true,
 	hp = 5,
-	memory = true,
 	undead = true
 }
 
@@ -28,8 +28,8 @@ data.ability={
 		end
 	end,
 	onHold = function(card,game)
-		game:chargeCard(card)
-		game:chargeCard(card)	
+		game:chargeCard(card,true)
+		game:chargeCard(card,true)	
 	end
 }
 

@@ -9,8 +9,9 @@ local data = {
 	back = true,
 	chargeInit = 3,
 	chargeMax = 3,
-	canFeedLife = true
-
+	foodType = "hp",
+	feedAmount = 2,
+	last =true
 }
 
 data.description = {
@@ -23,12 +24,9 @@ data.ability={
 
 	onFeed = function(card,game)
 
-		if game:feedCard(card) then
-			game:dischargeCard(card)
-			game:chargeCard("random")
-		else
-			game:gain(card,"my","hp") 
-		end
+		game:dischargeCard(card)
+		game:chargeCard("random")
+		
 	end,
 
 }

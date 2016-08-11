@@ -15,7 +15,7 @@ function debug:init(game,root)
 	for faction,tab in pairs(game.cardData) do	
 		if faction == "short" or faction == "index" or faction == "rarity" then
 			-----
-		elseif faction == "coins" then
+		elseif faction == "coins" or faction== "summon" then
 			for id,data in pairs(tab) do
 				index = index + 1		
 				local cd = table.copy(game.cardData.short[id])

@@ -8,7 +8,7 @@ local data = {
 	basePrice = 5,
 	back = true,
 	chargeInit = 1,
-	chargeMax = 5,
+	chargeMax = 6,
 
 	hp = 3,
 
@@ -32,7 +32,9 @@ data.ability={
 	end,
 
 	onCardPlay = function (card,game,target)
-		game:activateCard(target)
+		if target.hp and game:dischargeCard(card) then
+			game:activateCard(card,target)
+		end
 	end,
 }
 

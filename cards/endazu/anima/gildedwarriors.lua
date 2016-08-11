@@ -9,9 +9,10 @@ local data = {
 	back = true,
 	chargeInit = 1,
 	chargeMax = 5,
+	chargeMin = 1,
 	last = true,
 	hp = 1,
-	memory = true
+	connected = true
 }
 
 data.description = {
@@ -25,6 +26,7 @@ data.ability={
 	onPlay = function(card,game)
 		card.hp = card.charge
 		card.hp_max = card.charge
+		card:updateCanvas()
 	end,
 	onTurnStart = function (card,game)
 		for i = 1, card.charge do
@@ -32,7 +34,7 @@ data.ability={
 		end
 	end,
 	onHold = function(card,game)
-		game:chargeCard(card)	
+		game:chargeCard(card,true)	
 	end
 }
 

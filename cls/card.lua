@@ -86,7 +86,9 @@ end
 function card:reset()
 	self.hp = self.data.hp
 	self.last = self.data.last
-	if not self.memory then
+	if self.chargeMin then
+		self.charge = self.chargeMin
+	else
 		self.charge = self.data.chargeInit or self.data.charge
 	end
 	self.charging = self.data.charging

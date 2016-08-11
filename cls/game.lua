@@ -212,7 +212,7 @@ function game:clickCard()
 	local current = self.hoverCard.current
 	local card = self.hoverCard
 
-	if self.my.needTarget and self.my.targetSelect(self,self.hoverCard) then
+	if self.my.needTarget and self.my.targetSelected(self,self.hoverCard) then
 		self.my.needTarget= false 
 	end
 
@@ -453,7 +453,9 @@ function game:turnEnd()
 		card:cast("onTurnEnd")
 	end
 
-
+	for i,card in ipairs(self.my.hand.cards) do
+		card:cast("onHold")
+	end
 	
 
 
@@ -681,8 +683,9 @@ function game:drawCard(whose,id,manual) --or condition func with func(card)
 end
 
 function game:makeCard(data,whose)
-	whose = whose or "my"
-	local card = Card(self,data,whose,self[whose].library)
+	whose = whose or self.my
+	local where = whose ==  self.my and "my" or "your"
+	local card = Card(self,data,where,whose.library)
 	return card
 end
 
@@ -714,7 +717,7 @@ function game:refillCard(whose,id,level)
 	if data then
 		local tmp = table.copy(data)
 		tmp.level = tmp.level or (level or 1)
-		local target = self:makeCard(tmp,whose)
+		local target = self:makeCard(tmp,self[whose])
 		self:transferCard(target,to)
 	end
 end
@@ -886,9 +889,11 @@ function game:feedCard(card,all,what)
 	local amount = card.feedAmount or 1
 	local resource = self.my.resource
 	
-	if resource[food]>= amount then
+	local adjust = 0
+	if food == "hp" then adjust = 1 end
+	if resource[food]>= amount + adjust then
 		--
-	elseif  resource.magic >= amount then
+	elseif  resource.magic >= amount + adjust then
 		food = "magic"
 	else
 		return
@@ -901,8 +906,10 @@ function game:feedCard(card,all,what)
 
 	for i = 1, amount do
 		if not what  then  self:lose(self.my.hero.card,"my",food) end
-		self:healCard(card)
+		
 	end
+	
+	self:healCard(card)
 
 	if card.ability.onFeed then card.ability.onFeed(card,self,food) end
 
@@ -1006,6 +1013,12 @@ function game:healCard(card,full)
 		for i,v in ipairs(self:ally()) do
 			self:healCard(v,full)
 		end
+	elseif card == "charge" then
+		for i,v in ipairs(self:ally()) do
+			if v.charge and v.hp then
+				self:healCard(v)
+			end
+		end
 	elseif card then
 		if not card.hp then return end
 		card.hp = card.hp + (full and 100 or 1)
@@ -1053,7 +1066,7 @@ function game:attackCard(card, all)
 end
 
 function game:damageCard(card)
-	if card.intercept and card.charge and card.charge>0 then
+	if card.intercept and card.charge and card.charge>0 and not card.hp then
 		card.charge = card.charge - 1
 	else
 		card.hp = card.hp - 1
@@ -1212,7 +1225,7 @@ function game:attack(from,to,ignore)
 			end
 		end
 
-		
+	
 		if #candidate == 0 then --no intercept
 			if type(to) == "table" then --a card
 				target = to			
@@ -1221,7 +1234,7 @@ function game:attack(from,to,ignore)
 			elseif to == "hero" then
 				target = your.hero.card
 			elseif to == "infighting" then
-				target = self:randomAlly(my)
+				target = self:randomAlly(your)
 			else
 				target = self:randomAlly(your)
 			end
@@ -1311,13 +1324,13 @@ end
 function game:winner()
 	--screenshot,hero,result
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
-	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"win",self)
+	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"win",self)
 end
 
 function game:loser()
 	--screenshot,hero,result
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
-	gamestate.switch(gameState.result_scene,ss,self.my.hero.card,"lose",self)
+	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"lose",self)
 end
 
 function game:sacrificePre()
@@ -1370,30 +1383,31 @@ function game:copyCard(card)
 	return Card(self,card.data,card.born,card.current)
 end
 
-function game:allChargeTarget(my)
+function game:allChargeTarget(my,cond)
 	local candidate = {}
 	for i,v in ipairs(my.play.cards) do
-		if cond and v.category == cond then
-			table.insert(candidate)
-		elseif not cond then
-			table.insert(candidate)
+		if v.charge and cond and v.category == cond then
+			table.insert(candidate,v)
+		elseif v.charge and not cond then
+			table.insert(candidate,v)
 		end
 	end
 	for i,v in ipairs(my.hand.cards) do
-		if cond and v.category == cond then
-			table.insert(candidate)
-		elseif not cond then
-			table.insert(candidate)
+		if v.charge and  cond and v.category == cond then
+			table.insert(candidate,v)
+		elseif v.charge and not cond then
+			table.insert(candidate,v)
 		end
 	end
 	return candidate
 end
 
-function game:chargeCard(card,cond)
-	if not card.charge then return end
+function game:chargeCard(card,permanent,category)
+	if type(card) == "table" and not card.charge then return end
 	
+
 	if card == "random" then
-		local candidate = self:allChargeTarget(card:getSide("my"))
+		local candidate = self:allChargeTarget(self.my,category)
 		if candidate[1] then
 			return self:chargeCard(table.random(candidate))
 		else
@@ -1401,38 +1415,57 @@ function game:chargeCard(card,cond)
 		end
 		
 	elseif card =="all" then
-		for i,v in ipairs(self:allChargeTarget(card:getSide("my"))) do
+		for i,v in ipairs(self:allChargeTarget(self.my,category)) do
 			self:chargeCard(v)
 		end
 		return true
 	end
 
 	card.charge = card.charge+1
-	card:updateCanvas()
-	if card.chargeMax and card.charge >= card.chargeMax then
-		card.charge = card.chargeMax
-		card:cast("onFullCharge")
+	if permanent then 
+		card.chargeMin = card.chargeMin + 1 
+		if card.chargeMin>card.chargeMax then
+			card.chargeMin = card.chargeMax
+		end
 	end
+
+	if card.chargeMax and card.charge<=card.chargeMax and card.connected then
+		card.hp_max = card.charge
+		card.hp = card.hp + 1
+		card:updateCanvas()
+	end
+
+	if card.chargeMax and card.charge > card.chargeMax then
+		card.charge = card.chargeMax
+		card:cast("onFullCharge")	
+	end
+	card:updateCanvas()
 end
 
 function game:dischargeCard(card)
 	card.charge = card.charge-1
-	card:updateCanvas()
-	if card.charge <= 0 then
+	
+	if card.charge < 0 then
 		card.charge = 0
-		if card.awaken == nil then
+		return
+	end
+
+	if card.charge == 0 then
+		if card.awaken == nil and not card.hp then
 			self:killCard(card)
 		elseif card.awaken ==true then
 			card.awaken = false
 			card:cast("onSleep")
 		end
 	end
+	card:updateCanvas()
+	return true
 end
 
-function game:summon(id)
+function game:summon(card,id)
 	local data = self.cardData.short[id]
-	local c = self:makeCard(data)
-	self:transferCard(c,self.my.play)
+	local c = self:makeCard(data,card:getSide())
+	self:transferCard(c,card:getSide().play)
 end
 
 function game:AI(dt)

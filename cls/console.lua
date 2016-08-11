@@ -9,13 +9,15 @@ function console:init(parent,x,y,w,h)
 	self.font=love.graphics.newFont(15)
 	self.caretPos={5,520,5,540}
 	self.caretAlpha=0
-	self.input=""
 	self.countOneLine=math.floor(self.pos[3]/self.font:getWidth("0"))
 	self.wordHeight=self.font:getHeight("1")
 	self.language="en"
-	self:calCaretPos()
 	self.enable = false
 	self.cmd ={}
+	self.input=""
+	self.inputRight = ""
+	self.caretIndex = 0
+	self:calCaretPos()
 end
 
 local function lookForShort(word)
@@ -28,7 +30,15 @@ local function lookForShort(word)
 end
 
 function console:send(diag)
-	
+	local cmd =loadstring(diag.what)
+	if cmd then 
+		local test,rt = pcall(cmd) 
+		if test then
+			diag.what = diag.what .. " --> "..tostring(rt)
+		else
+			diag.what = diag.what .. " --> "..tostring(test)
+		end
+	end 
 	if self.cmd[diag.what] then self.cmd[diag.what]() end
 
 	local word=diag.who..": "..diag.what
@@ -61,7 +71,7 @@ function console:say(who,what,step)
 		who=who,
 		what=what,
 		time=0,
-		color={0,255,0,255},
+		color={255,255,255,255},
 		step=step or 0.3
 	}
 	self:send(diag)
@@ -101,9 +111,9 @@ function console:draw()
 	else
 		self.alpha=0.3
 	end
-	love.graphics.setColor(0, 255,0, 30*self.alpha)
+	love.graphics.setColor(0, 100,0, 100*self.alpha)
 	love.graphics.rectangle("fill", unpack(self.pos))
-	love.graphics.setColor(0, 255,0, 50*self.alpha)
+	love.graphics.setColor(0, 100,0, 150*self.alpha)
 	love.graphics.line(self.pos[1],self.caretPos[2],self.pos[1]+self.pos[3],self.caretPos[2])
 
 	for i,line in ipairs(self.content) do
@@ -163,7 +173,7 @@ function console:draw()
 
 	love.graphics.setColor(255, 100, 255,255*self.alpha)
 	love.graphics.setFont(self.font)
-	love.graphics.print(self.input, self.pos[1],self.caretPos[2])
+	love.graphics.print(self.input..self.inputRight, self.pos[1],self.caretPos[2])
 
 end
 
@@ -179,6 +189,7 @@ function console:textinput(t)
 	if self.enable == false then return end
     if self.isEdit then
     	self.input=self.input..t
+    	self.caretIndex = self.caretIndex + 1 
     	self:calCaretPos()
     end
 end
@@ -191,18 +202,37 @@ function console:keypressed(key)
 				self.isEdit=false
 				self.parent.keyLock = false
 			else
-				self:say("player",self.input,0.3)
+				self:say("player",self.input..self.inputRight,0.3)
 				self.input=""
+				self.inputRight=""
+				self.caretIndex=0
 				self:calCaretPos()
 			end
 		else
 			self.isEdit=true
 			self.parent.keyLock=true
 		end
+	elseif key =="left" then
+		self.caretIndex = self.caretIndex - 1
+		if self.caretIndex < 0 then self.caretIndex = 0 end
+		local total = self.input..self.inputRight
+		self.input = string.sub(total,0,self.caretIndex)
+		self.inputRight = string.sub(total,self.caretIndex+1,-1)
+		self:calCaretPos()
+	elseif key == "right" then
+		self.caretIndex = self.caretIndex + 1
+		local maxLen = string.len(self.input..self.inputRight)
+		if self.caretIndex>maxLen then self.caretIndex = maxLen end
+		local total = self.input..self.inputRight
+		self.input = string.sub(total,0,self.caretIndex)
+		self.inputRight = string.sub(total,self.caretIndex+1,-1)
+		self:calCaretPos()
 	end
 
 	if key=="backspace" and self.isEdit then
 		self.input=string.sub(self.input,1,-2)
+		self.caretIndex = self.caretIndex - 1
+		if self.caretIndex < 0 then self.caretIndex = 0 end
 		self:calCaretPos()
 	end
 end

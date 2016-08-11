@@ -6,7 +6,7 @@ img.skull = love.graphics.newImage("res/others/skull.png")
 img.magic = love.graphics.newImage("res/others/magic.png")
 img.attack = love.graphics.newImage("res/others/skull.png")
 img.shield = love.graphics.newImage("res/assets/shield.png")
-
+img.hp = love.graphics.newImage("res/others/hp.png")
 
 
 function effect:init(parent,tag,from,to,fading,during,easing,manual)

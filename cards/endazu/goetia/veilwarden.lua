@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 1,
 	chargeMax = 20,
 	hp = 5,
-	canFeedLife = true,
+	foodType = "hp",
 	intercept =true
 }
 
