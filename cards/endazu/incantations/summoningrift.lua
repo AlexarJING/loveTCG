@@ -31,13 +31,13 @@ data.ability={
 			local target
 			repeat
 				target = lib[love.math.random(#lib)]
-			until not target.isHero
+			until not target.isHero and not target.isCoin
 			local tCard = game:makeCard(target)
 			tCard.born = game.my
 			tCard.current = game.my.grave
 			table.insert(candidate,tCard)
 		end
-		game:optionsCard(candidate,game.my.hand)
+		game:optionsCards(candidate,game.my.hand)
 	end,
 }
 

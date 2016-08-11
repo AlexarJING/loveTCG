@@ -24,9 +24,7 @@ data.ability={
 		game:chargeCard(card)
 		game:chargeCard(card)
 	end,
-	onPlay = function (card,game)
-		card.shield = card.charge
-	end,
+
 }
 
 return data

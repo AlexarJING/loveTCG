@@ -24,7 +24,7 @@ data.ability={
 	end,
 	onPlay = function (card,game)
 		for i = 1, card.charge do
-			game:chargeCard("random","inscription")
+			game:chargeCard("random",false,"inscription") --card,permanent,category,from)
 		end
 	end,
 }

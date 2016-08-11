@@ -15,7 +15,7 @@ data.description = {
 	"1/20 charge",
  	"On hold: +1 charge",
  	"On play: for each charge",
- 	"Summon Argoreth Flower ",
+ 	"Summon flower ",
 }
 
 data.ability={
@@ -24,7 +24,7 @@ data.ability={
 	end,
 	onPlay = function (card,game)
 		for i= 1, card.charge do
-			game:summon("argorethflower")
+			game:summon(card,"conjuredargoreth")
 		end
 	end,
 }

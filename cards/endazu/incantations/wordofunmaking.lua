@@ -29,8 +29,9 @@ data.ability={
 	end,
 	onPlay = function (card,game)
 		game.my.needTarget = true
-		game.my.selectTarget = function(game,target)
+		game.my.targetSelected = function(game,target)
 			if target.current == game.my.deck or target.current == game.your.deck then return end
+			if target.current == game.my.hero or target.current == game.your.hero then return end
 			if target == card then return end
 			game:killCard(target)
 			game:killCard(card)

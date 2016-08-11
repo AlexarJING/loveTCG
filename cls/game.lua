@@ -901,7 +901,7 @@ function game:feedCard(card,all,what)
 
 	if card.awaken == false then
 		card.awaken = true
-		card.ability.onAwake(card,self)
+		card:cast("onAwake")
 	end
 
 	for i = 1, amount do
@@ -911,8 +911,7 @@ function game:feedCard(card,all,what)
 	
 	self:healCard(card)
 
-	if card.ability.onFeed then card.ability.onFeed(card,self,food) end
-
+	card:cast("onFeed",food)
 
 	for i,v in ipairs(self:ally(card,true)) do
 		v:cast("onFeedAlly",card,food)
@@ -1010,7 +1009,11 @@ function game:healCard(card,full)
 		if not target then target = self.my.hero.card end
 		return self:healCard(target,full)
 	elseif card == "all" then
-		for i,v in ipairs(self:ally()) do
+		for i,v in ipairs(self:ally(_,true)) do
+			self:healCard(v,full)
+		end
+	elseif card == "foe" then
+		for i,v in ipairs(self:foe(_,true)) do
 			self:healCard(v,full)
 		end
 	elseif card == "charge" then
@@ -1204,14 +1207,6 @@ function game:attack(from,to,ignore)
 	end
 
 
-	for i,card in ipairs(foe) do
-		card:cast("onFoeAttack",from)
-	end
-
-	for i,card in ipairs(ally) do
-		card:cast("onAllyAttack",from)
-	end
-
 
 	local target
 	local effect
@@ -1273,7 +1268,7 @@ function game:attack(from,to,ignore)
 		local t = v:cast("onAllyAttack",target)
 		if t then
 			target = t
-			break
+			--break
 		end
 	end
 
@@ -1282,7 +1277,7 @@ function game:attack(from,to,ignore)
 		local t = v:cast("onFoeAttack",target)
 		if t then
 			target = t
-			break
+			--break
 		end
 	end
 
@@ -1383,17 +1378,17 @@ function game:copyCard(card)
 	return Card(self,card.data,card.born,card.current)
 end
 
-function game:allChargeTarget(my,cond)
+function game:allChargeTarget(my,cond,from)
 	local candidate = {}
 	for i,v in ipairs(my.play.cards) do
-		if v.charge and cond and v.category == cond then
+		if v.charge and cond and v.category == cond  then
 			table.insert(candidate,v)
 		elseif v.charge and not cond then
 			table.insert(candidate,v)
 		end
 	end
 	for i,v in ipairs(my.hand.cards) do
-		if v.charge and  cond and v.category == cond then
+		if v.charge and  cond and v.category == cond  then
 			table.insert(candidate,v)
 		elseif v.charge and not cond then
 			table.insert(candidate,v)
@@ -1422,6 +1417,7 @@ function game:chargeCard(card,permanent,category)
 	end
 
 	card.charge = card.charge+1
+	
 	if permanent then 
 		card.chargeMin = card.chargeMin + 1 
 		if card.chargeMin>card.chargeMax then
@@ -1435,7 +1431,7 @@ function game:chargeCard(card,permanent,category)
 		card:updateCanvas()
 	end
 
-	if card.chargeMax and card.charge > card.chargeMax then
+	if card.chargeMax and card.charge >= card.chargeMax then
 		card.charge = card.chargeMax
 		card:cast("onFullCharge")	
 	end
