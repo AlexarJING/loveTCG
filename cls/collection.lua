@@ -18,7 +18,7 @@ end
 
 function collection:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata.collection
+	self.userdata= parent.userdata
 	self.x = -150
 	self.y = -200
 	self.scale = 0.5
@@ -85,9 +85,7 @@ function collection:init(parent)
 		self.category = btn.text 
 		self.parent.category = btn.text
 	end
-	self.categoryBtn["coins"] = btn
-
-
+	
 
 	self.parent.category = self.category
 
@@ -97,6 +95,31 @@ function collection:init(parent)
 		self.parent.pocket:save()
 	end
 end
+
+function collection:resetBtn()
+	self.faction = self.parent.faction
+	
+	for k,v in pairs(self.categoryBtn) do
+		v:remove()
+	end
+
+	self.categoryBtn ={}
+	self.category = nil
+	local i = 0
+	for category,data in pairs(self.cards[self.faction]) do
+		self.category = self.category or category
+		i = i + 1
+		local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,category)
+		btn.onClick = function(btn) 
+			self.show = "card"
+			self.category = btn.text 
+			self.parent.category = btn.text
+		end
+		self.categoryBtn[category] = btn
+	end
+	self.parent.category = self.category
+end
+
 
 function collection:update_forCoin(dt)
 	
@@ -131,10 +154,13 @@ function collection:update(dt)
 
 	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
 	
+	self.hoverUI= nil
 
 	for i,btn in ipairs(self.ui) do
 		btn:update(dt)
 	end
+
+	self.parent.hoverUI = self.parent.hoverUI or self.hoverUI
 
 	if self.show == "coin" then return self:update_forCoin(dt) end
 

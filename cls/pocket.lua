@@ -18,7 +18,7 @@ end
 
 function pocket:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata.collection
+	self.userdata= parent.userdata
 	self.collection = self.parent.collection
 	self.x = -100
 	self.y = 150
@@ -27,7 +27,7 @@ function pocket:init(parent)
 	self.slot = {}
 	self.slot2 = {}
 	self:load()
-	self:save()
+	--self:save()
 end
 
 function pocket:load()
@@ -48,7 +48,9 @@ function pocket:load()
 			c.slot = nil
 			c.current = collection
 			local x,y = getPosForCollection(self,c.index,c.level)
-			c:addAnimate(0.5,{x=x,y=y},"inBack")
+			c.x=x 
+			c.y=y
+			--c:addAnimate(0.5,{x=x,y=y},"inBack")
 		end
 	end
 
@@ -59,7 +61,9 @@ function pocket:load()
 			c.slot = nil
 			c.current = collection
 			local x,y = getPosForCollection(self,c.index,1)
-			c:addAnimate(0.5,{x=x,y=y},"inBack")
+			c.x=x 
+			c.y=y
+			--c:addAnimate(0.5,{x=x,y=y},"inBack")
 		end
 	end
 
@@ -69,7 +73,9 @@ function pocket:load()
 		local x, y = getPos(self,i)
 		card.current = self
 		card.slot = i
-		card:addAnimate(0.5,{x=x,y=y},"inBack")
+		card.x=x 
+		card.y=y
+		--card:addAnimate(0.5,{x=x,y=y},"inBack")
 		self.slot[i]=card
 	end
 
@@ -80,12 +86,18 @@ function pocket:load()
 				local x, y = getPos(self,i)
 				card.current = self
 				card.slot = i
-				card:addAnimate(0.5,{x=x,y=y},"inBack")
+				card.x=x 
+				card.y=y
+				--card:addAnimate(0.5,{x=x,y=y},"inBack")
 				self.slot2[i]=card
 				break
 			end
 		end	
 	end
+
+	self.parent.lib = data.heros[faction][hero].lib
+	self.parent.deck = data.heros[faction][hero].deck
+
 end
 
 function pocket:update_forCoin(dt)
@@ -162,12 +174,10 @@ function pocket:save()
 	self.userdata.heros[self.parent.faction][self.parent.hero].deck = data2
 	self.parent.lib = data
 	self.parent.deck = data2
-
-
-	local file = love.filesystem.newFile("system", "w")
-	file:write(table.save(self.parent.userdata))
-	file:close()
-
+	
+	self.userdata.currentHero = {id = self.parent.hero , faction = self.parent.faction}
+	self.parent.info:saveUserFile()
+	
 end
 
 

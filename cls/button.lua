@@ -15,6 +15,11 @@ function button:init(parent,x,y,w,h,text,cb)
 	table.insert(self.parent.ui, self)
 end
 
+function button:remove()
+	table.removeItem(self.parent.ui, self)
+end
+
+
 function button:check(x,y)
 	if x< self.x-self.w/2 or x>self.x+self.w/2 then return false end
 	if y< self.y-self.h/2 or y>self.y+self.h/2 then return false end
@@ -31,8 +36,8 @@ function button:update()
 		if self.onClick  and self.enable then self.onClick(self) end
 		self.down=false
 	end
-	if self.parent.cursor and self.hover then self.parent.cursor.hover = true end
-	return self.hover
+	if self.hover then self.parent.hoverUI = self end
+
 end
 
 function button:draw()

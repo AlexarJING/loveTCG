@@ -1,30 +1,33 @@
 local loader = {}
 
-function loader:new(parent,filename)
-	local file  = love.filesystem.newFile(filename, "r")
-	local contents = file:read()
-	file:close()
-	local lineStart = [[local p , c = ...
-]]
-	local lineEnd = [[	
-c:push("done")]]
-	local codestring = lineStart .. contents .. lineEnd
-	self.thread = love.thread.newThread(codestring)
-	self.channel = love.thread.getChannel(name)
-	self.startTime = love.timer.getTime()
-	self.thread:start(parent , self.channel)
-
+function loader.addPack(parent,func,sceneName)
+	loader.parent = parent
+	loader.running = true
+	loader.co = coroutine.create(func)
+	loader.scene = require (sceneName)
+	loader.scene:load()
+	loader.speed = 2
+	loader._update = loader.parent.update
+	loader._draw = loader.parent.draw
+	loader.parent.update = loader.update
+	loader.parent.draw = loader.draw
 end
 
-function loader:update(dt)
-	local test = self.channel:pop()
-	self.timer = love.timer.getTime() - self.startTime
-	if test == "done" then
-		self.finishTime = love.timer.getTime() - self.startTime
-		self.finish = true
+function loader.update(dt)
+	for i = 1 , loader.speed do
+		if coroutine.status(loader.co) == "dead" then 
+			loader.running = false
+			loader.parent.update = loader._update
+			loader.parent.draw = loader._draw
+			break
+		end
+		print(coroutine.resume(loader.co))
 	end
+	loader.scene:update(dt)
 end
 
-
+function loader.draw()
+	loader.scene:draw()
+end
 
 return loader

@@ -7,10 +7,11 @@ function scene:init()
 	
 	self.camera = Camera()
 	self.camera:lookAt(0,0)
+	self.builder = Builder()
 end 
 
 function scene:enter(cur,from)
-	self.builder = Builder()
+	
 end
 
 

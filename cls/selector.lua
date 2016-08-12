@@ -6,14 +6,14 @@ local Bg = require "cls/bg"
 
 function selector:init(parent)
 	self.parent = parent
-	self.userdata= parent.userdata.collection
+	self.userdata= parent.userdata
 	self.x = -400
 	self.y = 0
 	self.scale = 1.3
-	self.bg = Bg("vespitoleBg")
+	
 	self.currentFaction = self.userdata.currentHero.faction
 	self.currentID = self.userdata.currentHero.id
-	
+	self.bg = Bg(self.currentFaction.."Bg",0,0,1.1)
 
 	self.parent.faction = self.currentFaction
 	self.parent.hero = self.currentID
@@ -50,11 +50,12 @@ function selector:init(parent)
 			self.parent.pocket:save()
 			self.currentFaction = btn.text
 			self.currentIndex = 1
-			self.bg = Bg(btn.text.."Bg")
+			self.bg = Bg(btn.text.."Bg",0,0,1.1)
 			self.currentHero = self.heros[self.currentFaction][self.currentIndex]
 			self.parent.faction = self.currentFaction
 			self.parent.hero = self.currentHero.id
 			self.parent.pocket:load()
+			self.parent.collection:resetBtn()
 		end
 	end
 
@@ -67,7 +68,9 @@ function selector:init(parent)
 		end
 		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
 		self.parent.hero = self.currentHero.id
+		--self.parent.pocket:save()
 		self.parent.pocket:load()
+	
 	end
 	self.nextBtn = Button(self,-350,250,80,30,"next")
  	self.nextBtn.onClick = function()
@@ -78,16 +81,20 @@ function selector:init(parent)
 		end
 		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
 		self.parent.hero = self.currentHero.id
+		--self.parent.pocket:save()
 		self.parent.pocket:load()
+	
  	end
 end
 
 
 function selector:update(dt)
 	self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
+	self.hoverUI= nil
 	for i,btn in ipairs(self.ui) do
 		btn:update(dt)
 	end
+	self.parent.hoverUI = self.parent.hoverUI or self.hoverUI
 end
 
 

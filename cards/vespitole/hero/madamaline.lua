@@ -18,9 +18,9 @@ data.description = {
 data.ability={
 	
 	onTurnStart = function(card,game) 
-		if game.turnCount == 1 then
-			game:summon("courtesan")
-			game:summon("courtesan")
+		if game.turnCount <= 2 then
+			game:summon(card,"courtesan")
+			game:summon(card,"courtesan")
 		end
 	end,
 }

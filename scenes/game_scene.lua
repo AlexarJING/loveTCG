@@ -7,7 +7,7 @@ function scene:init()
 	self.camera:lookAt(0,0)
 end 
 
-function scene:enter(from,to,...)
+function scene:enter(to,...)
 	game = Game(...)
 end
 

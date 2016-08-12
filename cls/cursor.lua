@@ -6,14 +6,14 @@ function cursor:init(parent)
 	self.parent = parent
 	self.x=0
 	self.y=0
-	self.debug = true
+	self.debug = false
 	love.mouse.setVisible(false)
 end
 
 function cursor:update(hover)
 	self.x = self.parent.mousex
 	self.y = self.parent.mousey
-	self.hover = hover or self.hover
+	self.hover = hover
 	self.down = love.mouse.isDown(1) or love.mouse.isDown(2)
 end
 

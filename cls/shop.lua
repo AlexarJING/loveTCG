@@ -6,6 +6,7 @@ local Bg = require "cls/bg"
 local Button = require "cls/button"
 local Info = require "cls/info"
 local Progress = require "cls/progressbar"
+local Cursor = require "cls/cursor"
 
 local normal = love.graphics.newImage("res/assets/cardback.png")
 local silver = love.graphics.newImage("res/assets/cardbacksilver.png")
@@ -31,7 +32,7 @@ function shop:init(parent)
 	self.font = love.graphics.newFont(30)
 	self.info = Info(self)
 	self.data = self.info.data
-	
+	self.cursor = Cursor(self)
 	self:reset()
 end
 
@@ -145,9 +146,13 @@ end
 
 function shop:update(dt)
 	self.mousex, self.mousey = self.parent.camera:mousepos() 
+	
+	self.hoverUI = nil
+
 	for i,v in ipairs(self.ui) do
 		v:update(dt)
 	end
+	self.cursor:update(self.hoverUI)
 
 	if self.state == "buy" then
 
@@ -225,7 +230,7 @@ function shop:draw()
 			v:draw()
 		end
 	end
-
+	self.cursor:draw()
 end
 
 return shop
