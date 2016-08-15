@@ -34,6 +34,14 @@ function info:newUserFile(name)
 					dust =1000,
 					collection = require "cardLibs/test"	
 				}
+	elseif name == "debug" then
+	self.data ={
+					name = name,
+					gem = 1000,
+					gold = 1000,
+					dust =1000,
+					collection = require "cardLibs/debug"	
+				}
 	else
 	self.data ={
 					name = name,
@@ -43,6 +51,7 @@ function info:newUserFile(name)
 					collection = require "cardLibs/default"	
 				}
 	end
+
 	return self:saveUserFile()
 end
 

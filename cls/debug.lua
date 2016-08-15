@@ -9,7 +9,13 @@ end
 
 function debug:init(game,root)
     self.game = game
-    self.cards={}
+	self.enable = false
+	self:loadAll()
+end
+
+function debug:loadAll()
+	local game = self.game
+	self.cards={}
 
 	local index =0
 	for faction,tab in pairs(game.cardData) do	
@@ -40,9 +46,8 @@ function debug:init(game,root)
 			end
 		end
 	end
-
-	self.enable = false
 end
+
 
 function debug:rightClick(card)
 	if card.isHero then return end

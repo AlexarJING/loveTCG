@@ -1,8 +1,8 @@
 local data = {
-	img_name = "summonedBerserker", --argorathflower
+	img_name = "summonedberserker", --argorathflower
 	name = "Berserker",
 	faction = "summon",
-	rare = "E",
+	rare = 0,
 	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
 	last = true,
 	hp = 1,

@@ -11,13 +11,14 @@ data.rarity = {
 	["E"]={}
 }
 
+--local record = {}
 
 local lfs = love.filesystem
 local index=0
 
 for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 	data[faction]={}
-	
+	--record[faction]={}
 	for i,category in ipairs(lfs.getDirectoryItems("cards/"..faction)) do
 		if lfs.isFile("cards/"..faction.."/"..category) then
 			local id = string.sub(category,1,-5)
@@ -28,8 +29,11 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 			data.short[id] = d
 			d.id = id
 			table.insert(data.rarity[d.rare], d)
+			--record[faction][id] = {exp = 0, level = 3}
 		else
 			data[faction][category]={}
+			--record[faction][category] = {}
+
 			for i,id in ipairs(lfs.getDirectoryItems("cards/"..faction.."/"..category)) do
 				local id = string.sub(id,1,-5)
 				local d = require ("cards/"..faction.."/"..category.."/"..id)
@@ -38,13 +42,14 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 				data.short[id] = d
 				index=index+1
 				data.index[index] = d
-				
 				table.insert(data.rarity[d.rare], d)
+				--record[faction][category][id] = {exp =0,level = 3}
 			end	
 		end
 		
 	end
 end
+
 
 
 return data

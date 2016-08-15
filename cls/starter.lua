@@ -10,10 +10,10 @@ local Info = require "cls/info"
 function starter:init(parent)
 	self.info = Info(self)
 	self.parent = parent
-	self.bg = Bg("startbg")
-	self.bg2 = Bg("title")
+	self.bg = Bg("startbg",0,0,2)
+	self.bg2 = Bg("title",0,0,2)
 	self.font = love.graphics.newFont("res/others/start.ttf", 50)
-	self.string = "war of omens  war of omens  war of omens"
+	self.string = "war of omens war of omens war of omens"
 	self.offangle = 0
 
 	self.banner={}
@@ -37,6 +37,8 @@ function starter:init(parent)
 				self.info:newUserFile(self.input.text)
 			end			
 			self:toBuilder()
+		elseif btn.text == "delete" then
+			self.info:newUserFile("default")
 		elseif btn.text == "change" then
 			self.input.isLabel = false
 			self.input.editable = true
@@ -52,13 +54,16 @@ end
 
 
 function starter:toBuilder()
-	gamestate.switch(gameState.inter,gameState.builder_scene) 
+	--gamestate.switch(gameState.inter,gameState.builder_scene) 
+	gamestate.switch(gameState.builder_scene) 
 end
 
 function starter:update(dt)
 	self.mousex, self.mousey = self.parent.camera:mousepos() 
  	if love.keyboard.isDown("lctrl") then
  		self.confirm.text = "change"
+ 	elseif love.keyboard.isDown("lalt") then
+ 		self.confirm.text = "delete"
  	else
  		self.confirm.text = "confirm"
  	end

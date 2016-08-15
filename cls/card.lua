@@ -43,6 +43,7 @@ function card:init(game,data,born,current,state)
 	self.tweens={}
 	self.tweenStack = {}
 	if state then card:setState(state) end
+	if loader.running then coroutine.yield() end
 end
 
 function card:getSide(who)
@@ -229,13 +230,14 @@ end
 
 
 function card:draw(color)
+	--[[
 	if self.awaken == false then
 		love.graphics.setColor(100, 100, 100, self.alpha)
 	else
-		love.graphics.setColor(255, 255, 255, self.alpha)
-		
-	end
+		love.graphics.setColor(255, 255, 255, self.alpha)	
+	end]]
 	
+	love.graphics.setColor(255, 255, 255, self.alpha)
 	if color then love.graphics.setColor(color) end
 
 	local offx = 2*(love.math.random()-0.5)*self.magnitude

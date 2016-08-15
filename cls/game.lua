@@ -15,8 +15,8 @@ foeLibs[1] = require("cardLibs/skirmishLib")
 
 
 function game:init(userdata,foedata)
-	
-	self.bg = require "cls/bg"("table2d")
+	loader.addPack(self,function()
+	self.bg = require "cls/bg"("table2d",0,0,2)
 	self.up = {}
 	self.down = {}
 	for i,side in ipairs(sides) do
@@ -64,6 +64,7 @@ function game:init(userdata,foedata)
 	self.up.deck:setCards(foedata)
 	self.up.library:setCards(foedata)
 	self.up.hero:setHero(foedata)
+
 	self.down.deck:setCards(userdata)
 	self.down.library:setCards(userdata)
 	self.down.hero:setHero(userdata)
@@ -72,14 +73,16 @@ function game:init(userdata,foedata)
 	self.down.resource=self.down.hero.card
 
 	self.aiToggle = false
-
 	self:gameStart()
+	end,"lib/loading")
+	
+
 end
 
 function game:update(dt)
 	delay:update(dt)
 	self.hoverCard = nil
-	
+	self.hoverUI = nil
 	
 
 	if self.gameMode == "skirmish" and self.my ~= self.userside then
