@@ -1,6 +1,6 @@
 local data = {
-	img_name = "tomeofmemory",
-	name = "Tome of Memory",
+	img_name = "engravedurn",
+	name = "Engraved Urn",
 	faction = "endazu",
 	category = "inscriptions",
 	rare = 1,
@@ -11,7 +11,7 @@ local data = {
 	chargeMax = 20,
 	last = true,
 	awaken = false,
-	canFeedMagic = true,
+	foodType = "magic",
 }
 
 data.description = {
@@ -22,15 +22,20 @@ data.description = {
 
 data.ability={
 	onAllyDie = function(card,game,dead)
-		game:chargeCard(card)
+		if dead.hp then
+			game:chargeCard(card)
+		end
 	end,
 	onFoeDie = function(card,game,dead)
-		game:chargeCard(card)
+		if dead.hp then
+			game:chargeCard(card)
+		end
 	end,
 	onFeed = function(card,game)
 		card.awaken=nil
 		for i = 1, card.charge do
 			game:gain(card,"my","magic")
+			game:dischargeCard(card)
 		end
 	end
 }

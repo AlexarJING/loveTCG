@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 3,
 	chargeMax = 20,
 	last = true,
-	canFeedMagic = true,
+	foodType = "magic"
 }
 
 data.description = {
@@ -22,7 +22,7 @@ data.description = {
 data.ability={
 	onFeed = function(card,game)
 		game:dischargeCard(card)
-		game:summon("gildedwarriors")
+		game:summon(card,"gildedwarriors")
 	
 	end
 }

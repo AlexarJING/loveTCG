@@ -17,8 +17,9 @@ data.description = {
 data.ability={
 
 	onCardPlay= function (card,game,target)
-		if target.category == "incantations" then
+		if target.category == "inscriptions" then
 			game:chargeCard(target)
+			card:standout()
 		end
 	end
 }

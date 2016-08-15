@@ -11,8 +11,8 @@ local data = {
 }
 
 data.description = {
-	"Feed any Anima:",
-	"It gains +1 permanent ", 
+	"On turn: +1 Life",
+	"Starts with +5 Life" 
 }
 
 data.ability={

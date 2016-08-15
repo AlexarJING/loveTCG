@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 3,
 	chargeMax = 20,
 	last = true,
-	canFeedMagic = true,
+	foodType = "magic",
 }
 
 data.description = {
@@ -20,8 +20,9 @@ data.description = {
 }
 
 data.ability={
-	onAnyAttack = function(card,game,from)
-		game:attack(card,from)
+	onFoeAttack = function(card,game,from)
+		game:dischargeCard(card)
+		game:attack(card)
 	end,
 	onFeed = function(card,game)
 		for  i = 1, card.charge do

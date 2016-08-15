@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 3,
 	chargeMax = 20,
 	last = true,
-	canFeedMagic = true,
+	foodType = "magic",
 }
 
 data.description = {
@@ -22,23 +22,9 @@ data.description = {
 data.ability={
 	
 	onFeed = function(card,game)
-		
 		game:dischargeCard(card)
-		local canditate ={}
-		for i,v in ipairs(game.my.play.cards) do
-			if v.category == "anima" then
-				table.insert(canditate,v)
-			end
-		end
-
-		for i,v in ipairs(game.my.hand.cards) do
-			if v.category == "anima" then
-				table.insert(canditate,v)
-			end
-		end
-
-		game:chargeCard(table.random(canditate))
-		game:chargeCard(table.random(canditate))
+		game:chargeCard("random",true,"anima")
+		game:chargeCard("random",true,"anima")
 	end
 }
 

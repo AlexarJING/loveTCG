@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 3,
 	chargeMax = 20,
 	last = true,
-	canFeedMagic = true,
+	foodType = "magic",
 }
 
 data.description = {
@@ -25,7 +25,7 @@ data.ability={
 		game:gain(card,"my","magic")
 	end,
 	onFeed = function(card,game)
-		for i = 1, self.charge do
+		for i = 1, card.charge do
 			game:gain(card,"my","magic")
 			game:dischargeCard(card)
 		end

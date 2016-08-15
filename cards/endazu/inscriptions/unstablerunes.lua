@@ -10,7 +10,7 @@ local data = {
 	chargeInit = 3,
 	chargeMax = 20,
 	last = true,
-	canFeedMagic = true,
+	foodType = "magic",
 }
 
 data.description = {

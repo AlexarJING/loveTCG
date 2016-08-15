@@ -15,20 +15,20 @@ local data = {
 
 data.description = {
 	"3/5 charge",
- 	"feed magic: -1 charge",
+ 	"turn/feed magic: -1 charge",
  	"heal hero x2 "
 }
 
 data.ability={
 	onTurnStart = function(card,game)
 		game:dischargeCard(card)
-		game:healCard(game.my.hero)
-		game:healCard(game.my.hero)
+		game:healCard(game.my.hero.card)
+		game:healCard(game.my.hero.card)
 	end,
 	onFeed = function(card,game)
 		game:dischargeCard(card)
-		game:healCard(game.my.hero)
-		game:healCard(game.my.hero)
+		game:healCard(game.my.hero.card)
+		game:healCard(game.my.hero.card)
 	end
 }
 

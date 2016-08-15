@@ -4,7 +4,6 @@ local data = {
 	faction = "summon",
 	rare = 1,
 	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
-	basePrice = 3,
 	chargeInit = 1,
 	chargeMax = 1,
 	last = true,

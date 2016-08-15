@@ -19,7 +19,7 @@ data.ability={
 
 	onFeedAlly = function(card,game,target)
 		if target.category == "anima" then
-			game:chargeCard(target)
+			game:chargeCard(target,true)
 		end
 	end --(self.my.hero.card,self,card) 
 }

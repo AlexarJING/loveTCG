@@ -11,8 +11,8 @@ local data = {
 }
 
 data.description = {
-	"When you buy a card, 15% chance", 
-	"Restock bank from foe's deck",
+	"Play an Incantation:",
+	" +1 magic ",
 }
 
 data.ability={
