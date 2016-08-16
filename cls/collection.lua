@@ -5,8 +5,14 @@ local Card = require "cls/card"
 local Bg = require "cls/bg"
 
 local function getPos(self,index,level)
-	local x = self.x + (index-1)%8*120 + (level-1)*5
-	local y = self.y + 180*math.floor(index/8) + (level-1)*5
+	local x = self.x + (index-1)%7*120 + (level-1)*5
+	local y = self.y + 180*math.ceil(index/7-1) + (level-1)*5
+	return x ,y 
+end
+
+local function getPosForCoin(self,index)
+	local x = self.x + (index-1)%8*100 
+	local y = self.y + 130*math.ceil(index/8-1) 
 	return x ,y 
 end
 
@@ -58,7 +64,8 @@ function collection:init(parent)
 		local cd = table.copy(cardData.short[id])
 		local card =Card(self.parent,cd,nil,self)
 		card.index = i
-		card.x,card.y = getPos(self,i,1)
+		card.x,card.y = getPosForCoin(self,i)
+		card.scale = 0.4
 		self.coins[i] = card
 	end
 
@@ -208,20 +215,25 @@ function collection:draw()
 		btn:draw()
 	end
 
-	love.graphics.setColor(100, 100, 255, 50)
-	for i = 1, 16 do
-		local x, y = getPos(self,i,1)
-		love.graphics.rectangle("fill", x-55, y-80, 110, 160)
-	end
+	
 
 	if self.show == "card" then
-
+		love.graphics.setColor(100, 100, 255, 50)
+		for i = 1, 14 do
+			local x, y = getPos(self,i,1)
+			love.graphics.rectangle("fill", x-55, y-80, 110, 160)
+		end
 		for id,tab in pairs(self.cards[faction][category]) do
 			for level,card in ipairs(tab) do
 				card:draw()
 			end
 		end
 	else
+		love.graphics.setColor(100, 100, 255, 50)
+		for i = 1, 14 do
+			local x, y = getPosForCoin(self,i)
+			love.graphics.rectangle("fill", x-55, y-80, 110, 160)
+		end
 		for i,card in ipairs(self.coins) do
 			card:draw()
 		end

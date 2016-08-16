@@ -6,7 +6,7 @@ function loader.addPack(parent,func,sceneName)
 	loader.co = coroutine.create(func)
 	loader.scene = require (sceneName)
 	loader.scene:load()
-	loader.speed = 2
+	loader.speed = 1
 	loader._update = loader.parent.update
 	loader._draw = loader.parent.draw
 	loader.parent.update = loader.update

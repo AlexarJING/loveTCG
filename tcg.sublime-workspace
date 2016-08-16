@@ -4,16 +4,24 @@
 		"selected_items":
 		[
 			[
+				"for",
+				"forp	for k,v in pairs()"
+			],
+			[
+				"table",
+				"table.insert	(table, [pos,] value)"
+			],
+			[
+				"newfon",
+				"love.graphics.newFont"
+			],
+			[
 				"firewo",
 				"fireworks"
 			],
 			[
 				"attack",
 				"attackHero"
-			],
-			[
-				"for",
-				"fori	for i,v in ipairs()"
 			],
 			[
 				"sh",
@@ -208,10 +216,6 @@
 				"cost_lvl0"
 			],
 			[
-				"table",
-				"table.remove	(table [, pos])"
-			],
-			[
 				"inter",
 				"interceptTab"
 			],
@@ -320,59 +324,44 @@
 	"buffers":
 	[
 		{
-			"file": "cards/endazu/hero/calipeth.lua",
+			"file": "cls/menu.lua",
 			"settings":
 			{
-				"buffer_size": 394,
+				"buffer_size": 1430,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cards/endazu/hero/jesmai.lua",
+			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 418,
+				"buffer_size": 32249,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cards/endazu/hero/raktabaan.lua",
+			"file": "lib/loader.lua",
 			"settings":
 			{
-				"buffer_size": 393,
+				"buffer_size": 733,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "cards/endazu/hero/zalasair.lua",
+			"file": "cls/deckDataLoader.lua",
 			"settings":
 			{
-				"buffer_size": 329,
+				"buffer_size": 212,
+				"line_ending": "Windows",
+				"name": "deckDataLoader.lua"
+			}
+		},
+		{
+			"file": "cls/info.lua",
+			"settings":
+			{
+				"buffer_size": 2266,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lib/util.lua",
-			"settings":
-			{
-				"buffer_size": 18013,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
-			"settings":
-			{
-				"buffer_size": 5990,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/alex/Desktop/matrix.lua",
-			"settings":
-			{
-				"buffer_size": 2769,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -468,17 +457,58 @@
 	},
 	"expanded_folders":
 	[
-		"/G/love2dproj/loveTCG",
-		"/G/love2dproj/loveTCG/cards",
-		"/G/love2dproj/loveTCG/cards/endazu",
-		"/G/love2dproj/loveTCG/cards/endazu/anima",
-		"/G/love2dproj/loveTCG/cards/endazu/hero",
-		"/G/love2dproj/loveTCG/cards/endazu/incantations",
-		"/G/love2dproj/loveTCG/cards/endazu/inscriptions",
-		"/G/love2dproj/loveTCG/res"
+		"/F/Love2D Project/loveTCG",
+		"/F/Love2D Project/loveTCG/cardLibs",
+		"/F/Love2D Project/loveTCG/cardLibs/ai",
+		"/F/Love2D Project/loveTCG/cards",
+		"/F/Love2D Project/loveTCG/cards/vespitole/hero",
+		"/F/Love2D Project/loveTCG/lib",
+		"/F/Love2D Project/loveTCG/res"
 	],
 	"file_history":
 	[
+		"/F/Love2D Project/loveTCG/cls/game.lua",
+		"/F/Love2D Project/loveTCG/cls/card.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/capitainviatrix.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/gretta.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/zalazair.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/jasmai.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/calipeth.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/liet.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/esra.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/mogesh.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/sofocatro.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/ysadora.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/birondelle.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/valdorian.lua",
+		"/F/Love2D Project/lovengine/engine/util/animation.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/theodox.lua",
+		"/C/Users/Alexar/AppData/Roaming/LOVE/loveTCG/system",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/raktabaan.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/ai/babarus.lua",
+		"/F/Love2D Project/lovengine/engine/component/script.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/hero/captainviatrix.lua",
+		"/F/Love2D Project/loveTCG/conf.lua",
+		"/F/Love2D Project/loveTCG/cls/pocket.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/debug.lua",
+		"/F/Love2D Project/loveTCG/cards/metris/underlings/brigand.lua",
+		"/F/Love2D Project/loveTCG/cls/collection.lua",
+		"/F/Love2D Project/loveTCG/lib/ai.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/war/soldier.lua",
+		"/F/Love2D Project/loveTCG/cards/metris/murder/brigand.lua",
+		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
+		"/F/Love2D Project/loveTCG/lib/loader.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/faith/benediction.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/cardinalpocci.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/capitainviatrix.lua",
+		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/hero/calipeth.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/hero/jesmai.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/hero/raktabaan.lua",
+		"/F/Love2D Project/loveTCG/cards/endazu/hero/zalasair.lua",
+		"/F/Love2D Project/loveTCG/lib/util.lua",
+		"/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
+		"/C/Users/alex/Desktop/matrix.lua",
 		"/G/love2dproj/loveTCG/cls/game.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/scrollofpetals.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/unstablerunes.lua",
@@ -564,53 +594,11 @@
 		"/G/love2dproj/loveTCG/cards/daramek/rituals/starvingmob.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/slaves/ratcatcher.lua",
 		"/G/love2dproj/loveTCG/cls/effect.lua",
-		"/G/love2dproj/loveTCG/cls/shop.lua",
-		"/G/love2dproj/loveTCG/cls/info.lua",
-		"/G/love2dproj/loveTCG/lib/firework.lua",
-		"/G/love2dproj/loveTCG/cls/result.lua",
-		"/G/love2dproj/loveTCG/main.lua",
-		"/G/love2dproj/loveTCG/cls/menu.lua",
-		"/G/love2dproj/loveTCG/scenes/result_scene.lua",
-		"/G/love2dproj/loveTCG/cls/button.lua",
-		"/C/Windows/System32/drivers/etc/hosts",
-		"/G/love2dproj/loveTCG/scenes/game_scene.lua",
-		"/G/love2dproj/loveTCG/res/assets/cardbackgold.png",
-		"/G/love2dproj/loveTCG/cls/show.lua",
-		"/G/love2dproj/loveTCG/cls/bg.lua",
-		"/G/love2dproj/loveTCG/scenes/shopSCENE.lua",
-		"/G/love2dproj/loveTCG/cardLibs/skirmishLib.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/prosperity/vintner.lua",
-		"/G/love2dproj/loveTCG/cls/turn.lua",
-		"/G/love2dproj/loveTCG/cardLibs/default.lua",
-		"/G/love2dproj/loveTCG/cls/builder.lua",
-		"/G/love2dproj/loveTCG/cls/text.lua",
-		"/G/love2dproj/loveTCG/cls/starter.lua",
-		"/G/love2dproj/loveTCG/cls/collection.lua",
-		"/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
-		"/G/love2dproj/loveTCG/cards/vespitole/prosperity/wealthypatron.lua",
-		"/E/NARUTO SHIPPUDEN Ultimate Ninja STORM 4/火影忍者究极风暴4.xpadderprofile",
-		"/G/love2dproj/loveTCG/cls/play.lua",
-		"/G/love2dproj/loveTCG/cls/deck.lua",
-		"/G/love2dproj/loveTCG/scenes/test.lua",
-		"/G/love2dproj/loveTCG/lib/util.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/sofocatro.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/cardinalpocchi.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/sisterYsadora.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/regentmarsh.lua",
-		"/G/love2dproj/loveTCG/cls/library.lua",
-		"/G/love2dproj/loveTCG/cls/bank.lua",
-		"/G/love2dproj/loveTCG/cls/grave.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/coin.lua",
-		"/G/love2dproj/loveTCG/cls/scenes/test.lua",
-		"/G/defold/branches/28979/17281/home/main/control/camera.script",
-		"/G/love2dproj/loveTCG/cards/vespitole/wealthypatron.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/madamaline.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/supplicant.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/leadofcharge.lua"
+		"/G/love2dproj/loveTCG/cls/shop.lua"
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -625,6 +613,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"getposfor",
+			"print",
+			"if",
+			"local function ",
 			"onFoeAttack",
 			"self",
 			"onAnyAttack",
@@ -748,11 +740,7 @@
 			"belongTo",
 			"frame.me",
 			"frame.self",
-			",\"onPlay\",a.reUse",
-			"print",
-			"card",
-			"print",
-			"moveto"
+			",\"onPlay\",a.reUse"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -760,6 +748,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"function ai.",
 			"game",
 			"userside",
 			"info",
@@ -855,96 +844,33 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "cards/endazu/hero/calipeth.lua",
+					"file": "cls/menu.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 394,
+						"buffer_size": 1430,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								368,
-								368
+								566,
+								566
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "cards/endazu/hero/jesmai.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 418,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								244,
-								244
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": false,
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "cards/endazu/hero/raktabaan.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								221,
-								221
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": false,
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
+						"translation.x": -0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -952,28 +878,86 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "cards/endazu/hero/zalasair.lua",
+					"buffer": 1,
+					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 329,
+						"buffer_size": 32249,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								209,
-								209
+								5412,
+								5412
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4687.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "lib/loader.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 733,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								635,
+								635
+							]
+						],
+						"settings":
+						{
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 264.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "cls/deckDataLoader.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 212,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								137,
+								137
+							]
+						],
+						"settings":
+						{
+							"auto_name": "deckDataLoader.lua",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -984,95 +968,32 @@
 				},
 				{
 					"buffer": 4,
-					"file": "lib/util.lua",
+					"file": "cls/info.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18013,
+						"buffer_size": 2266,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13961,
-								15386
+								1142,
+								1142
 							]
 						],
 						"settings":
 						{
-							"is_init_dirty_state": false,
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 16139.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5990,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								282,
-								282
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1254.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/C/Users/alex/Desktop/matrix.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2769,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": false,
-							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1440.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1121,7 +1042,7 @@
 	"project": "tcg.sublime-project",
 	"replace":
 	{
-		"height": 74.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1159,7 +1080,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 212.0,
+	"side_bar_width": 252.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

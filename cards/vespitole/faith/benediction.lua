@@ -3,7 +3,7 @@ local data = {
 	name = "Benediction",
 	faction = "vespitole",
 
-	category = "prosperity",
+	category = "faith",
 	rare = 3 ,
 
 	profile = {"The divine word can encourage even the mouse to rise against the wolf. –Abbot Capraretto"},

@@ -27,8 +27,15 @@ local img_frame = {
 
 
 local cardImage = {}
-local font_title = love.graphics.newFont(22)
-local font_content = love.graphics.newFont(18)
+local language = "cn"
+local font_title = 
+	language == "cn" and  
+	love.graphics.newFont("res/others/chinesefont.ttf", 22) or
+	love.graphics.newFont(22)
+local font_content = language == "cn" and  
+	love.graphics.newFont("res/others/chinesefont.ttf", 18) or
+	love.graphics.newFont(18)
+
 
 local backCanvas
 
@@ -108,6 +115,11 @@ function card:initProperty(data)
 	self.charge = self.data.chargeInit or self.data.charge
 	self.charging = self.data.charging
 	self.timer = self.data.timer
+
+	if language == "cn" then
+		self.name = data.name_cn or self.name
+		self.description = data.description_cn or self.description
+	end
 
 	self.level = self.level or 1
 	if self.level then

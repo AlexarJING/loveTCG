@@ -11,8 +11,14 @@ local function getPos(self,index)
 end
 
 local function getPosForCollection(self,index,level)
-	local x = -150 + (index-1)%8*120 + (level-1)*5
-	local y = -200 + 180*math.floor(index/8) + (level-1)*5
+	local x = -150 + (index-1)%7*120 + (level-1)*5
+	local y = -200 + 180*math.ceil(index/7-1) + (level-1)*5
+	return x ,y 
+end
+
+local function getPosForCoin(self,index)
+	local x = -150 + (index-1)%8*100 
+	local y = -200 + 130*math.ceil(index/8-1) 
 	return x ,y 
 end
 
@@ -60,7 +66,7 @@ function pocket:load()
 			self.slot2[i] = nil
 			c.slot = nil
 			c.current = collection
-			local x,y = getPosForCollection(self,c.index,1)
+			local x,y = getPosForCoin(self,c.index)
 			c.x=x 
 			c.y=y
 			--c:addAnimate(0.5,{x=x,y=y},"inBack")
@@ -69,6 +75,7 @@ function pocket:load()
 
 
 	for i,d in ipairs(data.heros[faction][hero].lib) do
+		--print(faction,d.category,d.id,d.level)
 		local card = cards[faction][d.category][d.id][d.level]
 		local x, y = getPos(self,i)
 		card.current = self
@@ -114,7 +121,7 @@ function pocket:update_forCoin(dt)
 		self.slot2[hoverCard.slot] = nil
 		hoverCard.slot = nil
 		hoverCard.current = collection
-		local x,y = getPosForCollection(self,hoverCard.index,hoverCard.level)
+		local x,y = getPosForCoin(self,hoverCard.index)
 		hoverCard:addAnimate(0.5,{x=x,y=y},"inBack")
 		self.parent.click = false
 	end

@@ -32,6 +32,7 @@ function info:newUserFile(name)
 					gem = 1000,
 					gold = 1000,
 					dust =1000,
+					range = 0,
 					collection = require "cardLibs/test"	
 				}
 	elseif name == "debug" then
@@ -40,6 +41,7 @@ function info:newUserFile(name)
 					gem = 1000,
 					gold = 1000,
 					dust =1000,
+					range = 0,
 					collection = require "cardLibs/debug"	
 				}
 	else
@@ -48,6 +50,7 @@ function info:newUserFile(name)
 					gem = 0,
 					gold = 0,
 					dust =0,
+					range = 0,
 					collection = require "cardLibs/default"	
 				}
 	end

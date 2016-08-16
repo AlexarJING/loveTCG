@@ -18,7 +18,7 @@ function menu:init(parent)
 			if not self.parent.lib[i] then test = true ;break end 
 		end
 		if test then return end
-		gamestate.switch(gameState.game_scene,self.parent) --from,to,time,how,...
+		gamestate.switch(gameState.game_scene,self.parent)
 	end
 	local melee = Button(self,self.x,-100 + self.y,250,50,"melee")
 	local arena = Button(self,self.x,0+ self.y, 250,50,"arena")

@@ -9,10 +9,12 @@ local Card = require "cls/card"
 
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
+local AI = require "lib/ai"
 
-local foeLibs={}
-foeLibs[1] = require("cardLibs/skirmishLib")
+local deckData = require "cls/deckDataLoader"
 
+
+------------------------------------------------------------------------------------
 
 function game:init(userdata,foedata)
 	loader.addPack(self,function()
@@ -38,9 +40,7 @@ function game:init(userdata,foedata)
 		self:endturn()
 	end
 
-	self.aiLevel = 1
 	
-	local foedata = foeLibs[self.aiLevel]  ---todo！！！
 
 	self.aiCD = 0.5
 	self.mousex = 0
@@ -59,7 +59,7 @@ function game:init(userdata,foedata)
 	self.comboCount = 0
 
 	self.userdata = userdata
-	self.foedata = foedata
+	self.foedata = foedata or self:getFoeDeck(userdata.info.range)
 
 	self.up.deck:setCards(foedata)
 	self.up.library:setCards(foedata)
@@ -208,6 +208,54 @@ function game:mousepressed(key)
 		self.rightClick = true
 	end
 end
+
+----------------------------------------------------------------------------------
+function game:getFoeDeck(range)
+	range = range or 0
+	local foelevel
+	if love.math.random()<range/100 then
+		foelevel = 5
+	elseif love.math.random()<range /80 then
+		foelevel = 4
+	elseif love.math.random()<range /60 then
+		foelevel = 3
+	elseif love.math.random()<range /50 then
+		foelevel = 2
+	elseif love.math.random()<range /20 then
+		foelevel = 1
+	end
+
+	local foe = table.random(deckData)
+	for i,v in ipairs(foe.lib) do
+		local rnd = love.math.random()
+		if rnd> foelevel/5 then
+			v.level = v.level - 1
+		elseif rnd> foelevel/4 then
+			v.level = v.level -2
+		end
+		if v.level<1 then v.level = 1 end
+	end
+
+	foe.deck = {}
+
+	local allCoins
+	for k,v in pairs(self.cardData.coins) do
+		table.insert(allCoins,k)
+	end
+
+	for i = 1, 10 do
+		if love.math.random()>(0.2*foelevel)^2 then
+			table.insert(foe.deck, table.random(allCoins))
+		end
+	end
+
+	for k,v in pairs(foe) do
+		print(k,v)
+	end
+
+	return foe
+end
+
 
 function game:clickCard()
 	if self.my~=self.userside and  self.aiToggle then return end
@@ -867,7 +915,7 @@ function game:steal(card,what)
 	local res = self:lose(card,"your",what)
 
 	if  res then
-		self:gain(card,"my",res) 
+		return self:gain(card,"my",res) 
 	end
 
 end
@@ -1474,7 +1522,7 @@ function game:AI(dt)
 	if self.aiEnd then return end
 	self.aiCD = self.aiCD - dt
 	if self.aiCD > 0 then return end
-	local rule = self.foedata.rule
+	local rule = AI:getRule(self.foedata.rule)
 	for i,cond in ipairs(rule) do
 		if cond(self) then
 			self.aiCD = 0.5

@@ -30,6 +30,7 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 			d.id = id
 			table.insert(data.rarity[d.rare], d)
 			--record[faction][id] = {exp = 0, level = 3}
+
 		else
 			data[faction][category]={}
 			--record[faction][category] = {}
@@ -44,6 +45,7 @@ for i,faction in ipairs(lfs.getDirectoryItems("cards")) do
 				data.index[index] = d
 				table.insert(data.rarity[d.rare], d)
 				--record[faction][category][id] = {exp =0,level = 3}
+				--if d.isHero then print(id) end
 			end	
 		end
 		

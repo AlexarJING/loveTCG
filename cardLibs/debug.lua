@@ -89,6 +89,10 @@ data.cards = {
 				["level"]=3,
 				["exp"]=0,
 			},
+			["brigand"]={
+				["level"]=3,
+				["exp"]=0,
+			},
 		},
 		["espionage"]={
 			["forgery"]={
