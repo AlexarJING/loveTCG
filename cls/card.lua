@@ -311,12 +311,15 @@ function card:updateCanvas()
 	--description
 	
 	love.graphics.setFont(font_content)
+	local str = ""
 	for i,text in ipairs(self.description) do
-		love.graphics.setColor(0,0,0,255)
-		love.graphics.printf(text, 3, (i-1)*20+textHeight/(#self.description+1)+ 180 + 3, Width, "center")
-		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(text, 0, (i-1)*20+textHeight/(#self.description+1)+ 180, Width, "center")
+		str = str .. text .. "\n"
 	end
+	love.graphics.setColor(0,0,0,255)
+	love.graphics.printf(str, 3, 3-string.len(str)/10 + 250, Width, "center")
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.printf(str, 0, -string.len(str)/10 + 250 , Width, "center")
+
 	--price
 	if self.price then
 		love.graphics.setColor(255, 255, 255,255)

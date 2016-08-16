@@ -21,7 +21,7 @@ function loader.update(dt)
 			loader.parent.draw = loader._draw
 			break
 		end
-		print(coroutine.resume(loader.co))
+		coroutine.resume(loader.co)
 	end
 	loader.scene:update(dt)
 end

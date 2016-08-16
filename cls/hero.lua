@@ -19,7 +19,7 @@ function hero:init(game,root)
         self.x = -350
         self.y = 280      
     end
-
+    self.scale = 0.5
 
 end
 

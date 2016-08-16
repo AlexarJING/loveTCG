@@ -9,6 +9,7 @@ function turn:init(game,side)
 	self.game = game
 	self.img = love.graphics.newImage("res/assets/coin.png")
 	self.tw,self.th = self.img:getWidth(),self.img:getHeight()
+	self.freez = false
 end
 
 function turn:setTurn(side)
@@ -24,7 +25,9 @@ function turn:setTurn(side)
 end
 
 function turn:update(dt)
-	self.timer = self.timer - dt
+	if not self.freeze then 
+		self.timer = self.timer - dt
+	end
 	self.x = self.orientation*(320 - (self.timer/self.turntime)*640)
 	self.ry = self.ry + 0.3
 	if self.timer <0 then

@@ -17,7 +17,7 @@ local deckData = require "cls/deckDataLoader"
 ------------------------------------------------------------------------------------
 
 function game:init(userdata,foedata)
-	loader.addPack(self,function()
+	--loader.addPack(self,function()
 	self.bg = require "cls/bg"("table2d",0,0,2)
 	self.up = {}
 	self.down = {}
@@ -59,11 +59,17 @@ function game:init(userdata,foedata)
 	self.comboCount = 0
 
 	self.userdata = userdata
-	self.foedata = foedata or self:getFoeDeck(userdata.info.range)
+	if foedata then
+		self.foedata = foedata
+		self.foelevel = foedata.level
+	else
+		self.foedata,self.foelevel = self:getFoeDeck(userdata.info.range)
+	end
 
-	self.up.deck:setCards(foedata)
-	self.up.library:setCards(foedata)
-	self.up.hero:setHero(foedata)
+
+	self.up.deck:setCards(self.foedata)
+	self.up.library:setCards(self.foedata)
+	self.up.hero:setHero(self.foedata)
 
 	self.down.deck:setCards(userdata)
 	self.down.library:setCards(userdata)
@@ -74,7 +80,7 @@ function game:init(userdata,foedata)
 
 	self.aiToggle = false
 	self:gameStart()
-	end,"lib/loading")
+	--end,"lib/loading")
 	
 
 end
@@ -186,6 +192,7 @@ function game:keypress(key)
 		self.turnButton:endturn()
 	elseif key == "f1" then
 		self.debug.enable = not self.debug.enable
+		self.turnButton.freeze = self.debug.enable
 		self.my.hero.card.gold = 0
 		self.my.hero.card.food = 0
 		self.my.hero.card.magic = 999
@@ -213,47 +220,48 @@ end
 function game:getFoeDeck(range)
 	range = range or 0
 	local foelevel
-	if love.math.random()<range/100 then
+	local rnd = love.math.random()
+	if rnd<range/100 then
 		foelevel = 5
-	elseif love.math.random()<range /80 then
+	elseif rnd<range /90 then
 		foelevel = 4
-	elseif love.math.random()<range /60 then
+	elseif rnd<range /80 then
 		foelevel = 3
-	elseif love.math.random()<range /50 then
+	elseif rnd<range /50 then
 		foelevel = 2
-	elseif love.math.random()<range /20 then
+	else
 		foelevel = 1
 	end
+
+
 
 	local foe = table.random(deckData)
 	for i,v in ipairs(foe.lib) do
 		local rnd = love.math.random()
-		if rnd> foelevel/5 then
-			v.level = v.level - 1
-		elseif rnd> foelevel/4 then
-			v.level = v.level -2
+		if rnd< foelevel/5 then
+		
+		elseif rnd< foelevel/4 then
+			v.level = v.level -1
+		else
+			v.level = v.level - 2
 		end
 		if v.level<1 then v.level = 1 end
 	end
 
 	foe.deck = {}
 
-	local allCoins
+	local allCoins = {}
 	for k,v in pairs(self.cardData.coins) do
 		table.insert(allCoins,k)
 	end
 
 	for i = 1, 10 do
-		if love.math.random()>(0.2*foelevel)^2 then
+		if love.math.random()<(0.2*foelevel)^2 then
 			table.insert(foe.deck, table.random(allCoins))
 		end
 	end
 
-	for k,v in pairs(foe) do
-		print(k,v)
-	end
-
-	return foe
+	return foe,foelevel
 end
 
 
@@ -576,7 +584,7 @@ end
 function game:showCard(card)
 
 	if self.show.cards[1] then return end
-
+	if card.isHero then return end
 	self.show.lastPos = table.getIndex(card.current.cards,card)
 	self.show.lastPlace= card.current
 	self:transferCard(card,self.show)
@@ -638,10 +646,12 @@ function game:returnCard(card)
 
 	local pos = self.show.lastPos
 	local where = self.show.lastPlace
+	
+	self:transferCard(card,where,pos)
 	self.show.lastPos = nil
 	self.show.lastPlace = nil
 	self.show.tag = nil
-	self:transferCard(card,where,pos)
+
 end
 
 

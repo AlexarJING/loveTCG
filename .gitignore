@@ -43,3 +43,5 @@ Temporary Items
 .apdisk
 tcg.sublime-workspace
 tcg.sublime-workspace
+*.sublime-workspace
+tcg.sublime-workspace

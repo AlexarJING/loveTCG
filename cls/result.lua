@@ -109,11 +109,13 @@ function result:save()
 	local faction = data.collection.currentHero.faction
 	local heroData = data.collection.heros[faction][id]
 	if self.result =="win" then
-		data.gold = data.gold + 100*(2^self.game.aiLevel)
+		data.gold = data.gold + 100*(2^self.game.foelevel)
 		heroData.exp = heroData.exp + 200
+		data.range = data.range + 1 
 	else
 		data.gold = data.gold + 50
 		heroData.exp = heroData.exp + 50
+		data.range = data.range - 1 
 	end
 	self.info:saveUserFile()
 end
@@ -135,7 +137,7 @@ function result:draw()
 		if self.result == "lose" then
 			love.graphics.printf("YOU LOSE !\n+50 gold\n+50 exp", -360,100, 360, "center", 0, 2, 2)
 		else
-			love.graphics.printf("YOU WIN !\n+"..tostring(100*(2^self.game.aiLevel)).." gold\n+200 exp",
+			love.graphics.printf("YOU WIN !\n+"..tostring(100*(2^self.game.foelevel)).." gold\n+200 exp",
 			 -360,180, 360, "center", 0, 2, 2)
 		end
 	end

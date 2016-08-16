@@ -53,6 +53,7 @@ function debug:rightClick(card)
 	if card.isHero then return end
 	self.game:refillCard("my",card.data)
 	self.enable = false
+	self.game.turnButton.freeze = false
 end
 
 function debug:click(card)
@@ -65,6 +66,7 @@ function debug:click(card)
 	end
 	
 	self.enable = false
+	self.game.turnButton.freeze = false
 end
 
 function debug:update(dt)

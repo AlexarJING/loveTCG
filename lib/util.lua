@@ -181,6 +181,7 @@ function math.getLoopDist(p1,p2,loop)
 end
 
 function table.getIndex(tab,item)
+	if type(tab) ~= "table" then return end
 	for k,v in pairs(tab) do
 		if v==item then return k end
 	end
