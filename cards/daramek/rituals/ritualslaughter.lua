@@ -24,7 +24,7 @@ data.ability={
 			end
 		end
 		if not candidate[1] then return end
-		game:optionsCards(candidate)
+		game:optionsCards(card,candidate)
 		game.show.onChoose = function(card,game)
 			game:transferCard(card,game.my.play)
 			for i = 1, card.hp+1 do

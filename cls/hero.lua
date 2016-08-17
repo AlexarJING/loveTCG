@@ -25,7 +25,8 @@ end
 
 
 function hero:setHero(data)
-	local d = self.game.cardData[data.faction].hero[data.hero]
+	
+    local d = self.game.cardData[data.faction].hero[data.hero]
     self.card =  Card(self.game,d,self.root,self)
     
     self.card.hp = self.card.hp or 30

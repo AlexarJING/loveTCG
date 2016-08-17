@@ -23,7 +23,7 @@ data.ability={
 		end
 		if not options[1] then return end
 
-		game:optionsCards(options)
+		game:optionsCards(card,options)
 		
 		game.show.onChoose = function(target,game)
 			for i,v in ipairs(game.show.cards) do

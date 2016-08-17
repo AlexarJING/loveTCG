@@ -236,6 +236,7 @@ function game:getFoeDeck(range)
 
 
 	local foe = table.random(deckData)
+	
 	for i,v in ipairs(foe.lib) do
 		local rnd = love.math.random()
 		if rnd< foelevel/5 then
@@ -591,7 +592,8 @@ function game:showCard(card)
 	self.show.tag = "zoom"
 end
 
-function game:optionsCards(cards,to)
+function game:optionsCards(card,cards,to)
+	self.show.sender = card
 	if self.show.cards[1] then 
 		--delay:new(delayTime,since,func,...)
 		delay:new(

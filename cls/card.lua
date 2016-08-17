@@ -316,9 +316,9 @@ function card:updateCanvas()
 		str = str .. text .. "\n"
 	end
 	love.graphics.setColor(0,0,0,255)
-	love.graphics.printf(str, 3, 3-string.len(str)/10 + 250, Width, "center")
+	love.graphics.printf(str, 3, 3-string.len(str)/5 + 250, Width, "center")
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.printf(str, 0, -string.len(str)/10 + 250 , Width, "center")
+	love.graphics.printf(str, 0, -string.len(str)/5 + 250 , Width, "center")
 
 	--price
 	if self.price then

@@ -25,7 +25,7 @@ data.ability={
 			table.remove(cards, index)
 		end
 		if #candidate == 0 then return end
-		game:optionsCards(candidate)
+		game:optionsCards(card,candidate)
 		game.show.onChoose = function(card,game)
 			game:transferCard(card,game.my.hand)
 			if card.isCoin then

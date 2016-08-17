@@ -30,7 +30,7 @@ data.ability={
 			table.insert(candidate, c)
 		end
 		if #candidate == 0 then return end
-		game:optionsCards(candidate)
+		game:optionsCards(card,candidate)
 	end,
 }
 

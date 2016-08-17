@@ -1,6 +1,6 @@
 local data = {
 	faction = "endazu",
-	hero = "zalazair",
+	hero = "zalasair",
 	["lib"]={
 		[2]={
 			["level"]=3,

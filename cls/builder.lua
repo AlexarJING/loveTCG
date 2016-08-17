@@ -13,7 +13,7 @@ local Cursor = require "cls/cursor"
 
 function builder:init()
 	
-	loader.addPack(self,function()
+	--loader.addPack(self,function()
 	self.info = Info(self)
 	self.userdata = self.info.data.collection
 	self.font_title = love.graphics.newFont(30)
@@ -25,7 +25,7 @@ function builder:init()
 	self.cursor = Cursor(self)
 	self.state = "menu"
 	self.coins = {}
-	end,"lib/loading")
+	--end,"lib/loading")
 end
 
 function builder:initEditor()

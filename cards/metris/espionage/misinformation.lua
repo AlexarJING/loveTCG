@@ -19,7 +19,7 @@ data.ability={
 		local cards = {unpack(game.your.bank.cards)}
 		if #cards == 0 then return end
 
-		game:optionsCards(cards)
+		game:optionsCards(card,cards)
 		game.show.onChoose = function(target,game)
 	
 			for i,v in ipairs(game.your.library.cards) do
