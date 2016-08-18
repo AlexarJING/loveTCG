@@ -17,6 +17,7 @@ data.description = {
 data.ability={
 	onPlay = function (card,game)
 		local sacrificed = game:sacrificeCard("random")
+		if not sacrificed then return end
 		local copy = game:copyCard(sacrificed)
 		--game:transferCard(card ,from,to ,pos,passResort)
 		game:transferCard(copy,copy.current,game.my.play)

@@ -2,14 +2,7 @@ local ai = {}
 
 function ai.chooseShow(game)
 	if #game.show.cards==0 then return end
-	if game.show.tag == "sibyllinescrolls" 
-		or game.show.tag == ""
-		then
-
-	else
-
-
-	end
+	local card = table.max(game.show.cards,"price")
 	if card then
 		return game:chooseCard(card)
 	end
@@ -64,6 +57,7 @@ function ai:getRule(data)
 		if not self[v] then error("no funcs") end
 		table.insert(funcs, self[v])
 	end
+	return funcs
 end
 
 return ai

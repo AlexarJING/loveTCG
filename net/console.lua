@@ -1,18 +1,17 @@
-local console= Class("console")
+local console= {}
 local w = 800
 local h = 400
 
-function console:init(parent,x,y,w,h)
-	self.parent = parent
+function console:init(x,y,w,h)
 	self.content={}
-	self.pos={x,y-h,w,h}--{l,t,w,h}
+	self.pos={x,y,w,h}--{l,t,w,h}
 	self.font=love.graphics.newFont(15)
 	self.caretPos={5,520,5,540}
 	self.caretAlpha=0
 	self.countOneLine=math.floor(self.pos[3]/self.font:getWidth("0"))
 	self.wordHeight=self.font:getHeight("1")
 	self.language="en"
-	self.enable = false
+	self.enable = true
 	self.cmd ={}
 	self.input=""
 	self.inputRight = ""
@@ -30,11 +29,11 @@ local function lookForShort(word)
 end
 
 function console:send(diag)
-	local cmd =loadstring(diag.what)
+	local cmd =loadstring("return " .. diag.what)
 	if cmd then 
-		local test,rt = pcall(cmd) 
+		local test,a,b,c,d,e = pcall(cmd) 
 		if test then
-			diag.what = diag.what .. " --> "..tostring(rt)
+			diag.what = diag.what .. " --> "..tostring(a,b,c,d,e)
 		else
 			diag.what = diag.what .. " --> "..tostring(test)
 		end
@@ -99,6 +98,11 @@ function console:sys(what,step)
 	self:send(diag)
 end
 
+function console:update()
+
+
+end
+
 function console:draw()
 	if self.enable == false then return end
 	if self.isEdit then
@@ -106,6 +110,7 @@ function console:draw()
 	else
 		self.alpha=0.3
 	end
+
 	love.graphics.setColor(0, 100,0, 100*self.alpha)
 	love.graphics.rectangle("fill", unpack(self.pos))
 	love.graphics.setColor(0, 100,0, 150*self.alpha)
@@ -195,9 +200,8 @@ function console:keypressed(key)
 		if self.isEdit then
 			if self.input == "" then
 				self.isEdit=false
-				self.parent.keyLock = false
 			else
-				self:say("player",self.input..self.inputRight,0.3)
+				self:say("admin",self.input..self.inputRight,0.3)
 				self.input=""
 				self.inputRight=""
 				self.caretIndex=0
@@ -205,7 +209,6 @@ function console:keypressed(key)
 			end
 		else
 			self.isEdit=true
-			self.parent.keyLock=true
 		end
 	elseif key =="left" then
 		self.caretIndex = self.caretIndex - 1
@@ -233,10 +236,11 @@ function console:keypressed(key)
 end
 
 local function inRect(self)
-	if self.parent.mousex<self.pos[1] then return end
-	if self.parent.mousex>self.pos[1]+self.pos[3] then return end
-	if self.parent.mousey<self.pos[2]+self.pos[4]*0.8 then return end
-	if self.parent.mousey>self.pos[2]+self.pos[4] then return end
+	local x, y = love.mouse.getPosition()
+	if x<self.pos[1] then return end
+	if x>self.pos[1]+self.pos[3] then return end
+	if y<self.pos[2]+self.pos[4]*0.8 then return end
+	if y>self.pos[2]+self.pos[4] then return end
 	
 	return true
 end
@@ -246,21 +250,17 @@ function console:mousepressed(key)
 	if key==1 then
 		if inRect(self) then
 			if not self.isEdit then
-				self.isEdit=true
-				self.parent.keyLock=true
+				self.isEdit=true		
 			end
 		elseif self.isEdit then
-			self.isEdit=false
-			self.parent.keyLock=false
+			self.isEdit=false		
 		end
 	end
 end
 
 function console:toggle(toggle)
 	self.enable = toggle
-	if not self.enable then
-		self.parent.keyLock=false
-	end
+
 end
 
 

@@ -787,11 +787,11 @@ function math.polygonClip(subjectPolygon, clipPolygon)
   return outputList
 end
 
-function string.strippath(filename)    
-    return string.match(filename, "(.+)\\[^\\]*%.%w+$") --windows
+function string.path(filename)    
+    return string.match(filename, "(.+)\\[^\\]*%.%w+$") 
 end
-function string.stripfilename(filename)
-    return string.match(filename, ".+\\([^\\]*%.%w+)$") -- *nix system
+function string.filename(filename)
+    return string.match(filename, ".+\\([^\\]*%.%w+)$") 
 end
 
 function table.random(tab)
@@ -803,4 +803,54 @@ function table.pickRandom(tab)
 	local v = tab[i]
 	table.remove(tab,i)
 	return v
+end
+
+function table.max(tab,key)
+	local max
+	local index
+	local value = -1/0
+	for i,v in pairs(tab) do
+		if key  then
+			if v[key]>value then
+				value =v[key]
+				max = v
+				index = i
+			end
+		else
+			if v>value then
+				value =v
+				max = v
+				index = i
+			end
+		end
+	end
+
+	if max then 
+		return max , index
+	end
+end
+
+function table.min(tab,key)
+	local min
+	local index
+	local value = 1/0
+	for i,v in pairs(tab) do
+		if key  then
+			if v[key]>value then
+				value =v[key]
+				min = v
+				index = i
+			end
+		else
+			if v>value then
+				value =v
+				min = v
+				index = i
+			end
+		end
+	end
+
+	if min then 
+		return min , index
+	end
 end

@@ -78,7 +78,7 @@ function game:init(userdata,foedata)
 	self.up.resource=self.up.hero.card
 	self.down.resource=self.down.hero.card
 
-	self.aiToggle = false
+	self.aiToggle = true
 	self:gameStart()
 	--end,"lib/loading")
 	
@@ -1345,6 +1345,8 @@ function game:attack(from,to,ignore)
 	end
 
 	from:standout()
+
+	target = target or your.hero.card
 
 	if target.dodgeRate and love.math.random()<target.dodgeRate then
 		effect:addCallback(function() target:turnaround() end)

@@ -46,3 +46,7 @@ tcg.sublime-workspace
 *.sublime-workspace
 tcg.sublime-workspace
 tcg.sublime-workspace
+*.sublime-project
+tcg.sublime-project
+*.sublime-project
+tcg.sublime-project
