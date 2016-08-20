@@ -1,22 +1,16 @@
-local client = {}
+local client = sock.newClient("192.168.10.33", 22122)
 
-function client:init()
+love.connection = 'offline'
+client:on("connect", function()
+   love.connection = "online"
+end)
 
-    -- Creating a client to connect to some ip address
-    client = sock.newClient("192.168.10.33", 22122)
 
-    client:on("connect", function()
-       client:emit("login",{name = "test"})
-    end)
+client:connect()
+love.client =client
 
-    client:connect()
-
-   
-    
+return function()
+	love.update = function(...)
+		love.client:update()
+	end
 end
-
-function client:update()
-    client:update()
-end
-
-return client

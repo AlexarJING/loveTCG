@@ -2,6 +2,7 @@ local play = Class("play")
 local moveSpeed = 0.5
 function play:init(game,root)
     self.cards={}
+    self.name = "play"
     self.game = game
     self.root = root
     self.parent = game[root]

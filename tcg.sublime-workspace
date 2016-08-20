@@ -8,6 +8,14 @@
 				"fori	for i,v in ipairs()"
 			],
 			[
+				"cor",
+				"coroutine.wrap	(f)"
+			],
+			[
+				"co",
+				"coroutine.create	(f)"
+			],
+			[
 				"table",
 				"table.insert	(table, [pos,] value)"
 			],
@@ -324,54 +332,42 @@
 	"buffers":
 	[
 		{
-			"file": "lib/ai.lua",
+			"file": "cls/menu.lua",
 			"settings":
 			{
-				"buffer_size": 1189,
+				"buffer_size": 2970,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "main.lua",
-			"settings":
-			{
-				"buffer_size": 380,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "local client = {}\n\nfunction client:init()\n\n    -- Creating a client to connect to some ip address\n    client = sock.newClient(\"192.168.10.33\", 22122)\n\n    client:on(\"connect\", function()\n       client:emit(\"login\",{name = \"test\"})\n    end)\n\n    \n\n    client:connect()\n\n   \n    \nend\n\nfunction client:update()\n    client:update()\nend\n\nreturn client",
 			"file": "net/client.lua",
-			"file_size": 361,
-			"file_write_time": 131160478529727409,
 			"settings":
 			{
-				"buffer_size": 346,
-				"line_ending": "Windows",
-				"name": "client.lua"
-			}
-		},
-		{
-			"file": "/F/Love2D Project/box2d/modes/createMode.lua",
-			"settings":
-			{
-				"buffer_size": 22733,
+				"buffer_size": 268,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "conf.lua",
+			"file": "lib/sock.lua",
 			"settings":
 			{
-				"buffer_size": 3367,
+				"buffer_size": 37524,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "include.lua",
+			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 276,
+				"buffer_size": 33330,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "net/main.lua",
+			"settings":
+			{
+				"buffer_size": 5011,
 				"line_ending": "Windows"
 			}
 		}
@@ -468,31 +464,46 @@
 	},
 	"expanded_folders":
 	[
-		"/F/Love2D Project/loveTCG",
-		"/F/Love2D Project/loveTCG/lib",
-		"/F/Love2D Project/loveTCG/net"
+		"/G/love2dproj/loveTCG",
+		"/G/love2dproj/loveTCG/cardLibs",
+		"/G/love2dproj/loveTCG/cls",
+		"/G/love2dproj/loveTCG/lib",
+		"/G/love2dproj/loveTCG/net"
 	],
 	"file_history":
 	[
-		"/F/Love2D Project/loveTCG/net/sock.lua",
-		"/F/Love2D Project/loveTCG/lib/sock.lua",
-		"/F/Love2D Project/loveTCG/cls/game.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/fertilityoffering.lua",
-		"/F/Love2D Project/loveTCG/server/server.lua",
-		"/C/Users/Alexar/Desktop/sock.lua-master/bitser.lua",
-		"/F/Love2D Project/loveTCG/lib/util.lua",
-		"/F/Love2D Project/loveTCG/main.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/benediction.lua",
-		"/F/Love2D Project/loveTCG/lib/ai.lua",
-		"/F/Love2D Project/space war/tasks/tutorial_2.lua",
-		"/F/Love2D Project/loveTCG/cards/vespitole/faith/sibyllinescrolls.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/ramsack.lua",
-		"/F/Love2D Project/loveTCG/cards/metris/espionage/misinformation.lua",
-		"/F/Love2D Project/loveTCG/cards/endazu/incantations/summoningrift.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
-		"/F/Love2D Project/loveTCG/cards/daramek/rituals/bloodlust.lua",
+		"/G/love2dproj/loveTCG/cls/turn.lua",
+		"/G/love2dproj/loveTCG/main.lua",
+		"/G/love2dproj/loveTCG/cls/deck.lua",
+		"/G/love2dproj/loveTCG/cls/library.lua",
+		"/G/love2dproj/loveTCG/cls/hand.lua",
+		"/G/love2dproj/loveTCG/cls/grave.lua",
+		"/G/love2dproj/loveTCG/cls/play.lua",
+		"/G/love2dproj/loveTCG/cls/card.lua",
+		"/G/love2dproj/loveTCG/cls/hero.lua",
+		"/G/love2dproj/loveTCG/lib/loader.lua",
+		"/G/love2dproj/loveTCG/lib/loading.lua",
+		"/G/love2dproj/loveTCG/cls/pocket.lua",
+		"/G/love2dproj/loveTCG/cls/starter.lua",
+		"/G/love2dproj/loveTCG/cls/selector.lua",
+		"/G/love2dproj/loveTCG/cls/builder.lua",
+		"/G/love2dproj/loveTCG/cls/collection.lua",
+		"/G/love2dproj/loveTCG/net/main.lua",
+		"/G/love2dproj/loveTCG/cardLibs/default.lua",
+		"/G/love2dproj/loveTCG/cardLibs/debug.lua",
+		"/G/love2dproj/loveTCG/include.lua",
+		"/G/love2dproj/loveTCG/cls/result.lua",
+		"/G/love2dproj/loveTCG/cls/foedata.lua",
+		"/G/love2dproj/loveTCG/cls/game.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/faith/benediction.lua",
+		"/G/love2dproj/loveTCG/lib/ai.lua",
+		"/G/love2dproj/loveTCG/cards/vespitole/faith/sibyllinescrolls.lua",
+		"/G/love2dproj/loveTCG/cards/metris/espionage/ramsack.lua",
+		"/G/love2dproj/loveTCG/cards/metris/espionage/misinformation.lua",
+		"/G/love2dproj/loveTCG/cards/endazu/incantations/summoningrift.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/bloodlust.lua",
 		"/C/Users/alex/AppData/Local/Temp/Rar$DIa0.170/LuaLove.sublime-build",
-		"/F/Love2D Project/space war/tasks/tutorial_1.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/rituals/culltheherd.lua",
 		"/G/love2dproj/loveTCG/cards/vespitole/faith/cards/vespitole/faith/benediction.lua",
 		"/C/Users/alex/AppData/Roaming/Sublime Text 3/Packages/Lua Love/LuaLove.sublime-settings",
@@ -511,14 +522,11 @@
 		"/C/Users/alex/AppData/Local/Temp/Rar$DIa0.718/game.lua",
 		"/C/Users/alex/AppData/Local/Temp/Rar$DIa0.465/main.lua",
 		"/G/love2dproj/towerdefence/machineGun.lua",
-		"/G/love2dproj/loveTCG/cls/card.lua",
-		"/G/love2dproj/loveTCG/cls/builder.lua",
-		"/G/love2dproj/loveTCG/cls/hero.lua",
-		"/G/love2dproj/loveTCG/cls/game.lua",
 		"/G/love2dproj/loveTCG/cardLibs/ai/zalasair.lua",
 		"/F/Love2D Project/loveTCG/cls/info.lua",
 		"/F/Love2D Project/loveTCG/cls/deckDataLoader.lua",
 		"/F/Love2D Project/loveTCG/lib/loader.lua",
+		"/F/Love2D Project/loveTCG/cls/game.lua",
 		"/F/Love2D Project/loveTCG/cls/card.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/ai/capitainviatrix.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/ai/gretta.lua",
@@ -544,9 +552,11 @@
 		"/F/Love2D Project/loveTCG/cardLibs/debug.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/underlings/brigand.lua",
 		"/F/Love2D Project/loveTCG/cls/collection.lua",
+		"/F/Love2D Project/loveTCG/lib/ai.lua",
 		"/F/Love2D Project/loveTCG/cards/vespitole/war/soldier.lua",
 		"/F/Love2D Project/loveTCG/cards/metris/murder/brigand.lua",
 		"/F/Love2D Project/loveTCG/cls/cardDataLoader.lua",
+		"/F/Love2D Project/loveTCG/cards/vespitole/faith/benediction.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/cardinalpocci.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/capitainviatrix.lua",
 		"/F/Love2D Project/loveTCG/cardLibs/skirmishLib.lua",
@@ -554,6 +564,7 @@
 		"/F/Love2D Project/loveTCG/cards/endazu/hero/jesmai.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/hero/raktabaan.lua",
 		"/F/Love2D Project/loveTCG/cards/endazu/hero/zalasair.lua",
+		"/F/Love2D Project/loveTCG/lib/util.lua",
 		"/C/Users/alex/AppData/Roaming/LOVE/loveTCG/system",
 		"/C/Users/alex/Desktop/matrix.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/scrollofpetals.lua",
@@ -562,7 +573,6 @@
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/lanternscroll.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/papervipers.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/engravedurn.lua",
-		"/G/love2dproj/loveTCG/cards/endazu/incantations/summoningrift.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/incantations/wordofunmaking.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/empoweringseal.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/inscriptions/enchantedtreaty.lua",
@@ -578,7 +588,6 @@
 		"/G/love2dproj/loveTCG/cards/daramek/hero/orom.lua",
 		"/G/love2dproj/loveTCG/cards/vespitole/prosperity/tithe.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/slaves/stampede.lua",
-		"/G/love2dproj/loveTCG/cards/daramek/rituals/ritualslaughter.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/idols/herdingstones.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/idols/sacredtortoise.lua",
 		"/G/love2dproj/loveTCG/cards/daramek/idols/serpentaltar.lua",
@@ -590,22 +599,11 @@
 		"/G/love2dproj/loveTCG/cards/endazu/hero/zalasair.lua",
 		"/G/love2dproj/loveTCG/cards/vespitole/hero/captainviatrix.lua",
 		"/G/love2dproj/loveTCG/cards/vespitole/hero/cardinalpocci.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/madamaline.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/regentmarsh.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/sofocatro.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/ysadora.lua",
-		"/G/love2dproj/loveTCG/cards/metris/hero/birondelle.lua",
-		"/G/love2dproj/loveTCG/cards/metris/hero/loquori.lua",
-		"/G/love2dproj/loveTCG/cards/metris/hero/theodox.lua",
-		"/G/love2dproj/loveTCG/cards/metris/hero/valdorian.lua",
-		"/G/love2dproj/loveTCG/cards/daramek/hero/liet.lua",
-		"/G/love2dproj/loveTCG/cards/daramek/hero/tazin.lua",
-		"/G/love2dproj/loveTCG/cards/metris/hero/gretta.lua",
-		"/G/love2dproj/loveTCG/cards/endazu/incantations/banishinggust.lua"
+		"/G/love2dproj/loveTCG/cards/vespitole/hero/madamaline.lua"
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
@@ -620,8 +618,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"ai",
-			"max",
+			"print",
+			"parent",
+			"hero",
+			"parent",
+			"foelevel",
 			"optionsCards",
 			"getposfor",
 			"print",
@@ -744,10 +745,7 @@
 			"frame.heroDraw",
 			"draw3",
 			"a.draw3",
-			"draw3",
-			"reset",
-			":",
-			"belongTo"
+			"draw3"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -755,7 +753,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"min",
 			"function ai.",
 			"game",
 			"userside",
@@ -857,53 +854,55 @@
 			[
 				{
 					"buffer": 0,
-					"file": "lib/ai.lua",
+					"file": "cls/menu.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1189,
+						"buffer_size": 2970,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1174,
-								1174
+								2228,
+								2228
 							]
 						],
 						"settings":
 						{
+							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 603.0,
+						"translation.y": 1215.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "main.lua",
+					"file": "net/client.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 380,
+						"buffer_size": 268,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								44,
-								44
+								207,
+								207
 							]
 						],
 						"settings":
 						{
+							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
@@ -916,61 +915,61 @@
 				},
 				{
 					"buffer": 2,
-					"file": "net/client.lua",
+					"file": "lib/sock.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 346,
+						"buffer_size": 37524,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								272,
-								272
+								1799,
+								1799
 							]
 						],
 						"settings":
 						{
-							"auto_name": "client.lua",
-							"origin_encoding": "ASCII",
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 810.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "/F/Love2D Project/box2d/modes/createMode.lua",
+					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22733,
+						"buffer_size": 33330,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								7696,
+								7696
 							]
 						],
 						"settings":
 						{
-							"origin_encoding": "ASCII",
+							"is_init_dirty_state": true,
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5412.0,
+						"translation.y": 8771.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -978,62 +977,33 @@
 				},
 				{
 					"buffer": 4,
-					"file": "conf.lua",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 3367,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"origin_encoding": "UTF-8",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "include.lua",
+					"file": "net/main.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 276,
+						"buffer_size": 5011,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								221,
-								221
+								3534,
+								3545
 							]
 						],
 						"settings":
 						{
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 3240.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1072,7 +1042,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 193.0
+		"height": 313.0
 	},
 	"output.find_results":
 	{
@@ -1082,7 +1052,7 @@
 	"project": "tcg.sublime-project",
 	"replace":
 	{
-		"height": 70.0
+		"height": 80.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1096,16 +1066,12 @@
 	},
 	"select_project":
 	{
-		"height": 500.0,
+		"height": 0.0,
 		"last_filter": "",
 		"selected_items":
 		[
-			[
-				"",
-				"F:\\Love2D Project\\lovengine\\1.sublime-project"
-			]
 		],
-		"width": 380.0
+		"width": 0.0
 	},
 	"select_symbol":
 	{

@@ -55,7 +55,9 @@ function scene:draw()
 	end
 	self.bg2:draw()
 	love.graphics.setColor(200,0,0,self.alpha)
-	love.graphics.print("loading", 300,100,0,2,2)
+	if self.text then
+		love.graphics.print(self.text, 300,200,0,2,2)
+	end
 end
 
 

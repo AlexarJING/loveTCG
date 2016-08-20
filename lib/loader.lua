@@ -1,16 +1,19 @@
 local loader = {}
 
-function loader.addPack(parent,func,sceneName)
+
+function loader.addPack(parent,func,sceneName,text)
 	loader.parent = parent
 	loader.running = true
 	loader.co = coroutine.create(func)
-	loader.scene = require (sceneName)
+	loader.scene = loader.scene or require (sceneName)
 	loader.scene:load()
 	loader.speed = 1
 	loader._update = loader.parent.update
 	loader._draw = loader.parent.draw
 	loader.parent.update = loader.update
 	loader.parent.draw = loader.draw
+	loader.text = text or "loading"
+	loader.scene.text = loader.text
 end
 
 function loader.update(dt)

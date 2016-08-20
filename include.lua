@@ -1,3 +1,5 @@
+sock = require "lib/sock"
+client = require "net/client"()
 Class=require "lib/middleclass"
 Tween=require "lib/tween"
 gamestate=require "lib/gamestate"
@@ -5,6 +7,4 @@ Net=require "lib/net"
 Camera = require "lib/camera"
 delay = require "lib/delay"
 loader = require "lib/loader"
-sock = require "lib/sock"
-client = require "net/client"
 require "lib/util"

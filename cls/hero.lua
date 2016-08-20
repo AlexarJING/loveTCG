@@ -34,7 +34,7 @@ function hero:setHero(data)
     self.card.magic = self.card.magic or 0
     self.card.skull = self.card.skull or 0
     self.card.gold = self.card.gold or 0
-
+    self.card.current = self
     self.parent.resource=self.card
 end
 

@@ -1,6 +1,5 @@
 require "include"
 
---[[
 function love.load()
     gameState={}
     for _,name in ipairs(love.filesystem.getDirectoryItems("scenes")) do
@@ -8,12 +7,4 @@ function love.load()
     end
     gamestate.registerEvents()
     gamestate.switch(gameState.start_scene)
-end]]
-
-function love.load()
-	client:init()
-end
-
-function love.update(dt)
-	client:update()
 end

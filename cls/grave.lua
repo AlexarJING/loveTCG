@@ -2,6 +2,7 @@ local grave = Class("grave")
 
 function grave:init(game,root)
     self.cards={}
+    self.name = "grave"
     self.game = game
     self.root = root
     self.parent = game[root]

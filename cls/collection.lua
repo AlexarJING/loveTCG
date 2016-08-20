@@ -30,9 +30,7 @@ function collection:init(parent)
 	self.scale = 0.5
 	self.show = "card"
 
-	self.hero = self.parent.hero
-	self.faction = self.parent.faction
-
+	self.faction = self.parent.selector.faction
 
 	self.cards={}
 	
@@ -80,7 +78,7 @@ function collection:init(parent)
 		btn.onClick = function(btn) 
 			self.show = "card"
 			self.category = btn.text 
-			self.parent.category = btn.text
+			--self.parent.category = btn.text
 		end
 		self.categoryBtn[category] = btn
 	end
@@ -90,11 +88,10 @@ function collection:init(parent)
 	btn.onClick = function(btn) 
 		self.show = "coin"
 		self.category = btn.text 
-		self.parent.category = btn.text
+
 	end
 	
 
-	self.parent.category = self.category
 
 	local btn = Button(self,self.x+70, self.y - 130, 80,30, "save")
 	btn.onClick = function()
@@ -104,7 +101,7 @@ function collection:init(parent)
 end
 
 function collection:resetBtn()
-	self.faction = self.parent.faction
+	self.faction = self.parent.selector.faction
 	
 	for k,v in pairs(self.categoryBtn) do
 		v:remove()
@@ -120,11 +117,10 @@ function collection:resetBtn()
 		btn.onClick = function(btn) 
 			self.show = "card"
 			self.category = btn.text 
-			self.parent.category = btn.text
 		end
 		self.categoryBtn[category] = btn
 	end
-	self.parent.category = self.category
+
 end
 
 
@@ -171,8 +167,8 @@ function collection:update(dt)
 
 	if self.show == "coin" then return self:update_forCoin(dt) end
 
-	local faction = self.parent.faction
-	local category = self.parent.category
+	local faction = self.parent.selector.faction
+	local category = self.category
 
 	for id,tab in pairs(self.cards[faction][category]) do
 		for level,card in ipairs(tab) do
@@ -207,8 +203,8 @@ end
 function collection:draw()
 	
 
-	local faction = self.parent.faction
-	local hero = self.parent.hero
+	local faction = self.parent.selector.faction
+
 	local category = self.category
 
 	for i,btn in ipairs(self.ui) do

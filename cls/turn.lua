@@ -50,19 +50,17 @@ end
 function turn:checkMouse()
 	self.hover = self:checkHover()
 
-	if self.hover and self.game.click and not (self.game.my ~= self.game.userside and self.game.aiToggle) then
-		self.timer = self.turntime
-		self.orientation = - self.orientation
+	if self.hover and self.game.click and 
+		not (self.game.my ~= self.game.userside and self.game.gametype ~= "hotseat") then
 		self.game:turnEnd()
 	end
 
 	return self.hover
 end
 
-function turn:endturn()
+function turn:endTurn()
 	self.timer = self.turntime
 	self.orientation = - self.orientation
-	self.game:turnEnd()
 end
 
 function turn:draw()

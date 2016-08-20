@@ -109,7 +109,7 @@ function result:save()
 	local faction = data.collection.currentHero.faction
 	local heroData = data.collection.heros[faction][id]
 	if self.result =="win" then
-		data.gold = data.gold + 100*(2^self.game.foelevel)
+		data.gold = data.gold + 100*(2^self.game.foedata.level)
 		heroData.exp = heroData.exp + 200
 		data.range = data.range + 1 
 	else

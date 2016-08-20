@@ -4,6 +4,7 @@ local Card = require "cls/card"
 
 function library:init(game,root)
     self.cards={}
+    self.name = "lib"
     self.game = game
     self.root = root
     self.parent = game[root]

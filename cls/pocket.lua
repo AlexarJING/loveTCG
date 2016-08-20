@@ -4,6 +4,9 @@ local cardData = require "cls/cardDataLoader"
 local Card = require "cls/card"
 local Bg = require "cls/bg"
 
+local collection
+local selector
+
 local function getPos(self,index)
 	local x = self.x + (index-1)%5*150 
 	local y = self.y + 100*math.ceil(index/5 -1)
@@ -25,7 +28,7 @@ end
 function pocket:init(parent)
 	self.parent = parent
 	self.userdata= parent.userdata
-	self.collection = self.parent.collection
+	
 	self.x = -100
 	self.y = 150
 	self.scale = 0.5
@@ -33,19 +36,20 @@ function pocket:init(parent)
 	self.slot = {}
 	self.slot2 = {}
 	self:load()
-	--self:save()
 end
 
 function pocket:load()
-	local faction = self.parent.faction
-	local category = self.parent.category
-	local hero = self.parent.hero
+	collection = self.parent.collection
+	selector = self.parent.selector
+	local faction = selector.faction
+	local category = collection.category
+	local hero = selector.hero
 	local data = self.userdata
-	local cards = self.collection.cards
-	local coins = self.collection.coins
-	local collection = self.collection
+	local cards = collection.cards
+	local coins = collection.coins
+	
 
-	self.show = self.collection.show
+	self.show = collection.show
 
 	for i = 1,10 do		
 		local c = self.slot[i]
@@ -56,7 +60,6 @@ function pocket:load()
 			local x,y = getPosForCollection(self,c.index,c.level)
 			c.x=x 
 			c.y=y
-			--c:addAnimate(0.5,{x=x,y=y},"inBack")
 		end
 	end
 
@@ -69,20 +72,16 @@ function pocket:load()
 			local x,y = getPosForCoin(self,c.index)
 			c.x=x 
 			c.y=y
-			--c:addAnimate(0.5,{x=x,y=y},"inBack")
 		end
 	end
 
-
 	for i,d in ipairs(data.heros[faction][hero].lib) do
-		--print(faction,d.category,d.id,d.level)
 		local card = cards[faction][d.category][d.id][d.level]
 		local x, y = getPos(self,i)
 		card.current = self
 		card.slot = i
 		card.x=x 
 		card.y=y
-		--card:addAnimate(0.5,{x=x,y=y},"inBack")
 		self.slot[i]=card
 	end
 
@@ -95,16 +94,13 @@ function pocket:load()
 				card.slot = i
 				card.x=x 
 				card.y=y
-				--card:addAnimate(0.5,{x=x,y=y},"inBack")
 				self.slot2[i]=card
 				break
 			end
 		end	
 	end
 
-	self.parent.lib = data.heros[faction][hero].lib
-	self.parent.deck = data.heros[faction][hero].deck
-
+	self:save()
 end
 
 function pocket:update_forCoin(dt)
@@ -157,6 +153,7 @@ function pocket:update(dt)
 end
 
 function pocket:save()
+	local complet = true
 	local data = {}
 	for i = 1, 10 do
 		if self.slot[i] then
@@ -167,6 +164,8 @@ function pocket:save()
 				level = card.level,
 				exp = card.exp,
 				category = card.category})
+		else
+			complet = false
 		end
 	end
 
@@ -177,12 +176,27 @@ function pocket:save()
 			table.insert(data2 , card.id)
 		end
 	end
-	self.userdata.heros[self.parent.faction][self.parent.hero].lib = data
-	self.userdata.heros[self.parent.faction][self.parent.hero].deck = data2
-	self.parent.lib = data
-	self.parent.deck = data2
-	
-	self.userdata.currentHero = {id = self.parent.hero , faction = self.parent.faction}
+
+	local faction = self.parent.selector.faction
+	local hero = self.parent.selector.hero
+	local lib = data
+	local deck = data2
+
+	self.userdata.heros[faction][hero].lib = lib
+	self.userdata.heros[faction][hero].deck = deck
+	self.userdata.currentHero = {id = hero , faction = faction}
+
+	if complet then
+		local playerdata = {
+			faction = faction,
+			hero = hero,
+			lib = lib,
+			deck = deck,
+			range = self.parent.info.data.range
+		}
+
+		self.parent.playerdata = playerdata
+	end
 	self.parent.info:saveUserFile()
 	
 end

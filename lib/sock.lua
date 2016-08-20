@@ -38,7 +38,7 @@ local currentFolder = (...):match("(.-)[^%.]+$")
 
 require "enet"
 -- bitser is expected to be in the same directory as sock.lua
-local bitser = require(currentFolder.."bitser")
+local bitser = require("lib/bitser")
 
 -- links variables to keys based on their order
 -- note that it only works for boolean and number values, not strings

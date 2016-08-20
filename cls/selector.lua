@@ -11,12 +11,10 @@ function selector:init(parent)
 	self.y = 0
 	self.scale = 1.3
 	
-	self.currentFaction = self.userdata.currentHero.faction
-	self.currentID = self.userdata.currentHero.id
-	self.bg = Bg(self.currentFaction.."Bg",0,0,1.1)
+	self.faction = self.userdata.currentHero.faction
+	self.hero = self.userdata.currentHero.id
+	self.bg = Bg(self.faction.."Bg",0,0,1.1)
 
-	self.parent.faction = self.currentFaction
-	self.parent.hero = self.currentID
 
 	self.heros={}
 	for faction,tab in pairs(self.userdata.heros) do
@@ -26,12 +24,12 @@ function selector:init(parent)
 			index = index + 1
 			self.heros[faction][index] = Card(self.parent,cardData[faction].hero[id],nil,self)  --game,data,born,current
 	
-			if id == self.currentID then
+			if id == self.hero then
 				self.currentIndex = index
 			end
 		end
 	end
-	self.currentHero = self.heros[self.currentFaction][self.currentIndex]
+	self.heroCard = self.heros[self.faction][self.currentIndex]
 
 	self.ui = {}
 
@@ -48,12 +46,11 @@ function selector:init(parent)
 		end
 		btn.onClick = function(btn)
 			self.parent.pocket:save()
-			self.currentFaction = btn.text
+			self.faction = btn.text
 			self.currentIndex = 1
 			self.bg = Bg(btn.text.."Bg",0,0,1.1)
-			self.currentHero = self.heros[self.currentFaction][self.currentIndex]
-			self.parent.faction = self.currentFaction
-			self.parent.hero = self.currentHero.id
+			self.heroCard = self.heros[self.faction][self.currentIndex]
+			self.hero = self.heroCard.id
 			self.parent.pocket:load()
 			self.parent.collection:resetBtn()
 		end
@@ -63,12 +60,11 @@ function selector:init(parent)
 	self.prevBtn.onClick = function()
 		self.parent.pocket:save()
 		self.currentIndex = self.currentIndex + 1
-		if not self.heros[self.currentFaction][self.currentIndex] then
+		if not self.heros[self.faction][self.currentIndex] then
 			self.currentIndex = 1
 		end
-		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
-		self.parent.hero = self.currentHero.id
-		--self.parent.pocket:save()
+		self.heroCard = self.heros[self.faction][self.currentIndex]
+		self.hero = self.heroCard.id
 		self.parent.pocket:load()
 	
 	end
@@ -76,12 +72,11 @@ function selector:init(parent)
  	self.nextBtn.onClick = function()
  		self.parent.pocket:save()
  		self.currentIndex = self.currentIndex - 1
-		if not self.heros[self.currentFaction][self.currentIndex] then
-			self.currentIndex = #self.heros[self.currentFaction]
+		if not self.heros[self.faction][self.currentIndex] then
+			self.currentIndex = #self.heros[self.faction]
 		end
-		self.currentHero = self.heros[self.currentFaction][self.currentIndex]
-		self.parent.hero = self.currentHero.id
-		--self.parent.pocket:save()
+		self.heroCard = self.heros[self.faction][self.currentIndex]
+		self.hero = self.heroCard.id
 		self.parent.pocket:load()
 	
  	end
@@ -103,7 +98,7 @@ function selector:draw()
 	for i,btn in ipairs(self.ui) do
 		btn:draw()
 	end
-	self.currentHero:draw()
+	self.heroCard:draw()
 end
 
 return selector

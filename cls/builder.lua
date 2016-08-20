@@ -24,7 +24,6 @@ function builder:init()
 	self.menu = Menu(self)
 	self.cursor = Cursor(self)
 	self.state = "menu"
-	self.coins = {}
 	--end,"lib/loading")
 end
 

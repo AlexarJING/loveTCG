@@ -2,6 +2,7 @@ local hand = Class("hand")
 local moveSpeed = 0.5
 function hand:init(game,root)
     self.cards={}
+    self.name = "hand"
     self.game = game
     self.root = root
     self.parent = game[root]

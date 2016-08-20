@@ -132,8 +132,16 @@ function love.load()
     		op.client:emit("reconnect","player state conflit from that in server")
     		return
     	end
-    	op.client:emit("receivesync",{action = data.action,target = data.target})
+    	op.client:emit("receivesync",
+            {
+                side = data.side,
+                place = data.place,
+                pos = data.pos,
+                useall = data.useall
+                turnover = data.turnover
+            })
    	end)
+
 
 
     server:on("win", function(data,client)

@@ -55,30 +55,24 @@ end
 
 function card:getSide(who)
 	who = who or "my"
-	local my,your
 	
-	local my = self.game.my
-	local your = self.game.your
-	
-
-	if self.current == my.play or self.current == my.hero 
-		or self.current == my.bank or self.current == my.hand 
-		or self.current == my.deck or self.current == my.grave then
-		
-		if who == "my" then
-			return my, your
-		else
-			return your,my
-		end
-	else
-		if who == "my" then
-			return your,my
-		else
-			return my,your
-		end
+	local my = self.current.parent
+	local your = self.current.parent == self.game.up and 
+		self.game.down or self.game.up
+	if who == "my" then
+		return my,your
+	else 
+		return your,my
 	end
 end
 
+function card:placeInGame()
+	local place = self.current.name
+	local pos = table.getIndex(self.current.cards)
+	--local side = self.current.parent
+	local side = self.current.root
+	return side,place,pos
+end
 
 
 function card:setState(state)

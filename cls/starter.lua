@@ -31,11 +31,19 @@ function starter:init(parent)
 	self.input = Text(self,-100,-100,300,100,"id:","your name")
 	self.confirm = Button(self,150, -100 ,150,80,"confirm")
 	self.confirm.onClick = function(btn)
-		if btn.text == "confirm" then
-			
+		if btn.text == "confirm" then			
 			if self.input.text ~= self.info.data.name then
 				self.info:newUserFile(self.input.text)
-			end			
+			end
+			
+			--------------------------------------------------------
+			love.client:emit("login",{name = self.info.data.name})
+			love.client:on("login",function(data) love.connectionID = data end)
+			love.client.reconnect = function()
+				love.client:emit("login",{name = self.info.data.name})
+			end
+
+			----------------------------------------------------------------------
 			self:toBuilder()
 		elseif btn.text == "delete" then
 			self.info:newUserFile("default")

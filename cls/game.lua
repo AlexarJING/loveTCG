@@ -59,14 +59,7 @@ function game:init(userdata,foedata)
 	self.comboCount = 0
 
 	self.userdata = userdata
-	if foedata then
-		self.foedata = foedata
-		self.foelevel = foedata.level
-	else
-		self.foedata,self.foelevel = self:getFoeDeck(userdata.info.range)
-	end
-
-
+	
 	self.up.deck:setCards(self.foedata)
 	self.up.library:setCards(self.foedata)
 	self.up.hero:setHero(self.foedata)
@@ -78,8 +71,25 @@ function game:init(userdata,foedata)
 	self.up.resource=self.up.hero.card
 	self.down.resource=self.down.hero.card
 
-	self.aiToggle = true
+	if foedata.type == "ai" then
+		self.aiToggle = true
+		love.math.setRandomSeed(data.seed)
+		love.client:on("receivesync",function(data)
+			if data.turnover then
+				self:endTurn()
+			else
+				self:netPlaySync(data)
+			end
+		end) 
+
+	elseif foedata.type == "net" then
+		self.netToggle = true
+	end
+
+	self.gametype = foedata.type
+
 	self:gameStart()
+	
 	--end,"lib/loading")
 	
 
@@ -90,11 +100,6 @@ function game:update(dt)
 	self.hoverCard = nil
 	self.hoverUI = nil
 	
-
-	if self.gameMode == "skirmish" and self.my ~= self.userside then
-		self:AI(dt)
-	end
-
 	for i,side in ipairs(sides) do
 		self[side].deck:update(dt)
 		self[side].hand:update(dt)
@@ -111,22 +116,29 @@ function game:update(dt)
 		e:update(dt)
 	end
 
-	if self.hoverCard and self.click then
-		if self.hoverCard.current == self.debug then 
-			self.debug:click(self.hoverCard)
-			return 
+	if self.my == self.userside then
+		if self.hoverCard and self.click then
+			if self.hoverCard.current == self.debug then 
+				self.debug:click(self.hoverCard)
+				return 
+			end
+			self:clickCard()
 		end
-		self:clickCard()
-	end
 
-	if self.hoverCard and self.rightClick then
-		if self.my~=self.userside then return end
-		if self.hoverCard.current == self.debug then 
-			self.debug:rightClick(self.hoverCard)
-			return 
+		if self.hoverCard and self.rightClick then
+			if self.my~=self.userside then return end
+			if self.hoverCard.current == self.debug then 
+				self.debug:rightClick(self.hoverCard)
+				return 
+			end
+			self:showCard(self.hoverCard)
 		end
-		self:showCard(self.hoverCard)
+	elseif gametype == "ai" then
+		self:AI(dt)
+	elseif gametype == "net" then
+
 	end
+	
 
 	self.hover = self.turnButton:update(dt) or self.hoverCard
 	self.cursor:update(self.hover)
@@ -189,7 +201,7 @@ function game:keypress(key)
 	if self.keyLock then return end
 	if self.my~=self.userside and self.aiToggle then return end
 	if key == "space" then
-		self.turnButton:endturn()
+		self:endTurn()
 	elseif key == "f1" then
 		self.debug.enable = not self.debug.enable
 		self.turnButton.freeze = self.debug.enable
@@ -214,74 +226,79 @@ function game:mousepressed(key)
 	else 
 		self.rightClick = true
 	end
+
+
 end
 
 ----------------------------------------------------------------------------------
-function game:getFoeDeck(range)
-	range = range or 0
-	local foelevel
-	local rnd = love.math.random()
-	if rnd<range/100 then
-		foelevel = 5
-	elseif rnd<range /90 then
-		foelevel = 4
-	elseif rnd<range /80 then
-		foelevel = 3
-	elseif rnd<range /50 then
-		foelevel = 2
-	else
-		foelevel = 1
-	end
+function game:netPlaySync(msg)
+	local current = self[msg.side][msg.place]
+	local card = current.cards[msg.pos]
+	local useall = msg.useall
 
-
-
-	local foe = table.random(deckData)
-	
-	for i,v in ipairs(foe.lib) do
-		local rnd = love.math.random()
-		if rnd< foelevel/5 then
-		
-		elseif rnd< foelevel/4 then
-			v.level = v.level -1
+	if #self.show.cards == 0 then
+		if current == self.my.hand then
+			self:playCard(card)
+		elseif current == self.my.bank then
+			self:buyCard(card)
+		elseif current == self.my.play or current == self.my.hero then
+			if useall then
+				self:feedCard(card,"all")
+			else
+				self:feedCard(card)
+			end		
+		elseif current == self.your.bank then
+			self:robCard(card)
+		elseif current == self.your.hand then
+			self:stealCard(card)
+		elseif current == self.your.play  or current == self.your.hero then
+			if useall then
+				self:attackCard(card,"all")
+			else
+				self:attackCard(card)
+			end	
+		end
+	elseif current == self.show then
+		if self.show.tag == "zoom" then
+			self:returnCard(card)
 		else
-			v.level = v.level - 2
-		end
-		if v.level<1 then v.level = 1 end
-	end
-
-	foe.deck = {}
-
-	local allCoins = {}
-	for k,v in pairs(self.cardData.coins) do
-		table.insert(allCoins,k)
-	end
-
-	for i = 1, 10 do
-		if love.math.random()<(0.2*foelevel)^2 then
-			table.insert(foe.deck, table.random(allCoins))
+			self:chooseCard(card)
 		end
 	end
-
-	return foe,foelevel
 end
 
-
 function game:clickCard()
-	if self.my~=self.userside and  self.aiToggle then return end
+	if self.my~=self.userside and self.gametype~="hotseat" then return end
 
 	local current = self.hoverCard.current
 	local card = self.hoverCard
-
-	if self.my.needTarget and self.my.targetSelected(self,self.hoverCard) then
-		self.my.needTarget= false 
-	end
-
 	local useall
 	if love.keyboard.isDown("lshift") then
 		useall = true
 	else
 		useall = false
 	end
+
+	if self.gametype == "net" then
+		local side, place, pos = card:placeInGame()
+		love.client:emit("syncgame",{
+				tablename = self.foedata.tablename,
+				tableplace = self.foedata.tableplace,
+				side = side,
+				place = place,
+				pos = pos,
+				useall = useall
+			})
+	end
+
+	if self.my.needTarget then 
+		local result = self.my.targetSelected(self,self.hoverCard)
+		if result then
+			self.my.needTarget= false
+		end 
+	end
+
+	
 
 	if #self.show.cards == 0 then
 		if current == self.my.hand then
@@ -318,11 +335,17 @@ end
 
 function game:gameStart()
 	self.console:sys("game start!")
-	self.gameMode = "skirmish"
-	self.turn = "down"
-	self.my = self.down
-	self.your = self.up
+
+	if self.gametype == "net" then
+		self.turn = self.foedata.first and "down" or "up"
+	else
+		self.turn = love.math.random()<0.5 and "down" or "up"
+	end
+
 	self.userside = self.down
+
+	self.my = self[self.turn]
+	self.your = self.turn == "up" and self.down or self.up
 
 	
 	self.turnButton:setTurn(self.turn)
@@ -341,7 +364,6 @@ end
 
 function game:restart()
 
-	self.gameMode = "skirmish"
 	self.turn = "down"
 	self.my = self.down
 	self.your = self.up
@@ -391,9 +413,17 @@ function game:restart()
 end
 
 
-function game:endturn()
+function game:endTurn()
+	if self.gametype == "net" and self.my == self.userside then
+		love.client:emit("syncgame",{
+				tablename = self.foedata.tablename,
+				tableplace = self.foedata.tableplace,
+				turnover = true
+			})
+	end
 	self.console:sys(self.turn.."'s turn end!")
-	self.turnButton:endturn()
+	self.turnButton:endTurn()
+	self:turnEnd()
 end
 
 

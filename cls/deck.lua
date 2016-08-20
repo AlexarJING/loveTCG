@@ -3,6 +3,7 @@ local Card = require "cls/card"
 
 function deck:init(game,root)
     self.cards={}
+    self.name = "deck"
     self.game = game
     self.root = root
     self.parent = game[root]
