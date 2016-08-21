@@ -11,13 +11,13 @@ local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 local AI = require "lib/ai"
 
-local deckData = require "cls/deckDataLoader"
 
 
 ------------------------------------------------------------------------------------
 
 function game:init(userdata,foedata)
 	--loader.addPack(self,function()
+
 	self.bg = require "cls/bg"("table2d",0,0,2)
 	self.up = {}
 	self.down = {}
@@ -59,7 +59,8 @@ function game:init(userdata,foedata)
 	self.comboCount = 0
 
 	self.userdata = userdata
-	
+	self.foedata = foedata
+
 	self.up.deck:setCards(self.foedata)
 	self.up.library:setCards(self.foedata)
 	self.up.hero:setHero(self.foedata)
@@ -73,7 +74,11 @@ function game:init(userdata,foedata)
 
 	if foedata.type == "ai" then
 		self.aiToggle = true
-		love.math.setRandomSeed(data.seed)
+		
+
+	elseif foedata.type == "net" then
+		self.netToggle = true
+		love.math.setRandomSeed(foedata.seed)
 		love.client:on("receivesync",function(data)
 			if data.turnover then
 				self:endTurn()
@@ -81,9 +86,6 @@ function game:init(userdata,foedata)
 				self:netPlaySync(data)
 			end
 		end) 
-
-	elseif foedata.type == "net" then
-		self.netToggle = true
 	end
 
 	self.gametype = foedata.type
@@ -133,9 +135,9 @@ function game:update(dt)
 			end
 			self:showCard(self.hoverCard)
 		end
-	elseif gametype == "ai" then
+	elseif self.gametype == "ai" then
 		self:AI(dt)
-	elseif gametype == "net" then
+	elseif self.gametype == "net" then
 
 	end
 	
@@ -199,7 +201,7 @@ end
 function game:keypress(key)
 	self.console:keypressed(key)
 	if self.keyLock then return end
-	if self.my~=self.userside and self.aiToggle then return end
+	if self.my~=self.userside and self.gametype~="hotseat" then return end
 	if key == "space" then
 		self:endTurn()
 	elseif key == "f1" then
@@ -232,6 +234,7 @@ end
 
 ----------------------------------------------------------------------------------
 function game:netPlaySync(msg)
+
 	local current = self[msg.side][msg.place]
 	local card = current.cards[msg.pos]
 	local useall = msg.useall
@@ -268,6 +271,7 @@ function game:netPlaySync(msg)
 end
 
 function game:clickCard()
+
 	if self.my~=self.userside and self.gametype~="hotseat" then return end
 
 	local current = self.hoverCard.current
@@ -278,7 +282,7 @@ function game:clickCard()
 	else
 		useall = false
 	end
-
+	
 	if self.gametype == "net" then
 		local side, place, pos = card:placeInGame()
 		love.client:emit("syncgame",{
@@ -352,12 +356,12 @@ function game:gameStart()
 
 	self.console:sys("setting table...")
 	for i = 1, 4 do
-		self:refillCard("up")
-		self:refillCard("down")
+		self:refillCard("my",_,_,true)
+		self:refillCard("your",_,_,true)
 	end
 	for i = 1, 3 do
-		self:drawCard("up")
-		self:drawCard("down")
+		self:drawCard("my",_,_,true)
+		self:drawCard("your",_,_,true)
 	end
 	self:turnStart()
 end
@@ -715,14 +719,12 @@ function game:stealCard(card)
 end
 
 
-function game:drawCard(whose,id,manual) --or condition func with func(card)
+function game:drawCard(whose,id,manual,start) --or condition func with func(card)
 	
 	whose = whose or "my"
-	local to = self.my.hand
+	local to = start and self[whose].hand or self.my.hand
 
-	if whose == "up" or whose == "down" then
-		to = self[whose].hand
-	end
+	
 	if id == "random" then
 		local lib = self.cardData.index
 		local target
@@ -783,13 +785,10 @@ function game:makeCard(data,whose)
 end
 
 
-function game:refillCard(whose,id,level)
+function game:refillCard(whose,id,level, start)
 	whose = whose or "my"
-	local to = self.my.bank
-	if whose == "up" or whose == "down" then
-		to = self[whose].bank
-	end
-
+	local to = start and self[whose].bank or  self.my.bank
+	
 	local data
 	if id =="any" then
 		local target
@@ -1575,7 +1574,7 @@ function game:AI(dt)
 	end
 
 	delay:new(2,nil,function() 
-		self:endturn()
+		self:endTurn()
 		self.aiCD = 0.5
 		self.aiEnd=false
 	end)

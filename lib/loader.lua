@@ -14,9 +14,10 @@ function loader.addPack(parent,func,sceneName,text)
 	loader.parent.draw = loader.draw
 	loader.text = text or "loading"
 	loader.scene.text = loader.text
+	coroutine.resume(loader.co)
 end
 
-function loader.update(dt)
+function loader.update(obj,dt)
 	for i = 1 , loader.speed do
 		if coroutine.status(loader.co) == "dead" then 
 			loader.running = false

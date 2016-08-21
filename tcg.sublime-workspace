@@ -5,7 +5,7 @@
 		[
 			[
 				"for",
-				"fori	for i,v in ipairs()"
+				"forp	for k,v in pairs()"
 			],
 			[
 				"cor",
@@ -335,23 +335,7 @@
 			"file": "cls/menu.lua",
 			"settings":
 			{
-				"buffer_size": 2970,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "net/client.lua",
-			"settings":
-			{
-				"buffer_size": 268,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "lib/sock.lua",
-			"settings":
-			{
-				"buffer_size": 37524,
+				"buffer_size": 3150,
 				"line_ending": "Windows"
 			}
 		},
@@ -359,7 +343,49 @@
 			"file": "cls/game.lua",
 			"settings":
 			{
-				"buffer_size": 33330,
+				"buffer_size": 33309,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/effect.lua",
+			"settings":
+			{
+				"buffer_size": 2459,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 296 files for \"random\"\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\bantlingcrown.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.22 then\n   23  			game:attack(card,\"weakest\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\championspaiza.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.1 then\n   23  			game:refillCard(\"my\",\"any\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\crossandpile.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.2 then\n   23: 			game:gain(card,\"my\",\"random\")\n   24  		end\n   25  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\divinercharms.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.12 then\n   23  			game:drawCard()\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\fecundcharm.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.12 then\n   23  			game:summon(\"argorethflower\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\ferrymanstoll.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.2 then\n   23  			game:gain(card,\"my\",\"skull\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\foolsgeld.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.2 then\n   23: 			game:lose(card,\"your\",\"random\")\n   24  		end\n   25  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\gravelinedrachm.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.08 then\n   23  			game:refill(\"my\",\"fireship\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\humblebundle.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.1 then\n   23  			game:summon(card,\"cattle\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\kongregate.lua:\n   14  data.description = {\n   15  	\"play: +1 gold\",\n   16: 	\"random coin effect\"\n   17  }\n   18  \n   ..\n   24  			table.insert(coins,v)\n   25  		end\n   26: 		local cardData = table.random(coins)\n   27  		cardData.ability.onPlay(card,game)\n   28  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\obolcornucopia.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.2 then\n   23  			game:gain(card,\"my\",\"food\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\serpentsseal.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.24 then\n   23  			game:feedCard(game.my.hero.card,nil,\"magic\") --game:feedCard(card,all,what)\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\swindlersmark.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.12 then\n   23: 			game:steal(card,\"random\")\n   24  		end\n   25  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\vicardoubloon.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.2 then\n   23  			game:gain(card,\"my\",\"gold\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\wergeldseax.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.15 then\n   23  			game:summon(card,\"berserker\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\coins\\wishingcoin.lua:\n   20  	onPlay = function(card,game)\n   21  		game:gain(card,\"my\",\"gold\")\n   22: 		if love.math.random()<0.18 then\n   23  			game:gain(card,\"my\",\"magic\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\colossalaurochs.lua:\n   25  	end,\n   26  	onDying = function(card,game)\n   27: 		if love.math.random()<0.5 then\n   28  			return \"toHand\"\n   29  		else\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\goatoutrider.lua:\n   21  data.ability={\n   22  	onAttacked = function(card,game,from) \n   23: 		if love.math.random()<0.5 then game:attack(card) end \n   24  	end\n   25  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\herdofaurochs.lua:\n   13  \n   14  data.description = {\n   15: 	\"On turn: +2 random resource\",\n   16  	\"When life reduced to 0\",\n   17  	\"25%: return to hand\"\n   ..\n   20  data.ability={\n   21  	onTurnStart = function (card,game) \n   22: 		game:gain(card,\"my\",\"random\")\n   23: 		game:gain(card,\"my\",\"random\")\n   24  	end,\n   25  	onDying = function(card,game)\n   26: 		if love.math.random()<0.25 then\n   27  			return \"toHand\"\n   28  		else\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\herdofboars.lua:\n   22  	end,\n   23  	onKilled = function(card,game)\n   24: 		game:gain(card,\"my\",\"random\")\n   25: 		game:gain(card,\"my\",\"random\")\n   26  	end\n   27  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\herdofgoats.lua:\n   18  data.ability={\n   19  	onTurnStart = function (card,game) \n   20: 		game:gain(card,\"my\",\"random\")		--card,who,what\n   21  	end,\n   22  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\herd\\herdofrats.lua:\n   18  data.ability={\n   19  	onTurnStart = function (card,game) \n   20: 		game:lose(card,\"your\",\"random\")		--card,who,what\n   21  	end,\n   22  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\hero\\babarus.lua:\n   17  	onGain = function(card,game,what) --self.my.hero.card,self,who,what\n   18  		if (what == \"skull\" or what == \"food\")\n   19: 			and love.math.random()<0.5 then\n   20  			game:lose(card,\"my\",what)\n   21  			game:gain(card,\"my\",\"magic\")\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\hero\\liet.lua:\n   11  data.description = {\n   12  	\"For each card you play\", \n   13: 	\"15%: +1 random resource \",\n   14  }\n   15  \n   16  data.ability={\n   17  	onCardPlay = function (card,game)\n   18: 		if love.math.random()<0.15 then game:gain(card,\"my\",\"random\") end\n   19  	end,\n   20  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\hero\\orom.lua:\n   11  data.description = {\n   12  	\"On sacrifice ally:\",\n   13: 	\"+1 random resource\",\n   14  }\n   15  \n   16  data.ability={\n   17  	onSacrificeAlly = function(card,game,target)\n   18: 		game:gain(target,\"my\",\"random\")\n   19  	end\n   20  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\hero\\tazin.lua:\n   16  data.ability={\n   17  	onFoeAttack = function(card,game)\n   18: 		if love.math.random()<0.25 then\n   19  			game:attack(card)\n   20  		end\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\idols\\herdingstones.lua:\n   17  	\"+1 charge.\",\n   18  	\"4 charges:\",\n   19: 	\"Gain a random herd \"\n   20  }\n   21  \n   ..\n   30  		\n   31  		local herds = {\"herdofaurochs\",\"herdofboars\",\"herdofgoats\",\"herdofrats\"}\n   32: 		local data = game.cardData.short[table.random(herds)]\n   33  		local c = game:makeCard(data)\n   34  		game:transferCard(c,game.my.hand)\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\idols\\sacrificialdais.lua:\n   13  data.description = {\n   14  	\"on Sacrifice an Ally\",\n   15: 	\"+1 random resource\",\n   16  }\n   17  \n   18  data.ability={\n   19  	onSacrificeAlly = function(card,game)\n   20: 		game:gain(card,\"my\",\"random\")\n   21  	end\n   22  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\idols\\serpentaltar.lua:\n   19  	onAllyAttack = function(card,game,who)\n   20  		if who == game.my.hero.card then \n   21: 			if love.math.random()<0.25 then game:attack(card) end\n   22  		end\n   23  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\idols\\shepherdsgift.lua:\n   12  \n   13  data.description = {\n   14: 	\"turn: +1 random resource\",\n   15  }\n   16  \n   17  data.ability={\n   18  	onTurnStart = function(card,game)\n   19: 		game:gain(card,\"my\",\"random\")\n   20  	end\n   21  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\idols\\shrineofrebirth.lua:\n   19  data.ability={\n   20  	onAllyDie = function(card,game,target)\n   21: 		if love.math.random()<0.1 then\n   22  			target:reset()\n   23  			game:transferCard(target , target:getSide().hand)\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\carnage.lua:\n   18  	onPlay = function (card,game)	\n   19  		while true do\n   20: 			local sacrificed = game:sacrificeCard(\"random\")\n   21  			if not sacrificed then return end\n   22  			for i = 1, sacrificed.hp do\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\culltheherd.lua:\n   39  		for i = 1, 3 do\n   40  			if #options == 0 then break end\n   41: 			table.insert(candidate,table.pickRandom(options)) \n   42  		end\n   43  \n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\fertilityoffering.lua:\n   11  \n   12  data.description = {\n   13: 	\"Sacrifice random ally\",\n   14  	\"copy that ally\",\n   15  }\n   ..\n   17  data.ability={\n   18  	onPlay = function (card,game)\n   19: 		local sacrificed = game:sacrificeCard(\"random\")\n   20  		if not sacrificed then return end\n   21  		local copy = game:copyCard(sacrificed)\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\festival.lua:\n   29  				end\n   30  				if not candidate[1] then return end\n   31: 				return candidate[love.math.random(#candidate)]\n   32  			end\n   33  		)\n   ..\n   39  				end\n   40  			end\n   41: 			return candidate[love.math.random(#candidate)]\n   42  		end)\n   43  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\riteofbrood.lua:\n   19  data.ability={\n   20  	onCardPlay = function (card,game)\n   21: 		game:gain(card,\"my\",\"random\")\n   22  	end,\n   23  }\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\rituals\\ritualslaughter.lua:\n   12  data.description = {\n   13  	\"Pick an ally to sacrifice\",\n   14:  	\"Gain random resources\",\n   15   	\"equal to victim's life +1.\"\n   16  }\n   ..\n   29  			game:transferCard(card,game.my.play)\n   30  			for i = 1, card.hp+1 do\n   31: 				delay:new((i-1)*0.2,nil,game.gain,game,card,\"my\",\"random\")\n   32  			end\n   33  			game:sacrificeCard(card)\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\ratcatcher.lua:\n   27  			end\n   28  			if not candidate[1] then return end\n   29: 			return candidate[love.math.random(#candidate)]\n   30  		end)\n   31  	end,\n   ..\n   39  			end\n   40  			if not candidate[1] then return end\n   41: 			return candidate[love.math.random(#candidate)]\n   42  		end)\n   43  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\sacrificiallamb.lua:\n   21  data.ability={\n   22  	onSacrifice = function(card,game)\n   23: 		game:gain(card,\"my\",\"random\")\n   24  		game:feedCard(game.my.hero.card,false,\"magic\")\n   25  	end\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\scavengers.lua:\n   20  data.ability={\n   21  	onTurnStart = function (card,game) \n   22: 		game:gain(card,\"my\",\"random\")		--card,who,what\n   23  	end,\n   24  	onPlay = function (card,game)\n   25: 		game:gain(card,\"my\",\"random\")\n   26  	end,\n   27  	onDying = function(card,game)\n   28: 		if love.math.random()<0.5 then\n   29  			return \"toHand\"\n   30  		else\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\scrivener.lua:\n   30  				end\n   31  				if not candidate[1] then return end\n   32: 				return candidate[love.math.random(#candidate)]\n   33  			end\n   34  		)\n   ..\n   44  				end\n   45  				if not candidate[1] then return end\n   46: 				return candidate[love.math.random(#candidate)]\n   47  			end\n   48  		)\n   ..\n   53  			for i = 1, game.cardPlayCount-card.currentCardPlayed do\n   54  				if game.lastPlayed.category == \"rituals\" then\n   55: 					game:gain(card,\"my\",\"random\")\n   56  				end\n   57  			end\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\shepherd.lua:\n   16  	\"Cancel 2 attacks/turn.\",\n   17   	\"On turn, for each herd:\", \n   18:  	\"+1 random resource. \",\n   19  }\n   20  \n   ..\n   24  		for i,v in ipairs(game.my.play.cards) do\n   25  			if string.find(v.id,\"herdof\") then\n   26: 				game:gain(card,\"my\",\"random\")\n   27  			end\n   28  		end\n\nG:\\love2dproj\\loveTCG\\cards\\daramek\\slaves\\starvingmob.lua:\n   19  data.ability={\n   20  	onTurnStart = function (card,game) \n   21: 		game:lose(card,\"your\",\"random\")		--card,who,what\n   22  	end,\n   23  	onPlay = function (card,game)\n   24: 		game:lose(card,\"your\",\"random\")\n   25  	end,\n   26  	onFeed = function (card,game)\n   27: 		game:lose(card,\"your\",\"random\")\n   28  	end,\n   29  }\n\nG:\\love2dproj\\loveTCG\\cards\\endazu\\goetia\\bloodpact.lua:\n   18  	\"3/3 charge\",\n   19   	\"Feed 2 Life: -1 charge\",\n   20:  	\"+1 charge to random\"\n   21  }\n   22  \n   ..\n   26  \n   27  		game:dischargeCard(card)\n   28: 		game:chargeCard(\"random\")\n   29  		\n   30  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\endazu\\incantations\\cantillation.lua:\n   16   	\"On hold: +1 charge\",\n   17   	\"On play: for each charge\",\n   18:  	\"+ charge to random inscription\",\n   19  }\n   20  \n   ..\n   25  	onPlay = function (card,game)\n   26  		for i = 1, card.charge do\n   27: 			game:chargeCard(\"random\",false,\"inscription\") --card,permanent,category,from)\n   28  		end\n   29  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\endazu\\incantations\\poemofblight.lua:\n   26  	onPlay = function (card,game)\n   27  		for i = 1,card.charge do \n   28: 			game:lose(card,\"your\",\"random\")\n   29  		end\n   30  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\endazu\\incantations\\summoningrift.lua:\n   15  	\"0/5 charge\",\n   16   	\"On hold: +1 charge\",\n   17:  	\"Summon charge count random cards\",\n   18   	\"Pick one to keep\",\n   19  }\n   ..\n   31  			local target\n   32  			repeat\n   33: 				target = lib[love.math.random(#lib)]\n   34  			until not target.isHero and not target.isCoin\n   35  			local tCard = game:makeCard(target)\n\nG:\\love2dproj\\loveTCG\\cards\\endazu\\inscriptions\\empoweringseal.lua:\n   24  	onFeed = function(card,game)\n   25  		game:dischargeCard(card)\n   26: 		game:chargeCard(\"random\",true,\"anima\")\n   27: 		game:chargeCard(\"random\",true,\"anima\")\n   28  	end\n   29  }\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\conspiracy\\consolidate.lua:\n   22  	end,\n   23  	onDestroyCard = function (card,game,target)\n   24: 		if  target.hp and target.born == card:getSide()  and love.math.random()<0.5 then\n   25  			return true\n   26  		end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\conspiracy\\seduce.lua:\n   10  \n   11  data.description = {\n   12: 	\"Control a random enemy\",\n   13   	\"If no enemeies: +2 skull\",\n   14   	\"Destroy after use \",\n   ..\n   20  		\n   21  		if candidate[1] then\n   22: 			local target = table.random(candidate)\n   23  			game:transferCard(target,game.my.play)\n   24  		else\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\espionage\\embezzle.lua:\n   17  data.ability={\n   18  	onTurnStart = function(card,game)\n   19: 		game:steal(card,\"random\")\n   20  	end,\n   21  }\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\espionage\\impersonate.lua:\n   10  \n   11  data.description = {\n   12: 	\"Draw a random card\",\n   13  	\"from foe's hand\",\n   14   	\"Destroy after use\",\n   ..\n   17  data.ability={\n   18  	onPlay = function(card,game)\n   19: 		local target = table.random(game.your.hand.cards)\n   20  		if not target then return end\n   21  		game:transferCard(target,game.my.hand)\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\espionage\\ramsack.lua:\n   21  		for i = 1,3 do\n   22  			if #cards==0 then break end\n   23: 			local index = love.math.random(#cards)\n   24  			table.insert(candidate, cards[index])\n   25  			table.remove(cards, index)\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\espionage\\roberry.lua:\n   17  	onPlay = function(card,game)		\n   18  		for i = 1, 2 do\n   19: 			game:steal(card,\"random\")\n   20  		end\n   21  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\espionage\\sabotage.lua:\n   19  		game:attack(card)	\n   20  		for i = 1, 2 do\n   21: 			game:lose(card,\"your\",\"random\")\n   22  		end\n   23  	end,\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\hero\\birondelle.lua:\n   20  \n   21  	onCardBuy= function (card,game,target)\n   22: 		if love.math.random()<0.15 then\n   23  			game:refillCard(\"your\")\n   24  		end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\hero\\gretta.lua:\n   18  data.ability={\n   19  	onFoeAttack = function(card,game,target)\n   20: 		if love.math.random()<0.25 then\n   21  			return card\n   22  		end\n   ..\n   24  \n   25  	onAttacked = function (card,gamem,from)\n   26: 		if love.math.random()<0.2 then\n   27  			game:attack(card)\n   28  		end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\hero\\loquori.lua:\n   18  data.ability={\n   19  	onFoeGain = function (card,game,what) \n   20: 		if love.math.random()<0.05 then\n   21  			game:steal(card,what)\n   22  		end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\hero\\theodox.lua:\n   18  data.ability={\n   19  	onDestroyCard = function (card,game,target)\n   20: 		if  target.born == game.my  and love.math.random()<0.2 then\n   21  			return true\n   22  		end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\hero\\valdorian.lua:\n   19  data.ability={\n   20  	onTurnStart = function(card,game) \n   21: 		if  love.math.random()<0.35 then\n   22  			game:drawCard(\"your\")\n   23  		end\n   ..\n   25  	onCardPlay = function (card,game,target)\n   26  		if target.isCoin and target.born~=game.my then\n   27: 			if  love.math.random()<0.35 then\n   28  				game:gain(target,\"my\",\"gold\")\n   29  			end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\murder\\arson.lua:\n   18  	onPlay = function(card,game)		\n   19  		for i = 1, 7 do\n   20: 			if not game:lose(card,\"your\",\"random\") then\n   21  				game:attack(card)\n   22  			end\n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\apothecary.lua:\n   22  		\n   23  		local poisons = {\"belladonna\", \"hemlock\" , \"arsenic\"}\n   24: 		print(table.random(poisons))\n   25: 		game:refillCard(\"my\",table.random(poisons))\n   26  \n   27  	end,\n   ..\n   29  		game:healCard(\"all\",true)\n   30  	end,\n   31: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   32  }\n   33  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\assassin.lua:\n   24  	end,\n   25  	onTurnStart = function (card,game) game:attack(card,\"weakest\") end,\n   26: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   27  }\n   28  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\bodyguard.lua:\n   18  \n   19  data.ability={\n   20: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   21  }\n   22  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\brigand.lua:\n   12  \n   13  data.description = {\n   14: 	\"On turn: steal random.\",\n   15  	\"if failed: attack\",\n   16  	\"50%: destroy when killed \",\n   ..\n   19  data.ability={\n   20  	onTurnStart = function (card,game) \n   21: 		if not game:steal(card,\"random\") then\n   22  			game:attack(card)\n   23  		end\n   ..\n   25  	\n   26  \n   27: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   28  }\n   29  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\brute.lua:\n   18  data.ability={\n   19  	onTurnStart = function (card,game) game:attack(card);game:attack(card) end,\n   20: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   21  }\n   22  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\charlatan.lua:\n   34  	end,\n   35  \n   36: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   37  }\n   38  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\cutpurse.lua:\n   19  data.ability={\n   20  	onTurnStart = function (card,game) \n   21: 		game:steal(card,\"random\")\n   22  	end,\n   23  \n   24  	onFoeGain = function (card,game,what) \n   25  \n   26: 		if love.math.random()<0.05 then\n   27  			game:steal(card,what)\n   28  		end\n   29  	end,\n   30  \n   31: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   32  }\n   33  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\informant.lua:\n   28  					candidate[index] = v\n   29  				end\n   30: 				return table.random(candidate)\n   31  			end,card.level) \n   32  		end)\n   33  	end,\n   34  	onTurnStart = function (card,game) game:drawCard(\"your\") end,\n   35: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   36  }\n   37  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\lackey.lua:\n   30  					candidate[index] = v\n   31  				end\n   32: 				return table.random(candidate)\n   33  			end,card.level) \n   34  		end)\n   ..\n   40  		end\n   41  	end,\n   42: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   43  }\n   44  \n\nG:\\love2dproj\\loveTCG\\cards\\metris\\underlings\\tavernwench.lua:\n   29  	\n   30  \n   31: 	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end\n   32  }\n   33  \n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\faith\\miracle.lua:\n   16  \n   17  data.description = {\n   18: 	\"play: draw a random card\",\n   19  }\n   20  \n   21  data.ability={\n   22  	onPlay = function(card,game) \n   23: 		game:drawCard(\"my\",\"random\") --whose,id\n   24  	end,\n   25  }\n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\faith\\sibyllinescrolls.lua:\n   27  		for i = 1,3 do\n   28  			if #cards==0 then break end\n   29: 			local c = table.pickRandom(cards)\n   30  			table.insert(candidate, c)\n   31  		end\n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\hero\\regentmarsh.lua:\n   18  data.ability={\n   19  	onFeedAlly = function(card,game) \n   20: 		if love.math.random()<0.5 then  game:attack(card) end\n   21  	end,\n   22  }\n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\hero\\ysadora.lua:\n   17  data.ability={\n   18  	onAttack = function(card,game) \n   19: 		if love.math.random()<0.75 then\n   20  			game:healCard(card)\n   21  		end\n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\power\\bureaucrat.lua:\n   28  data.ability={\n   29  	onPlay = function(card,game) game:drawCard() end,\n   30: 	onTurnStart = function(card,game) game:lose(card,\"your\",\"random\") end,\n   31: 	onFeed = function(card,game) game:lose(card,\"your\",\"random\") end,\n   32  }\n   33  \n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\power\\embargo.lua:\n   25  	onPlay = function(card,game) \n   26  		game:drawCard() \n   27: 		game:lose(card,\"your\",\"random\")\n   28  	end,\n   29  }\n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\war\\mercenary.lua:\n   24  	onTurnStart = function (card,game) game:attack(card)end,\n   25  	onFeed = function (card,game) game:attack(card) end,\n   26: 	onAttacked = function(card,game,from) if love.math.random()<0.50 then game:attack(card) end end\n   27  }\n   28  \n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\war\\militia.lua:\n   24  	onTurnStart = function (card,game) game:attack(card)end,\n   25  	onFeed = function (card,game) game:attack(card) end,\n   26: 	onAttacked = function(card,game,from) if love.math.random()<0.25 then game:attack(card) end end\n   27  }\n   28  \n\nG:\\love2dproj\\loveTCG\\cards\\vespitole\\war\\soldier.lua:\n   24  	onTurnStart = function (card,game) game:attack(card)end,\n   25  	onFeed = function (card,game) game:attack(card) end,\n   26: 	onAttacked = function(card,game,from) if love.math.random()<0.75 then game:attack(card) end end\n   27  }\n   28  \n\nG:\\love2dproj\\loveTCG\\cls\\card.lua:\n  247  	if color then love.graphics.setColor(color) end\n  248  \n  249: 	local offx = 2*(love.math.random()-0.5)*self.magnitude\n  250: 	local offy = 2*(love.math.random()-0.5)*self.magnitude\n  251  \n  252  	if math.cos(self.ry)<0 or math.cos(self.rx)<0 then\n\nG:\\love2dproj\\loveTCG\\cls\\effect.lua:\n   23  	self.y = from.y\n   24  	self.scale = 1\n   25: 	self.mx =  (love.math.random()-0.5)*100 + self.x / 1.2\n   26: 	self.my = (love.math.random()-0.5)*100 + self.y / 1.2\n   27  	self.alpha = 255\n   28  \n\nG:\\love2dproj\\loveTCG\\cls\\game.lua:\n   79  	elseif foedata.type == \"net\" then\n   80  		self.netToggle = true\n   81: 		love.math.setRandomSeed(foedata.seed)\n   82  		love.client:on(\"receivesync\",function(data)\n   83  			if data.turnover then\n   ..\n  344  		self.turn = self.foedata.first and \"down\" or \"up\"\n  345  	else\n  346: 		self.turn = love.math.random()<0.5 and \"down\" or \"up\"\n  347  	end\n  348  \n  ...\n  726  \n  727  	\n  728: 	if id == \"random\" then\n  729  		local lib = self.cardData.index\n  730  		local target\n  731  		while true do\n  732: 			target = lib[love.math.random(#lib)]\n  733  			if not target.isHero then\n  734  				local tCard = self:makeCard(target)\n  ...\n  744  \n  745  		if not candidate[1] then return end\n  746: 		local target = table.random(candidate)\n  747  		self:transferCard(target,to)\n  748  		return target\n  ...\n  771  	else --随机\n  772  		if #self.my.deck.cards == 0 then return end\n  773: 		local card = table.random(self[whose].deck.cards)\n  774  		card:reset()\n  775  		self:transferCard(card,to)\n  ...\n  794  		local target\n  795  		repeat\n  796: 			target = lib[love.math.random(#lib)]\n  797  		until not target.isHero\n  798  		data = target\n  ...\n  804  		data = table.copy(id) -- attentions!!! game:copyCard()\n  805  	else\n  806: 		data = table.random(self[whose].library.cards)\n  807  	end\n  808  \n  ...\n  895  function game:gain(card,who,what)\n  896  \n  897: 	if what == \"random\" then \n  898: 		what = table.random(res) \n  899  	end\n  900  \n  ...\n  921  	local whose = card:getSide(who)\n  922  \n  923: 	if what == \"random\" then \n  924  		local candidate = {unpack(res)}\n  925  		repeat\n  926: 			local item = table.pickRandom(candidate)\n  927  			if whose.resource[item]>0 then\n  928  				what = item\n  ...\n  930  			end\n  931  		until #candidate == 0\n  932: 		if what == \"random\" then return end\n  933  	end\n  934  \n  ...\n 1028  	end\n 1029  	if lowest then\n 1030: 		return table.random(lowest)\n 1031  	end\n 1032  end\n ....\n 1047  	end\n 1048  	if strongest then\n 1049: 		return table.random(strongest)\n 1050  	end\n 1051  end\n 1052  \n 1053  \n 1054: function game:randomAlly(who,hurt,nosac)\n 1055  	who = who or self.my\n 1056  	local candidate={}\n ....\n 1061  	end\n 1062  	if not candidate[1] then return end\n 1063: 	return table.random(candidate)\n 1064  end\n 1065  \n ....\n 1075  	end\n 1076  \n 1077: 	if noHp[1] then return table.random(noHp) end\n 1078  \n 1079  	if ally[1] then\n ....\n 1322  				target = your.hero.card\n 1323  			elseif to == \"infighting\" then\n 1324: 				target = self:randomAlly(your)\n 1325  			else\n 1326: 				target = self:randomAlly(your)\n 1327  			end\n 1328  			effect = Effect(self,\"attack\",from,target,false,1,\"inBack\")	\n ....\n 1378  	target = target or your.hero.card\n 1379  \n 1380: 	if target.dodgeRate and love.math.random()<target.dodgeRate then\n 1381  		effect:addCallback(function() target:turnaround() end)\n 1382  		return\n ....\n 1441  	elseif target == \"strongest\" then\n 1442  		target = self:sacrificePre() or self:weakestAlly(nil,nil,true)\n 1443: 	elseif target == \"random\" then\n 1444: 		target = self:sacrificePre() or self:randomAlly(nil,nil,true)\n 1445  	elseif target == \"all\" then\n 1446  		for i,v in ipairs(ally) do\n ....\n 1496  	\n 1497  \n 1498: 	if card == \"random\" then\n 1499  		local candidate = self:allChargeTarget(self.my,category)\n 1500  		if candidate[1] then\n 1501: 			return self:chargeCard(table.random(candidate))\n 1502  		else\n 1503  			return false\n\nG:\\love2dproj\\loveTCG\\cls\\menu.lua:\n   10  	range = playerdata.range\n   11  	local foelevel\n   12: 	local rnd = love.math.random()\n   13  	if rnd<range/100 then\n   14  		foelevel = 5\n   ..\n   25  \n   26  \n   27: 	local foe = table.random(deckData)\n   28  	\n   29  	for i,v in ipairs(foe.lib) do\n   30: 		local rnd = love.math.random()\n   31  		if rnd< foelevel/5 then\n   32  		\n   ..\n   47  \n   48  	for i = 1, 10 do\n   49: 		if love.math.random()<(0.2*foelevel)^2 then\n   50: 			table.insert(foe.deck, table.random(allCoins))\n   51  		end\n   52  	end\n\nG:\\love2dproj\\loveTCG\\cls\\result.lua:\n   60  	self.ready = true\n   61  	return Fire(\n   62: 		300*(0.5-love.math.random()),\n   63  		400,\n   64: 		love.math.random(),\n   65: 		-13+6*love.math.random(),\n   66: 		1+2*love.math.random(),nil,\n   67: 		colors[love.math.random(6)]\n   68: 		--{100+155*love.math.random(),100+155*love.math.random(),100+155*love.math.random()}\n   69  		)\n   70  end\n\nG:\\love2dproj\\loveTCG\\cls\\shop.lua:\n   62  			self.selected.tween.callback = function()\n   63  				self.state = \"show\"\n   64: 				self:getRandomCard(i)\n   65  			end\n   66  		end\n   ..\n   78  rate[2] =  {[\"E\"] = 0.004, [4]= 0.01,[3] = 0.3,[2] = 1,[1]=1}\n   79  rate[3] =  {[\"E\"] = 0.01, [4]= 0.3,[3] = 1,[2] = 1,[1]=1}\n   80: function shop:getRandomCard(p)\n   81  	local cards= {}\n   82  	for i = 1, 3 do \n   83  		local rarity \n   84: 		if love.math.random()< rate[p][\"E\"] then\n   85  			rarity = \"E\"\n   86: 		elseif love.math.random()< rate[p][4] then\n   87  			rarity = 4\n   88: 		elseif love.math.random()< rate[p][3] then\n   89  			rarity = 3\n   90: 		elseif love.math.random()< rate[p][2] then\n   91  			rarity = 2\n   92: 		elseif love.math.random()< rate[p][1] then\n   93  			rarity = 1\n   94  		end\n   95  \n   96  		local dataSet = cardData.rarity[rarity]\n   97: 		local data = dataSet[love.math.random(#dataSet)]\n   98  		data.back = self.packs[p].back\n   99  		cards[i] = Card(self,data,nil,{x=0+i*5,y=-50+i*5,rx=3.14,scale=0.8})\n\nG:\\love2dproj\\loveTCG\\cls\\starter.lua:\n   20  	for i = 1,30 do\n   21  		local b = {text = self.string, \n   22: 		x = love.math.random(-2000,2000),\n   23: 		y = love.math.random(-360,360),\n   24: 		scale =love.math.random()*0.8+0.6,\n   25: 		o = 1- love.math.random(0,1)*2}\n   26  		table.insert(self.banner, b)\n   27  	end\n\nG:\\love2dproj\\loveTCG\\lib\\camera.lua:\n   99  	self.duration = self.duration - love.timer.getDelta()\n  100  	self.magnitude = self.magnitude*0.98\n  101: 	self.offx = love.math.random(-self.magnitude, self.magnitude)\n  102:     self.offy = love.math.random(-self.magnitude, self.magnitude)\n  103      if self.duration<=0 then \n  104      	self.offx=0\n\nG:\\love2dproj\\loveTCG\\lib\\firework.lua:\n   10  		x = x,\n   11  		y = y,\n   12: 		dx = (0.5-love.math.random())*dx*2,\n   13  		dy = dy,\n   14  		time = time,\n   ..\n   20  \n   21  function firework:makeParticle(obj,life,makeP)\n   22: 	local t  = life or love.math.random()*0.5+0.7\n   23  	local p = {\n   24  		x = obj.x,\n   25  		y = obj.y,\n   26: 		dx = love.math.random(-5,5),\n   27: 		dy = love.math.random(-5,5),\n   28  		img = obj.img,\n   29  		makeP =makeP or 0,\n   ..\n   38  function firework:boom()\n   39  	for i = 1,50 do\n   40: 		local p = self:makeParticle(self.bomb,1.5+ love.math.random()*0.5,0.3)\n   41  		p.dx=p.dx*3\n   42  		p.dy=p.dy*3\n\nG:\\love2dproj\\loveTCG\\lib\\frag.lua:\n   46  \n   47  		for y= 1,self.rate do\n   48: 			self.qSRotSpeed[x][y] = love.math.random()*0.3\n   49  			self.qSRot[x][y] = 0\n   50  			self.qX[x][y]=self.x-self.sw/2+self.sizeX*x-0.5*self.sizeX\n   51  			self.qY[x][y]=self.y-self.sh/2+self.sizeY*y-0.5*self.sizeY\n   52  			self.qX[x][y],self.qY[x][y]=math.axisRot_P(self.qX[x][y],self.qY[x][y],self.x,self.y,self.rot)\n   53: 			self.qSpeedX[x][y]=(self.qX[x][y]-self.x)*self.speed*love.math.random()\n   54: 			self.qSpeedY[x][y]=(self.qY[x][y]-self.y)*self.speed*love.math.random()			\n   55  			self.qSRot[x][y] = self.rot\n   56  		end\n\nG:\\love2dproj\\loveTCG\\lib\\loading.lua:\n   12  	for i = 1,30 do\n   13  		local b = {text = self.string, \n   14: 		x = love.math.random(-2000,2000),\n   15: 		y = love.math.random(-360,360),\n   16: 		scale =love.math.random()*0.8+0.6,\n   17: 		o = 1- love.math.random(0,1)*2}\n   18  		table.insert(self.banner, b)\n   19  	end\n\nG:\\love2dproj\\loveTCG\\lib\\util.lua:\n   41  end\n   42  \n   43: function love.graphics.randomColor()\n   44: 	local r=math.random(0,255)\n   45: 	local g=math.random(0,255)\n   46: 	local b=math.random(0,255)\n   47  	return {r,g,b,255}\n   48  end\n   ..\n  108  end\n  109  \n  110: function math.randomPolygon(count,size)\n  111  	local v={}\n  112  	local rt={}\n  ...\n  118  	for i=1,v_c do\n  119  		v[i]={}\n  120: 		v[i].x=love.math.random(-50,50)*size\n  121: 		v[i].y=love.math.random(-50,50)*size\n  122  	end\n  123  	local maxY=-50*size\n  ...\n  238     list[1] = {{'b','c','d','f','g','h','j','l','m','n','p','r','s','t','v','x','z','k','w','y'},{'qu','th','ll','ph'}} --21,4\n  239     list[2] = {'a','e','i','o','u'} --v\n  240:    random = love.math.newRandomGenerator(os.time())\n  241:    random:setSeed(love.math.random(1,9999))\n  242:    local first = random:random(2)\n  243     local name = ''\n  244     local char = ''\n  ...\n  246     --creates first letter(s)\n  247     if first == 2 then --v\n  248: 	  for i=1, random:random(2) do\n  249: 		 char = list[2][random:random(#list[2])]\n  250  		 if i == 2 then\n  251  			while char == name do\n  252: 			   char = list[2][random:random(#list[2])]\n  253  			end\n  254  			name = name .. char\n  ...\n  258  	  end\n  259     else --c\n  260: 	  if random:random(2) == 1 then\n  261: 		 for i=1, random:random(2) do\n  262: 			char = list[1][1][random:random(#list[1][1])]\n  263  			if i == 2 then\n  264  			   while char == name do\n  265: 				  char = list[1][1][random:random(#list[1][1])]\n  266  			   end\n  267  			   name = name .. char\n  ...\n  271  		 end\n  272  	  else\n  273: 		 char = list[1][2][random:random(#list[1][2])]\n  274  		 if char == 'qu' then\n  275: 			nchar = list[2][random:random(2,3)]\n  276  			first = 2\n  277  		 end\n  ...\n  286  	  add = ''\n  287  	  if first == 2 then --v\n  288: 		 for i=1, random:random(2) do\n  289: 			char = list[2][random:random(#list[2])]\n  290  			if i == 2 then\n  291  			   while char == add do\n  292: 				  char = list[2][random:random(#list[2])]\n  293  			   end\n  294  			   add = add .. char\n  ...\n  298  		 end\n  299  	  else --c\n  300: 		 if random:random(2) == 1 then\n  301: 			for i=1, random:random(2) do\n  302: 			   char = list[1][1][random:random(#list[1][1])]\n  303  			   if i == 2 then\n  304  				  while char == add do\n  305: 					 char = list[1][1][random:random(#list[1][1])]\n  306  				  end\n  307  				  add = add .. char\n  ...\n  311  			end\n  312  		 else\n  313: 			char = list[1][2][random:random(#list[1][2])]\n  314  			if char == 'qu' then\n  315: 			   nchar = list[2][random:random(2,3)]\n  316  			end\n  317  			add = char .. nchar\n  ...\n  477  	local mid_x = (x2+x1)/2;\n  478  	local mid_y = (y2+y1)/2;\n  479: 	mid_x = mid_x+(love.math.random()-.5)*displace;\n  480: 	mid_y = mid_y+(love.math.random()-.5)*displace;\n  481  	love.graphics.drawLightning(x1,y1,mid_x,mid_y,displace/2,curDetail);\n  482  	love.graphics.drawLightning(x2,y2,mid_x,mid_y,displace/2,curDetail);\n  ...\n  795  end\n  796  \n  797: function table.random(tab)\n  798: 	return tab[love.math.random(#tab)]\n  799  end\n  800  \n  801: function table.pickRandom(tab)\n  802: 	local i = love.math.random(#tab)\n  803  	local v = tab[i]\n  804  	table.remove(tab,i)\n\nG:\\love2dproj\\loveTCG\\net\\main.lua:\n   21  \n   22  local function startgame(player1,player2)\n   23: 	local first = love.math.random()<0.5\n   24  	local tab = {player1,player2}\n   25  	local tabname = tostring(tab)\n\n247 matches across 93 files\n",
+			"settings":
+			{
+				"buffer_size": 34073,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "cls/bank.lua",
+			"settings":
+			{
+				"buffer_size": 1427,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cls/card.lua",
+			"settings":
+			{
+				"buffer_size": 11896,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "net/conf.lua",
+			"settings":
+			{
+				"buffer_size": 3395,
 				"line_ending": "Windows"
 			}
 		},
@@ -367,7 +393,7 @@
 			"file": "net/main.lua",
 			"settings":
 			{
-				"buffer_size": 5011,
+				"buffer_size": 5267,
 				"line_ending": "Windows"
 			}
 		}
@@ -468,10 +494,16 @@
 		"/G/love2dproj/loveTCG/cardLibs",
 		"/G/love2dproj/loveTCG/cls",
 		"/G/love2dproj/loveTCG/lib",
-		"/G/love2dproj/loveTCG/net"
+		"/G/love2dproj/loveTCG/net",
+		"/G/love2dproj/loveTCG/scenes"
 	],
 	"file_history":
 	[
+		"/G/love2dproj/loveTCG/cards/daramek/rituals/festival.lua",
+		"/G/love2dproj/loveTCG/net/client.lua",
+		"/G/love2dproj/loveTCG/lib/loader.lua",
+		"/G/love2dproj/loveTCG/scenes/game_scene.lua",
+		"/G/love2dproj/loveTCG/lib/sock.lua",
 		"/G/love2dproj/loveTCG/cls/turn.lua",
 		"/G/love2dproj/loveTCG/main.lua",
 		"/G/love2dproj/loveTCG/cls/deck.lua",
@@ -481,7 +513,6 @@
 		"/G/love2dproj/loveTCG/cls/play.lua",
 		"/G/love2dproj/loveTCG/cls/card.lua",
 		"/G/love2dproj/loveTCG/cls/hero.lua",
-		"/G/love2dproj/loveTCG/lib/loader.lua",
 		"/G/love2dproj/loveTCG/lib/loading.lua",
 		"/G/love2dproj/loveTCG/cls/pocket.lua",
 		"/G/love2dproj/loveTCG/cls/starter.lua",
@@ -595,11 +626,7 @@
 		"/G/love2dproj/loveTCG/cards/endazu/goetia/veilwarden.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/hero/raktabaan.lua",
 		"/G/love2dproj/loveTCG/cards/endazu/hero/calipeth.lua",
-		"/G/love2dproj/loveTCG/cards/endazu/hero/jesmai.lua",
-		"/G/love2dproj/loveTCG/cards/endazu/hero/zalasair.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/captainviatrix.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/cardinalpocci.lua",
-		"/G/love2dproj/loveTCG/cards/vespitole/hero/madamaline.lua"
+		"/G/love2dproj/loveTCG/cards/endazu/hero/jesmai.lua"
 	],
 	"find":
 	{
@@ -618,6 +645,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"random",
+			"emit",
 			"print",
 			"parent",
 			"hero",
@@ -743,8 +772,6 @@
 			"print",
 			"losemoney",
 			"frame.heroDraw",
-			"draw3",
-			"a.draw3",
 			"draw3"
 		],
 		"highlight": true,
@@ -849,7 +876,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -858,15 +885,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2970,
+						"buffer_size": 3150,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2228,
-								2228
+								136,
+								136
 							]
 						],
 						"settings":
@@ -877,57 +904,1180 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1215.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "net/client.lua",
+					"file": "cls/game.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 268,
+						"buffer_size": 33309,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								207,
-								207
+								4460,
+								4460
 							]
 						],
 						"settings":
 						{
 							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 5099.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "lib/sock.lua",
-					"semi_transient": false,
+					"file": "cls/effect.lua",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 37524,
+						"buffer_size": 2459,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1799,
-								1799
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 972.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34073,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										183,
+										189
+									],
+									[
+										404,
+										410
+									],
+									[
+										622,
+										628
+									],
+									[
+										671,
+										677
+									],
+									[
+										856,
+										862
+									],
+									[
+										1062,
+										1068
+									],
+									[
+										1284,
+										1290
+									],
+									[
+										1500,
+										1506
+									],
+									[
+										1551,
+										1557
+									],
+									[
+										1738,
+										1744
+									],
+									[
+										1958,
+										1964
+									],
+									[
+										2139,
+										2145
+									],
+									[
+										2259,
+										2265
+									],
+									[
+										2481,
+										2487
+									],
+									[
+										2699,
+										2705
+									],
+									[
+										2967,
+										2973
+									],
+									[
+										3013,
+										3019
+									],
+									[
+										3198,
+										3204
+									],
+									[
+										3415,
+										3421
+									],
+									[
+										3635,
+										3641
+									],
+									[
+										3842,
+										3848
+									],
+									[
+										4051,
+										4057
+									],
+									[
+										4231,
+										4237
+									],
+									[
+										4415,
+										4421
+									],
+									[
+										4454,
+										4460
+									],
+									[
+										4536,
+										4542
+									],
+									[
+										4736,
+										4742
+									],
+									[
+										4775,
+										4781
+									],
+									[
+										4960,
+										4966
+									],
+									[
+										5164,
+										5170
+									],
+									[
+										5415,
+										5421
+									],
+									[
+										5640,
+										5646
+									],
+									[
+										5762,
+										5768
+									],
+									[
+										5802,
+										5808
+									],
+									[
+										5959,
+										5965
+									],
+									[
+										6101,
+										6107
+									],
+									[
+										6270,
+										6276
+									],
+									[
+										6452,
+										6458
+									],
+									[
+										6629,
+										6635
+									],
+									[
+										6862,
+										6868
+									],
+									[
+										6995,
+										7001
+									],
+									[
+										7199,
+										7205
+									],
+									[
+										7382,
+										7388
+									],
+									[
+										7511,
+										7517
+									],
+									[
+										7696,
+										7702
+									],
+									[
+										7968,
+										7974
+									],
+									[
+										8231,
+										8237
+									],
+									[
+										8393,
+										8399
+									],
+									[
+										8556,
+										8562
+									],
+									[
+										8815,
+										8821
+									],
+									[
+										8932,
+										8938
+									],
+									[
+										9135,
+										9141
+									],
+									[
+										9312,
+										9318
+									],
+									[
+										9526,
+										9532
+									],
+									[
+										9741,
+										9747
+									],
+									[
+										9891,
+										9897
+									],
+									[
+										10097,
+										10103
+									],
+									[
+										10330,
+										10336
+									],
+									[
+										10437,
+										10443
+									],
+									[
+										10519,
+										10525
+									],
+									[
+										10736,
+										10742
+									],
+									[
+										10887,
+										10893
+									],
+									[
+										11094,
+										11100
+									],
+									[
+										11274,
+										11280
+									],
+									[
+										11444,
+										11450
+									],
+									[
+										11639,
+										11645
+									],
+									[
+										11748,
+										11754
+									],
+									[
+										11840,
+										11846
+									],
+									[
+										12009,
+										12015
+									],
+									[
+										12108,
+										12114
+									],
+									[
+										12297,
+										12303
+									],
+									[
+										12441,
+										12447
+									],
+									[
+										12701,
+										12707
+									],
+									[
+										12887,
+										12893
+									],
+									[
+										13020,
+										13026
+									],
+									[
+										13302,
+										13308
+									],
+									[
+										13350,
+										13356
+									],
+									[
+										13594,
+										13600
+									],
+									[
+										13761,
+										13767
+									],
+									[
+										13921,
+										13927
+									],
+									[
+										14152,
+										14158
+									],
+									[
+										14298,
+										14304
+									],
+									[
+										14464,
+										14470
+									],
+									[
+										14735,
+										14741
+									],
+									[
+										14985,
+										14991
+									],
+									[
+										15166,
+										15172
+									],
+									[
+										15335,
+										15341
+									],
+									[
+										15547,
+										15553
+									],
+									[
+										15685,
+										15691
+									],
+									[
+										15889,
+										15895
+									],
+									[
+										16132,
+										16138
+									],
+									[
+										16329,
+										16335
+									],
+									[
+										16528,
+										16534
+									],
+									[
+										16760,
+										16766
+									],
+									[
+										16974,
+										16980
+									],
+									[
+										17027,
+										17033
+									],
+									[
+										17175,
+										17181
+									],
+									[
+										17436,
+										17442
+									],
+									[
+										17639,
+										17645
+									],
+									[
+										17814,
+										17820
+									],
+									[
+										17995,
+										18001
+									],
+									[
+										18129,
+										18135
+									],
+									[
+										18404,
+										18410
+									],
+									[
+										18598,
+										18604
+									],
+									[
+										18806,
+										18812
+									],
+									[
+										18913,
+										18919
+									],
+									[
+										19054,
+										19060
+									],
+									[
+										19243,
+										19249
+									],
+									[
+										19441,
+										19447
+									],
+									[
+										19627,
+										19633
+									],
+									[
+										19774,
+										19780
+									],
+									[
+										19966,
+										19972
+									],
+									[
+										20137,
+										20143
+									],
+									[
+										20257,
+										20263
+									],
+									[
+										20458,
+										20464
+									],
+									[
+										20669,
+										20675
+									],
+									[
+										20873,
+										20879
+									],
+									[
+										21141,
+										21147
+									],
+									[
+										21215,
+										21221
+									],
+									[
+										21400,
+										21406
+									],
+									[
+										21674,
+										21680
+									],
+									[
+										21977,
+										21983
+									],
+									[
+										22280,
+										22286
+									],
+									[
+										22477,
+										22483
+									],
+									[
+										22540,
+										22546
+									],
+									[
+										22752,
+										22758
+									],
+									[
+										22814,
+										22820
+									],
+									[
+										23012,
+										23018
+									],
+									[
+										23231,
+										23237
+									],
+									[
+										23324,
+										23330
+									],
+									[
+										23456,
+										23462
+									],
+									[
+										23642,
+										23648
+									],
+									[
+										23826,
+										23832
+									],
+									[
+										23992,
+										23998
+									],
+									[
+										24167,
+										24173
+									],
+									[
+										24296,
+										24302
+									],
+									[
+										24332,
+										24338
+									],
+									[
+										24439,
+										24445
+									],
+									[
+										24543,
+										24549
+									],
+									[
+										24697,
+										24703
+									],
+									[
+										24804,
+										24810
+									],
+									[
+										24908,
+										24914
+									],
+									[
+										24986,
+										24992
+									],
+									[
+										25152,
+										25158
+									],
+									[
+										25252,
+										25258
+									],
+									[
+										25408,
+										25414
+									],
+									[
+										25465,
+										25471
+									],
+									[
+										25665,
+										25671
+									],
+									[
+										25922,
+										25928
+									],
+									[
+										25981,
+										25987
+									],
+									[
+										26121,
+										26127
+									],
+									[
+										26269,
+										26275
+									],
+									[
+										26448,
+										26454
+									],
+									[
+										26557,
+										26563
+									],
+									[
+										26652,
+										26658
+									],
+									[
+										26765,
+										26771
+									],
+									[
+										26835,
+										26841
+									],
+									[
+										26992,
+										26998
+									],
+									[
+										27036,
+										27042
+									],
+									[
+										27071,
+										27077
+									],
+									[
+										27104,
+										27110
+									],
+									[
+										27144,
+										27150
+									],
+									[
+										27185,
+										27191
+									],
+									[
+										27212,
+										27218
+									],
+									[
+										27239,
+										27245
+									],
+									[
+										27410,
+										27416
+									],
+									[
+										27615,
+										27621
+									],
+									[
+										27723,
+										27729
+									],
+									[
+										27800,
+										27806
+									],
+									[
+										27873,
+										27879
+									],
+									[
+										27946,
+										27952
+									],
+									[
+										28019,
+										28025
+									],
+									[
+										28176,
+										28182
+									],
+									[
+										28440,
+										28446
+									],
+									[
+										28483,
+										28489
+									],
+									[
+										28527,
+										28533
+									],
+									[
+										28571,
+										28577
+									],
+									[
+										28812,
+										28818
+									],
+									[
+										28885,
+										28891
+									],
+									[
+										29088,
+										29094
+									],
+									[
+										29249,
+										29255
+									],
+									[
+										29350,
+										29356
+									],
+									[
+										29388,
+										29394
+									],
+									[
+										29578,
+										29584
+									],
+									[
+										29758,
+										29764
+									],
+									[
+										30118,
+										30124
+									],
+									[
+										30200,
+										30206
+									],
+									[
+										30391,
+										30397
+									],
+									[
+										30434,
+										30440
+									],
+									[
+										30478,
+										30484
+									],
+									[
+										30522,
+										30528
+									],
+									[
+										30673,
+										30679
+									],
+									[
+										30708,
+										30714
+									],
+									[
+										30743,
+										30749
+									],
+									[
+										30778,
+										30784
+									],
+									[
+										30876,
+										30882
+									],
+									[
+										31013,
+										31019
+									],
+									[
+										31059,
+										31065
+									],
+									[
+										31314,
+										31320
+									],
+									[
+										31336,
+										31342
+									],
+									[
+										31373,
+										31379
+									],
+									[
+										31398,
+										31404
+									],
+									[
+										31438,
+										31444
+									],
+									[
+										31445,
+										31451
+									],
+									[
+										31601,
+										31607
+									],
+									[
+										31608,
+										31614
+									],
+									[
+										31646,
+										31652
+									],
+									[
+										31653,
+										31659
+									],
+									[
+										31756,
+										31762
+									],
+									[
+										31763,
+										31769
+									],
+									[
+										31877,
+										31883
+									],
+									[
+										31884,
+										31890
+									],
+									[
+										31923,
+										31929
+									],
+									[
+										31930,
+										31936
+									],
+									[
+										31971,
+										31977
+									],
+									[
+										31978,
+										31984
+									],
+									[
+										32090,
+										32096
+									],
+									[
+										32097,
+										32103
+									],
+									[
+										32231,
+										32237
+									],
+									[
+										32238,
+										32244
+									],
+									[
+										32316,
+										32322
+									],
+									[
+										32323,
+										32329
+									],
+									[
+										32447,
+										32453
+									],
+									[
+										32454,
+										32460
+									],
+									[
+										32492,
+										32498
+									],
+									[
+										32499,
+										32505
+									],
+									[
+										32604,
+										32610
+									],
+									[
+										32611,
+										32617
+									],
+									[
+										32729,
+										32735
+									],
+									[
+										32736,
+										32742
+									],
+									[
+										32775,
+										32781
+									],
+									[
+										32782,
+										32788
+									],
+									[
+										32826,
+										32832
+									],
+									[
+										32833,
+										32839
+									],
+									[
+										32947,
+										32953
+									],
+									[
+										32954,
+										32960
+									],
+									[
+										33086,
+										33092
+									],
+									[
+										33093,
+										33099
+									],
+									[
+										33174,
+										33180
+									],
+									[
+										33181,
+										33187
+									],
+									[
+										33343,
+										33349
+									],
+									[
+										33399,
+										33405
+									],
+									[
+										33623,
+										33629
+									],
+									[
+										33664,
+										33670
+									],
+									[
+										33723,
+										33729
+									],
+									[
+										33763,
+										33769
+									],
+									[
+										33955,
+										33961
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								33936,
+								33936
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ 	].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 29978.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "cls/bank.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1427,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								328,
+								328
+							]
+						],
+						"settings":
+						{
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 81.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "cls/card.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11896,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2213,
+								2213
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 976.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "net/conf.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3395,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								229,
+								229
 							]
 						],
 						"settings":
@@ -939,71 +2089,42 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 810.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "cls/game.lua",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 33330,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7696,
-								7696
-							]
-						],
-						"settings":
-						{
-							"is_init_dirty_state": true,
-							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 8771.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
+					"buffer": 7,
 					"file": "net/main.lua",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5011,
+						"buffer_size": 5267,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3534,
-								3545
+								482,
+								482
 							]
 						],
 						"settings":
 						{
+							"is_init_dirty_state": false,
 							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
-						"translation.y": 3240.0,
+						"translation.x": 0.0,
+						"translation.y": 137.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

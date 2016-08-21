@@ -1,13 +1,14 @@
 local scene = gamestate.new()
 local Game = require "cls/game"
 
+
 function scene:init()
 	
 	self.camera = Camera()
 	self.camera:lookAt(0,0)
 end 
 
-function scene:enter(to,...)
+function scene:enter(from,...)
 	game = Game(...)
 end
 

@@ -16,7 +16,7 @@ local function findop(player)
 	end
 	if #match == 0 then return end
 	table.sort(match,function(a,b) return a.range<b.range end)
-	return match[1]
+	return db.waiting[match[1].id]
 end
 
 local function startgame(player1,player2)
@@ -28,24 +28,26 @@ local function startgame(player1,player2)
 		name = player2.name,
 		id = player2.id,
 		hero = player2.hero,
+        faction = player2.faction,
 		range = player2.range,
 		deck = player2.deck,
 		lib = player2.lib,
 		first = first,
 		seed = seed,
-		tablenanme = tabname,
+		tablename = tabname,
 		tableplace = 1
 		})
 	player2.client:emit("startgame",{
 		name = player1.name,
 		id = player1.id,
 		hero = player1.hero,
+        faction = player1.faction,
 		range = player1.range,
 		deck = player1.deck,
 		lib = player1.lib,
 		first = not first,
 		seed = seed,
-		tablenanme = tabname,
+		tablename = tabname,
 		tableplace = 2
 		})
 	player1.state = "gaming"
@@ -71,29 +73,39 @@ function love.load()
     end)
 
     server:on("login", function(data, client)
-        console:sys("client: " .. tostring(client.connection) .. " has joint to the server")
+        local id = tostring(client.connection)
+        console:sys("client: " .. id .. " has joint to the server")
         local userdata = {
         	name = data.name,
-        	id = tostring(client.connection),
+        	id = id,
         	client = client,
         	state = "login"
     	}
-    	db.login[client.connection] = userdata
-        client:emit("login", userdata.id)
+    	db.login[id] = userdata
+        client:emit("login", id)
     end)
 
 
 
 
     server:on("search", function(data,client)
-    	local user= data.id
+    	
+        local user= data.id
     	local userdata = db.login[user]
-    	if not userdata then client:emit("reconnect","can't find in login table") end
-    	if userdata.state~="login" then client:emit("reconnect","player state conflit from that in server") end
+
+    	if not userdata then 
+            client:emit("reconnect","can't find in login table") ; 
+            return 
+        end
+    	if userdata.state~="login" then 
+            client:emit("reconnect","player state conflit from that in server"); 
+            return 
+        end
     	userdata.deck = data.deck
     	userdata.lib = data.lib
     	userdata.hero = data.hero
     	userdata.range = data.range
+        userdata.faction = data.faction
     	local op = findop(userdata)
     	if op then
     		db.login[user] = nil
@@ -103,7 +115,6 @@ function love.load()
     		userdata.state = "waiting"
     		db.waiting[user] = userdata
     		db.login[user] = nil
-    		userdata.client:emit("reconnect","can't find in login table")
     	end
     end)
 
@@ -124,20 +135,23 @@ function love.load()
     end)
 
     server:on("syncgame", function(data,client)
- 
+        print("123")
+        if not db.gaming[data.tablename] then return end
     	local player = db.gaming[data.tablename][data.tableplace]
     	local op = db.gaming[data.tablename][(data.tableplace == 1 and 2 or 1)]
     	if player.state~="gaming" or op.state~="gaming" then
-    		player.client:emit("reconnect","player state conflit from that in server")
+    		print("error")
+            player.client:emit("reconnect","player state conflit from that in server")
     		op.client:emit("reconnect","player state conflit from that in server")
     		return
     	end
+        print("transfer")
     	op.client:emit("receivesync",
             {
                 side = data.side,
                 place = data.place,
                 pos = data.pos,
-                useall = data.useall
+                useall = data.useall,
                 turnover = data.turnover
             })
    	end)
@@ -158,7 +172,7 @@ function love.load()
 
     server:on("disconnect",function(data,client)
     	local id = tostring(client.connection)
-    	console:sys("client: " .. id .. "lost connection")
+    	console:sys("client: " .. id .. " lost connection")
     	db.waiting[id] = nil
     	db.login[id] = nil
     	for k,v in pairs(db.gaming) do

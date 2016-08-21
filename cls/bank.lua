@@ -4,6 +4,7 @@ local moveSpeed = 0.5
 function bank:init(game,root)
     self.cards={}
     self.game = game
+    self.name = "bank"
     self.root = root
     self.parent = game[root]
     if self.root == "up" then

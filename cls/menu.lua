@@ -2,12 +2,12 @@ local menu = Class("menu")
 local Button = require "cls/button"
 local Bg = require "cls/bg"
 local cardData = require "cls/cardDataLoader"
-
+local deckData = require "cls/deckDataLoader"
 
 
 local function getAI(playerdata)
 
-	range = playerdata
+	range = playerdata.range
 	local foelevel
 	local rnd = love.math.random()
 	if rnd<range/100 then
@@ -55,20 +55,26 @@ local function getAI(playerdata)
 	return foe
 end
 
-local function getNetplayer(playerdata)
-	local foedata
-	loader.addPack(self,function()
-		playerdata.id = love.connectionID
-		love.client:emit("search",playerdata)
-		while true do
-			foedata = client.foedata
-			if foedata then break end
-			if love.keyboard.isDown("escape") then break end
+local function searchNetPlayer(parent,playerdata)
+	love.client:on("startgame",function(data)
+		parent.foedata = data
+	end)
+	playerdata.id = love.connectionID
+	love.client:emit("search",playerdata)
+
+	loader.addPack(parent,function()		
+		while true do			
+			if parent.foedata then 
+				break 
+			end		
+			if love.keyboard.isDown("escape") then 
+				love.client:emit("stopwaiting",{id = playerdata.id})
+				break
+			end
 			coroutine.yield()
 		end
 	end,"lib/loading","searching")
-	foedata.type = "net"
-	return foedata
+
 end
 
 
@@ -93,9 +99,9 @@ function menu:init(parent)
 	arena.onClick = function()
 		local playerdata = self.parent.playerdata
 		if not playerdata then return end
-		local foedata = getNetPlayer(playerdata)
-		if not foedata then return end
-		gamestate.switch(gameState.game_scene,playerdata,foedata)
+		searchNetPlayer(self,playerdata)
+
+		
 	end
 	local shop = Button(self,self.x, 100+ self.y,250,50,"shop")
 	shop.onClick = function()
@@ -120,6 +126,11 @@ function menu:update(dt)
 		btn:update(dt)
 	end
 	self.parent.hoverUI = self.parent.hoverUI or self.hoverUI
+
+	if self.foedata then 
+		self.foedata.type = "net"
+		gamestate.switch(gameState.game_scene,self.parent.playerdata,self.foedata)
+	end
 end
 
 

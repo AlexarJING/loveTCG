@@ -68,9 +68,9 @@ end
 
 function card:placeInGame()
 	local place = self.current.name
-	local pos = table.getIndex(self.current.cards)
+	local pos = table.getIndex(self.current.cards,self)
 	--local side = self.current.parent
-	local side = self.current.root
+	local side = self.current.parent == game.my and "my" or "your"
 	return side,place,pos
 end
 
