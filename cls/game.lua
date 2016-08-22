@@ -17,7 +17,9 @@ local AI = require "lib/ai"
 
 function game:init(userdata,foedata)
 	--loader.addPack(self,function()
-
+	self.rnd = require "lib/random"
+	self.rnd:new()
+	
 	self.bg = require "cls/bg"("table2d",0,0,2)
 	self.up = {}
 	self.down = {}
@@ -32,12 +34,12 @@ function game:init(userdata,foedata)
 	end
 	self.show = require "cls/show"(self)
 	self.turnButton = require "cls/turn"(self)
-	self.debug = require "cls/debug"(self)
+	--self.debug = require "cls/debug"(self)
 	self.console = require "cls/console"(self,-640,360,1280,300)
 	self.cursor = require "cls/cursor"(self)
 
-	self.console.cmd.endturn = function()
-		self:endturn()
+	self.console.cmd.endTurn = function()
+		self:endTurn()
 	end
 
 	
@@ -61,6 +63,26 @@ function game:init(userdata,foedata)
 	self.userdata = userdata
 	self.foedata = foedata
 
+	if foedata.type == "ai" then
+		self.aiToggle = true
+	elseif foedata.type == "net" then
+		self.netToggle = true
+		self.rnd:setSeed(foedata.seed)		
+		love.client:on("receivesync",function(data)
+			if data.turnover then
+				self:endTurn()
+			else
+				self:netPlaySync(data)
+			end
+		end) 
+		love.client:on("win",function(data)
+			print(data)
+			self:winner()
+		end)
+	end
+
+
+
 	self.up.deck:setCards(self.foedata)
 	self.up.library:setCards(self.foedata)
 	self.up.hero:setHero(self.foedata)
@@ -72,21 +94,7 @@ function game:init(userdata,foedata)
 	self.up.resource=self.up.hero.card
 	self.down.resource=self.down.hero.card
 
-	if foedata.type == "ai" then
-		self.aiToggle = true
-		
-
-	elseif foedata.type == "net" then
-		self.netToggle = true
-		love.math.setRandomSeed(foedata.seed)
-		love.client:on("receivesync",function(data)
-			if data.turnover then
-				self:endTurn()
-			else
-				self:netPlaySync(data)
-			end
-		end) 
-	end
+	
 
 	self.gametype = foedata.type
 
@@ -111,7 +119,7 @@ function game:update(dt)
 		self[side].grave:update(dt)
 	end
 
-	self.debug:update(dt)
+	--self.debug:update(dt)
 	self.show:update(dt)
 
 	for i,e in ipairs(self.effects) do
@@ -161,7 +169,7 @@ function game:draw()
 		self[side].deck:draw()
 	end
 
-	self.debug:draw()
+	--self.debug:draw()
 
 	self.show:draw()
 
@@ -343,7 +351,7 @@ function game:gameStart()
 	if self.gametype == "net" then
 		self.turn = self.foedata.first and "down" or "up"
 	else
-		self.turn = love.math.random()<0.5 and "down" or "up"
+		self.turn = self.rnd:random()<0.5 and "down" or "up"
 	end
 
 	self.userside = self.down
@@ -729,7 +737,7 @@ function game:drawCard(whose,id,manual,start) --or condition func with func(card
 		local lib = self.cardData.index
 		local target
 		while true do
-			target = lib[love.math.random(#lib)]
+			target = self.rnd:table(lib)
 			if not target.isHero then
 				local tCard = self:makeCard(target)
 				self:transferCard(tCard,self.my.hand)
@@ -743,7 +751,7 @@ function game:drawCard(whose,id,manual,start) --or condition func with func(card
 		end
 
 		if not candidate[1] then return end
-		local target = table.random(candidate)
+		local target = self.rnd:table(candidate)
 		self:transferCard(target,to)
 		return target
 	elseif type(id) == "string" then  ---当id为名字时
@@ -770,7 +778,7 @@ function game:drawCard(whose,id,manual,start) --or condition func with func(card
 		return id
 	else --随机
 		if #self.my.deck.cards == 0 then return end
-		local card = table.random(self[whose].deck.cards)
+		local card = self.rnd:table(self[whose].deck.cards)
 		card:reset()
 		self:transferCard(card,to)
 	end
@@ -790,10 +798,12 @@ function game:refillCard(whose,id,level, start)
 	local to = start and self[whose].bank or  self.my.bank
 	
 	local data
+	
 	if id =="any" then
 		local target
+		local lib = self.cardData.index
 		repeat
-			target = lib[love.math.random(#lib)]
+			target = self.rnd:table(lib)
 		until not target.isHero
 		data = target
 	elseif type(id)=="string" then --名字
@@ -803,7 +813,7 @@ function game:refillCard(whose,id,level, start)
 	elseif type(id) == "table" then
 		data = table.copy(id) -- attentions!!! game:copyCard()
 	else
-		data = table.random(self[whose].library.cards)
+		data = self.rnd:table(self[whose].library.cards)
 	end
 
 	if data then
@@ -895,7 +905,7 @@ local res = {"gold","food","magic","skull"}
 function game:gain(card,who,what)
 
 	if what == "random" then 
-		what = table.random(res) 
+		what = self.rnd:table(res) 
 	end
 
 	local whose = card:getSide(who)
@@ -923,7 +933,7 @@ function game:lose(card,who,what)
 	if what == "random" then 
 		local candidate = {unpack(res)}
 		repeat
-			local item = table.pickRandom(candidate)
+			local item = self.rnd:pickTable(candidate)
 			if whose.resource[item]>0 then
 				what = item
 				break
@@ -1027,7 +1037,7 @@ function game:weakestAlly(who,hurt,nosac)
 		end
 	end
 	if lowest then
-		return table.random(lowest)
+		return self.rnd:table(lowest)
 	end
 end
 
@@ -1046,7 +1056,7 @@ function game:strongestAlly(who,hurt,nosac)
 		end
 	end
 	if strongest then
-		return table.random(strongest)
+		return self.rnd:table(strongest)
 	end
 end
 
@@ -1060,7 +1070,7 @@ function game:randomAlly(who,hurt,nosac)
 		end
 	end
 	if not candidate[1] then return end
-	return table.random(candidate)
+	return self.rnd:table(candidate)
 end
 
 function game:attackOrder(cards)
@@ -1074,7 +1084,7 @@ function game:attackOrder(cards)
 		end
 	end
 
-	if noHp[1] then return table.random(noHp) end
+	if noHp[1] then return self.rnd:table(noHp) end
 
 	if ally[1] then
 		local strongest
@@ -1377,7 +1387,7 @@ function game:attack(from,to,ignore)
 
 	target = target or your.hero.card
 
-	if target.dodgeRate and love.math.random()<target.dodgeRate then
+	if target.dodgeRate and self.rnd:random()<target.dodgeRate then
 		effect:addCallback(function() target:turnaround() end)
 		return
 	end
@@ -1412,6 +1422,8 @@ end
 
 function game:winner()
 	--screenshot,hero,result
+	love.client:emit("gameover",{tablename = self.foedata.tablename,
+				tableplace = self.foedata.tableplace,})
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
 	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"win",self)
 end
@@ -1498,7 +1510,7 @@ function game:chargeCard(card,permanent,category)
 	if card == "random" then
 		local candidate = self:allChargeTarget(self.my,category)
 		if candidate[1] then
-			return self:chargeCard(table.random(candidate))
+			return self:chargeCard(self.rnd:table(candidate))
 		else
 			return false
 		end

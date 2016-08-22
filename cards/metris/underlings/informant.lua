@@ -27,12 +27,12 @@ data.ability={
 					index = index + 1
 					candidate[index] = v
 				end
-				return table.random(candidate)
+				return game.rnd:table(candidate)
 			end,card.level) 
 		end)
 	end,
 	onTurnStart = function (card,game) game:drawCard("your") end,
-	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
+	onDestroyed = function (card,game) if game.rnd:random()<0.5 then return true end end
 }
 
 return data

@@ -28,7 +28,7 @@ data.ability={
 					end
 				end
 				if not candidate[1] then return end
-				return table.random(candidate)
+				return game.rnd:table(candidate)
 			end
 		)
 		game:refillCard("my",function(cards) 
@@ -38,7 +38,7 @@ data.ability={
 					table.insert(candidate, v)
 				end
 			end
-			return table.random(candidate)
+			return game.rnd:table(candidate)
 		end)
 	end,
 }

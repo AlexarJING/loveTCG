@@ -18,7 +18,7 @@ data.description = {
 
 data.ability={
 	onAllyDie = function(card,game,target)
-		if love.math.random()<0.1 then
+		if game.rnd:random()<0.1 then
 			target:reset()
 			game:transferCard(target , target:getSide().hand)
 			return true

@@ -20,7 +20,7 @@ data.ability={
 		local cards = {unpack(game.your.deck.cards)}
 		for i = 1,3 do
 			if #cards==0 then break end
-			local index = love.math.random(#cards)
+			local index = game.rnd:random(#cards)
 			table.insert(candidate, cards[index])
 			table.remove(cards, index)
 		end

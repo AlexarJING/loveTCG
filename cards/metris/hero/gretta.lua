@@ -17,13 +17,13 @@ data.description = {
 
 data.ability={
 	onFoeAttack = function(card,game,target)
-		if love.math.random()<0.25 then
+		if game.rnd:random()<0.25 then
 			return card
 		end
 	end,
 
 	onAttacked = function (card,gamem,from)
-		if love.math.random()<0.2 then
+		if game.rnd:random()<0.2 then
 			game:attack(card)
 		end
 	end

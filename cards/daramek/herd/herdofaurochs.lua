@@ -23,7 +23,7 @@ data.ability={
 		game:gain(card,"my","random")
 	end,
 	onDying = function(card,game)
-		if love.math.random()<0.25 then
+		if game.rnd:random()<0.25 then
 			return "toHand"
 		else
 			return "death"

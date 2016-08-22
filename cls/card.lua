@@ -35,7 +35,7 @@ local font_title =
 local font_content = language == "cn" and  
 	love.graphics.newFont("res/others/chinesefont.ttf", 18) or
 	love.graphics.newFont(18)
-
+local font_number = love.graphics.newFont(18)
 
 local backCanvas
 
@@ -319,7 +319,7 @@ function card:updateCanvas()
 		love.graphics.setColor(255, 255, 255,255)
 		--love.graphics.circle("fill", 195, 20, 15)
 		love.graphics.draw(img_gold, 177, 10,0,1.3,1.3)
-		love.graphics.setFont(font_content)
+		love.graphics.setFont(font_number)
 		love.graphics.setColor(0, 0, 0,255)
 		love.graphics.printf(self.price, 177, 11, 30, "center")
 		love.graphics.setColor(0, 0, 0,255)

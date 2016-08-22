@@ -19,7 +19,7 @@ data.ability={
 		local candidate = game:foe(card,false,true)
 		
 		if candidate[1] then
-			local target = table.random(candidate)
+			local target = game.rnd:table(candidate)
 			game:transferCard(target,game.my.play)
 		else
 			game:gain(card,"my","skull")

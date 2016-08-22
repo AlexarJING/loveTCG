@@ -17,7 +17,7 @@ data.description = {
 
 data.ability={
 	onDestroyCard = function (card,game,target)
-		if  target.born == game.my  and love.math.random()<0.2 then
+		if  target.born == game.my  and game.rnd:random()<0.2 then
 			return true
 		end
 	end

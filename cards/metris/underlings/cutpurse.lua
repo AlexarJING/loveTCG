@@ -23,12 +23,12 @@ data.ability={
 
 	onFoeGain = function (card,game,what) 
 
-		if love.math.random()<0.05 then
+		if game.rnd:random()<0.05 then
 			game:steal(card,what)
 		end
 	end,
 
-	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
+	onDestroyed = function (card,game) if game.rnd:random()<0.5 then return true end end
 }
 
 return data

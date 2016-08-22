@@ -19,7 +19,7 @@ data.ability={
 	--onCardBuy(hero,game,card)
 
 	onCardBuy= function (card,game,target)
-		if love.math.random()<0.15 then
+		if game.rnd:random()<0.15 then
 			game:refillCard("your")
 		end
 	end

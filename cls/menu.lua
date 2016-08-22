@@ -86,7 +86,7 @@ function menu:init(parent)
 	self.x = 500
 	self.y = 10
 
-	local journey = Button(self,self.x,-300,250,50,"journey")
+	local journey = Button(self,self.x,-300,250,50,"tutorial")
 	local skirmish = Button(self,self.x,-200,250,50,"skirmish")
 	skirmish.onClick = function()
 		local playerdata = self.parent.playerdata

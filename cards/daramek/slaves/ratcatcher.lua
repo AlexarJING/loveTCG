@@ -26,7 +26,7 @@ data.ability={
 				end
 			end
 			if not candidate[1] then return end
-			return candidate[love.math.random(#candidate)]
+			return candidate[game.rnd:random(#candidate)]
 		end)
 	end,
 	onPlay = function (card,game)
@@ -38,7 +38,7 @@ data.ability={
 				end
 			end
 			if not candidate[1] then return end
-			return candidate[love.math.random(#candidate)]
+			return candidate[game.rnd:random(#candidate)]
 		end)
 	end,
 }

@@ -21,7 +21,7 @@ data.ability={
 		game:healCard("all")
 	end,
 	onDestroyCard = function (card,game,target)
-		if  target.hp and target.born == card:getSide()  and love.math.random()<0.5 then
+		if  target.hp and target.born == card:getSide()  and game.rnd:random()<0.5 then
 			return true
 		end
 	end

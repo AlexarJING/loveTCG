@@ -33,7 +33,7 @@ data.ability={
 		card:updateCanvas()
 	end,
 
-	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
+	onDestroyed = function (card,game) if game.rnd:random()<0.5 then return true end end
 }
 
 return data

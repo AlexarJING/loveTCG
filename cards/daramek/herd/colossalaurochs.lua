@@ -24,7 +24,7 @@ data.ability={
 		end
 	end,
 	onDying = function(card,game)
-		if love.math.random()<0.5 then
+		if game.rnd:random()<0.5 then
 			return "toHand"
 		else
 			return "death"

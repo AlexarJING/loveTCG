@@ -23,7 +23,7 @@ data.ability={
 	onPlay = function (card,game) game:drawCard() end,
 	onTurnStart = function (card,game) game:attack(card)end,
 	onFeed = function (card,game) game:attack(card) end,
-	onAttacked = function(card,game,from) if love.math.random()<0.75 then game:attack(card) end end
+	onAttacked = function(card,game,from) if game.rnd:random()<0.75 then game:attack(card) end end
 }
 
 return data

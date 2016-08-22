@@ -17,7 +17,7 @@ data.description = {
 
 data.ability={
 	onFoeGain = function (card,game,what) 
-		if love.math.random()<0.05 then
+		if game.rnd:random()<0.05 then
 			game:steal(card,what)
 		end
 	end,

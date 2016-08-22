@@ -30,7 +30,7 @@ data.ability={
 		for i= 1, card.charge do			
 			local target
 			repeat
-				target = lib[love.math.random(#lib)]
+				target = lib[game.rnd:random(#lib)]
 			until not target.isHero and not target.isCoin
 			local tCard = game:makeCard(target)
 			tCard.born = game.my

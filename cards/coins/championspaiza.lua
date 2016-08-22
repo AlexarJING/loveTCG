@@ -19,7 +19,7 @@ data.description = {
 data.ability={
 	onPlay = function(card,game)
 		game:gain(card,"my","gold")
-		if love.math.random()<0.1 then
+		if game.rnd:random()<0.1 then
 			game:refillCard("my","any")
 		end
 	end,

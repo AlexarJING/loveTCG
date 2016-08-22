@@ -19,7 +19,7 @@ data.description = {
 data.ability={
 	onPlay = function(card,game)
 		game:gain(card,"my","gold")
-		if love.math.random()<0.22 then
+		if game.rnd:random()<0.22 then
 			game:attack(card,"weakest")
 		end
 	end,

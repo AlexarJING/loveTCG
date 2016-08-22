@@ -16,7 +16,7 @@ data.description = {
 
 data.ability={
 	onAttack = function(card,game) 
-		if love.math.random()<0.75 then
+		if game.rnd:random()<0.75 then
 			game:healCard(card)
 		end
 	end,

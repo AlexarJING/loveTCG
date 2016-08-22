@@ -15,7 +15,7 @@ data.description = {
 
 data.ability={
 	onCardPlay = function (card,game)
-		if love.math.random()<0.15 then game:gain(card,"my","random") end
+		if game.rnd:random()<0.15 then game:gain(card,"my","random") end
 	end,
 }
 

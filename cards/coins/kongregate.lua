@@ -23,7 +23,7 @@ data.ability={
 		for k,v in pairs(game.cardData.coins) do
 			table.insert(coins,v)
 		end
-		local cardData = table.random(coins)
+		local cardData = game.rnd:table(coins)
 		cardData.ability.onPlay(card,game)
 	end,
 }

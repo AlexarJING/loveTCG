@@ -21,14 +21,14 @@ data.ability={
 	onFeed = function (card,game) 
 		
 		local poisons = {"belladonna", "hemlock" , "arsenic"}
-		print(table.random(poisons))
-		game:refillCard("my",table.random(poisons))
+		print(game.rnd:table(poisons))
+		game:refillCard("my",game.rnd:table(poisons))
 
 	end,
 	onTurnStart = function (card,game)
 		game:healCard("all",true)
 	end,
-	onDestroyed = function (card,game) if love.math.random()<0.5 then return true end end
+	onDestroyed = function (card,game) if game.rnd:random()<0.5 then return true end end
 }
 
 return data

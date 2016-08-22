@@ -135,7 +135,6 @@ function love.load()
     end)
 
     server:on("syncgame", function(data,client)
-        print("123")
         if not db.gaming[data.tablename] then return end
     	local player = db.gaming[data.tablename][data.tableplace]
     	local op = db.gaming[data.tablename][(data.tableplace == 1 and 2 or 1)]
@@ -145,7 +144,6 @@ function love.load()
     		op.client:emit("reconnect","player state conflit from that in server")
     		return
     	end
-        print("transfer")
     	op.client:emit("receivesync",
             {
                 side = data.side,

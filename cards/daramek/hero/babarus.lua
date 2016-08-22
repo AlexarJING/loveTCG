@@ -16,7 +16,7 @@ data.description = {
 data.ability={
 	onGain = function(card,game,what) --self.my.hero.card,self,who,what
 		if (what == "skull" or what == "food")
-			and love.math.random()<0.5 then
+			and game.rnd:random()<0.5 then
 			game:lose(card,"my",what)
 			game:gain(card,"my","magic")
 		end 

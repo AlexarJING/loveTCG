@@ -18,13 +18,13 @@ data.description = {
 
 data.ability={
 	onTurnStart = function(card,game) 
-		if  love.math.random()<0.35 then
+		if  game.rnd:random()<0.35 then
 			game:drawCard("your")
 		end
 	end,
 	onCardPlay = function (card,game,target)
 		if target.isCoin and target.born~=game.my then
-			if  love.math.random()<0.35 then
+			if  game.rnd:random()<0.35 then
 				game:gain(target,"my","gold")
 			end
 		end

@@ -17,7 +17,7 @@ data.description = {
 
 data.ability={
 	onFeedAlly = function(card,game) 
-		if love.math.random()<0.5 then  game:attack(card) end
+		if game.rnd:random()<0.5 then  game:attack(card) end
 	end,
 }
 

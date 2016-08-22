@@ -29,7 +29,7 @@ data.ability={
 	onFullCharge = function(card,game)
 		
 		local herds = {"herdofaurochs","herdofboars","herdofgoats","herdofrats"}
-		local data = game.cardData.short[table.random(herds)]
+		local data = game.cardData.short[game.rnd:table(herds)]
 		local c = game:makeCard(data)
 		game:transferCard(c,game.my.hand)
 		card.charge = 0

@@ -16,7 +16,7 @@ data.description = {
 
 data.ability={
 	onPlay = function(card,game)
-		local target = table.random(game.your.hand.cards)
+		local target = game.rnd:table(game.your.hand.cards)
 		if not target then return end
 		game:transferCard(target,game.my.hand)
 	end,
