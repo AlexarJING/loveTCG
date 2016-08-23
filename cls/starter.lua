@@ -7,6 +7,8 @@ local Button = require "cls/button"
 local Text = require "cls/text"
 local Info = require "cls/info"
 
+
+
 function starter:init(parent)
 	self.info = Info(self)
 	self.parent = parent
@@ -67,6 +69,7 @@ function starter:toBuilder()
 end
 
 function starter:update(dt)
+
 	self.mousex, self.mousey = self.parent.camera:mousepos() 
  	if love.keyboard.isDown("lctrl") then
  		self.confirm.text = "change"
@@ -84,6 +87,8 @@ function starter:update(dt)
 	for i,v in ipairs(self.ui) do
 		v:update(dt)
 	end
+
+	
 end
 
 

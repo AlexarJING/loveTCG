@@ -340,7 +340,7 @@
 			"file": "cls/dialogbub.lua",
 			"settings":
 			{
-				"buffer_size": 150,
+				"buffer_size": 2123,
 				"line_ending": "Windows",
 				"name": "dialogbub.lua"
 			}
@@ -349,7 +349,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 286,
+				"buffer_size": 505,
 				"line_ending": "Windows"
 			}
 		},
@@ -867,6 +867,7 @@
 						"settings":
 						{
 							"auto_name": "tutorial.lua",
+							"origin_encoding": "UTF-8",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -882,20 +883,21 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 150,
+						"buffer_size": 2123,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								60,
-								60
+								1896,
+								1896
 							]
 						],
 						"settings":
 						{
 							"auto_name": "dialogbub.lua",
+							"origin_encoding": "ASCII",
 							"syntax": "Packages/Lua Love/LuaLove.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -911,15 +913,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 286,
+						"buffer_size": 505,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18,
-								18
+								0,
+								0
 							]
 						],
 						"settings":

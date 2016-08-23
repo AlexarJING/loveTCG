@@ -10,7 +10,7 @@ local Card = require "cls/card"
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
 local AI = require "lib/ai"
-
+local jump = require "lib/jump"
 
 
 ------------------------------------------------------------------------------------
@@ -152,6 +152,9 @@ function game:update(dt)
 
 	self.hover = self.turnButton:update(dt) or self.hoverCard
 	self.cursor:update(self.hover)
+	if  love.keyboard.isDown("escape") and not jump.running then
+		jump.to(self,self.down.hero,"lib/gamedialog")
+	end
 end
 
 function game:draw()
