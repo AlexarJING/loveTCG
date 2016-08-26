@@ -13,7 +13,7 @@ function delay:new(delayTime,since,func,...)
 		return self.index
 	else
 		self.stack[tostring(delayTime)]={delayTime,func,{...}}
-		return tostring(delayTime)
+		return self.index
 	end
 	
 	

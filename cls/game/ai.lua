@@ -51,11 +51,17 @@ function ai.attackHero(game)
 	end
 end
 
-function ai:getRule(data)
+function ai:getRule(data,aifuncs)
 	local funcs={}
 	for i,v in ipairs(data) do
-		if not self[v] then error("no funcs") end
-		table.insert(funcs, self[v])
+		if self[v] then
+			table.insert(funcs, self[v])
+		else 
+			if aifuncs and aifuncs[v] then
+				table.insert(funcs, aifuncs[v])
+			end
+		end
+			
 	end
 	return funcs
 end

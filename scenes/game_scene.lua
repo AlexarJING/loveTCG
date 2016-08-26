@@ -1,5 +1,5 @@
 local scene = gamestate.new()
-local Game = require "cls/game"
+
 
 
 function scene:init()

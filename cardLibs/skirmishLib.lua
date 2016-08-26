@@ -79,4 +79,6 @@ local data = {
 
 data.rule = {"chooseShow","playHand","feedAlly","aimFoe","buyBank","feedHero","attackHero"}
 
+
+
 return data

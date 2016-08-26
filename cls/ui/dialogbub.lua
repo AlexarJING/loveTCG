@@ -5,10 +5,10 @@ local offright = 50
 local offheight = 130
 local quotheight = 30
 
-function dialog:init(x,y,str,up)
+function dialog:init(parent,x,y,str,last)
 	self.str = str
 	self.content = string.toTable(str)
-	self.font = love.graphics.newFont("res/others/chinesefont.ttf", 22)
+	self.font = love.graphics.newFont("res/others/chinesefont.ttf", 30)
 	self.width = self.font:getWidth(str)
 	self.height = self.font:getHeight(str)
 	self.readSpeed = 0.1
@@ -17,20 +17,27 @@ function dialog:init(x,y,str,up)
 	self.readPos = 0
 	self.x = x
 	self.y = y
-	self.up = up
+	self.up = y < 0
+	--table.insert(self.parent.ui, self)
+	self.last = last or 3
+	self.timer = love.timer.getTime()
 end
 
 function dialog:update(dt)
 	self.readCD = self.readCD - dt
-	if love.keyboard.isDown("space") then self.readCD=-1 end
+	if love.keyboard.isDown("space") then self.readCD=-1;self.confirm = true end
 	if self.readCD<0 then
 		self.readCD = self.readSpeed
 		if self.readPos<#self.content then
 			self.readPos = self.readPos + 1
 			self.read = self.read .. self.content[self.readPos]
-		else
+		elseif not love.keyboard.isDown("space") and self.confirm then
 			self.done= true
 		end
+	end
+
+	if love.timer.getTime()-self.timer>self.last then
+		self.done = true
 	end
 
 end

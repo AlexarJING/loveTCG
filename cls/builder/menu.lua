@@ -1,11 +1,8 @@
 local menu = Class("menu")
-local Button = require "cls/button"
-local Bg = require "cls/bg"
-local cardData = require "cls/cardDataLoader"
-local deckData = require "cls/deckDataLoader"
 
 
-local function getAI(playerdata)
+
+local function getAI(playerdata,melee)
 
 	range = playerdata.range
 	local foelevel
@@ -25,7 +22,16 @@ local function getAI(playerdata)
 
 
 	local foe = table.random(deckData)
-	
+	if melee then 
+		local cards = {}
+		for i,card in ipairs(cardData.index) do
+			if card.basePrice then
+				card.level = 1
+				table.insert(cards, card)
+			end
+		end
+		foe.lib = cards
+	end
 	for i,v in ipairs(foe.lib) do
 		local rnd = love.math.random()
 		if rnd< foelevel/5 then
@@ -54,6 +60,7 @@ local function getAI(playerdata)
 	foe.type = "ai"
 	return foe
 end
+
 
 local function searchNetPlayer(parent,playerdata)
 	love.client:on("startgame",function(data)
@@ -87,6 +94,20 @@ function menu:init(parent)
 	self.y = 10
 
 	local journey = Button(self,self.x,-300,250,50,"tutorial")
+	journey.onClick = function()
+		info.data.tutorial = info.data.tutorial or 1
+		local tlevel = info.data.tutorial
+		if not love.filesystem.exists("cardLibs/tutorial"..tostring(tlevel)..".lua") then
+			tlevel = 1
+		end
+		local foedata = require ("cardLibs/tutorial"..tostring(tlevel))
+		foedata.level =1
+		foedata.deck = {}
+		foedata.type = "ai"
+		foedata.reward = function() info.data.tutorial = info.data.tutorial + 1 end
+		local playerdata = foedata.playerdata
+		gamestate.switch(gameState.game_scene,playerdata,foedata)
+	end
 	local skirmish = Button(self,self.x,-200,250,50,"skirmish")
 	skirmish.onClick = function()
 		local playerdata = self.parent.playerdata
@@ -95,13 +116,21 @@ function menu:init(parent)
 		gamestate.switch(gameState.game_scene,playerdata,foedata)
 	end
 	local melee = Button(self,self.x,-100 + self.y,250,50,"melee")
+	melee.onClick = function()
+		local playerdata = self.parent.playerdata
+		if not playerdata then return end
+		local foedata = getAI(playerdata,true)
+		playerdata.lib = table.copy(foedata.lib)
+		gamestate.switch(gameState.game_scene,playerdata,foedata)
+	
+	end
+
 	local arena = Button(self,self.x,0+ self.y, 250,50,"arena")
 	arena.onClick = function()
 		local playerdata = self.parent.playerdata
 		if not playerdata then return end
 		searchNetPlayer(self,playerdata)
-
-		
+	
 	end
 	local shop = Button(self,self.x, 100+ self.y,250,50,"shop")
 	shop.onClick = function()

@@ -1,5 +1,5 @@
 local hero = Class("hero")
-local Card = require "cls/card"
+
 local img_food = love.graphics.newImage("res/others/food.png")
 local img_gold = love.graphics.newImage("res/others/money.png")
 local img_skull = love.graphics.newImage("res/others/skull.png")
@@ -20,13 +20,14 @@ function hero:init(game,root)
         self.y = 280      
     end
     self.scale = 0.5
-
+    self.w = 100
+    self.h = 120
 end
 
 
 function hero:setHero(data)
 	
-    local d = self.game.cardData[data.faction].hero[data.hero]
+    local d = cardData[data.faction].hero[data.hero]
     self.card =  Card(self.game,d,self.root,self)
     
     self.card.hp = self.card.hp or 30

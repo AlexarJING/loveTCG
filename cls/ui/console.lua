@@ -195,7 +195,7 @@ function console:keypressed(key)
 		if self.isEdit then
 			if self.input == "" then
 				self.isEdit=false
-				self.parent.keyLock = false
+				self.parent.lockInput = false
 			else
 				self:say("player",self.input..self.inputRight,0.3)
 				self.input=""
@@ -205,7 +205,7 @@ function console:keypressed(key)
 			end
 		else
 			self.isEdit=true
-			self.parent.keyLock=true
+			self.parent.lockInput=true
 		end
 	elseif key =="left" then
 		self.caretIndex = self.caretIndex - 1
@@ -247,11 +247,11 @@ function console:mousepressed(key)
 		if inRect(self) then
 			if not self.isEdit then
 				self.isEdit=true
-				self.parent.keyLock=true
+				self.parent.lockInput=true
 			end
 		elseif self.isEdit then
 			self.isEdit=false
-			self.parent.keyLock=false
+			self.parent.lockInput=false
 		end
 	end
 end
@@ -259,7 +259,7 @@ end
 function console:toggle(toggle)
 	self.enable = toggle
 	if not self.enable then
-		self.parent.keyLock=false
+		self.parent.lockInput=false
 	end
 end
 

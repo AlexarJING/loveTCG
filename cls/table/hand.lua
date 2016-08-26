@@ -17,6 +17,8 @@ function hand:init(game,root)
     self.maxCount= 5
     self.scale = 0.5
     self.rx=0
+    self.w = 300
+    self.h = 120
 end
 
 

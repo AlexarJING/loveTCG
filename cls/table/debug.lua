@@ -1,5 +1,5 @@
 local debug = Class("debug")
-local Card = require "cls/card"
+
 
 local function getPos(self,index,level)
 	local x = -500 + 50*(index%20)
@@ -18,13 +18,13 @@ function debug:loadAll()
 	self.cards={}
 
 	local index =0
-	for faction,tab in pairs(game.cardData) do	
+	for faction,tab in pairs(cardData) do	
 		if faction == "short" or faction == "index" or faction == "rarity" then
 			-----
 		elseif faction == "coins" or faction== "summon" then
 			for id,data in pairs(tab) do
 				index = index + 1		
-				local cd = table.copy(game.cardData.short[id])
+				local cd = table.copy(cardData.short[id])
 				local card =Card(self,cd,nil,self)
 				card.current = self
 				card.x,card.y = getPos(self,index,level)
@@ -35,7 +35,7 @@ function debug:loadAll()
 				
 				for id,data in pairs(d) do
 					index = index + 1		
-					local cd = table.copy(game.cardData.short[id])
+					local cd = table.copy(cardData.short[id])
 					local card =Card(self,cd,nil,self)
 					card.current = self
 					card.x,card.y = getPos(self,index,level)

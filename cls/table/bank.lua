@@ -9,7 +9,7 @@ function bank:init(game,root)
     self.parent = game[root]
     if self.root == "up" then
         self.cx = 550
-        self.cy = 0
+        self.cy = - 250
         self.rz = -0.5
         self.x = 650
         self.y = 360
@@ -17,7 +17,7 @@ function bank:init(game,root)
         self.outy = -360
     else
         self.cx = -550
-        self.cy = 0
+        self.cy = 250
         self.rz = 0.5
         self.x = -650
         self.y = -360
@@ -25,7 +25,8 @@ function bank:init(game,root)
         self.outy = 360
     end
     self.scale = 0.5
-
+    self.w = 150
+    self.h = 800
 
     self.maxCount= 5
    
@@ -37,9 +38,9 @@ function bank:rearrange()
         for i,card in ipairs(self.cards) do
             local y 
             if self.root == "up" then
-                y= self.cy + (i-1) * 100 - 250
+                y= self.cy + (i-1) * 100 
             else
-                y= self.cy - (i-1) * 100 + 250
+                y= self.cy - (i-1) * 100 
             end
             card:setAnimate(moveSpeed,{x=self.cx , y = y,rz=self.rz,rx=0,scale=self.scale},"outQuad")
         end

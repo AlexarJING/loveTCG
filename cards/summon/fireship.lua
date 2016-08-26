@@ -7,7 +7,7 @@ local data = {
 	last = true,
 	hp = 3,
 	timer = 4,
-	price = 4,
+	basePrice = 4,
 	back = true
 }
 

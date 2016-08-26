@@ -20,7 +20,7 @@ data.ability={
 	onPlay = function(card,game)
 		local coins = {}
 
-		for k,v in pairs(game.cardData.coins) do
+		for k,v in pairs(cardData.coins) do
 			table.insert(coins,v)
 		end
 		local cardData = game.rnd:table(coins)

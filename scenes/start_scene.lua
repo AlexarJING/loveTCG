@@ -1,5 +1,5 @@
 local scene = gamestate.new()
-local Starter = require "cls/starter"
+
 
 function scene:init()
 	self.camera = Camera()

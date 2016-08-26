@@ -1,6 +1,4 @@
 local scene = gamestate.new()
-local Result = require "cls/result"
-
 
 function scene:init()
 	self.camera = Camera()

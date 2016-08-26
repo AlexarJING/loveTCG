@@ -1,6 +1,6 @@
 local scene = gamestate.new()
-local Builder = require "cls/builder"
-local Card = require "cls/card"
+local Builder = require "cls/builder/builder"
+local Card = require "cls/game/card"
 
 
 function scene:init()

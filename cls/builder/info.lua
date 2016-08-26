@@ -1,13 +1,11 @@
 local info = Class("info")
-local Button = require "cls/button"
-local Bg = require "cls/bg"
+
 local font = love.graphics.newFont(20)
 local gold = love.graphics.newImage("res/others/coin.png")
 local gem = love.graphics.newImage("res/others/gem.png")
 local dust = love.graphics.newImage("res/others/steel.png")
 
-function info:init(parent)
-	self.parent = parent
+function info:init()
 	self.data = self:readUserFile()
 	self.id = self.data.name
 	self.gem = self.data.gem
@@ -21,8 +19,7 @@ end
 
 
 function info:update(dt)
-	--self.mousex , self.mousey = self.parent.mousex , self.parent.mousey
-	
+
 end
 
 function info:newUserFile(name)
@@ -33,7 +30,8 @@ function info:newUserFile(name)
 					gold = 1000,
 					dust =1000,
 					range = 0,
-					collection = require "cardLibs/test"	
+					collection = require "cardLibs/test",
+					tutorial = 1	
 				}
 	elseif name == "debug" then
 	self.data ={
@@ -42,7 +40,8 @@ function info:newUserFile(name)
 					gold = 1000,
 					dust =1000,
 					range = 0,
-					collection = require "cardLibs/debug"	
+					collection = require "cardLibs/debug",
+					tutorial = 1	
 				}
 	else
 	self.data ={
@@ -51,7 +50,8 @@ function info:newUserFile(name)
 					gold = 0,
 					dust =0,
 					range = 0,
-					collection = require "cardLibs/default"	
+					collection = require "cardLibs/default"	,
+					tutorial = 1
 				}
 	end
 

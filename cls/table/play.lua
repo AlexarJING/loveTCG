@@ -17,7 +17,9 @@ function play:init(game,root)
     end
 
     self.maxCount= 8
-    self.scale = 0.5 
+    self.scale = 0.5
+    self.w = 500
+    self.h = 150 
 end
 
 function play:rearrange()

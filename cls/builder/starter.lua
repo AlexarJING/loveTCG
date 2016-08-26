@@ -1,16 +1,7 @@
 local starter = Class("starter")
 
-local Card = require "cls/card"
-local cardData = require "cls/cardDataLoader"
-local Bg = require "cls/bg"
-local Button = require "cls/button"
-local Text = require "cls/text"
-local Info = require "cls/info"
-
-
-
 function starter:init(parent)
-	self.info = Info(self)
+	self.info = info
 	self.parent = parent
 	self.bg = Bg("startbg",0,0,2)
 	self.bg2 = Bg("title",0,0,2)
@@ -30,7 +21,8 @@ function starter:init(parent)
 
 
 	self.ui = {}
-	self.input = Text(self,-100,-100,300,100,"id:","your name")
+	
+	self.input = Text(self,-100,-100,300,80,"id:","your name")
 	self.confirm = Button(self,150, -100 ,150,80,"confirm")
 	self.confirm.onClick = function(btn)
 		if btn.text == "confirm" then			
@@ -59,7 +51,7 @@ function starter:init(parent)
 	
 	self.input.text = data.name
 	self.input.isLabel = true
-	
+	self.cursor = Cursor(self)
 end
 
 

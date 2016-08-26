@@ -1,5 +1,5 @@
 local deck = Class("deck")
-local Card = require "cls/card"
+
 
 function deck:init(game,root)
     self.cards={}
@@ -17,7 +17,8 @@ function deck:init(game,root)
         self.rx = 3.14
     end
     self.scale = 0.5
-   
+    self.w = 100
+    self.h = 150
 end
 
 
@@ -37,9 +38,9 @@ function deck:setCards(data)
     for i = 1, 10 do
         local card
         if data.deck[i] then
-            card = Card(self.game,self.game.cardData.short[data.deck[i]],self.root,self)
+            card = Card(self.game,cardData.short[data.deck[i]],self.root,self)
         else
-            card = Card(self.game,self.game.cardData.short[data.faction.."coin"],self.root,self)
+            card = Card(self.game,cardData.short[data.faction.."coin"],self.root,self)
         end
         table.insert(self.cards, card)
     end

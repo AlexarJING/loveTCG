@@ -1,48 +1,43 @@
 local game = Class("game")
-game.cardData = require "cls/cardDataLoader"
+
 game.font_title = love.graphics.newFont(30)
 game.font_content = love.graphics.newFont(20)
 
-local Effect = require "cls/effect"
-local Turn = require "cls/turn"
-local Card = require "cls/card"
+
+
 
 local sides = {"up","down"}
 local hoverColor = {255,100,100,255}
-local AI = require "lib/ai"
-local jump = require "lib/jump"
-
-
 ------------------------------------------------------------------------------------
 
 function game:init(userdata,foedata)
 	--loader.addPack(self,function()
-	self.rnd = require "lib/random"
+	self.ui = {}
+	local btn = Button(self,580,300,100,50,"Yield",function() self:loser() end)
+	self.rnd = rnd
 	self.rnd:new()
-	
-	self.bg = require "cls/bg"("table2d",0,0,2)
+	self.name = "game"
+	self.bg = Bg("table2d",0,0,2)
 	self.up = {}
 	self.down = {}
+
 	for i,side in ipairs(sides) do
-		self[side].deck = require "cls/deck"(self,side)
-		self[side].hand = require "cls/hand"(self,side)
-		self[side].bank = require "cls/bank"(self,side)
-		self[side].play = require "cls/play"(self,side)
-		self[side].library = require "cls/library"(self,side)
-		self[side].hero = require "cls/hero"(self,side)
-		self[side].grave = require "cls/grave"(self,side)
+		self[side].deck = Deck(self,side)
+		self[side].hand = Hand(self,side)
+		self[side].bank = Bank(self,side)
+		self[side].play = Play(self,side)
+		self[side].library = Library(self,side)
+		self[side].hero = Hero(self,side)
+		self[side].grave = Grave(self,side)
 	end
-	self.show = require "cls/show"(self)
-	self.turnButton = require "cls/turn"(self)
-	--self.debug = require "cls/debug"(self)
-	self.console = require "cls/console"(self,-640,360,1280,300)
-	self.cursor = require "cls/cursor"(self)
-
-	self.console.cmd.endTurn = function()
-		self:endTurn()
-	end
-
+	self.show = Show(self)
+	self.turnButton = TurnButton(self)
 	
+
+	--self.debug = Debug(self)
+
+	self.console = Console(self,-640,360,1280,300)
+	self.cursor = Cursor(self)
 
 	self.aiCD = 0.5
 	self.mousex = 0
@@ -50,8 +45,9 @@ function game:init(userdata,foedata)
 	self.turnCount = 0
 	self.cardPlayCount = 0
 	self.effects = {}
-	
-	
+	self.dialog = {}
+	self.readyDiagTime = love.timer.getTime()
+	self.indicators = {}
 
 	self.up.turnDrawCount = 3
 	self.up.handsize = 4
@@ -62,6 +58,10 @@ function game:init(userdata,foedata)
 
 	self.userdata = userdata
 	self.foedata = foedata
+
+	if foedata.story then
+		self.story = require("cls/game/story").addData(foedata.story)
+	end
 
 	if foedata.type == "ai" then
 		self.aiToggle = true
@@ -76,8 +76,7 @@ function game:init(userdata,foedata)
 			end
 		end) 
 		love.client:on("win",function(data)
-			print(data)
-			self:winner()
+			self:winner(data)
 		end)
 	end
 
@@ -98,8 +97,10 @@ function game:init(userdata,foedata)
 
 	self.gametype = foedata.type
 
+
 	self:gameStart()
 	
+
 	--end,"lib/loading")
 	
 
@@ -119,12 +120,32 @@ function game:update(dt)
 		self[side].grave:update(dt)
 	end
 
-	--self.debug:update(dt)
 	self.show:update(dt)
 
 	for i,e in ipairs(self.effects) do
 		e:update(dt)
 	end
+
+	if self.debug then self.debug:update(dt) end
+	--if self.menu  then self.menu:update(dt) end
+	if self.story then
+		self.story:update()
+	end
+
+
+	for i,v in ipairs(self.dialog) do
+		v:update(dt)
+		if v.done then
+			table.remove(self.dialog,i)
+		end
+	end
+
+	for i,v in ipairs(self.ui) do
+		v:update(dt)
+	end
+
+	if self.lockInput then return end
+	
 
 	if self.my == self.userside then
 		if self.hoverCard and self.click then
@@ -148,13 +169,7 @@ function game:update(dt)
 	elseif self.gametype == "net" then
 
 	end
-	
 
-	self.hover = self.turnButton:update(dt) or self.hoverCard
-	self.cursor:update(self.hover)
-	if  love.keyboard.isDown("escape") and not jump.running then
-		jump.to(self,self.down.hero,"lib/gamedialog")
-	end
 end
 
 function game:draw()
@@ -172,7 +187,7 @@ function game:draw()
 		self[side].deck:draw()
 	end
 
-	--self.debug:draw()
+	if self.debug then self.debug:draw() end
 
 	self.show:draw()
 
@@ -201,7 +216,14 @@ function game:draw()
 		love.graphics.print("AI: off", -640,-320)
 	end
 
-	self.cursor:draw()
+	for i,v in ipairs(self.dialog) do
+		v:draw()
+	end
+
+
+	for i,v in ipairs(self.ui) do
+		v:draw()
+	end
 end
 
 
@@ -210,17 +232,20 @@ function game:textinput(t)
 end
 
 function game:keypress(key)
+	if self.lockInput then return end
 	self.console:keypressed(key)
 	if self.keyLock then return end
 	if self.my~=self.userside and self.gametype~="hotseat" then return end
 	if key == "space" then
 		self:endTurn()
 	elseif key == "f1" then
-		self.debug.enable = not self.debug.enable
-		self.turnButton.freeze = self.debug.enable
+		if self.debug then
+			self.debug.enable = not self.debug.enable
+			self.lockTime = self.debug.enable
+		end
 		self.my.hero.card.gold = 0
 		self.my.hero.card.food = 0
-		self.my.hero.card.magic = 999
+		self.my.hero.card.magic = 60
 		self.my.hero.card.skull = 0
 	elseif key == "f2" then
 		self.console:toggle(not self.console.enable)
@@ -232,8 +257,8 @@ function game:keypress(key)
 end
 
 function game:mousepressed(key)
+	if self.lockInput then return end
 	self.console:mousepressed(key)
-	if self.keyLock then return end
 	if key == 1 then
 		self.click = true
 	else 
@@ -241,6 +266,47 @@ function game:mousepressed(key)
 	end
 
 
+end
+
+function game:addDiag(delaytime,lasttime,who,content)
+	delay:new(
+			delaytime, --condition
+			nil,
+			function() 
+				local where  = self[who].hero
+				local x,y = where.x,where.y
+				table.insert(self.dialog , Dialog(self,x,y,content,lasttime) )
+			end
+			)
+	local time = love.timer.getTime() + delaytime + lasttime
+	self.readyDiagTime = time> self.readyDiagTime and time or self.readyDiagTime
+end
+
+function game:clearDiag()
+	self.dialog = {}
+end
+
+
+function game:readyDiag()
+	return love.timer.getTime()>self.readyDiagTime
+end
+
+function game:addIndicator(side,where,w,h)
+	if type(side)=="number" then
+		table.insert(self.indicators, Indicator(self,side,where,w,h))
+	else
+		local place = self[side][where]
+		local x,y,w,h = place.cx or place.x,place.cy or place.y,place.w,place.h
+		table.insert(self.indicators, Indicator(self,x,y,w,h)) 
+	end
+	
+	
+end
+
+function game:clearIndicator()
+	for i,v in ipairs(self.indicators) do
+		table.removeItem(self.ui,v)
+	end
 end
 
 ----------------------------------------------------------------------------------
@@ -353,6 +419,8 @@ function game:gameStart()
 
 	if self.gametype == "net" then
 		self.turn = self.foedata.first and "down" or "up"
+	elseif self.foedata.playerfirst~=nil then
+		self.turn = self.foedata.playerfirst and "down" or "up"
 	else
 		self.turn = self.rnd:random()<0.5 and "down" or "up"
 	end
@@ -737,7 +805,7 @@ function game:drawCard(whose,id,manual,start) --or condition func with func(card
 
 	
 	if id == "random" then
-		local lib = self.cardData.index
+		local lib = cardData.index
 		local target
 		while true do
 			target = self.rnd:table(lib)
@@ -804,15 +872,15 @@ function game:refillCard(whose,id,level, start)
 	
 	if id =="any" then
 		local target
-		local lib = self.cardData.index
+		local lib = cardData.index
 		repeat
 			target = self.rnd:table(lib)
 		until not target.isHero
 		data = target
 	elseif type(id)=="string" then --名字
-		data = self.cardData.short[id]
+		data = cardData.short[id]
 	elseif type(id) == "function" then --条件
-		data= id(self.cardData)
+		data= id(cardData)
 	elseif type(id) == "table" then
 		data = table.copy(id) -- attentions!!! game:copyCard()
 	else
@@ -1140,8 +1208,10 @@ end
 function game:checkGameOver(card)
 	if card.isHero then
 		if self.userside == card:getSide() then
+			if  self.story and self.story.update("lose") == "return" then return end
 			self:loser()
 		else
+			if  self.story and self.story.update("win") == "return" then return end
 			self:winner()
 		end
 	end
@@ -1423,16 +1493,22 @@ function game:attack(from,to,ignore)
 end
 
 
-function game:winner()
+function game:winner(str)
 	--screenshot,hero,result
-	love.client:emit("gameover",{tablename = self.foedata.tablename,
-				tableplace = self.foedata.tableplace,})
+	if not str then
+		love.client:emit("win",{tablename = self.foedata.tablename,
+					tableplace = self.foedata.tableplace,})
+	end
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
-	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"win",self)
+	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"win",self,str)
 end
 
-function game:loser()
+function game:loser(t)
 	--screenshot,hero,result
+	if t then
+		love.client:emit("yield",{tablename = self.foedata.tablename,
+					tableplace = self.foedata.tableplace,})
+	end
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
 	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"lose",self)
 end
@@ -1568,7 +1644,7 @@ function game:dischargeCard(card)
 end
 
 function game:summon(card,id)
-	local data = self.cardData.short[id]
+	local data = cardData.short[id]
 	local c = self:makeCard(data,card:getSide())
 	self:transferCard(c,card:getSide().play)
 end
@@ -1580,7 +1656,7 @@ function game:AI(dt)
 	if self.aiEnd then return end
 	self.aiCD = self.aiCD - dt
 	if self.aiCD > 0 then return end
-	local rule = AI:getRule(self.foedata.rule)
+	local rule = AI:getRule(self.foedata.rule,self.foedata.ai)
 	for i,cond in ipairs(rule) do
 		if cond(self) then
 			self.aiCD = 0.5

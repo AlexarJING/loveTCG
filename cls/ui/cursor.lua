@@ -8,12 +8,13 @@ function cursor:init(parent)
 	self.y=0
 	self.debug = false
 	love.mouse.setVisible(false)
+	table.insert(parent.ui, self)
 end
 
 function cursor:update(hover)
 	self.x = self.parent.mousex
 	self.y = self.parent.mousey
-	self.hover = hover
+	self.hover = self.parent.hoverCard or self.parent.hoverUI
 	self.down = love.mouse.isDown(1) or love.mouse.isDown(2)
 end
 

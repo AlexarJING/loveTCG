@@ -1,13 +1,5 @@
 local shop = Class("shop")
 
-local Card = require "cls/card"
-local cardData = require "cls/cardDataLoader"
-local Bg = require "cls/bg"
-local Button = require "cls/button"
-local Info = require "cls/info"
-local Progress = require "cls/progressbar"
-local Cursor = require "cls/cursor"
-
 local normal = love.graphics.newImage("res/assets/cardback.png")
 local silver = love.graphics.newImage("res/assets/cardbacksilver.png")
 local gold = love.graphics.newImage("res/assets/cardbackgold.png")
@@ -30,10 +22,12 @@ function shop:init(parent)
 	self.bg = Bg("storeBg")
 	self.bg.scale = 2
 	self.font = love.graphics.newFont(30)
-	self.info = Info(self)
+	self.info = info
 	self.data = self.info.data
-	self.cursor = Cursor(self)
+	self.ui = {}
+
 	self:reset()
+	Cursor(self)
 end
 
 
@@ -49,7 +43,7 @@ function shop:reset()
 		Button(self,0,150,120,50,"1000 gold") ,
 		Button(self,300,150,120,50,"1 gem") ,
 	}
-	
+	Cursor(self)
 	for i = 1 , 3 do
 		self.buys[i].onClick = function() 
 			if self.data[price[i].money]<price[1].amount then return end
@@ -152,7 +146,7 @@ function shop:update(dt)
 	for i,v in ipairs(self.ui) do
 		v:update(dt)
 	end
-	self.cursor:update(self.hoverUI)
+
 
 	if self.state == "buy" then
 
@@ -188,9 +182,7 @@ function shop:draw()
 	
 	self.bg:draw()
 	self.info:draw()
-	for i,v in ipairs(self.ui) do
-		v:draw()
-	end
+	
 
 
 	love.graphics.setColor(255, 255, 255, 255)
@@ -230,7 +222,10 @@ function shop:draw()
 			v:draw()
 		end
 	end
-	self.cursor:draw()
+	
+	for i,v in ipairs(self.ui) do
+		v:draw()
+	end
 end
 
 return shop

@@ -6,7 +6,7 @@ local data = {
 	profile = {" The valley is ever fertile. The herds roam thick, on fours legs and on two. "},
 	last = true,
 	hp = 1,
-	back = true
+	back = true,
 }
 
 data.description = {

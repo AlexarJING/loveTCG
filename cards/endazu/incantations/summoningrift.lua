@@ -25,7 +25,7 @@ data.ability={
 
 	onPlay = function (card,game)
 		local candidate = {}
-		local lib = game.cardData.index
+		local lib = cardData.index
 
 		for i= 1, card.charge do			
 			local target

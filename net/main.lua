@@ -166,7 +166,16 @@ function love.load()
     	op.state = "login"
     end)
 
-
+    server:on("yield", function(data,client)
+        local player = db.gaming[data.tablename][data.tableplace]
+        local op = db.gaming[data.tablename][(data.tableplace == 1 and 2 or 1)]
+        db.gaming[data.tablename] = nil
+        db.login[player.id] = player
+        db.login[op.id] = op
+        player.state = "login"
+        op.state = "login"
+        op.client:emit("win","foe yield")
+    end)
 
     server:on("disconnect",function(data,client)
     	local id = tostring(client.connection)

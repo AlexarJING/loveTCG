@@ -19,8 +19,9 @@ data.ability={
 		if #game.my.hand.cards>= game.my.handsize then game:refillCard();return end
 		
 
-		local drawCount = game.my.handsize
-		if game:drawCard("my","ally") then
+		local drawCount = game.my.turnDrawCount
+
+		if drawCount >0 and game:drawCard("my","ally") then
 			drawCount = drawCount -1
 		end
 

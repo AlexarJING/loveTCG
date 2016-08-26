@@ -1,15 +1,16 @@
 local turn = Class("turn")
 
 
-function turn:init(game,side)
+function turn:init(parent,side)
 	self.ry = 0
 	self.d = 20
 	self.turntime = 60
 	self.timer = self.turntime
-	self.game = game
+	self.parent = parent
 	self.img = love.graphics.newImage("res/assets/coin.png")
 	self.tw,self.th = self.img:getWidth(),self.img:getHeight()
 	self.freez = false
+	table.insert(parent.ui,self)
 end
 
 function turn:setTurn(side)
@@ -25,7 +26,7 @@ function turn:setTurn(side)
 end
 
 function turn:update(dt)
-	if not self.freeze then 
+	if not self.parent.lockTime then 
 		self.timer = self.timer - dt
 	end
 	self.x = self.orientation*(320 - (self.timer/self.turntime)*640)
@@ -33,13 +34,18 @@ function turn:update(dt)
 	if self.timer <0 then
 		self.timer = self.turntime
 		self.orientation = - self.orientation
-		self.game:turnEnd()
+		self.parent:turnEnd()
 	end
-	return self:checkMouse()
+
+	self:checkMouse()
+
+	if self.hover  then
+		self.parent.hoverUI = self
+	end
 end
 
 function turn:checkHover()
-	local x , y = self.game.mousex , self.game.mousey
+	local x , y = self.parent.mousex , self.parent.mousey
 
 	if x > self.x - self.d and x < self.x + self.d and
 		y > self.y - self.d and y < self.y + self.d then
@@ -50,9 +56,9 @@ end
 function turn:checkMouse()
 	self.hover = self:checkHover()
 
-	if self.hover and self.game.click and 
-		not (self.game.my ~= self.game.userside and self.game.gametype ~= "hotseat") then
-		self.game:turnEnd()
+	if self.hover and self.parent.click and 
+		not (self.parent.my ~= self.parent.userside and self.parent.gametype ~= "hotseat") then
+		self.parent:turnEnd()
 	end
 
 	return self.hover

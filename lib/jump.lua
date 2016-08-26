@@ -17,7 +17,7 @@ function jump.update(parent,dt)
 	if jump.scene.update(dt) then
 		jump.goback()
 	end
-	jump._update(parent,dt)
+	--jump._update(parent,dt)
 end
 
 function jump.goback()

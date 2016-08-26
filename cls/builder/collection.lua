@@ -1,8 +1,5 @@
 local collection = Class("collection")
-local Button = require "cls/button"
-local cardData = require "cls/cardDataLoader"
-local Card = require "cls/card"
-local Bg = require "cls/bg"
+
 
 local function getPos(self,index,level)
 	local x = self.x + (index-1)%7*120 + (level-1)*5
@@ -74,7 +71,7 @@ function collection:init(parent)
 	for category,data in pairs(self.cards[self.faction]) do
 		self.category = self.category or category
 		i = i + 1
-		local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,category)
+		local btn =  Button(self,self.x+i*100+200 ,self.y-130,80,30,category)
 		btn.onClick = function(btn) 
 			self.show = "card"
 			self.category = btn.text 
@@ -84,7 +81,7 @@ function collection:init(parent)
 	end
 	
 	i = i + 1 
-	local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,"coins")
+	local btn =  Button(self,self.x+i*100+200 ,self.y-130,80,30,"coins")
 	btn.onClick = function(btn) 
 		self.show = "coin"
 		self.category = btn.text 
@@ -93,7 +90,7 @@ function collection:init(parent)
 	
 
 
-	local btn = Button(self,self.x+70, self.y - 130, 80,30, "save")
+	local btn = Button(self,self.x+100, self.y - 130, 80,30, "save")
 	btn.onClick = function()
 		self.parent.state = "menu"
 		self.parent.pocket:save()

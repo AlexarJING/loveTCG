@@ -1,5 +1,5 @@
 local library = Class("library")
-local Card = require "cls/card"
+
 
 
 function library:init(game,root)
@@ -24,7 +24,7 @@ function library:setCards(data)
     self.cards = {}
     local lib = data.lib
     for i,v in ipairs(lib) do
-        local d= table.copy(self.game.cardData.short[v.id])
+        local d= table.copy(cardData.short[v.id])
         d.level = v.level
         d.exp = v.exp
         table.insert(self.cards, d)

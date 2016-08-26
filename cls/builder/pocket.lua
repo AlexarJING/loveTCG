@@ -1,8 +1,5 @@
 local pocket = Class("pocket")
-local Button = require "cls/button"
-local cardData = require "cls/cardDataLoader"
-local Card = require "cls/card"
-local Bg = require "cls/bg"
+
 
 local collection
 local selector

@@ -22,7 +22,7 @@ data.ability={
 		game:refillCard("my","herdofrats",card.level)
 
 		if game:sacrificeCard("herdofrats") then
-			local d = game.cardData.short.warrats
+			local d = cardData.short.warrats
 			d.level = card.level
 			local copy = game:makeCard(d)
 			game:drawCard("my",copy)

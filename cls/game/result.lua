@@ -1,14 +1,8 @@
 local result = Class("result")
-local Bg = require "cls/bg"
-local font = love.graphics.newFont(20)
-local Frag = require "lib/frag"
-local cardData = require "cls/cardDataLoader"
-local Card = require "cls/card"
-local Fire = require "lib/firework"
-local Info = require "cls/info"
 
-function result:init(parent,screenshot,hero,result,game)
-	self.info = Info(self)
+local font = love.graphics.newFont(20)
+function result:init(parent,screenshot,hero,result,game,reason)
+	self.info = info
 	self.game = game
 	self.result = result
 	self.bg = Bg("stoneBg")
@@ -19,6 +13,7 @@ function result:init(parent,screenshot,hero,result,game)
 	self.hero = hero
 	self.hero:setAnimate(1,{x=0},"inQuad",nil)
 	self.hero:setAnimate(1,{y=0},"inQuad",nil)
+	self.reason = reason or "You Have Conquered Your Enemies"
 	if result == "win" then
 		self.hero:setAnimate(1,{scale=1},"inQuad",nil,
 			function() 
@@ -112,11 +107,15 @@ function result:save()
 		data.gold = data.gold + 100*(2^self.game.foedata.level)
 		heroData.exp = heroData.exp + 200
 		data.range = data.range + 1 
+		if self.game.foedata.reward then
+			self.game.foedata.reward()
+		end
 	else
 		data.gold = data.gold + 50
 		heroData.exp = heroData.exp + 50
 		data.range = data.range - 1 
 	end
+
 	self.info:saveUserFile()
 end
 
@@ -137,7 +136,9 @@ function result:draw()
 		if self.result == "lose" then
 			love.graphics.printf("YOU LOSE !\n+50 gold\n+50 exp", -360,100, 360, "center", 0, 2, 2)
 		else
-			love.graphics.printf("YOU WIN !\n+"..tostring(100*(2^self.game.foelevel)).." gold\n+200 exp",
+			love.graphics.printf(self.reason,
+			 -360,-230, 360, "center", 0, 2, 2)
+			love.graphics.printf("YOU WIN !\n+"..tostring(100*(2^self.game.foedata.level)).." gold\n+200 exp",
 			 -360,180, 360, "center", 0, 2, 2)
 		end
 	end

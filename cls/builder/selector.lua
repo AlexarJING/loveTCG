@@ -1,8 +1,5 @@
 local selector = Class("selector")
-local Button = require "cls/button"
-local cardData = require "cls/cardDataLoader"
-local Card = require "cls/card"
-local Bg = require "cls/bg"
+
 
 function selector:init(parent)
 	self.parent = parent
