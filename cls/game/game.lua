@@ -1404,9 +1404,9 @@ function game:attack(from,to,ignore)
 			elseif to == "hero" then
 				target = your.hero.card
 			elseif to == "infighting" then
-				target = self:randomAlly(your)
+				target = self:randomAlly(your) or your.hero.card
 			else
-				target = self:randomAlly(your)
+				target = self:randomAlly(your) or your.hero.card
 			end
 			effect = Effect(self,"attack",from,target,false,1,"inBack")	
 			--effect:addCallback(function() target:vibrate() end)
