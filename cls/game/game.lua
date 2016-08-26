@@ -787,7 +787,7 @@ function game:robCard(card)
 	if self:buyCard(card) then
 		card.born = self.my
 		self:killCard(robber)
-		return true
+		return card
 	end
 end
 
@@ -1495,10 +1495,12 @@ end
 
 function game:winner(str)
 	--screenshot,hero,result
+
 	if not str then
 		love.client:emit("win",{tablename = self.foedata.tablename,
 					tableplace = self.foedata.tableplace,})
 	end
+	print(1111111111)
 	local ss = love.graphics.newImage(love.graphics.newScreenshot())
 	gamestate.switch(gameState.result_scene,ss,self.userside.hero.card,"win",self,str)
 end

@@ -8,12 +8,54 @@ function ai.chooseShow(game)
 	end
 end
 
+function ai.supplyTarget(game)
+	if not game.my.needTarget then return end
+	local foe = table.combine(game.your.play.cards,game.your.hand.cards,game.your.bank.cards)
+	local target = table.max(foe,"price")
+	if target then
+		local result = game.my.targetSelected(game,target)
+		if result then
+			game.my.needTarget= false
+			return true
+		end 
+	end
+end
+
+--如果有不能出的则留不能出的 charging
+--如果有onhold则留最贵的
+--贵的牌先出
+--手里最多留一个能出的牌，
+
 
 function ai.playHand(game)
-	local card = game.my.hand.cards[1]
-	if card then
-		return game:playCard(card)
+	local hold
+	local cards = {unpack(game.my.hand.cards)}
+
+	for i,v in ipairs(cards) do
+		if v.charging then 
+			hold = v 
+		elseif v.ability.onHold then
+			if (not v.chargeMax) or (v.chargeMax and v.charge<v.chargeMax) then
+				if not hold then
+					hold = v
+				elseif v.price>hold.price then
+					hold = v
+				end
+			end
+		end
 	end
+
+	table.removeItem(cards,hold)
+
+	local target = table.max(cards,"price")
+
+	if target then return game:playCard(target) end
+
+	for i,v in ipairs(cards) do
+		local rt = game:playCard(v)
+		if rt then return rt end
+	end
+
 end
 
 function ai.feedAlly(game)
@@ -26,6 +68,7 @@ end
 
 
 function ai.aimFoe(game)
+
 	for i,card in ipairs(game.your.play.cards) do
 		if card.hp then	
 			return game:attackCard(card)
@@ -34,8 +77,14 @@ function ai.aimFoe(game)
 end
 
 function ai.buyBank(game)
+	for i,card in ipairs(game.your.bank.cards) do
+		local rt = game:robCard(card)
+		if rt then return true end
+	end
+
 	for i,card in ipairs(game.my.bank.cards) do
-		if game:buyCard(card) then return true end
+		local rt = game:buyCard(card)
+		if rt then return true end
 	end
 end
 
@@ -51,9 +100,11 @@ function ai.attackHero(game)
 	end
 end
 
+local default = {"chooseShow","supplyTarget","playHand","feedAlly","aimFoe","buyBank","feedHero","attackHero"}
+
 function ai:getRule(data,aifuncs)
 	local funcs={}
-	for i,v in ipairs(data) do
+	for i,v in ipairs(data or default) do
 		if self[v] then
 			table.insert(funcs, self[v])
 		else 

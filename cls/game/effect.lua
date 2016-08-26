@@ -10,6 +10,7 @@ img.hp = love.graphics.newImage("res/others/hp.png")
 
 
 function effect:init(parent,tag,from,to,fading,during,easing,manual)
+	if not from or not to then error("no target") end
 	during = 0.5
 	self.parent = parent
 	if not manual then

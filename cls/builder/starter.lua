@@ -1,4 +1,5 @@
 local starter = Class("starter")
+local cn = love.graphics.newFont("res/others/chinesefont.ttf",24)
 
 function starter:init(parent)
 	self.info = info
@@ -105,7 +106,10 @@ function starter:draw()
 	for i,v in ipairs(self.ui) do
 		v:draw()
 	end
-
+	love.graphics.setColor(0, 0, 0, 255)
+	love.graphics.setFont(cn)
+	love.graphics.printf("版本：0.0.1  作者：Alexar@成都\n按住ctrl点击按钮可以更改用户名，debug为超级用户解锁所有卡牌。\n卡牌汉化工作将在接下来进行\n 本版本为内部测试版本，有任何问题及bug请联系alexar@foxmail.com，谢谢！\n 本卡牌资源全部来自网络。如有侵权请联系作者。",
+	 -640, 100, 1280, "center")
 end
 
 

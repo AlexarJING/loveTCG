@@ -811,7 +811,7 @@ function table.max(tab,key)
 	local value = -1/0
 	for i,v in pairs(tab) do
 		if key  then
-			if v[key]>value then
+			if v[key] and v[key]>value then
 				value =v[key]
 				max = v
 				index = i
@@ -836,7 +836,7 @@ function table.min(tab,key)
 	local value = 1/0
 	for i,v in pairs(tab) do
 		if key  then
-			if v[key]>value then
+			if v[key] and v[key]>value then
 				value =v[key]
 				min = v
 				index = i
@@ -853,4 +853,20 @@ function table.min(tab,key)
 	if min then 
 		return min , index
 	end
+end
+
+function table.combine(...)
+	local rt = {}
+	for i,tab in ipairs({...}) do
+		for i,v in ipairs(tab) do
+			table.insert(rt, v)
+		end
+	end
+end
+
+local _print = print
+local index = 0
+print = function(...)	
+	index = index+1
+	return _print(index,...)
 end

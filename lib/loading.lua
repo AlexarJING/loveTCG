@@ -1,4 +1,4 @@
-local Bg = require "cls/bg"
+local Bg = require "cls/ui/bg"
 local scene = {}
 
 function scene:load()

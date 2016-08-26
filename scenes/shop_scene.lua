@@ -4,10 +4,12 @@ local scene = gamestate.new()
 function scene:init()
 	self.camera = Camera()
 	self.camera:lookAt(0,0)
-	self.shop = Shop(self)	
+	
 end 
 
-
+function scene:enter()
+	self.shop = Shop(self)
+end
 
 function scene:draw()
 	self.camera:attach()

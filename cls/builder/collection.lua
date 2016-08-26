@@ -90,7 +90,7 @@ function collection:init(parent)
 	
 
 
-	local btn = Button(self,self.x+100, self.y - 130, 80,30, "save")
+	local btn = Button(self,self.x+200, self.y - 130, 80,30, "save")
 	btn.onClick = function()
 		self.parent.state = "menu"
 		self.parent.pocket:save()
@@ -110,7 +110,7 @@ function collection:resetBtn()
 	for category,data in pairs(self.cards[self.faction]) do
 		self.category = self.category or category
 		i = i + 1
-		local btn =  Button(self,self.x+i*100+100 ,self.y-130,80,30,category)
+		local btn =  Button(self,self.x+i*100+200 ,self.y-130,80,30,category)
 		btn.onClick = function(btn) 
 			self.show = "card"
 			self.category = btn.text 

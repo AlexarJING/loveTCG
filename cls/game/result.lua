@@ -95,6 +95,7 @@ end
 
 function result:toMenu()
 	self:save()
+	delay:clear()
 	gamestate.switch(gameState.inter,gameState.builder_scene,nil,nil)
 end
 

@@ -13,7 +13,7 @@ function info:init()
 	self.dust = self.data.dust
 	self.x = -600
 	self.y = -350
-	self.w = 500
+	self.w = 600
 	self.h = 30
 end
 
@@ -90,6 +90,7 @@ function info:draw()
 	love.graphics.print(": "..tostring(self.data.gold), self.x+330,self.y)
 	love.graphics.draw(gem, self.x+400,self.y)
 	love.graphics.print(": "..tostring(self.data.gem), self.x+430,self.y)
+	love.graphics.print("Range: "..tostring(self.data.range), self.x+500,self.y)
 
 end
 

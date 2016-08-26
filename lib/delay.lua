@@ -37,6 +37,8 @@ function delay:update(dt)
 	end
 end
 
-
+function delay:clear()
+	self.stack={} 
+end
 
 return delay
